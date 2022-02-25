@@ -24,13 +24,13 @@ pallet-bridge-messages = { path = "../../modules/messages", default-features = f
 
 # Substrate dependencies
 
-frame-support = { git = "https://github.com/purestake/substrate", default-features = false , branch = "moonbeam-polkadot-v0.9.12" }
-pallet-transaction-payment = { git = "https://github.com/purestake/substrate", default-features = false , branch = "moonbeam-polkadot-v0.9.12" }
-sp-core = { git = "https://github.com/purestake/substrate", default-features = false , branch = "moonbeam-polkadot-v0.9.12" }
-sp-runtime = { git = "https://github.com/purestake/substrate", default-features = false , branch = "moonbeam-polkadot-v0.9.12" }
-sp-state-machine = { git = "https://github.com/purestake/substrate", default-features = false, optional = true , branch = "moonbeam-polkadot-v0.9.12" }
-sp-std = { git = "https://github.com/purestake/substrate", default-features = false , branch = "moonbeam-polkadot-v0.9.12" }
-sp-trie = { git = "https://github.com/purestake/substrate", default-features = false , branch = "moonbeam-polkadot-v0.9.12" }
+frame-support = { git = "https://github.com/axtend/axlib", default-features = false , branch = "16d1466" }
+pallet-transaction-payment = { git = "https://github.com/axtend/axlib", default-features = false , branch = "16d1466" }
+sp-core = { git = "https://github.com/axtend/axlib", default-features = false , branch = "16d1466" }
+sp-runtime = { git = "https://github.com/axtend/axlib", default-features = false , branch = "16d1466" }
+sp-state-machine = { git = "https://github.com/axtend/axlib", default-features = false, optional = true , branch = "16d1466" }
+sp-std = { git = "https://github.com/axtend/axlib", default-features = false , branch = "16d1466" }
+sp-trie = { git = "https://github.com/axtend/axlib", default-features = false , branch = "16d1466" }
 
 [features]
 default = ["std"]

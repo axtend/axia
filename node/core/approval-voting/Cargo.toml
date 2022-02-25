@@ -23,19 +23,19 @@ polkadot-primitives = { path = "../../../primitives" }
 polkadot-node-primitives = { path = "../../primitives" }
 polkadot-node-jaeger = { path = "../../jaeger" }
 
-sc-keystore = { git = "https://github.com/purestake/substrate", default-features = false , branch = "moonbeam-polkadot-v0.9.12" }
-sp-consensus = { git = "https://github.com/purestake/substrate", default-features = false , branch = "moonbeam-polkadot-v0.9.12" }
-sp-consensus-slots = { git = "https://github.com/purestake/substrate", default-features = false , branch = "moonbeam-polkadot-v0.9.12" }
-sp-application-crypto = { git = "https://github.com/purestake/substrate", default-features = false, features = ["full_crypto"] , branch = "moonbeam-polkadot-v0.9.12" }
-sp-runtime = { git = "https://github.com/purestake/substrate", default-features = false , branch = "moonbeam-polkadot-v0.9.12" }
+sc-keystore = { git = "https://github.com/axtend/axlib", default-features = false , branch = "16d1466" }
+sp-consensus = { git = "https://github.com/axtend/axlib", default-features = false , branch = "16d1466" }
+sp-consensus-slots = { git = "https://github.com/axtend/axlib", default-features = false , branch = "16d1466" }
+sp-application-crypto = { git = "https://github.com/axtend/axlib", default-features = false, features = ["full_crypto"] , branch = "16d1466" }
+sp-runtime = { git = "https://github.com/axtend/axlib", default-features = false , branch = "16d1466" }
 
 [dev-dependencies]
 parking_lot = "0.11.1"
 rand_core = "0.5.1" #                                                                       should match schnorrkel
-sp-keyring = { git = "https://github.com/purestake/substrate", branch = "moonbeam-polkadot-v0.9.12" }
-sp-keystore = { git = "https://github.com/purestake/substrate", branch = "moonbeam-polkadot-v0.9.12" }
-sp-core = { git = "https://github.com/purestake/substrate", branch = "moonbeam-polkadot-v0.9.12" }
-sp-consensus-babe = { git = "https://github.com/purestake/substrate", branch = "moonbeam-polkadot-v0.9.12" }
+sp-keyring = { git = "https://github.com/axtend/axlib", branch = "16d1466" }
+sp-keystore = { git = "https://github.com/axtend/axlib", branch = "16d1466" }
+sp-core = { git = "https://github.com/axtend/axlib", branch = "16d1466" }
+sp-consensus-babe = { git = "https://github.com/axtend/axlib", branch = "16d1466" }
 polkadot-node-subsystem-test-helpers = { path = "../../subsystem-test-helpers" }
 assert_matches = "1.4.0"
 kvdb-memorydb = "0.10.0"

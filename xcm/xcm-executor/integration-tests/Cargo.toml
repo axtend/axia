@@ -6,20 +6,20 @@ description = "Integration tests for the XCM Executor"
 version = "0.9.12"
 
 [dependencies]
-frame-support = { git = "https://github.com/purestake/substrate", default-features = false , branch = "moonbeam-polkadot-v0.9.12" }
-frame-system = { git = "https://github.com/purestake/substrate", branch = "moonbeam-polkadot-v0.9.12" }
+frame-support = { git = "https://github.com/axtend/axlib", default-features = false , branch = "16d1466" }
+frame-system = { git = "https://github.com/axtend/axlib", branch = "16d1466" }
 futures = "0.3.17"
 pallet-xcm = { path = "../../pallet-xcm" }
 polkadot-test-client = { path = "../../../node/test/client" }
 polkadot-test-runtime = { path = "../../../runtime/test-runtime" }
 polkadot-test-service = { path = "../../../node/test/service" }
-sp-consensus = { git = "https://github.com/purestake/substrate", branch = "moonbeam-polkadot-v0.9.12" }
-sp-keyring = { git = "https://github.com/purestake/substrate", branch = "moonbeam-polkadot-v0.9.12" }
-sp-runtime = { git = "https://github.com/purestake/substrate", default-features = false , branch = "moonbeam-polkadot-v0.9.12" }
-sp-state-machine = { git = "https://github.com/purestake/substrate", branch = "moonbeam-polkadot-v0.9.12" }
+sp-consensus = { git = "https://github.com/axtend/axlib", branch = "16d1466" }
+sp-keyring = { git = "https://github.com/axtend/axlib", branch = "16d1466" }
+sp-runtime = { git = "https://github.com/axtend/axlib", default-features = false , branch = "16d1466" }
+sp-state-machine = { git = "https://github.com/axtend/axlib", branch = "16d1466" }
 xcm = { path = "../..", default-features = false }
 xcm-executor = { path = ".." }
-sp-tracing = { git = "https://github.com/purestake/substrate", branch = "moonbeam-polkadot-v0.9.12" }
+sp-tracing = { git = "https://github.com/axtend/axlib", branch = "16d1466" }
 
 [features]
 default = ["std"]
