@@ -31,40 +31,40 @@ pallet-shift-session-manager = { path = "../../../modules/shift-session-manager"
 
 # Substrate Dependencies
 
-beefy-primitives = { git = "https://github.com/purestake/substrate", default-features = false , branch = "moonbeam-polkadot-v0.9.17" }
-frame-benchmarking = { git = "https://github.com/purestake/substrate", default-features = false, optional = true , branch = "moonbeam-polkadot-v0.9.17" }
-frame-executive = { git = "https://github.com/purestake/substrate", default-features = false , branch = "moonbeam-polkadot-v0.9.17" }
-frame-support = { git = "https://github.com/purestake/substrate", default-features = false , branch = "moonbeam-polkadot-v0.9.17" }
-frame-system = { git = "https://github.com/purestake/substrate", default-features = false , branch = "moonbeam-polkadot-v0.9.17" }
-frame-system-rpc-runtime-api = { git = "https://github.com/purestake/substrate", default-features = false , branch = "moonbeam-polkadot-v0.9.17" }
-pallet-authority-discovery = { git = "https://github.com/purestake/substrate", default-features = false , branch = "moonbeam-polkadot-v0.9.17" }
-pallet-babe = { git = "https://github.com/purestake/substrate", default-features = false , branch = "moonbeam-polkadot-v0.9.17" }
-pallet-balances = { git = "https://github.com/purestake/substrate", default-features = false , branch = "moonbeam-polkadot-v0.9.17" }
-pallet-beefy = { git = "https://github.com/purestake/substrate", default-features = false , branch = "moonbeam-polkadot-v0.9.17" }
-pallet-beefy-mmr = { git = "https://github.com/purestake/substrate", default-features = false , branch = "moonbeam-polkadot-v0.9.17" }
-pallet-grandpa = { git = "https://github.com/purestake/substrate", default-features = false , branch = "moonbeam-polkadot-v0.9.17" }
-pallet-mmr = { git = "https://github.com/purestake/substrate", default-features = false , branch = "moonbeam-polkadot-v0.9.17" }
-pallet-mmr-primitives = { git = "https://github.com/purestake/substrate", default-features = false , branch = "moonbeam-polkadot-v0.9.17" }
-pallet-session = { git = "https://github.com/purestake/substrate", default-features = false , branch = "moonbeam-polkadot-v0.9.17" }
-pallet-sudo = { git = "https://github.com/purestake/substrate", default-features = false , branch = "moonbeam-polkadot-v0.9.17" }
-pallet-timestamp = { git = "https://github.com/purestake/substrate", default-features = false , branch = "moonbeam-polkadot-v0.9.17" }
-pallet-transaction-payment = { git = "https://github.com/purestake/substrate", default-features = false , branch = "moonbeam-polkadot-v0.9.17" }
-pallet-transaction-payment-rpc-runtime-api = { git = "https://github.com/purestake/substrate", default-features = false , branch = "moonbeam-polkadot-v0.9.17" }
-sp-api = { git = "https://github.com/purestake/substrate", default-features = false , branch = "moonbeam-polkadot-v0.9.17" }
-sp-authority-discovery = { git = "https://github.com/purestake/substrate", default-features = false , branch = "moonbeam-polkadot-v0.9.17" }
-sp-block-builder = { git = "https://github.com/purestake/substrate", default-features = false , branch = "moonbeam-polkadot-v0.9.17" }
-sp-consensus-babe = { git = "https://github.com/purestake/substrate", default-features = false , branch = "moonbeam-polkadot-v0.9.17" }
-sp-core = { git = "https://github.com/purestake/substrate", default-features = false , branch = "moonbeam-polkadot-v0.9.17" }
-sp-finality-grandpa = { git = "https://github.com/purestake/substrate", default-features = false , branch = "moonbeam-polkadot-v0.9.17" }
-sp-inherents = { git = "https://github.com/purestake/substrate", default-features = false , branch = "moonbeam-polkadot-v0.9.17" }
-sp-io = { git = "https://github.com/purestake/substrate", default-features = false , branch = "moonbeam-polkadot-v0.9.17" }
-sp-offchain = { git = "https://github.com/purestake/substrate", default-features = false , branch = "moonbeam-polkadot-v0.9.17" }
-sp-runtime = { git = "https://github.com/purestake/substrate", default-features = false , branch = "moonbeam-polkadot-v0.9.17" }
-sp-session = { git = "https://github.com/purestake/substrate", default-features = false , branch = "moonbeam-polkadot-v0.9.17" }
-sp-std = { git = "https://github.com/purestake/substrate", default-features = false , branch = "moonbeam-polkadot-v0.9.17" }
-sp-transaction-pool = { git = "https://github.com/purestake/substrate", default-features = false , branch = "moonbeam-polkadot-v0.9.17" }
-sp-trie = { git = "https://github.com/purestake/substrate", default-features = false , branch = "moonbeam-polkadot-v0.9.17" }
-sp-version = { git = "https://github.com/purestake/substrate", default-features = false , branch = "moonbeam-polkadot-v0.9.17" }
+beefy-primitives = { git = "https://github.com/axtend/axlib", default-features = false , branch = "c92f69d" }
+frame-benchmarking = { git = "https://github.com/axtend/axlib", default-features = false, optional = true , branch = "c92f69d" }
+frame-executive = { git = "https://github.com/axtend/axlib", default-features = false , branch = "c92f69d" }
+frame-support = { git = "https://github.com/axtend/axlib", default-features = false , branch = "c92f69d" }
+frame-system = { git = "https://github.com/axtend/axlib", default-features = false , branch = "c92f69d" }
+frame-system-rpc-runtime-api = { git = "https://github.com/axtend/axlib", default-features = false , branch = "c92f69d" }
+pallet-authority-discovery = { git = "https://github.com/axtend/axlib", default-features = false , branch = "c92f69d" }
+pallet-babe = { git = "https://github.com/axtend/axlib", default-features = false , branch = "c92f69d" }
+pallet-balances = { git = "https://github.com/axtend/axlib", default-features = false , branch = "c92f69d" }
+pallet-beefy = { git = "https://github.com/axtend/axlib", default-features = false , branch = "c92f69d" }
+pallet-beefy-mmr = { git = "https://github.com/axtend/axlib", default-features = false , branch = "c92f69d" }
+pallet-grandpa = { git = "https://github.com/axtend/axlib", default-features = false , branch = "c92f69d" }
+pallet-mmr = { git = "https://github.com/axtend/axlib", default-features = false , branch = "c92f69d" }
+pallet-mmr-primitives = { git = "https://github.com/axtend/axlib", default-features = false , branch = "c92f69d" }
+pallet-session = { git = "https://github.com/axtend/axlib", default-features = false , branch = "c92f69d" }
+pallet-sudo = { git = "https://github.com/axtend/axlib", default-features = false , branch = "c92f69d" }
+pallet-timestamp = { git = "https://github.com/axtend/axlib", default-features = false , branch = "c92f69d" }
+pallet-transaction-payment = { git = "https://github.com/axtend/axlib", default-features = false , branch = "c92f69d" }
+pallet-transaction-payment-rpc-runtime-api = { git = "https://github.com/axtend/axlib", default-features = false , branch = "c92f69d" }
+sp-api = { git = "https://github.com/axtend/axlib", default-features = false , branch = "c92f69d" }
+sp-authority-discovery = { git = "https://github.com/axtend/axlib", default-features = false , branch = "c92f69d" }
+sp-block-builder = { git = "https://github.com/axtend/axlib", default-features = false , branch = "c92f69d" }
+sp-consensus-babe = { git = "https://github.com/axtend/axlib", default-features = false , branch = "c92f69d" }
+sp-core = { git = "https://github.com/axtend/axlib", default-features = false , branch = "c92f69d" }
+sp-finality-grandpa = { git = "https://github.com/axtend/axlib", default-features = false , branch = "c92f69d" }
+sp-inherents = { git = "https://github.com/axtend/axlib", default-features = false , branch = "c92f69d" }
+sp-io = { git = "https://github.com/axtend/axlib", default-features = false , branch = "c92f69d" }
+sp-offchain = { git = "https://github.com/axtend/axlib", default-features = false , branch = "c92f69d" }
+sp-runtime = { git = "https://github.com/axtend/axlib", default-features = false , branch = "c92f69d" }
+sp-session = { git = "https://github.com/axtend/axlib", default-features = false , branch = "c92f69d" }
+sp-std = { git = "https://github.com/axtend/axlib", default-features = false , branch = "c92f69d" }
+sp-transaction-pool = { git = "https://github.com/axtend/axlib", default-features = false , branch = "c92f69d" }
+sp-trie = { git = "https://github.com/axtend/axlib", default-features = false , branch = "c92f69d" }
+sp-version = { git = "https://github.com/axtend/axlib", default-features = false , branch = "c92f69d" }
 
 # Polkadot (parachain) Dependencies
 
@@ -76,7 +76,7 @@ polkadot-runtime-parachains = { git = "https://github.com/paritytech/polkadot", 
 libsecp256k1 = { version = "0.7", features = ["hmac"] }
 
 [build-dependencies]
-substrate-wasm-builder = { git = "https://github.com/purestake/substrate", branch = "moonbeam-polkadot-v0.9.17" }
+substrate-wasm-builder = { git = "https://github.com/axtend/axlib", branch = "c92f69d" }
 
 [features]
 default = ["std"]

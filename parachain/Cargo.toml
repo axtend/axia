@@ -12,10 +12,10 @@ edition = "2018"
 parity-scale-codec = { version = "2.0.0", default-features = false, features = [ "derive" ] }
 parity-util-mem = { version = "0.10.0", default-features = false, optional = true }
 scale-info = { version = "1.0", default-features = false, features = ["derive"] }
-sp-std = { git = "https://github.com/purestake/substrate", default-features = false , branch = "moonbeam-polkadot-v0.9.17" }
-sp-runtime = { git = "https://github.com/purestake/substrate", default-features = false , branch = "moonbeam-polkadot-v0.9.17" }
-sp-core = { git = "https://github.com/purestake/substrate", default-features = false , branch = "moonbeam-polkadot-v0.9.17" }
-frame-support = { git = "https://github.com/purestake/substrate", default-features = false , branch = "moonbeam-polkadot-v0.9.17" }
+sp-std = { git = "https://github.com/axtend/axlib", default-features = false , branch = "c92f69d" }
+sp-runtime = { git = "https://github.com/axtend/axlib", default-features = false , branch = "c92f69d" }
+sp-core = { git = "https://github.com/axtend/axlib", default-features = false , branch = "c92f69d" }
+frame-support = { git = "https://github.com/axtend/axlib", default-features = false , branch = "c92f69d" }
 polkadot-core-primitives = { path = "../core-primitives", default-features = false }
 derive_more = "0.99.11"
 

@@ -12,6 +12,6 @@ thiserror = "1.0.30"
 async-trait = "0.1.52"
 polkadot-node-subsystem = { path = "../../subsystem" }
 polkadot-primitives = { path = "../../../primitives" }
-sp-blockchain = { git = "https://github.com/purestake/substrate", branch = "moonbeam-polkadot-v0.9.17" }
-sp-inherents = { git = "https://github.com/purestake/substrate", branch = "moonbeam-polkadot-v0.9.17" }
-sp-runtime = { git = "https://github.com/purestake/substrate", branch = "moonbeam-polkadot-v0.9.17" }
+sp-blockchain = { git = "https://github.com/axtend/axlib", branch = "c92f69d" }
+sp-inherents = { git = "https://github.com/axtend/axlib", branch = "c92f69d" }
+sp-runtime = { git = "https://github.com/axtend/axlib", branch = "c92f69d" }

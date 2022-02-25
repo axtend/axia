@@ -12,11 +12,11 @@ parking_lot = "0.11.1"
 polkadot-node-subsystem = { path = "../subsystem" }
 polkadot-node-subsystem-util = { path = "../subsystem-util" }
 polkadot-primitives = { path = "../../primitives" }
-sp-core = { git = "https://github.com/purestake/substrate", branch = "moonbeam-polkadot-v0.9.17" }
-sp-keystore = { git = "https://github.com/purestake/substrate", branch = "moonbeam-polkadot-v0.9.17" }
-sc-keystore = { git = "https://github.com/purestake/substrate", branch = "moonbeam-polkadot-v0.9.17" }
-sp-keyring = { git = "https://github.com/purestake/substrate", branch = "moonbeam-polkadot-v0.9.17" }
-sp-application-crypto = { git = "https://github.com/purestake/substrate", branch = "moonbeam-polkadot-v0.9.17" }
+sp-core = { git = "https://github.com/axtend/axlib", branch = "c92f69d" }
+sp-keystore = { git = "https://github.com/axtend/axlib", branch = "c92f69d" }
+sc-keystore = { git = "https://github.com/axtend/axlib", branch = "c92f69d" }
+sp-keyring = { git = "https://github.com/axtend/axlib", branch = "c92f69d" }
+sp-application-crypto = { git = "https://github.com/axtend/axlib", branch = "c92f69d" }
 
 [dev-dependencies]
 polkadot-overseer = { path = "../overseer" }

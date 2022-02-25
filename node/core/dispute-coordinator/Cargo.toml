@@ -17,14 +17,14 @@ polkadot-node-primitives = { path = "../../primitives" }
 polkadot-node-subsystem = { path = "../../subsystem" }
 polkadot-node-subsystem-util = { path = "../../subsystem-util" }
 
-sc-keystore = { git = "https://github.com/purestake/substrate", branch = "moonbeam-polkadot-v0.9.17" }
+sc-keystore = { git = "https://github.com/axtend/axlib", branch = "c92f69d" }
 
 [dev-dependencies]
 kvdb-memorydb = "0.10.0"
 polkadot-node-subsystem-test-helpers = { path = "../../subsystem-test-helpers" }
-sp-keyring = { git = "https://github.com/purestake/substrate", branch = "moonbeam-polkadot-v0.9.17" }
-sp-core = { git = "https://github.com/purestake/substrate", branch = "moonbeam-polkadot-v0.9.17" }
-sp-keystore = { git = "https://github.com/purestake/substrate", branch = "moonbeam-polkadot-v0.9.17" }
+sp-keyring = { git = "https://github.com/axtend/axlib", branch = "c92f69d" }
+sp-core = { git = "https://github.com/axtend/axlib", branch = "c92f69d" }
+sp-keystore = { git = "https://github.com/axtend/axlib", branch = "c92f69d" }
 assert_matches = "1.4.0"
 test-helpers = { package = "polkadot-primitives-test-helpers", path = "../../../primitives/test-helpers" }
 
