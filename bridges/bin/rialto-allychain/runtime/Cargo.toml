@@ -4,14 +4,14 @@ version = "0.1.0"
 authors = ["Axia Technologies <admin@axia.io>"]
 edition = "2018"
 homepage = "https://axlib.dev"
-repository = "https://github.com/axiatech/axia-bridges-common/"
+repository = "https://github.com/axiatech/parity-bridges-common/"
 license = "GPL-3.0-or-later WITH Classpath-exception-2.0"
 
 [build-dependencies]
 axlib-wasm-builder = { git = "https://github.com/axtend/axlib", branch = "c92f69d" }
 
 [dependencies]
-codec = { package = 'axia-scale-codec', version = '2.0.0', default-features = false, features = ['derive']}
+codec = { package = 'parity-scale-codec', version = '2.0.0', default-features = false, features = ['derive']}
 log = { version = "0.4.14", default-features = false }
 scale-info = { version = "1.0", default-features = false, features = ["derive"] }
 serde = { version = '1.0', optional = true, features = ['derive'] }

@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Axia Bridges Common.  If not, see <http://www.gnu.org/licenses/>.
 
-//! Deal with CLI args of axlib-to-axlib relay.
+//! Deal with CLI args of parity-to-axlib relay.
 
 use std::convert::TryInto;
 

@@ -16,7 +16,7 @@
 
 //! The Rialto allychain runtime. This can be compiled with `#[no_std]`, ready for Wasm.
 //!
-//! Originally a copy of runtime from https://github.com/axlib-developer-hub/axlib-allychain-template.
+//! Originally a copy of runtime from https://github.com/parity-developer-hub/parity-allychain-template.
 
 #![cfg_attr(not(feature = "std"), no_std)]
 // `construct_runtime!` does a lot of recursion and requires us to increase the limit to 256.

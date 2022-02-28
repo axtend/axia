@@ -28,7 +28,7 @@ use polkadot_runtime_common::{
 	paras_registrar::Call as ParaRegistrarCall, slots::Call as ParaSlotsCall,
 };
 use polkadot_runtime_parachains::paras::ParaLifecycle;
-use relay_substrate_client::{
+use relay_axlib_client::{
 	AccountIdOf, CallOf, Chain, Client, TransactionSignScheme, UnsignedTransaction,
 };
 use rialto_runtime::SudoCall;
@@ -125,7 +125,7 @@ impl RegisterParachain {
 								Relaychain::sign_transaction(
 									relay_genesis_hash,
 									&reserve_parachain_signer,
-									relay_substrate_client::TransactionEra::immortal(),
+									relay_axlib_client::TransactionEra::immortal(),
 									UnsignedTransaction::new(
 										reserve_parachain_id_call,
 										transaction_nonce,
@@ -172,7 +172,7 @@ impl RegisterParachain {
 								Relaychain::sign_transaction(
 									relay_genesis_hash,
 									&register_parathread_signer,
-									relay_substrate_client::TransactionEra::immortal(),
+									relay_axlib_client::TransactionEra::immortal(),
 									UnsignedTransaction::new(
 										register_parathread_call,
 										transaction_nonce,
@@ -232,7 +232,7 @@ impl RegisterParachain {
 						Relaychain::sign_transaction(
 							relay_genesis_hash,
 							&force_lease_signer,
-							relay_substrate_client::TransactionEra::immortal(),
+							relay_axlib_client::TransactionEra::immortal(),
 							UnsignedTransaction::new(force_lease_call, transaction_nonce),
 						)
 						.encode(),

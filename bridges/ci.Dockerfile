@@ -24,7 +24,7 @@ USER user
 
 WORKDIR /home/user
 
-ARG PROJECT=axlib-relay
+ARG PROJECT=parity-relay
 
 COPY --chown=user:user ./${PROJECT} ./
 COPY --chown=user:user ./bridge-entrypoint.sh ./
@@ -42,9 +42,9 @@ ARG VERSION=""
 
 LABEL org.opencontainers.image.title="${PROJECT}" \
     org.opencontainers.image.description="${PROJECT} - component of Axia Bridges Common" \
-    org.opencontainers.image.source="https://github.com/axiatech/axia-bridges-common/blob/${VCS_REF}/ci.Dockerfile" \
-    org.opencontainers.image.url="https://github.com/axiatech/axia-bridges-common/blob/${VCS_REF}/ci.Dockerfile" \
-    org.opencontainers.image.documentation="https://github.com/axiatech/axia-bridges-common/blob/${VCS_REF}/README.md" \
+    org.opencontainers.image.source="https://github.com/axiatech/parity-bridges-common/blob/${VCS_REF}/ci.Dockerfile" \
+    org.opencontainers.image.url="https://github.com/axiatech/parity-bridges-common/blob/${VCS_REF}/ci.Dockerfile" \
+    org.opencontainers.image.documentation="https://github.com/axiatech/parity-bridges-common/blob/${VCS_REF}/README.md" \
     org.opencontainers.image.created="${BUILD_DATE}" \
     org.opencontainers.image.version="${VERSION}" \
     org.opencontainers.image.revision="${VCS_REF}" \

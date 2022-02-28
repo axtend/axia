@@ -8,14 +8,14 @@
 
 set -xeu
 
-RUST_LOG=rpc=trace,bridge=trace ./target/debug/axlib-relay init-bridge wococo-to-betanet \
+RUST_LOG=rpc=trace,bridge=trace ./target/debug/parity-relay init-bridge wococo-to-betanet \
 	--source-host 127.0.0.1 \
 	--source-port 9944 \
 	--target-host 127.0.0.1 \
 	--target-port 9955 \
 	--target-signer //Alice
 
-RUST_LOG=rpc=trace,bridge=trace ./target/debug/axlib-relay relay-headers wococo-to-betanet \
+RUST_LOG=rpc=trace,bridge=trace ./target/debug/parity-relay relay-headers wococo-to-betanet \
 	--source-host 127.0.0.1 \
 	--source-port 9944 \
 	--target-host 127.0.0.1 \

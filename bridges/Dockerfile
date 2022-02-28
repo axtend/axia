@@ -1,19 +1,19 @@
 # Builds images used by the bridge.
 #
 # In particular, it can be used to build Axlib nodes and bridge relayers. The binary that gets
-# built can be specified with the `PROJECT` build-arg. For example, to build the `axlib-relay`
+# built can be specified with the `PROJECT` build-arg. For example, to build the `parity-relay`
 # you would do the following:
 #
-# `docker build . -t local/axlib-relay --build-arg=PROJECT=axlib-relay`
+# `docker build . -t local/parity-relay --build-arg=PROJECT=parity-relay`
 #
 # See the `deployments/README.md` for all the available `PROJECT` values.
 
 FROM docker.io/axiatech/bridges-ci:latest as builder
-WORKDIR /axia-bridges-common
+WORKDIR /parity-bridges-common
 
 COPY . .
 
-ARG PROJECT=axlib-relay
+ARG PROJECT=parity-relay
 RUN cargo build --release --verbose -p ${PROJECT} && \
     strip ./target/release/${PROJECT}
 
@@ -42,10 +42,10 @@ USER user
 
 WORKDIR /home/user
 
-ARG PROJECT=axlib-relay
+ARG PROJECT=parity-relay
 
-COPY --chown=user:user --from=builder /axia-bridges-common/target/release/${PROJECT} ./
-COPY --chown=user:user --from=builder /axia-bridges-common/deployments/local-scripts/bridge-entrypoint.sh ./
+COPY --chown=user:user --from=builder /parity-bridges-common/target/release/${PROJECT} ./
+COPY --chown=user:user --from=builder /parity-bridges-common/deployments/local-scripts/bridge-entrypoint.sh ./
 
 # check if executable works in this container
 RUN ./${PROJECT} --version
@@ -60,9 +60,9 @@ ARG VERSION=""
 
 LABEL org.opencontainers.image.title="${PROJECT}" \
     org.opencontainers.image.description="${PROJECT} - component of Axia Bridges Common" \
-    org.opencontainers.image.source="https://github.com/axiatech/axia-bridges-common/blob/${VCS_REF}/Dockerfile" \
-    org.opencontainers.image.url="https://github.com/axiatech/axia-bridges-common/blob/${VCS_REF}/Dockerfile" \
-    org.opencontainers.image.documentation="https://github.com/axiatech/axia-bridges-common/blob/${VCS_REF}/README.md" \
+    org.opencontainers.image.source="https://github.com/axiatech/parity-bridges-common/blob/${VCS_REF}/Dockerfile" \
+    org.opencontainers.image.url="https://github.com/axiatech/parity-bridges-common/blob/${VCS_REF}/Dockerfile" \
+    org.opencontainers.image.documentation="https://github.com/axiatech/parity-bridges-common/blob/${VCS_REF}/README.md" \
     org.opencontainers.image.created="${BUILD_DATE}" \
     org.opencontainers.image.version="${VERSION}" \
     org.opencontainers.image.revision="${VCS_REF}" \

@@ -21,10 +21,10 @@ use sp_core::{Bytes, Pair};
 
 use bp_header_chain::justification::GrandpaJustification;
 use relay_rococo_client::{Rococo, SigningParams as RococoSigningParams};
-use relay_substrate_client::{Client, IndexOf, TransactionSignScheme, UnsignedTransaction};
+use relay_axlib_client::{Client, IndexOf, TransactionSignScheme, UnsignedTransaction};
 use relay_utils::metrics::MetricsParams;
 use relay_wococo_client::{SyncHeader as WococoSyncHeader, Wococo};
-use substrate_relay_helper::finality_pipeline::{
+use axlib_relay_helper::finality_pipeline::{
 	SubstrateFinalitySyncPipeline, SubstrateFinalityToSubstrate,
 };
 
@@ -68,11 +68,11 @@ impl SubstrateFinalitySyncPipeline for WococoFinalityToRococo {
 	}
 
 	fn start_relay_guards(&self) {
-		relay_substrate_client::guard::abort_on_spec_version_change(
+		relay_axlib_client::guard::abort_on_spec_version_change(
 			self.finality_pipeline.target_client.clone(),
 			bp_rococo::VERSION.spec_version,
 		);
-		relay_substrate_client::guard::abort_when_account_balance_decreased(
+		relay_axlib_client::guard::abort_when_account_balance_decreased(
 			self.finality_pipeline.target_client.clone(),
 			self.transactions_author(),
 			MAXIMAL_BALANCE_DECREASE_PER_DAY,

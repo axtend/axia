@@ -8,7 +8,7 @@ edition = "2018"
 polkadot-primitives = { path = "../primitives" }
 polkadot-node-primitives = { package = "polkadot-node-primitives", path = "../node/primitives" }
 novelpoly = { package = "reed-solomon-novelpoly", version = "1.0.0" }
-axia-scale-codec = { version = "2.3.1", default-features = false, features = ["std", "derive"] }
+parity-scale-codec = { version = "2.3.1", default-features = false, features = ["std", "derive"] }
 sp-core = { git = "https://github.com/axtend/axlib", branch = "c92f69d" }
 trie = { package = "sp-trie", git = "https://github.com/axtend/axlib", branch = "c92f69d" }
 thiserror = "1.0.30"

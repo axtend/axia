@@ -8,7 +8,7 @@ edition = "2018"
 futures = "0.3.21"
 tracing = "0.1.29"
 memory-lru = "0.1.0"
-axia-util-mem = { version = "0.10.0", default-features = false }
+parity-util-mem = { version = "0.10.0", default-features = false }
 
 sp-api = { git = "https://github.com/axtend/axlib", branch = "c92f69d" }
 sp-authority-discovery = { git = "https://github.com/axtend/axlib", branch = "c92f69d" }

@@ -27,7 +27,7 @@ use structopt::StructOpt;
 use strum::{EnumString, EnumVariantNames, VariantNames};
 
 use frame_support::dispatch::GetDispatchInfo;
-use relay_substrate_client::{
+use relay_axlib_client::{
 	AccountIdOf, AccountPublicOf, BalanceOf, BlockNumberOf, CallOf, Chain, ChainWithBalances,
 	Client, Error as SubstrateError, HashOf, SignatureOf, Subscription, TransactionSignScheme,
 	TransactionStatusOf, UnsignedTransaction,
@@ -243,7 +243,7 @@ impl SwapTokens {
 								Source::sign_transaction(
 									source_genesis_hash,
 									&create_swap_signer,
-									relay_substrate_client::TransactionEra::immortal(),
+									relay_axlib_client::TransactionEra::immortal(),
 									UnsignedTransaction::new(create_swap_call, transaction_nonce),
 								)
 								.encode(),
@@ -378,7 +378,7 @@ impl SwapTokens {
 									Target::sign_transaction(
 										target_genesis_hash,
 										&target_sign,
-										relay_substrate_client::TransactionEra::immortal(),
+										relay_axlib_client::TransactionEra::immortal(),
 										UnsignedTransaction::new(
 											send_message_call,
 											transaction_nonce,
@@ -418,7 +418,7 @@ impl SwapTokens {
 									Source::sign_transaction(
 										source_genesis_hash,
 										&source_sign,
-										relay_substrate_client::TransactionEra::immortal(),
+										relay_axlib_client::TransactionEra::immortal(),
 										UnsignedTransaction::new(
 											cancel_swap_call,
 											transaction_nonce,

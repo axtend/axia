@@ -26,7 +26,7 @@ use finality_relay::{
 	FinalitySyncParams, FinalitySyncPipeline, SourceClient as FinalitySourceClient, SourceHeader,
 	TargetClient as FinalityTargetClient,
 };
-use relay_substrate_client::{
+use relay_axlib_client::{
 	finality_source::{FinalitySource as SubstrateFinalitySource, RequiredHeaderNumberRef},
 	Chain, Client, HeaderIdOf, SyncHeader,
 };
@@ -322,7 +322,7 @@ async fn relay_mandatory_header_from_range<SourceChain: Chain, P>(
 	best_finalized_source_header_at_target: String,
 	range: (SourceChain::BlockNumber, SourceChain::BlockNumber),
 	relay_task_name: &str,
-) -> Result<bool, relay_substrate_client::Error>
+) -> Result<bool, relay_axlib_client::Error>
 where
 	SubstrateFinalitySource<SourceChain, P>: FinalitySourceClient<P>,
 	P: FinalitySyncPipeline<Number = SourceChain::BlockNumber>,
@@ -364,7 +364,7 @@ where
 async fn best_finalized_source_header_at_source<SourceChain: Chain, P>(
 	finality_source: &SubstrateFinalitySource<SourceChain, P>,
 	relay_task_name: &str,
-) -> Result<SourceChain::BlockNumber, relay_substrate_client::Error>
+) -> Result<SourceChain::BlockNumber, relay_axlib_client::Error>
 where
 	SubstrateFinalitySource<SourceChain, P>: FinalitySourceClient<P>,
 	P: FinalitySyncPipeline<Number = SourceChain::BlockNumber>,
@@ -411,7 +411,7 @@ where
 async fn find_mandatory_header_in_range<SourceChain: Chain, P>(
 	finality_source: &SubstrateFinalitySource<SourceChain, P>,
 	range: (SourceChain::BlockNumber, SourceChain::BlockNumber),
-) -> Result<Option<SourceChain::BlockNumber>, relay_substrate_client::Error>
+) -> Result<Option<SourceChain::BlockNumber>, relay_axlib_client::Error>
 where
 	SubstrateFinalitySource<SourceChain, P>: FinalitySourceClient<P>,
 	P: FinalitySyncPipeline<Number = SourceChain::BlockNumber>,

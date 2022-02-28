@@ -7,7 +7,7 @@ edition = "2018"
 [dependencies]
 sp-std = { package = "sp-std", git = "https://github.com/axtend/axlib", default-features = false, branch = "c92f69d" }
 sp-tracing = { git = "https://github.com/axtend/axlib", default-features = false , branch = "c92f69d" }
-axia-scale-codec = { version = "2.3.1", default-features = false }
+parity-scale-codec = { version = "2.3.1", default-features = false }
 primitives = { package = "polkadot-primitives", path = "../../primitives", default-features = false }
 
 bs58 = { version = "0.4.0", default-features = false, features = ["alloc"] }
@@ -17,7 +17,7 @@ default = ["std"]
 std = [
 	"sp-std/std",
 	"sp-tracing/std",
-    "axia-scale-codec/std",
+    "parity-scale-codec/std",
     "primitives/std",
     "bs58/std"
 ]

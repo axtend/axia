@@ -1,5 +1,5 @@
 [package]
-name = "axlib-relay"
+name = "parity-relay"
 version = "0.1.0"
 authors = ["Axia Technologies <admin@axia.io>"]
 edition = "2018"
@@ -8,7 +8,7 @@ license = "GPL-3.0-or-later WITH Classpath-exception-2.0"
 [dependencies]
 anyhow = "1.0"
 async-std = "1.9.0"
-codec = { package = "axia-scale-codec", version = "2.2.0" }
+codec = { package = "parity-scale-codec", version = "2.2.0" }
 futures = "0.3.12"
 hex = "0.4"
 log = "0.4.14"
@@ -48,12 +48,12 @@ relay-rialto-client = { path = "../client-rialto" }
 relay-rialto-allychain-client = { path = "../client-rialto-allychain" }
 relay-betanet-client = { path = "../client-betanet" }
 relay-wococo-client = { path = "../client-wococo" }
-relay-axlib-client = { path = "../client-axlib" }
+relay-parity-client = { path = "../client-axlib" }
 relay-utils = { path = "../utils" }
 relay-alphanet-client = { path = "../client-alphanet" }
 rialto-allychain-runtime = { path = "../../bin/rialto-allychain/runtime" }
 rialto-runtime = { path = "../../bin/rialto/runtime" }
-axlib-relay-helper = { path = "../lib-axlib-relay" }
+parity-relay-helper = { path = "../lib-parity-relay" }
 
 # Axlib Dependencies
 

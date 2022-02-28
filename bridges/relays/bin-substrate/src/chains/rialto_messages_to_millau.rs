@@ -32,8 +32,8 @@ use relay_millau_client::{
 use relay_rialto_client::{
 	HeaderId as RialtoHeaderId, Rialto, SigningParams as RialtoSigningParams,
 };
-use relay_substrate_client::{Chain, Client, IndexOf, TransactionSignScheme, UnsignedTransaction};
-use substrate_relay_helper::{
+use relay_axlib_client::{Chain, Client, IndexOf, TransactionSignScheme, UnsignedTransaction};
+use axlib_relay_helper::{
 	messages_lane::{
 		select_delivery_transaction_limits, MessagesRelayParams, StandaloneMessagesMetrics,
 		SubstrateMessageLane, SubstrateMessageLaneToSubstrate,
@@ -103,7 +103,7 @@ impl SubstrateMessageLane for RialtoMessagesToMillau {
 		let transaction = Rialto::sign_transaction(
 			genesis_hash,
 			&self.message_lane.source_sign,
-			relay_substrate_client::TransactionEra::new(
+			relay_axlib_client::TransactionEra::new(
 				best_block_id,
 				self.message_lane.source_transactions_mortality,
 			),
@@ -147,7 +147,7 @@ impl SubstrateMessageLane for RialtoMessagesToMillau {
 		let transaction = Millau::sign_transaction(
 			genesis_hash,
 			&self.message_lane.target_sign,
-			relay_substrate_client::TransactionEra::new(
+			relay_axlib_client::TransactionEra::new(
 				best_block_id,
 				self.message_lane.target_transactions_mortality,
 			),
@@ -181,7 +181,7 @@ pub async fn run(
 		MixStrategy,
 	>,
 ) -> anyhow::Result<()> {
-	let stall_timeout = relay_substrate_client::bidirectional_transaction_stall_timeout(
+	let stall_timeout = relay_axlib_client::bidirectional_transaction_stall_timeout(
 		params.source_transactions_mortality,
 		params.target_transactions_mortality,
 		Rialto::AVERAGE_BLOCK_INTERVAL,
@@ -280,7 +280,7 @@ pub(crate) fn standalone_metrics(
 	source_client: Client<Rialto>,
 	target_client: Client<Millau>,
 ) -> anyhow::Result<StandaloneMessagesMetrics<Rialto, Millau>> {
-	substrate_relay_helper::messages_lane::standalone_metrics(
+	axlib_relay_helper::messages_lane::standalone_metrics(
 		source_client,
 		target_client,
 		Some(crate::chains::rialto::ASSOCIATED_TOKEN_ID),
@@ -304,7 +304,7 @@ pub(crate) async fn update_millau_to_rialto_conversion_rate(
 				Rialto::sign_transaction(
 					genesis_hash,
 					&signer,
-					relay_substrate_client::TransactionEra::immortal(),
+					relay_axlib_client::TransactionEra::immortal(),
 					UnsignedTransaction::new(
 						rialto_runtime::MessagesCall::update_pallet_parameter {
 							parameter: rialto_runtime::millau_messages::RialtoToMillauMessagesParameter::MillauToRialtoConversionRate(

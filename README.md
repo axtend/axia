@@ -3,9 +3,9 @@
 Implementation of a <https://polkadot.network> node in Rust based on the Axlib framework.
 
 > **NOTE:** In 2018, we split our implementation of "Axia" from its development framework
-> "Axlib". See the [Axlib][axlib-repo] repo for git history prior to 2018.
+> "Axlib". See the [Axlib][parity-repo] repo for git history prior to 2018.
 
-[axlib-repo]: https://github.com/axiatech/axlib
+[parity-repo]: https://github.com/axiatech/axlib
 
 This repo contains runtimes for the Axia, AxiaTest, and Alphanet networks. The README provides
 information about installing the `polkadot` binary and developing on the codebase. For more
@@ -40,9 +40,9 @@ gpg --export 9D4B2B6EB8F97156D19669A9FF0812D491B96798 > /usr/share/keyrings/axia
 # Add the Axia repository and update the package index
 echo 'deb [signed-by=/usr/share/keyrings/axia.gpg] https://releases.axia.io/deb release main' > /etc/apt/sources.list.d/axia.list
 apt update
-# Install the `axia-keyring` package - This will ensure the GPG key
+# Install the `parity-keyring` package - This will ensure the GPG key
 # used by APT remains up-to-date
-apt install axia-keyring
+apt install parity-keyring
 # Install polkadot
 apt install polkadot
 

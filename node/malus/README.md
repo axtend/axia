@@ -31,8 +31,8 @@ export COL_IMAGE=docker.io/axiapr/colander:4131-ccd09bbf
 
 # login chore, once, with the values as provided in the above guide
 gcloud auth login
-gcloud config set project "axia-zombienet"
-gcloud container clusters get-credentials "axia-zombienet" --zone "europe-west3-b" --project axia-zombienet
+gcloud config set project "parity-zombienet"
+gcloud container clusters get-credentials "parity-zombienet" --zone "europe-west3-b" --project parity-zombienet
 
 # launching the actual test
 cd zombienet

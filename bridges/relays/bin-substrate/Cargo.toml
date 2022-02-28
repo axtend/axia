@@ -1,5 +1,5 @@
 [package]
-name = "substrate-relay"
+name = "parity-relay"
 version = "0.1.0"
 authors = ["Parity Technologies <admin@parity.io>"]
 edition = "2018"
@@ -48,12 +48,12 @@ relay-rialto-client = { path = "../client-rialto" }
 relay-rialto-parachain-client = { path = "../client-rialto-parachain" }
 relay-rococo-client = { path = "../client-rococo" }
 relay-wococo-client = { path = "../client-wococo" }
-relay-substrate-client = { path = "../client-substrate" }
+relay-parity-client = { path = "../client-substrate" }
 relay-utils = { path = "../utils" }
 relay-westend-client = { path = "../client-westend" }
 rialto-parachain-runtime = { path = "../../bin/rialto-parachain/runtime" }
 rialto-runtime = { path = "../../bin/rialto/runtime" }
-substrate-relay-helper = { path = "../lib-substrate-relay" }
+parity-relay-helper = { path = "../lib-parity-relay" }
 
 # Substrate Dependencies
 

@@ -18,7 +18,7 @@ use crate::cli::{Balance, TargetConnectionParams, TargetSigningParams};
 
 use codec::{Decode, Encode};
 use num_traits::{One, Zero};
-use relay_substrate_client::{
+use relay_axlib_client::{
 	BlockWithJustification, Chain, Client, Error as SubstrateError, HeaderOf, TransactionSignScheme,
 };
 use relay_utils::FailedClient;
@@ -433,7 +433,7 @@ async fn update_transaction_tip<C: Chain, S: TransactionSignScheme<Chain = C>>(
 				S::sign_transaction(
 					*client.genesis_hash(),
 					key_pair,
-					relay_substrate_client::TransactionEra::immortal(),
+					relay_axlib_client::TransactionEra::immortal(),
 					unsigned_tx.clone(),
 				),
 			)
@@ -454,7 +454,7 @@ async fn update_transaction_tip<C: Chain, S: TransactionSignScheme<Chain = C>>(
 		S::sign_transaction(
 			*client.genesis_hash(),
 			key_pair,
-			relay_substrate_client::TransactionEra::immortal(),
+			relay_axlib_client::TransactionEra::immortal(),
 			unsigned_tx,
 		),
 	))

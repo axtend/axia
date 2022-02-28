@@ -31,8 +31,8 @@ use relay_kusama_client::{
 use relay_polkadot_client::{
 	HeaderId as PolkadotHeaderId, Polkadot, SigningParams as PolkadotSigningParams,
 };
-use relay_substrate_client::{Chain, Client, TransactionSignScheme, UnsignedTransaction};
-use substrate_relay_helper::{
+use relay_axlib_client::{Chain, Client, TransactionSignScheme, UnsignedTransaction};
+use axlib_relay_helper::{
 	messages_lane::{
 		select_delivery_transaction_limits, MessagesRelayParams, StandaloneMessagesMetrics,
 		SubstrateMessageLane, SubstrateMessageLaneToSubstrate,
@@ -105,7 +105,7 @@ impl SubstrateMessageLane for PolkadotMessagesToKusama {
 		let transaction = Polkadot::sign_transaction(
 			genesis_hash,
 			&self.message_lane.source_sign,
-			relay_substrate_client::TransactionEra::new(
+			relay_axlib_client::TransactionEra::new(
 				best_block_id,
 				self.message_lane.source_transactions_mortality,
 			),
@@ -149,7 +149,7 @@ impl SubstrateMessageLane for PolkadotMessagesToKusama {
 		let transaction = Kusama::sign_transaction(
 			genesis_hash,
 			&self.message_lane.target_sign,
-			relay_substrate_client::TransactionEra::new(
+			relay_axlib_client::TransactionEra::new(
 				best_block_id,
 				self.message_lane.target_transactions_mortality,
 			),
@@ -182,7 +182,7 @@ pub async fn run(
 		MixStrategy,
 	>,
 ) -> anyhow::Result<()> {
-	let stall_timeout = relay_substrate_client::bidirectional_transaction_stall_timeout(
+	let stall_timeout = relay_axlib_client::bidirectional_transaction_stall_timeout(
 		params.source_transactions_mortality,
 		params.target_transactions_mortality,
 		Polkadot::AVERAGE_BLOCK_INTERVAL,
@@ -285,7 +285,7 @@ pub(crate) fn standalone_metrics(
 	source_client: Client<Polkadot>,
 	target_client: Client<Kusama>,
 ) -> anyhow::Result<StandaloneMessagesMetrics<Polkadot, Kusama>> {
-	substrate_relay_helper::messages_lane::standalone_metrics(
+	axlib_relay_helper::messages_lane::standalone_metrics(
 		source_client,
 		target_client,
 		Some(crate::chains::polkadot::TOKEN_ID),
@@ -309,7 +309,7 @@ pub(crate) async fn update_kusama_to_polkadot_conversion_rate(
 				Polkadot::sign_transaction(
 					genesis_hash,
 					&signer,
-					relay_substrate_client::TransactionEra::immortal(),
+					relay_axlib_client::TransactionEra::immortal(),
 					UnsignedTransaction::new(
 						relay_polkadot_client::runtime::Call::BridgeKusamaMessages(
 							relay_polkadot_client::runtime::BridgeKusamaMessagesCall::update_pallet_parameter(

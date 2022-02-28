@@ -21,7 +21,7 @@ use crate::{
 	select_full_bridge,
 };
 use frame_support::weights::DispatchInfo;
-use relay_substrate_client::Chain;
+use relay_axlib_client::Chain;
 use structopt::StructOpt;
 use strum::VariantNames;
 

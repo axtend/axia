@@ -21,10 +21,10 @@ use sp_core::{Bytes, Pair};
 
 use bp_header_chain::justification::GrandpaJustification;
 use relay_millau_client::{Millau, SigningParams as MillauSigningParams};
-use relay_substrate_client::{Client, IndexOf, TransactionSignScheme, UnsignedTransaction};
+use relay_axlib_client::{Client, IndexOf, TransactionSignScheme, UnsignedTransaction};
 use relay_utils::metrics::MetricsParams;
 use relay_westend_client::{SyncHeader as WestendSyncHeader, Westend};
-use substrate_relay_helper::finality_pipeline::{
+use axlib_relay_helper::finality_pipeline::{
 	SubstrateFinalitySyncPipeline, SubstrateFinalityToSubstrate,
 };
 

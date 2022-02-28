@@ -17,7 +17,7 @@
 //! Types used to connect to the Rococo-Substrate chain.
 
 use codec::Encode;
-use relay_substrate_client::{
+use relay_axlib_client::{
 	Chain, ChainBase, ChainWithBalances, TransactionEraOf, TransactionSignScheme,
 	UnsignedTransaction,
 };
@@ -31,7 +31,7 @@ pub mod runtime;
 pub type HeaderId = relay_utils::HeaderId<bp_rococo::Hash, bp_rococo::BlockNumber>;
 
 /// Rococo header type used in headers sync.
-pub type SyncHeader = relay_substrate_client::SyncHeader<bp_rococo::Header>;
+pub type SyncHeader = relay_axlib_client::SyncHeader<bp_rococo::Header>;
 
 /// Rococo chain definition
 #[derive(Debug, Clone, Copy)]

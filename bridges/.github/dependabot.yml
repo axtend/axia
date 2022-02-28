@@ -23,7 +23,7 @@ updates:
   - dependency-name: sp-*
     versions:
     - ">= 0"
-  - dependency-name: axlib-*
+  - dependency-name: parity-*
     versions:
     - ">= 0"
   - dependency-name: vergen

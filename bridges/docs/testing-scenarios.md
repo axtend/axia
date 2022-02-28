@@ -86,7 +86,7 @@ kCharlie.
 ### Syncing headers loop
 
 5. Relayer sees that `B1` has not yet been delivered to the target chain.
-   [Sync loop code](https://github.com/axiatech/axia-bridges-common/blob/8b327a94595c4a6fae6d7866e24ecf2390501e32/relays/headers-relay/src/sync_loop.rs#L199).
+   [Sync loop code](https://github.com/axiatech/parity-bridges-common/blob/8b327a94595c4a6fae6d7866e24ecf2390501e32/relays/headers-relay/src/sync_loop.rs#L199).
 
 1. Relayer prepares transaction which delivers `B1` and with all of the missing
    ancestors to the target chain (one header per transaction).
@@ -102,10 +102,10 @@ kCharlie.
 1. The header sync informs the target chain about `B1..B3` blocks (see point 6).
 
 1. Relayer learns about missing finalization of `B1..B3` on the target chain, see
-   [finality maintenance code](https://github.com/axiatech/axia-bridges-common/blob/8b327a94595c4a6fae6d7866e24ecf2390501e32/relays/axlib/src/headers_maintain.rs#L107).
+   [finality maintenance code](https://github.com/axiatech/parity-bridges-common/blob/8b327a94595c4a6fae6d7866e24ecf2390501e32/relays/axlib/src/headers_maintain.rs#L107).
 
 1. Relayer submits justification for `B3` to the target chain (`finalize_header`).
-    See [#421](https://github.com/axiatech/axia-bridges-common/issues/421) for multiple
+    See [#421](https://github.com/axiatech/parity-bridges-common/issues/421) for multiple
     authority set changes support in Relayer (i.e. what block the target chain expects, not only
     what I have).
 

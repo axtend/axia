@@ -41,7 +41,7 @@ use sp_api::ConstructRuntimeApi;
 use sp_consensus::SlotData;
 use sp_keystore::SyncCryptoStorePtr;
 use sp_runtime::traits::BlakeTwo256;
-use substrate_prometheus_endpoint::Registry;
+use axlib_prometheus_endpoint::Registry;
 
 // Runtime type overrides
 type BlockNumber = u32;

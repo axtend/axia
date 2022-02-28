@@ -109,7 +109,7 @@ include!(concat!(env!("OUT_DIR"), "/wasm_binary.rs"));
 /// Runtime version (Alphanet).
 pub const VERSION: RuntimeVersion = RuntimeVersion {
 	spec_name: create_runtime_str!("alphanet"),
-	impl_name: create_runtime_str!("axia-alphanet"),
+	impl_name: create_runtime_str!("parity-alphanet"),
 	authoring_version: 2,
 	spec_version: 9170,
 	impl_version: 0,

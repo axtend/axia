@@ -6,7 +6,7 @@ edition = "2018"
 
 [dependencies]
 clap = { version = "3.0", features = ["derive", "env"] }
-codec = { package = "axia-scale-codec", version = "2.0.0" }
+codec = { package = "parity-scale-codec", version = "2.0.0" }
 env_logger = "0.9.0"
 jsonrpsee = { version = "0.8", features = ["ws-client"] }
 log = "0.4.11"
@@ -41,7 +41,7 @@ polkadot-runtime = { path = "../../runtime/polkadot" }
 axctest-runtime = { path = "../../runtime/axctest" }
 alphanet-runtime = { path = "../../runtime/alphanet" }
 
-sub-tokens = { git = "https://github.com/axiatech/axlib-debug-kit", branch = "master" }
+sub-tokens = { git = "https://github.com/paritytech/substrate-debug-kit", branch = "master" }
 
 [dev-dependencies]
 sp-version = { git = "https://github.com/axtend/axlib", branch = "c92f69d" }

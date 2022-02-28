@@ -21,7 +21,7 @@ use crate::{finality_target::SubstrateFinalityTarget, STALL_TIMEOUT};
 use bp_header_chain::justification::GrandpaJustification;
 use bp_runtime::AccountIdOf;
 use finality_relay::{FinalitySyncParams, FinalitySyncPipeline};
-use relay_substrate_client::{
+use relay_axlib_client::{
 	finality_source::FinalitySource, BlockNumberOf, Chain, Client, HashOf, SyncHeader,
 };
 use relay_utils::{metrics::MetricsParams, BlockNumberBase};
@@ -154,7 +154,7 @@ where
 				TargetChain::AVERAGE_BLOCK_INTERVAL,
 			),
 			recent_finality_proofs_limit: RECENT_FINALITY_PROOFS_LIMIT,
-			stall_timeout: relay_substrate_client::transaction_stall_timeout(
+			stall_timeout: relay_axlib_client::transaction_stall_timeout(
 				transactions_mortality,
 				TargetChain::AVERAGE_BLOCK_INTERVAL,
 				STALL_TIMEOUT,

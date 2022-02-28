@@ -28,12 +28,12 @@ use strum::VariantNames;
 
 use codec::Encode;
 use messages_relay::relay_strategy::MixStrategy;
-use relay_substrate_client::{
+use relay_axlib_client::{
 	AccountIdOf, Chain, Client, TransactionSignScheme, UnsignedTransaction,
 };
 use relay_utils::metrics::MetricsParams;
 use sp_core::{Bytes, Pair};
-use substrate_relay_helper::{
+use axlib_relay_helper::{
 	messages_lane::MessagesRelayParams, on_demand_headers::OnDemandHeadersRelay,
 };
 
@@ -271,7 +271,7 @@ macro_rules! select_bridge {
 							left_sign.public().into(),
 							move |_, transaction_nonce| {
 								Bytes(
-									Left::sign_transaction(left_genesis_hash, &left_sign, relay_substrate_client::TransactionEra::immortal(),
+									Left::sign_transaction(left_genesis_hash, &left_sign, relay_axlib_client::TransactionEra::immortal(),
 										UnsignedTransaction::new(
 											relay_kusama_client::runtime::Call::Balances(
 												relay_kusama_client::runtime::BalancesCall::transfer(
@@ -301,7 +301,7 @@ macro_rules! select_bridge {
 							right_sign.public().into(),
 							move |_, transaction_nonce| {
 								Bytes(
-									Right::sign_transaction(right_genesis_hash, &right_sign, relay_substrate_client::TransactionEra::immortal(),
+									Right::sign_transaction(right_genesis_hash, &right_sign, relay_axlib_client::TransactionEra::immortal(),
 										UnsignedTransaction::new(
 											relay_polkadot_client::runtime::Call::Balances(
 												relay_polkadot_client::runtime::BalancesCall::transfer(
@@ -376,7 +376,7 @@ impl RelayHeadersAndMessages {
 						Left::NAME
 					)
 				};
-				substrate_relay_helper::conversion_rate_update::run_conversion_rate_update_loop(
+				axlib_relay_helper::conversion_rate_update::run_conversion_rate_update_loop(
 					left_to_right_metrics
 						.target_to_source_conversion_rate
 						.as_ref()
@@ -419,7 +419,7 @@ impl RelayHeadersAndMessages {
 						Right::NAME
 					)
 				};
-				substrate_relay_helper::conversion_rate_update::run_conversion_rate_update_loop(
+				axlib_relay_helper::conversion_rate_update::run_conversion_rate_update_loop(
 					right_to_left_metrics
 						.target_to_source_conversion_rate
 						.as_ref()
@@ -462,7 +462,7 @@ impl RelayHeadersAndMessages {
 				>();
 				let relayers_fund_account_balance =
 					left_client.free_native_balance(relayer_fund_acount_id.clone()).await;
-				if let Err(relay_substrate_client::Error::AccountDoesNotExist) =
+				if let Err(relay_axlib_client::Error::AccountDoesNotExist) =
 					relayers_fund_account_balance
 				{
 					log::info!(target: "bridge", "Going to create relayers fund account at {}.", Left::NAME);
@@ -480,7 +480,7 @@ impl RelayHeadersAndMessages {
 				>();
 				let relayers_fund_account_balance =
 					right_client.free_native_balance(relayer_fund_acount_id.clone()).await;
-				if let Err(relay_substrate_client::Error::AccountDoesNotExist) =
+				if let Err(relay_axlib_client::Error::AccountDoesNotExist) =
 					relayers_fund_account_balance
 				{
 					log::info!(target: "bridge", "Going to create relayers fund account at {}.", Right::NAME);

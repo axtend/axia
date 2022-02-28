@@ -8,7 +8,7 @@ version = "0.9.17"
 targets = ["x86_64-unknown-linux-gnu"]
 
 [dependencies]
-codec = { package = "axia-scale-codec", version = "2.0.0", default-features = false }
+codec = { package = "parity-scale-codec", version = "2.0.0", default-features = false }
 scale-info = { version = "1.0", default-features = false, features = ["derive"] }
 frame-support = { default-features = false, git = "https://github.com/axtend/axlib" , branch = "c92f69d" }
 frame-system = { default-features = false, git = "https://github.com/axtend/axlib" , branch = "c92f69d" }

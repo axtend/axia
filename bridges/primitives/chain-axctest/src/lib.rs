@@ -35,7 +35,7 @@ pub type AxiaTest = AxiaLike;
 // NOTE: This needs to be kept up to date with the AxiaTest runtime found in the Axia repo.
 pub const VERSION: RuntimeVersion = RuntimeVersion {
 	spec_name: sp_version::create_runtime_str!("axctest"),
-	impl_name: sp_version::create_runtime_str!("axia-axctest"),
+	impl_name: sp_version::create_runtime_str!("parity-axctest"),
 	authoring_version: 2,
 	spec_version: 9100,
 	impl_version: 0,

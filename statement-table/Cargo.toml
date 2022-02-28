@@ -5,6 +5,6 @@ authors = ["Axia Technologies <admin@axia.io>"]
 edition = "2018"
 
 [dependencies]
-axia-scale-codec = { version = "2.3.1", default-features = false, features = ["derive"] }
+parity-scale-codec = { version = "2.3.1", default-features = false, features = ["derive"] }
 sp-core = { git = "https://github.com/axtend/axlib", branch = "c92f69d" }
 primitives = { package = "polkadot-primitives", path = "../primitives" }

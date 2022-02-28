@@ -6,7 +6,7 @@
 
 # Set up your HS connections
 matrix:
-- name: matrix-axia-io
+- name: matrix-parity-io
   url: https://matrix.axia.io
   # Create a user - log that user in using a post request
   # curl -XPOST -d '{"type": "m.login.password",
@@ -25,7 +25,7 @@ msgtype: m.text
 rules:
 - name: bridge              # Name of the rule
   room: "#bridges-workers:matrix.axia.io" # Room or ID
-  matrix: matrix-axia-io     # The Matrix HS to use - defaults to first one
+  matrix: matrix-parity-io     # The Matrix HS to use - defaults to first one
   msgtype: m.notice
   # The following values are optional:
   image: true           # Attach image to the notification?

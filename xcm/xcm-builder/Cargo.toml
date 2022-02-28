@@ -6,7 +6,7 @@ description = "Tools & types for building with XCM and its executor."
 version = "0.9.17"
 
 [dependencies]
-axia-scale-codec = { version = "2.3.1", default-features = false, features = ["derive"] }
+parity-scale-codec = { version = "2.3.1", default-features = false, features = ["derive"] }
 scale-info = { version = "1.0", default-features = false, features = ["derive"] }
 xcm = { path = "..", default-features = false }
 xcm-executor = { path = "../xcm-executor", default-features = false }
@@ -32,7 +32,7 @@ default = ["std"]
 runtime-benchmarks = []
 std = [
 	"log/std",
-	"axia-scale-codec/std",
+	"parity-scale-codec/std",
 	"scale-info/std",
 	"xcm/std",
 	"xcm-executor/std",

@@ -16,7 +16,7 @@ curl -v http://millau-node-alice:9933/health
 # we need tip around `526186677695 - 17800827994 = 508_385_849_701`. Let's round it
 # up to `1_000_000_000_000`.
 
-/home/user/axlib-relay resubmit-transactions millau \
+/home/user/parity-relay resubmit-transactions millau \
 	--target-host millau-node-alice \
 	--target-port 9944 \
 	--target-signer //Dave \

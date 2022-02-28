@@ -32,8 +32,8 @@ rustup target add wasm32-unknown-unknown --toolchain nightly
 Once this is configured you can build and test the repo as follows:
 
 ```
-git clone https://github.com/axiatech/axia-bridges-common.git
-cd axia-bridges-common
+git clone https://github.com/axiatech/parity-bridges-common.git
+cd parity-bridges-common
 cargo build --all
 cargo test --all
 ```
@@ -45,9 +45,9 @@ Also you can build the repo with
 docker pull axiatech/bridges-ci:production
 mkdir ~/cache
 chown 1000:1000 ~/cache #processes in the container runs as "nonroot" user with UID 1000
-docker run --rm -it -w /shellhere/axia-bridges-common \
+docker run --rm -it -w /shellhere/parity-bridges-common \
                     -v /home/$(whoami)/cache/:/cache/    \
-                    -v "$(pwd)":/shellhere/axia-bridges-common \
+                    -v "$(pwd)":/shellhere/parity-bridges-common \
                     -e CARGO_HOME=/cache/cargo/ \
                     -e SCCACHE_DIR=/cache/sccache/ \
                     -e CARGO_TARGET_DIR=/cache/target/  axiatech/bridges-ci:production cargo build --all
@@ -130,10 +130,10 @@ There are 2 ways to run the bridge, described below:
 First you'll need to build the bridge nodes and relay. This can be done as follows:
 
 ```bash
-# In `axia-bridges-common` folder
+# In `parity-bridges-common` folder
 cargo build -p rialto-bridge-node
 cargo build -p millau-bridge-node
-cargo build -p axlib-relay
+cargo build -p parity-relay
 ```
 
 ### Running a Dev network
@@ -152,7 +152,7 @@ To run a simple dev network you can use the scripts located in the
 First, we must run the two Axlib nodes.
 
 ```bash
-# In `axia-bridges-common` folder
+# In `parity-bridges-common` folder
 ./deployments/local-scripts/run-rialto-node.sh
 ./deployments/local-scripts/run-millau-node.sh
 ```
@@ -221,7 +221,7 @@ In this section we'll show you how to quickly send a bridge message, if you want
 interact with and test the bridge see more details in [send message](./docs/send-message.md)
 
 ```bash
-# In `axia-bridges-common` folder
+# In `parity-bridges-common` folder
 ./scripts/send-message-from-millau-rialto.sh remark
 ```
 
@@ -243,5 +243,5 @@ If you are interested in information exchange and development of Axia related br
 feel free to join the [Axia Bridges](https://app.element.io/#/room/#bridges:web3.foundation)
 Element channel.
 
-The [Axlib Technical](https://app.element.io/#/room/#axlib-technical:matrix.org) Element
+The [Axlib Technical](https://app.element.io/#/room/#parity-technical:matrix.org) Element
 channel is most suited for discussions regarding Axlib itself.

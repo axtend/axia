@@ -31,7 +31,7 @@ while true
 do
 	rand_sleep
 	echo "Initiating token-swap between Rialto and Millau"
-	/home/user/axlib-relay \
+	/home/user/parity-relay \
 		swap-tokens \
 		millau-to-rialto \
 		--source-host $SOURCE_HOST \

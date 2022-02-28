@@ -130,7 +130,7 @@ pub fn max_extrinsic_size() -> u32 {
 	*BlockLength::get().max.get(DispatchClass::Normal)
 }
 
-// TODO [#78] may need to be updated after https://github.com/axiatech/axia-bridges-common/issues/78
+// TODO [#78] may need to be updated after https://github.com/axiatech/parity-bridges-common/issues/78
 /// Maximal number of messages in single delivery transaction.
 pub const MAX_MESSAGES_IN_DELIVERY_TRANSACTION: MessageNonce = 128;
 

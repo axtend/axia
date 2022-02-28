@@ -3,7 +3,7 @@
 version: '3.5'
 services:
   relay-headers-alphanet-to-millau:
-    image: axiatech/axlib-relay
+    image: axiatech/parity-relay
     entrypoint: /entrypoints/relay-headers-alphanet-to-millau-entrypoint.sh
     volumes:
       - ./bridges/alphanet-millau/entrypoints:/entrypoints

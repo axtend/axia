@@ -1,7 +1,7 @@
 # Using Axia Bridges Common dependency (`git subtree`).
 
 In `./bridges` sub-directory you can find a `git subtree` imported version of:
-[axia-bridges-common](https://github.com/axiatech/axia-bridges-common/) repository.
+[parity-bridges-common](https://github.com/axiatech/parity-bridges-common/) repository.
 
 # How to fix broken Bridges code?
 
@@ -21,13 +21,13 @@ current (`polkadot`) repo.
 
 1. Add Bridges repo as a local remote:
 ```
-$ git remote add -f bridges git@github.com:axiatech/axia-bridges-common.git
+$ git remote add -f bridges git@github.com:axiatech/parity-bridges-common.git
 ```
 
 If you plan to contribute back, consider forking the repository on Github and adding
 your personal fork as a remote as well.
 ```
-$ git remote add -f my-bridges git@github.com:tomusdrw/axia-bridges-common.git
+$ git remote add -f my-bridges git@github.com:tomusdrw/parity-bridges-common.git
 ```
 
 2. To update Bridges:

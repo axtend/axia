@@ -3,7 +3,7 @@
 ## Requirements
 Make sure to install `docker` and `docker-compose` to be able to run and test bridge deployments. If
 for whatever reason you can't or don't want to use Docker, you can find some scripts for running the
-bridge [here](https://github.com/svyatonik/axia-bridges-common.test).
+bridge [here](https://github.com/svyatonik/parity-bridges-common.test).
 
 ## Networks
 One of the building blocks we use for our deployments are _networks_. A network is a collection of
@@ -92,7 +92,7 @@ seeds for the `sr25519` keys. This seed may also be used in the signer argument 
 Example:
 
 ```bash
-./axlib-relay relay-headers rialto-to-millau \
+./parity-relay relay-headers rialto-to-millau \
 	--source-host rialto-node-alice \
 	--source-port 9944 \
 	--target-host millau-node-alice \
@@ -182,7 +182,7 @@ Here are the arguments currently supported:
   - `PROJECT`: Project to build withing bridges repo. Can be one of:
     - `rialto-bridge-node`
     - `millau-bridge-node`
-    - `axlib-relay`
+    - `parity-relay`
 
 ### GitHub Actions
 We have a nightly job which runs and publishes Docker images for the different nodes and relayers to

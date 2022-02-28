@@ -19,7 +19,7 @@ services:
       LETSENCRYPT_EMAIL: admin@axia.io
 
   relay-millau-rialto: &sub-bridge-relay
-    image: axiatech/axlib-relay
+    image: axiatech/parity-relay
     entrypoint: /entrypoints/relay-millau-rialto-entrypoint.sh
     volumes:
       - ./bridges/rialto-millau/entrypoints:/entrypoints

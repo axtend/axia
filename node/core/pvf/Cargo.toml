@@ -19,7 +19,7 @@ slotmap = "1.0"
 tracing = "0.1.29"
 pin-project = "1.0.9"
 rand = "0.8.3"
-axia-scale-codec = { version = "2.3.1", default-features = false, features = ["derive"] }
+parity-scale-codec = { version = "2.3.1", default-features = false, features = ["derive"] }
 polkadot-allychain = { path = "../../../allychain" }
 polkadot-core-primitives = { path = "../../../core-primitives" }
 polkadot-node-subsystem-util = { path = "../../subsystem-util"}

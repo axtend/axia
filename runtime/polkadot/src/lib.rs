@@ -112,7 +112,7 @@ include!(concat!(env!("OUT_DIR"), "/wasm_binary.rs"));
 /// Runtime version (Axia).
 pub const VERSION: RuntimeVersion = RuntimeVersion {
 	spec_name: create_runtime_str!("polkadot"),
-	impl_name: create_runtime_str!("axia-polkadot"),
+	impl_name: create_runtime_str!("parity-polkadot"),
 	authoring_version: 0,
 	spec_version: 9170,
 	impl_version: 0,

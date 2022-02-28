@@ -23,7 +23,7 @@ use crate::finality_pipeline::SubstrateFinalitySyncPipeline;
 use async_trait::async_trait;
 use codec::Decode;
 use finality_relay::{FinalitySyncPipeline, TargetClient};
-use relay_substrate_client::{Chain, Client, Error as SubstrateError};
+use relay_axlib_client::{Chain, Client, Error as SubstrateError};
 use relay_utils::relay_loop::Client as RelayClient;
 
 /// Substrate client as Substrate finality target.
@@ -97,7 +97,7 @@ where
 				transactions_author,
 				move |best_block_id, transaction_nonce| {
 					pipeline.make_submit_finality_proof_transaction(
-						relay_substrate_client::TransactionEra::new(
+						relay_axlib_client::TransactionEra::new(
 							best_block_id,
 							transactions_mortality,
 						),

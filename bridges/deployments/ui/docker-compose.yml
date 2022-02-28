@@ -1,7 +1,7 @@
 version: '3.5'
 services:
   bridges-ui:
-    image: axiatech/axia-bridges-ui
+    image: axiatech/parity-bridges-ui
     environment:
       VIRTUAL_HOST: ui.brucke.link
       VIRTUAL_PORT: 80

@@ -16,8 +16,8 @@ apt update && apt dist-upgrade
 apt install -y git clang curl libssl-dev llvm libudev-dev screen
 
 # Now we clone the repository
-git clone https://github.com/axiatech/axia-bridges-common.git
-cd axia-bridges-common
+git clone https://github.com/axiatech/parity-bridges-common.git
+cd parity-bridges-common
 
 # Install rustup & toolchain
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | bash -s -- -y

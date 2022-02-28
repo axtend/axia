@@ -5,7 +5,7 @@ sleep 60
 curl -v http://millau-node-alice:9933/health
 curl -v https://alphanet-rpc.polkadot.io:443/health
 
-/home/user/axlib-relay init-bridge alphanet-to-millau \
+/home/user/parity-relay init-bridge alphanet-to-millau \
 	--source-host alphanet-rpc.polkadot.io \
 	--source-port 443 \
 	--source-secure \
@@ -15,7 +15,7 @@ curl -v https://alphanet-rpc.polkadot.io:443/health
 
 # Give chain a little bit of time to process initialization transaction
 sleep 6
-/home/user/axlib-relay relay-headers alphanet-to-millau \
+/home/user/parity-relay relay-headers alphanet-to-millau \
 	--source-host alphanet-rpc.polkadot.io \
 	--source-port 443 \
 	--source-secure \

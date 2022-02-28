@@ -1,5 +1,5 @@
 [package]
-name = "axlib-relay-helper"
+name = "parity-relay-helper"
 version = "0.1.0"
 authors = ["Axia Technologies <admin@axia.io>"]
 edition = "2018"
@@ -10,7 +10,7 @@ anyhow = "1.0"
 thiserror = "1.0.26"
 async-std = "1.9.0"
 async-trait = "0.1.42"
-codec = { package = "axia-scale-codec", version = "2.2.0" }
+codec = { package = "parity-scale-codec", version = "2.2.0" }
 futures = "0.3.12"
 num-traits = "0.2"
 log = "0.4.14"
@@ -25,7 +25,7 @@ finality-grandpa = { version = "0.14.0" }
 finality-relay = { path = "../finality" }
 relay-utils = { path = "../utils" }
 messages-relay = { path = "../messages" }
-relay-axlib-client = { path = "../client-axlib" }
+relay-parity-client = { path = "../client-axlib" }
 
 pallet-bridge-messages = { path = "../../modules/messages" }
 

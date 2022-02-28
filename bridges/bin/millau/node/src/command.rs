@@ -41,7 +41,7 @@ impl AxlibCli for Cli {
 	}
 
 	fn support_url() -> String {
-		"https://github.com/axiatech/axia-bridges-common/".into()
+		"https://github.com/axiatech/parity-bridges-common/".into()
 	}
 
 	fn copyright_start_year() -> i32 {

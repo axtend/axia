@@ -15,7 +15,7 @@ readme = "README.md"
 [dependencies]
 polkadot-cli = { path = "cli", features = [ "axctest-native", "alphanet-native", "betanet-native" ]  }
 color-eyre = { version = "0.6.0", default-features = false }
-axia-util-mem = { version = "*", default-features = false, features = ["jemalloc-global"] }
+parity-util-mem = { version = "*", default-features = false, features = ["jemalloc-global"] }
 
 [dev-dependencies]
 assert_cmd = "2.0.4"

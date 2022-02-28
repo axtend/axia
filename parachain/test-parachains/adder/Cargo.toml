@@ -17,7 +17,7 @@ dlmalloc = { version = "0.2.3", features = [ "global" ] }
 sp-io = { git = "https://github.com/axtend/axlib", default-features = false, features = [ "disable_allocator" ] , branch = "c92f69d" }
 
 [build-dependencies]
-substrate-wasm-builder = { git = "https://github.com/axtend/axlib", branch = "c92f69d" }
+axlib-wasm-builder = { git = "https://github.com/axtend/axlib", branch = "c92f69d" }
 
 [features]
 default = [ "std" ]

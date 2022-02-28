@@ -7,7 +7,7 @@ edition = "2018"
 [dependencies]
 serde = { version = "1.0.136", optional = true, features = ["derive"] }
 scale-info = { version = "1.0", default-features = false, features = ["bit-vec", "derive"] }
-axia-scale-codec = { version = "2.3.1", default-features = false, features = ["bit-vec", "derive"] }
+parity-scale-codec = { version = "2.3.1", default-features = false, features = ["bit-vec", "derive"] }
 primitives = { package = "sp-core", git = "https://github.com/axtend/axlib", default-features = false , branch = "c92f69d" }
 inherents = { package = "sp-inherents", git = "https://github.com/axtend/axlib", default-features = false , branch = "c92f69d" }
 application-crypto = { package = "sp-application-crypto", git = "https://github.com/axtend/axlib", default-features = false , branch = "c92f69d" }
@@ -27,13 +27,13 @@ trie = { package = "sp-trie", git = "https://github.com/axtend/axlib", default-f
 bitvec = { version = "0.20.1", default-features = false, features = ["alloc"] }
 frame-system = { git = "https://github.com/axtend/axlib", default-features = false , branch = "c92f69d" }
 hex-literal = "0.3.4"
-axia-util-mem = { version = "0.10.0", default-features = false, optional = true }
+parity-util-mem = { version = "0.10.0", default-features = false, optional = true }
 
 [features]
 default = ["std"]
 std = [
 	"application-crypto/std",
-	"axia-scale-codec/std",
+	"parity-scale-codec/std",
 	"scale-info/std",
 	"primitives/std",
 	"inherents/std",
@@ -49,7 +49,7 @@ std = [
 	"sp-arithmetic/std",
 	"runtime_primitives/std",
 	"serde",
-	"axia-util-mem",
+	"parity-util-mem",
 	"polkadot-allychain/std",
 	"polkadot-core-primitives/std",
 	"bitvec/std",

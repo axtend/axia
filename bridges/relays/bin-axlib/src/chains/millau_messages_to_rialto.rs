@@ -207,7 +207,7 @@ pub async fn run(
 
 	// 2/3 is reserved for proofs and tx overhead
 	let max_messages_size_in_single_batch = bp_rialto::max_extrinsic_size() / 3;
-	// TODO: use Millau weights after https://github.com/axiatech/axia-bridges-common/issues/390
+	// TODO: use Millau weights after https://github.com/axiatech/parity-bridges-common/issues/390
 	let (max_messages_in_single_batch, max_messages_weight_in_single_batch) =
 		select_delivery_transaction_limits::<
 			pallet_bridge_messages::weights::RialtoWeight<millau_runtime::Runtime>,

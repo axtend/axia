@@ -54,7 +54,7 @@ impl WeightToFeePolynomial for WeightToFee {
 // NOTE: This needs to be kept up to date with the Alphanet runtime found in the Axia repo.
 pub const VERSION: RuntimeVersion = RuntimeVersion {
 	spec_name: sp_version::create_runtime_str!("alphanet"),
-	impl_name: sp_version::create_runtime_str!("axia-alphanet"),
+	impl_name: sp_version::create_runtime_str!("parity-alphanet"),
 	authoring_version: 2,
 	spec_version: 51,
 	impl_version: 0,

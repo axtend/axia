@@ -31,7 +31,7 @@ default:
 
 .kubernetes-build:                 &kubernetes-build
   tags:
-    - kubernetes-axia-build
+    - kubernetes-parity-build
   interruptible:                   true
 
 .docker-env:                       &docker-env
@@ -204,8 +204,8 @@ build:
     - mv -v ./target/release/rialto-allychain-collator ./artifacts/
     - strip ./target/release/millau-bridge-node
     - mv -v ./target/release/millau-bridge-node ./artifacts/
-    - strip ./target/release/axlib-relay
-    - mv -v ./target/release/axlib-relay ./artifacts/
+    - strip ./target/release/parity-relay
+    - mv -v ./target/release/parity-relay ./artifacts/
     - mv -v ./deployments/local-scripts/bridge-entrypoint.sh ./artifacts/
     - mv -v ./ci.Dockerfile ./artifacts/
 
@@ -228,8 +228,8 @@ build-nightly:
     GIT_STRATEGY:                  none
     DOCKERFILE:                    ci.Dockerfile
     IMAGE_NAME:                    docker.io/axiatech/$CI_JOB_NAME
-    VAULT_SERVER_URL:              "https://vault.axia-mgmt-vault.axia.io"
-    VAULT_AUTH_PATH:               "gitlab-axia-io-jwt"
+    VAULT_SERVER_URL:              "https://vault.parity-mgmt-vault.axia.io"
+    VAULT_AUTH_PATH:               "gitlab-parity-io-jwt"
     VAULT_AUTH_ROLE:               "cicd_gitlab_axia_${CI_PROJECT_NAME}"
   needs:
     - job:                         build
@@ -284,7 +284,7 @@ millau-bridge-node:
   stage:                           publish
   <<:                              *build-push-image
 
-axlib-relay:
+parity-relay:
   stage:                           publish
   <<:                              *build-push-image
 

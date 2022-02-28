@@ -87,6 +87,7 @@ name = "alphanet-runtime"
 version = "0.9.17"
 dependencies = [
  "alphanet-runtime-constants",
+ "axlib-wasm-builder",
  "beefy-primitives",
  "bitvec",
  "frame-benchmarking",
@@ -136,11 +137,11 @@ dependencies = [
  "pallet-vesting",
  "pallet-xcm",
  "pallet-xcm-benchmarks",
- "axia-scale-codec",
+ "parity-scale-codec",
  "polkadot-allychain",
  "polkadot-primitives",
- "polkadot-runtime-common",
  "polkadot-runtime-allychains",
+ "polkadot-runtime-common",
  "rustc-hex",
  "scale-info",
  "serde",
@@ -164,7 +165,6 @@ dependencies = [
  "sp-transaction-pool",
  "sp-trie",
  "sp-version",
- "axlib-wasm-builder",
  "tiny-keccak",
  "xcm",
  "xcm-builder",
@@ -499,6 +499,7 @@ name = "axctest-runtime"
 version = "0.9.17"
 dependencies = [
  "axctest-runtime-constants",
+ "axlib-wasm-builder",
  "beefy-primitives",
  "bitvec",
  "frame-benchmarking",
@@ -549,10 +550,10 @@ dependencies = [
  "pallet-utility",
  "pallet-vesting",
  "pallet-xcm",
- "axia-scale-codec",
+ "parity-scale-codec",
  "polkadot-primitives",
- "polkadot-runtime-common",
  "polkadot-runtime-allychains",
+ "polkadot-runtime-common",
  "rustc-hex",
  "scale-info",
  "separator",
@@ -579,7 +580,6 @@ dependencies = [
  "sp-trie",
  "sp-version",
  "static_assertions",
- "axlib-wasm-builder",
  "tiny-keccak",
  "xcm",
  "xcm-builder",
@@ -595,6 +595,113 @@ dependencies = [
  "polkadot-runtime-common",
  "smallvec",
  "sp-runtime",
+]
+
+[[package]]
+name = "axlib-build-script-utils"
+version = "3.0.0"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
+dependencies = [
+ "platforms",
+]
+
+[[package]]
+name = "axlib-frame-rpc-system"
+version = "4.0.0-dev"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
+dependencies = [
+ "frame-system-rpc-runtime-api",
+ "futures 0.3.21",
+ "jsonrpc-core",
+ "jsonrpc-core-client",
+ "jsonrpc-derive",
+ "log",
+ "parity-scale-codec",
+ "sc-client-api",
+ "sc-rpc-api",
+ "sc-transaction-pool-api",
+ "sp-api",
+ "sp-block-builder",
+ "sp-blockchain",
+ "sp-core",
+ "sp-runtime",
+]
+
+[[package]]
+name = "axlib-prometheus-endpoint"
+version = "0.10.0-dev"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
+dependencies = [
+ "async-std",
+ "futures-util",
+ "hyper",
+ "log",
+ "prometheus",
+ "thiserror",
+ "tokio",
+]
+
+[[package]]
+name = "axlib-test-client"
+version = "2.0.1"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
+dependencies = [
+ "async-trait",
+ "futures 0.3.21",
+ "hex",
+ "parity-scale-codec",
+ "sc-client-api",
+ "sc-client-db",
+ "sc-consensus",
+ "sc-executor",
+ "sc-offchain",
+ "sc-service",
+ "serde",
+ "serde_json",
+ "sp-blockchain",
+ "sp-consensus",
+ "sp-core",
+ "sp-keyring",
+ "sp-keystore",
+ "sp-runtime",
+ "sp-state-machine",
+]
+
+[[package]]
+name = "axlib-test-utils"
+version = "4.0.0-dev"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
+dependencies = [
+ "axlib-test-utils-derive",
+ "futures 0.3.21",
+ "tokio",
+]
+
+[[package]]
+name = "axlib-test-utils-derive"
+version = "0.10.0-dev"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
+dependencies = [
+ "proc-macro-crate 1.1.3",
+ "proc-macro2",
+ "quote",
+ "syn",
+]
+
+[[package]]
+name = "axlib-wasm-builder"
+version = "5.0.0-dev"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
+dependencies = [
+ "ansi_term",
+ "build-helper",
+ "cargo_metadata",
+ "sp-maybe-compressed-blob",
+ "strum",
+ "tempfile",
+ "toml",
+ "walkdir",
+ "wasm-gc-api",
 ]
 
 [[package]]
@@ -642,13 +749,14 @@ dependencies = [
 [[package]]
 name = "beefy-gadget"
 version = "4.0.0-dev"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
+ "axlib-prometheus-endpoint",
  "beefy-primitives",
  "fnv",
  "futures 0.3.21",
  "log",
- "axia-scale-codec",
+ "parity-scale-codec",
  "parking_lot",
  "sc-chain-spec",
  "sc-client-api",
@@ -663,7 +771,6 @@ dependencies = [
  "sp-core",
  "sp-keystore",
  "sp-runtime",
- "axlib-prometheus-endpoint",
  "thiserror",
  "wasm-timer",
 ]
@@ -671,7 +778,7 @@ dependencies = [
 [[package]]
 name = "beefy-gadget-rpc"
 version = "4.0.0-dev"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
  "beefy-gadget",
  "beefy-primitives",
@@ -681,7 +788,7 @@ dependencies = [
  "jsonrpc-derive",
  "jsonrpc-pubsub",
  "log",
- "axia-scale-codec",
+ "parity-scale-codec",
  "parking_lot",
  "sc-rpc",
  "sc-utils",
@@ -694,20 +801,105 @@ dependencies = [
 [[package]]
 name = "beefy-merkle-tree"
 version = "4.0.0-dev"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 
 [[package]]
 name = "beefy-primitives"
 version = "4.0.0-dev"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
- "axia-scale-codec",
+ "parity-scale-codec",
  "scale-info",
  "sp-api",
  "sp-application-crypto",
  "sp-core",
  "sp-runtime",
  "sp-std",
+]
+
+[[package]]
+name = "betanet-runtime"
+version = "0.9.17"
+dependencies = [
+ "axlib-wasm-builder",
+ "beefy-primitives",
+ "betanet-runtime-constants",
+ "bp-betanet",
+ "bp-messages",
+ "bp-runtime",
+ "bp-wococo",
+ "bridge-runtime-common",
+ "frame-benchmarking",
+ "frame-executive",
+ "frame-support",
+ "frame-system",
+ "frame-system-rpc-runtime-api",
+ "hex-literal",
+ "log",
+ "pallet-authority-discovery",
+ "pallet-authorship",
+ "pallet-babe",
+ "pallet-balances",
+ "pallet-beefy",
+ "pallet-beefy-mmr",
+ "pallet-bridge-dispatch",
+ "pallet-bridge-grandpa",
+ "pallet-bridge-messages",
+ "pallet-collective",
+ "pallet-grandpa",
+ "pallet-im-online",
+ "pallet-indices",
+ "pallet-membership",
+ "pallet-mmr",
+ "pallet-mmr-primitives",
+ "pallet-multisig",
+ "pallet-offences",
+ "pallet-proxy",
+ "pallet-session",
+ "pallet-staking",
+ "pallet-sudo",
+ "pallet-timestamp",
+ "pallet-transaction-payment",
+ "pallet-transaction-payment-rpc-runtime-api",
+ "pallet-utility",
+ "pallet-xcm",
+ "parity-scale-codec",
+ "polkadot-allychain",
+ "polkadot-primitives",
+ "polkadot-runtime-allychains",
+ "polkadot-runtime-common",
+ "scale-info",
+ "serde",
+ "serde_derive",
+ "smallvec",
+ "sp-api",
+ "sp-authority-discovery",
+ "sp-block-builder",
+ "sp-consensus-babe",
+ "sp-core",
+ "sp-inherents",
+ "sp-io",
+ "sp-offchain",
+ "sp-runtime",
+ "sp-session",
+ "sp-staking",
+ "sp-std",
+ "sp-transaction-pool",
+ "sp-version",
+ "xcm",
+ "xcm-builder",
+ "xcm-executor",
+]
+
+[[package]]
+name = "betanet-runtime-constants"
+version = "0.9.17"
+dependencies = [
+ "frame-support",
+ "polkadot-primitives",
+ "polkadot-runtime-common",
+ "smallvec",
+ "sp-runtime",
 ]
 
 [[package]]
@@ -890,6 +1082,22 @@ dependencies = [
 ]
 
 [[package]]
+name = "bp-betanet"
+version = "0.1.0"
+dependencies = [
+ "bp-messages",
+ "bp-polkadot-core",
+ "bp-runtime",
+ "frame-support",
+ "parity-scale-codec",
+ "smallvec",
+ "sp-api",
+ "sp-runtime",
+ "sp-std",
+ "sp-version",
+]
+
+[[package]]
 name = "bp-header-chain"
 version = "0.1.0"
 dependencies = [
@@ -897,7 +1105,7 @@ dependencies = [
  "bp-test-utils",
  "finality-grandpa",
  "frame-support",
- "axia-scale-codec",
+ "parity-scale-codec",
  "scale-info",
  "serde",
  "sp-core",
@@ -912,7 +1120,7 @@ version = "0.1.0"
 dependencies = [
  "bp-runtime",
  "frame-support",
- "axia-scale-codec",
+ "parity-scale-codec",
  "scale-info",
  "sp-std",
 ]
@@ -926,7 +1134,7 @@ dependencies = [
  "frame-support",
  "frame-system",
  "impl-trait-for-tuples",
- "axia-scale-codec",
+ "parity-scale-codec",
  "scale-info",
  "serde",
  "sp-std",
@@ -941,26 +1149,10 @@ dependencies = [
  "frame-support",
  "frame-system",
  "hex",
- "axia-scale-codec",
+ "parity-scale-codec",
  "scale-info",
  "sp-api",
  "sp-core",
- "sp-runtime",
- "sp-std",
- "sp-version",
-]
-
-[[package]]
-name = "bp-betanet"
-version = "0.1.0"
-dependencies = [
- "bp-messages",
- "bp-polkadot-core",
- "bp-runtime",
- "frame-support",
- "axia-scale-codec",
- "smallvec",
- "sp-api",
  "sp-runtime",
  "sp-std",
  "sp-version",
@@ -974,7 +1166,7 @@ dependencies = [
  "hash-db",
  "hex-literal",
  "num-traits",
- "axia-scale-codec",
+ "parity-scale-codec",
  "scale-info",
  "sp-core",
  "sp-io",
@@ -991,7 +1183,7 @@ dependencies = [
  "bp-header-chain",
  "ed25519-dalek",
  "finality-grandpa",
- "axia-scale-codec",
+ "parity-scale-codec",
  "sp-application-crypto",
  "sp-finality-grandpa",
  "sp-runtime",
@@ -1002,11 +1194,11 @@ dependencies = [
 name = "bp-wococo"
 version = "0.1.0"
 dependencies = [
+ "bp-betanet",
  "bp-messages",
  "bp-polkadot-core",
- "bp-betanet",
  "bp-runtime",
- "axia-scale-codec",
+ "parity-scale-codec",
  "sp-api",
  "sp-runtime",
  "sp-std",
@@ -1026,7 +1218,7 @@ dependencies = [
  "pallet-bridge-grandpa",
  "pallet-bridge-messages",
  "pallet-transaction-payment",
- "axia-scale-codec",
+ "parity-scale-codec",
  "scale-info",
  "sp-core",
  "sp-runtime",
@@ -1799,9 +1991,9 @@ checksum = "ee2626afccd7561a06cf1367e2950c4718ea04565e20fb5029b6c7d8ad09abcf"
 
 [[package]]
 name = "ed25519"
-version = "1.3.0"
+version = "1.4.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "74e1069e39f1454367eb2de793ed062fac4c35c2934b76a81d90dd9abcd28816"
+checksum = "eed12bbf7b5312f8da1c2722bc06d8c6b12c2d86a7fb35a194c7f3e6fc2bbe39"
 dependencies = [
  "signature",
 ]
@@ -1837,11 +2029,11 @@ dependencies = [
 
 [[package]]
 name = "enum-as-inner"
-version = "0.3.3"
+version = "0.3.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "7c5f0096a91d210159eceb2ff5e1c4da18388a170e1e3ce948aac9c8fdbbf595"
+checksum = "570d109b813e904becc80d8d5da38376818a143348413f7149f1340fe04754d4"
 dependencies = [
- "heck 0.3.3",
+ "heck 0.4.0",
  "proc-macro2",
  "quote",
  "syn",
@@ -2010,7 +2202,7 @@ dependencies = [
  "futures-timer",
  "log",
  "num-traits",
- "axia-scale-codec",
+ "parity-scale-codec",
  "parking_lot",
  "scale-info",
 ]
@@ -2070,9 +2262,9 @@ checksum = "00b0228411908ca8685dba7fc2cdd70ec9990a6e753e89b6ac91a84c40fbaf4b"
 [[package]]
 name = "fork-tree"
 version = "3.0.0"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
- "axia-scale-codec",
+ "parity-scale-codec",
 ]
 
 [[package]]
@@ -2088,13 +2280,13 @@ dependencies = [
 [[package]]
 name = "frame-benchmarking"
 version = "4.0.0-dev"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
  "frame-support",
  "frame-system",
  "linregress",
  "log",
- "axia-scale-codec",
+ "parity-scale-codec",
  "paste",
  "scale-info",
  "serde",
@@ -2110,7 +2302,7 @@ dependencies = [
 [[package]]
 name = "frame-benchmarking-cli"
 version = "4.0.0-dev"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
  "Inflector",
  "chrono",
@@ -2120,7 +2312,7 @@ dependencies = [
  "handlebars",
  "linked-hash-map",
  "log",
- "axia-scale-codec",
+ "parity-scale-codec",
  "sc-cli",
  "sc-client-db",
  "sc-executor",
@@ -2137,11 +2329,11 @@ dependencies = [
 [[package]]
 name = "frame-election-provider-support"
 version = "4.0.0-dev"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
  "frame-support",
  "frame-system",
- "axia-scale-codec",
+ "parity-scale-codec",
  "scale-info",
  "sp-arithmetic",
  "sp-npos-elections",
@@ -2151,11 +2343,11 @@ dependencies = [
 [[package]]
 name = "frame-executive"
 version = "4.0.0-dev"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
  "frame-support",
  "frame-system",
- "axia-scale-codec",
+ "parity-scale-codec",
  "scale-info",
  "sp-core",
  "sp-io",
@@ -2171,7 +2363,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "37ed5e5c346de62ca5c184b4325a6600d1eaca210666e4606fe4e449574978d0"
 dependencies = [
  "cfg-if 1.0.0",
- "axia-scale-codec",
+ "parity-scale-codec",
  "scale-info",
  "serde",
 ]
@@ -2179,7 +2371,7 @@ dependencies = [
 [[package]]
 name = "frame-support"
 version = "4.0.0-dev"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
  "bitflags",
  "frame-metadata",
@@ -2187,7 +2379,7 @@ dependencies = [
  "impl-trait-for-tuples",
  "log",
  "once_cell",
- "axia-scale-codec",
+ "parity-scale-codec",
  "paste",
  "scale-info",
  "serde",
@@ -2208,7 +2400,7 @@ dependencies = [
 [[package]]
 name = "frame-support-procedural"
 version = "4.0.0-dev"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
  "Inflector",
  "frame-support-procedural-tools",
@@ -2220,7 +2412,7 @@ dependencies = [
 [[package]]
 name = "frame-support-procedural-tools"
 version = "4.0.0-dev"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
  "frame-support-procedural-tools-derive",
  "proc-macro-crate 1.1.3",
@@ -2232,7 +2424,7 @@ dependencies = [
 [[package]]
 name = "frame-support-procedural-tools-derive"
 version = "3.0.0"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
  "proc-macro2",
  "quote",
@@ -2242,12 +2434,12 @@ dependencies = [
 [[package]]
 name = "frame-support-test"
 version = "3.0.0"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
  "frame-support",
  "frame-support-test-pallet",
  "frame-system",
- "axia-scale-codec",
+ "parity-scale-codec",
  "pretty_assertions",
  "rustversion",
  "scale-info",
@@ -2265,22 +2457,22 @@ dependencies = [
 [[package]]
 name = "frame-support-test-pallet"
 version = "4.0.0-dev"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
  "frame-support",
  "frame-system",
- "axia-scale-codec",
+ "parity-scale-codec",
  "scale-info",
 ]
 
 [[package]]
 name = "frame-system"
 version = "4.0.0-dev"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
  "frame-support",
  "log",
- "axia-scale-codec",
+ "parity-scale-codec",
  "scale-info",
  "serde",
  "sp-core",
@@ -2293,12 +2485,12 @@ dependencies = [
 [[package]]
 name = "frame-system-benchmarking"
 version = "4.0.0-dev"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
  "frame-benchmarking",
  "frame-support",
  "frame-system",
- "axia-scale-codec",
+ "parity-scale-codec",
  "scale-info",
  "sp-core",
  "sp-runtime",
@@ -2308,16 +2500,16 @@ dependencies = [
 [[package]]
 name = "frame-system-rpc-runtime-api"
 version = "4.0.0-dev"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
- "axia-scale-codec",
+ "parity-scale-codec",
  "sp-api",
 ]
 
 [[package]]
 name = "frame-try-runtime"
 version = "0.10.0-dev"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
  "frame-support",
  "sp-api",
@@ -2513,7 +2705,7 @@ dependencies = [
 [[package]]
 name = "generate-bags"
 version = "4.0.0-dev"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
  "chrono",
  "frame-election-provider-support",
@@ -2953,7 +3145,7 @@ version = "0.5.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "161ebdfec3c8e3b52bf61c4f3550a1eea4f9579d10dc1b936f3171ebdcd6c443"
 dependencies = [
- "axia-scale-codec",
+ "parity-scale-codec",
 ]
 
 [[package]]
@@ -3177,7 +3369,7 @@ dependencies = [
  "jsonrpc-core",
  "jsonrpc-server-utils",
  "log",
- "axia-tokio-ipc",
+ "parity-tokio-ipc",
  "parking_lot",
  "tower-service",
 ]
@@ -3225,7 +3417,7 @@ dependencies = [
  "jsonrpc-core",
  "jsonrpc-server-utils",
  "log",
- "axia-ws",
+ "parity-ws",
  "parking_lot",
  "slab",
 ]
@@ -3419,7 +3611,7 @@ version = "0.10.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "45a3f58dc069ec0e205a27f5b45920722a46faed802a0541538241af6228f512"
 dependencies = [
- "axia-util-mem",
+ "parity-util-mem",
  "smallvec",
 ]
 
@@ -3430,7 +3622,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "c3b6b85fc643f5acd0bffb2cc8a6d150209379267af0d41db72170021841f9f5"
 dependencies = [
  "kvdb",
- "axia-util-mem",
+ "parity-util-mem",
  "parking_lot",
 ]
 
@@ -3445,7 +3637,7 @@ dependencies = [
  "log",
  "num_cpus",
  "owning_ref",
- "axia-util-mem",
+ "parity-util-mem",
  "parking_lot",
  "regex",
  "rocksdb",
@@ -3945,7 +4137,7 @@ dependencies = [
  "futures 0.3.21",
  "js-sys",
  "libp2p-core",
- "axia-send-wrapper",
+ "parity-send-wrapper",
  "wasm-bindgen",
  "wasm-bindgen-futures",
 ]
@@ -4246,7 +4438,7 @@ checksum = "d505169b746dacf02f7d14d8c80b34edfd8212159c63d23c977739a0d960c626"
 dependencies = [
  "hash-db",
  "hashbrown 0.11.2",
- "axia-util-mem",
+ "parity-util-mem",
 ]
 
 [[package]]
@@ -4812,12 +5004,12 @@ checksum = "20448fd678ec04e6ea15bbe0476874af65e98a01515d667aa49f1434dc44ebf4"
 [[package]]
 name = "pallet-assets"
 version = "4.0.0-dev"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
  "frame-benchmarking",
  "frame-support",
  "frame-system",
- "axia-scale-codec",
+ "parity-scale-codec",
  "scale-info",
  "sp-runtime",
  "sp-std",
@@ -4826,12 +5018,12 @@ dependencies = [
 [[package]]
 name = "pallet-authority-discovery"
 version = "4.0.0-dev"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
  "frame-support",
  "frame-system",
  "pallet-session",
- "axia-scale-codec",
+ "parity-scale-codec",
  "scale-info",
  "sp-application-crypto",
  "sp-authority-discovery",
@@ -4842,12 +5034,12 @@ dependencies = [
 [[package]]
 name = "pallet-authorship"
 version = "4.0.0-dev"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
  "frame-support",
  "frame-system",
  "impl-trait-for-tuples",
- "axia-scale-codec",
+ "parity-scale-codec",
  "scale-info",
  "sp-authorship",
  "sp-runtime",
@@ -4857,7 +5049,7 @@ dependencies = [
 [[package]]
 name = "pallet-babe"
 version = "4.0.0-dev"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
  "frame-benchmarking",
  "frame-support",
@@ -4866,7 +5058,7 @@ dependencies = [
  "pallet-authorship",
  "pallet-session",
  "pallet-timestamp",
- "axia-scale-codec",
+ "parity-scale-codec",
  "scale-info",
  "sp-application-crypto",
  "sp-consensus-babe",
@@ -4881,7 +5073,7 @@ dependencies = [
 [[package]]
 name = "pallet-bags-list"
 version = "4.0.0-dev"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
  "frame-benchmarking",
  "frame-election-provider-support",
@@ -4889,7 +5081,7 @@ dependencies = [
  "frame-system",
  "log",
  "pallet-balances",
- "axia-scale-codec",
+ "parity-scale-codec",
  "scale-info",
  "sp-core",
  "sp-io",
@@ -4901,7 +5093,7 @@ dependencies = [
 [[package]]
 name = "pallet-bags-list-remote-tests"
 version = "4.0.0-dev"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
  "frame-election-provider-support",
  "frame-support",
@@ -4921,13 +5113,13 @@ dependencies = [
 [[package]]
 name = "pallet-balances"
 version = "4.0.0-dev"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
  "frame-benchmarking",
  "frame-support",
  "frame-system",
  "log",
- "axia-scale-codec",
+ "parity-scale-codec",
  "scale-info",
  "sp-runtime",
  "sp-std",
@@ -4936,13 +5128,13 @@ dependencies = [
 [[package]]
 name = "pallet-beefy"
 version = "4.0.0-dev"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
  "beefy-primitives",
  "frame-support",
  "frame-system",
  "pallet-session",
- "axia-scale-codec",
+ "parity-scale-codec",
  "scale-info",
  "serde",
  "sp-runtime",
@@ -4952,7 +5144,7 @@ dependencies = [
 [[package]]
 name = "pallet-beefy-mmr"
 version = "4.0.0-dev"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
  "beefy-merkle-tree",
  "beefy-primitives",
@@ -4965,7 +5157,7 @@ dependencies = [
  "pallet-mmr",
  "pallet-mmr-primitives",
  "pallet-session",
- "axia-scale-codec",
+ "parity-scale-codec",
  "scale-info",
  "serde",
  "sp-core",
@@ -4977,14 +5169,14 @@ dependencies = [
 [[package]]
 name = "pallet-bounties"
 version = "4.0.0-dev"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
  "frame-benchmarking",
  "frame-support",
  "frame-system",
  "log",
  "pallet-treasury",
- "axia-scale-codec",
+ "parity-scale-codec",
  "scale-info",
  "sp-core",
  "sp-io",
@@ -5001,7 +5193,7 @@ dependencies = [
  "frame-support",
  "frame-system",
  "log",
- "axia-scale-codec",
+ "parity-scale-codec",
  "scale-info",
  "sp-core",
  "sp-io",
@@ -5022,7 +5214,7 @@ dependencies = [
  "frame-system",
  "log",
  "num-traits",
- "axia-scale-codec",
+ "parity-scale-codec",
  "scale-info",
  "serde",
  "sp-core",
@@ -5049,7 +5241,7 @@ dependencies = [
  "log",
  "num-traits",
  "pallet-balances",
- "axia-scale-codec",
+ "parity-scale-codec",
  "scale-info",
  "serde",
  "sp-core",
@@ -5061,13 +5253,13 @@ dependencies = [
 [[package]]
 name = "pallet-collective"
 version = "4.0.0-dev"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
  "frame-benchmarking",
  "frame-support",
  "frame-system",
  "log",
- "axia-scale-codec",
+ "parity-scale-codec",
  "scale-info",
  "sp-core",
  "sp-io",
@@ -5078,12 +5270,12 @@ dependencies = [
 [[package]]
 name = "pallet-democracy"
 version = "4.0.0-dev"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
  "frame-benchmarking",
  "frame-support",
  "frame-system",
- "axia-scale-codec",
+ "parity-scale-codec",
  "scale-info",
  "serde",
  "sp-io",
@@ -5094,14 +5286,14 @@ dependencies = [
 [[package]]
 name = "pallet-election-provider-multi-phase"
 version = "4.0.0-dev"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
  "frame-benchmarking",
  "frame-election-provider-support",
  "frame-support",
  "frame-system",
  "log",
- "axia-scale-codec",
+ "parity-scale-codec",
  "rand 0.7.3",
  "scale-info",
  "sp-arithmetic",
@@ -5117,13 +5309,13 @@ dependencies = [
 [[package]]
 name = "pallet-elections-phragmen"
 version = "5.0.0-dev"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
  "frame-benchmarking",
  "frame-support",
  "frame-system",
  "log",
- "axia-scale-codec",
+ "parity-scale-codec",
  "scale-info",
  "sp-core",
  "sp-io",
@@ -5135,12 +5327,12 @@ dependencies = [
 [[package]]
 name = "pallet-gilt"
 version = "4.0.0-dev"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
  "frame-benchmarking",
  "frame-support",
  "frame-system",
- "axia-scale-codec",
+ "parity-scale-codec",
  "scale-info",
  "sp-arithmetic",
  "sp-runtime",
@@ -5150,7 +5342,7 @@ dependencies = [
 [[package]]
 name = "pallet-grandpa"
 version = "4.0.0-dev"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
  "frame-benchmarking",
  "frame-support",
@@ -5158,7 +5350,7 @@ dependencies = [
  "log",
  "pallet-authorship",
  "pallet-session",
- "axia-scale-codec",
+ "parity-scale-codec",
  "scale-info",
  "sp-application-crypto",
  "sp-core",
@@ -5173,13 +5365,13 @@ dependencies = [
 [[package]]
 name = "pallet-identity"
 version = "4.0.0-dev"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
  "enumflags2",
  "frame-benchmarking",
  "frame-support",
  "frame-system",
- "axia-scale-codec",
+ "parity-scale-codec",
  "scale-info",
  "sp-io",
  "sp-runtime",
@@ -5189,14 +5381,14 @@ dependencies = [
 [[package]]
 name = "pallet-im-online"
 version = "4.0.0-dev"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
  "frame-benchmarking",
  "frame-support",
  "frame-system",
  "log",
  "pallet-authorship",
- "axia-scale-codec",
+ "parity-scale-codec",
  "scale-info",
  "sp-application-crypto",
  "sp-core",
@@ -5209,12 +5401,12 @@ dependencies = [
 [[package]]
 name = "pallet-indices"
 version = "4.0.0-dev"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
  "frame-benchmarking",
  "frame-support",
  "frame-system",
- "axia-scale-codec",
+ "parity-scale-codec",
  "scale-info",
  "sp-core",
  "sp-io",
@@ -5226,13 +5418,13 @@ dependencies = [
 [[package]]
 name = "pallet-membership"
 version = "4.0.0-dev"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
  "frame-benchmarking",
  "frame-support",
  "frame-system",
  "log",
- "axia-scale-codec",
+ "parity-scale-codec",
  "scale-info",
  "sp-core",
  "sp-io",
@@ -5243,14 +5435,14 @@ dependencies = [
 [[package]]
 name = "pallet-mmr"
 version = "4.0.0-dev"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
  "ckb-merkle-mountain-range",
  "frame-benchmarking",
  "frame-support",
  "frame-system",
  "pallet-mmr-primitives",
- "axia-scale-codec",
+ "parity-scale-codec",
  "scale-info",
  "sp-core",
  "sp-io",
@@ -5261,12 +5453,12 @@ dependencies = [
 [[package]]
 name = "pallet-mmr-primitives"
 version = "4.0.0-dev"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
  "frame-support",
  "frame-system",
  "log",
- "axia-scale-codec",
+ "parity-scale-codec",
  "serde",
  "sp-api",
  "sp-core",
@@ -5277,13 +5469,13 @@ dependencies = [
 [[package]]
 name = "pallet-mmr-rpc"
 version = "3.0.0"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
  "jsonrpc-core",
  "jsonrpc-core-client",
  "jsonrpc-derive",
  "pallet-mmr-primitives",
- "axia-scale-codec",
+ "parity-scale-codec",
  "serde",
  "sp-api",
  "sp-blockchain",
@@ -5294,12 +5486,12 @@ dependencies = [
 [[package]]
 name = "pallet-multisig"
 version = "4.0.0-dev"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
  "frame-benchmarking",
  "frame-support",
  "frame-system",
- "axia-scale-codec",
+ "parity-scale-codec",
  "scale-info",
  "sp-io",
  "sp-runtime",
@@ -5309,11 +5501,11 @@ dependencies = [
 [[package]]
 name = "pallet-nicks"
 version = "4.0.0-dev"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
  "frame-support",
  "frame-system",
- "axia-scale-codec",
+ "parity-scale-codec",
  "scale-info",
  "sp-io",
  "sp-runtime",
@@ -5323,13 +5515,13 @@ dependencies = [
 [[package]]
 name = "pallet-offences"
 version = "4.0.0-dev"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
  "frame-support",
  "frame-system",
  "log",
  "pallet-balances",
- "axia-scale-codec",
+ "parity-scale-codec",
  "scale-info",
  "serde",
  "sp-runtime",
@@ -5340,7 +5532,7 @@ dependencies = [
 [[package]]
 name = "pallet-offences-benchmarking"
 version = "4.0.0-dev"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
  "frame-benchmarking",
  "frame-election-provider-support",
@@ -5353,7 +5545,7 @@ dependencies = [
  "pallet-offences",
  "pallet-session",
  "pallet-staking",
- "axia-scale-codec",
+ "parity-scale-codec",
  "scale-info",
  "sp-runtime",
  "sp-staking",
@@ -5363,12 +5555,12 @@ dependencies = [
 [[package]]
 name = "pallet-preimage"
 version = "4.0.0-dev"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
  "frame-benchmarking",
  "frame-support",
  "frame-system",
- "axia-scale-codec",
+ "parity-scale-codec",
  "scale-info",
  "sp-core",
  "sp-io",
@@ -5379,12 +5571,12 @@ dependencies = [
 [[package]]
 name = "pallet-proxy"
 version = "4.0.0-dev"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
  "frame-benchmarking",
  "frame-support",
  "frame-system",
- "axia-scale-codec",
+ "parity-scale-codec",
  "scale-info",
  "sp-io",
  "sp-runtime",
@@ -5394,11 +5586,11 @@ dependencies = [
 [[package]]
 name = "pallet-recovery"
 version = "4.0.0-dev"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
  "frame-support",
  "frame-system",
- "axia-scale-codec",
+ "parity-scale-codec",
  "scale-info",
  "sp-io",
  "sp-runtime",
@@ -5408,13 +5600,13 @@ dependencies = [
 [[package]]
 name = "pallet-scheduler"
 version = "4.0.0-dev"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
  "frame-benchmarking",
  "frame-support",
  "frame-system",
  "log",
- "axia-scale-codec",
+ "parity-scale-codec",
  "scale-info",
  "sp-io",
  "sp-runtime",
@@ -5424,14 +5616,14 @@ dependencies = [
 [[package]]
 name = "pallet-session"
 version = "4.0.0-dev"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
  "frame-support",
  "frame-system",
  "impl-trait-for-tuples",
  "log",
  "pallet-timestamp",
- "axia-scale-codec",
+ "parity-scale-codec",
  "scale-info",
  "sp-core",
  "sp-io",
@@ -5445,7 +5637,7 @@ dependencies = [
 [[package]]
 name = "pallet-session-benchmarking"
 version = "4.0.0-dev"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
  "frame-benchmarking",
  "frame-support",
@@ -5461,11 +5653,11 @@ dependencies = [
 [[package]]
 name = "pallet-society"
 version = "4.0.0-dev"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
  "frame-support",
  "frame-system",
- "axia-scale-codec",
+ "parity-scale-codec",
  "rand_chacha 0.2.2",
  "scale-info",
  "sp-runtime",
@@ -5475,7 +5667,7 @@ dependencies = [
 [[package]]
 name = "pallet-staking"
 version = "4.0.0-dev"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
  "frame-benchmarking",
  "frame-election-provider-support",
@@ -5484,7 +5676,7 @@ dependencies = [
  "log",
  "pallet-authorship",
  "pallet-session",
- "axia-scale-codec",
+ "parity-scale-codec",
  "rand_chacha 0.2.2",
  "scale-info",
  "serde",
@@ -5498,7 +5690,7 @@ dependencies = [
 [[package]]
 name = "pallet-staking-reward-curve"
 version = "4.0.0-dev"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
  "proc-macro-crate 1.1.3",
  "proc-macro2",
@@ -5509,7 +5701,7 @@ dependencies = [
 [[package]]
 name = "pallet-staking-reward-fn"
 version = "4.0.0-dev"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
  "log",
  "sp-arithmetic",
@@ -5518,11 +5710,11 @@ dependencies = [
 [[package]]
 name = "pallet-sudo"
 version = "4.0.0-dev"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
  "frame-support",
  "frame-system",
- "axia-scale-codec",
+ "parity-scale-codec",
  "scale-info",
  "sp-io",
  "sp-runtime",
@@ -5532,13 +5724,13 @@ dependencies = [
 [[package]]
 name = "pallet-timestamp"
 version = "4.0.0-dev"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
  "frame-benchmarking",
  "frame-support",
  "frame-system",
  "log",
- "axia-scale-codec",
+ "parity-scale-codec",
  "scale-info",
  "sp-inherents",
  "sp-io",
@@ -5550,14 +5742,14 @@ dependencies = [
 [[package]]
 name = "pallet-tips"
 version = "4.0.0-dev"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
  "frame-benchmarking",
  "frame-support",
  "frame-system",
  "log",
  "pallet-treasury",
- "axia-scale-codec",
+ "parity-scale-codec",
  "scale-info",
  "serde",
  "sp-core",
@@ -5569,11 +5761,11 @@ dependencies = [
 [[package]]
 name = "pallet-transaction-payment"
 version = "4.0.0-dev"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
  "frame-support",
  "frame-system",
- "axia-scale-codec",
+ "parity-scale-codec",
  "scale-info",
  "serde",
  "smallvec",
@@ -5586,13 +5778,13 @@ dependencies = [
 [[package]]
 name = "pallet-transaction-payment-rpc"
 version = "4.0.0-dev"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
  "jsonrpc-core",
  "jsonrpc-core-client",
  "jsonrpc-derive",
  "pallet-transaction-payment-rpc-runtime-api",
- "axia-scale-codec",
+ "parity-scale-codec",
  "sp-api",
  "sp-blockchain",
  "sp-core",
@@ -5603,10 +5795,10 @@ dependencies = [
 [[package]]
 name = "pallet-transaction-payment-rpc-runtime-api"
 version = "4.0.0-dev"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
  "pallet-transaction-payment",
- "axia-scale-codec",
+ "parity-scale-codec",
  "sp-api",
  "sp-runtime",
 ]
@@ -5614,14 +5806,14 @@ dependencies = [
 [[package]]
 name = "pallet-treasury"
 version = "4.0.0-dev"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
  "frame-benchmarking",
  "frame-support",
  "frame-system",
  "impl-trait-for-tuples",
  "pallet-balances",
- "axia-scale-codec",
+ "parity-scale-codec",
  "scale-info",
  "serde",
  "sp-runtime",
@@ -5631,12 +5823,12 @@ dependencies = [
 [[package]]
 name = "pallet-utility"
 version = "4.0.0-dev"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
  "frame-benchmarking",
  "frame-support",
  "frame-system",
- "axia-scale-codec",
+ "parity-scale-codec",
  "scale-info",
  "sp-core",
  "sp-io",
@@ -5647,13 +5839,13 @@ dependencies = [
 [[package]]
 name = "pallet-vesting"
 version = "4.0.0-dev"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
  "frame-benchmarking",
  "frame-support",
  "frame-system",
  "log",
- "axia-scale-codec",
+ "parity-scale-codec",
  "scale-info",
  "sp-runtime",
  "sp-std",
@@ -5667,7 +5859,7 @@ dependencies = [
  "frame-system",
  "log",
  "pallet-balances",
- "axia-scale-codec",
+ "parity-scale-codec",
  "polkadot-allychain",
  "polkadot-runtime-allychains",
  "scale-info",
@@ -5692,7 +5884,7 @@ dependencies = [
  "pallet-assets",
  "pallet-balances",
  "pallet-xcm",
- "axia-scale-codec",
+ "parity-scale-codec",
  "polkadot-primitives",
  "polkadot-runtime-common",
  "scale-info",
@@ -5707,7 +5899,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "axia-db"
+name = "parity-db"
 version = "0.3.7"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "09aa6c5bb8070cf0456d9fc228b3022e900aae9092c48c9c45facf97422efc1d"
@@ -5726,7 +5918,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "axia-scale-codec"
+name = "parity-scale-codec"
 version = "2.3.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "373b1a4c1338d9cd3d1fa53b3a11bdab5ab6bd80a20f7f7becd76953ae2be909"
@@ -5735,12 +5927,12 @@ dependencies = [
  "bitvec",
  "byte-slice-cast",
  "impl-trait-for-tuples",
- "axia-scale-codec-derive",
+ "parity-scale-codec-derive",
  "serde",
 ]
 
 [[package]]
-name = "axia-scale-codec-derive"
+name = "parity-scale-codec-derive"
 version = "2.3.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "1557010476e0595c9b568d16dcfb81b93cdeb157612726f5170d31aa707bed27"
@@ -5752,13 +5944,13 @@ dependencies = [
 ]
 
 [[package]]
-name = "axia-send-wrapper"
+name = "parity-send-wrapper"
 version = "0.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "aa9777aa91b8ad9dd5aaa04a9b6bcb02c7f1deb952fca5a66034d5e63afc5c6f"
 
 [[package]]
-name = "axia-tokio-ipc"
+name = "parity-tokio-ipc"
 version = "0.9.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "9981e32fb75e004cc148f5fb70342f393830e0a4aa62e3cc93b50976218d42b6"
@@ -5772,7 +5964,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "axia-util-mem"
+name = "parity-util-mem"
 version = "0.10.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "6f4cb4e169446179cbc6b8b6320cc9fca49bd2e94e8db25f25f200a8ea774770"
@@ -5780,7 +5972,7 @@ dependencies = [
  "cfg-if 1.0.0",
  "hashbrown 0.11.2",
  "impl-trait-for-tuples",
- "axia-util-mem-derive",
+ "parity-util-mem-derive",
  "parking_lot",
  "primitive-types",
  "smallvec",
@@ -5790,7 +5982,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "axia-util-mem-derive"
+name = "parity-util-mem-derive"
 version = "0.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "f557c32c6d268a07c921471619c0295f5efad3a0e76d4f97a05c091a51d110b2"
@@ -5801,7 +5993,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "axia-wasm"
+name = "parity-wasm"
 version = "0.32.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "16ad52817c4d343339b3bc2e26861bd21478eda0b7509acf83505727000512ac"
@@ -5810,13 +6002,13 @@ dependencies = [
 ]
 
 [[package]]
-name = "axia-wasm"
+name = "parity-wasm"
 version = "0.42.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "be5e13c266502aadf83426d87d81a0f5d1ef45b8027f5a471c360abfe4bfae92"
 
 [[package]]
-name = "axia-ws"
+name = "parity-ws"
 version = "0.11.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "5983d3929ad50f12c3eb9a6743f19d691866ecd44da74c0a3308c3f8a56df0c6"
@@ -6036,12 +6228,28 @@ dependencies = [
  "assert_cmd",
  "color-eyre",
  "nix",
- "axia-util-mem",
+ "parity-util-mem",
  "polkadot-cli",
  "polkadot-core-primitives",
  "remote-externalities",
  "tempfile",
  "tokio",
+]
+
+[[package]]
+name = "polkadot-allychain"
+version = "0.9.17"
+dependencies = [
+ "derive_more",
+ "frame-support",
+ "parity-scale-codec",
+ "parity-util-mem",
+ "polkadot-core-primitives",
+ "scale-info",
+ "serde",
+ "sp-core",
+ "sp-runtime",
+ "sp-std",
 ]
 
 [[package]]
@@ -6094,7 +6302,7 @@ dependencies = [
  "futures 0.3.21",
  "futures-timer",
  "lru 0.7.2",
- "axia-scale-codec",
+ "parity-scale-codec",
  "polkadot-erasure-coding",
  "polkadot-node-network-protocol",
  "polkadot-node-primitives",
@@ -6123,7 +6331,7 @@ dependencies = [
  "futures-timer",
  "log",
  "lru 0.7.2",
- "axia-scale-codec",
+ "parity-scale-codec",
  "polkadot-erasure-coding",
  "polkadot-node-network-protocol",
  "polkadot-node-primitives",
@@ -6145,6 +6353,7 @@ dependencies = [
 name = "polkadot-cli"
 version = "0.9.17"
 dependencies = [
+ "axlib-build-script-utils",
  "clap",
  "frame-benchmarking-cli",
  "futures 0.3.21",
@@ -6158,7 +6367,6 @@ dependencies = [
  "sc-tracing",
  "sp-core",
  "sp-trie",
- "axlib-build-script-utils",
  "thiserror",
  "try-runtime-cli",
 ]
@@ -6170,13 +6378,13 @@ dependencies = [
  "alphanet-runtime",
  "axctest-runtime",
  "beefy-primitives",
+ "betanet-runtime",
  "frame-benchmarking",
  "frame-system-rpc-runtime-api",
  "pallet-mmr-primitives",
  "pallet-transaction-payment-rpc-runtime-api",
  "polkadot-primitives",
  "polkadot-runtime",
- "betanet-runtime",
  "sc-client-api",
  "sc-consensus",
  "sc-executor",
@@ -6206,7 +6414,7 @@ dependencies = [
  "futures 0.3.21",
  "futures-timer",
  "log",
- "axia-scale-codec",
+ "parity-scale-codec",
  "polkadot-node-network-protocol",
  "polkadot-node-primitives",
  "polkadot-node-subsystem",
@@ -6227,8 +6435,8 @@ dependencies = [
 name = "polkadot-core-primitives"
 version = "0.9.17"
 dependencies = [
- "axia-scale-codec",
- "axia-util-mem",
+ "parity-scale-codec",
+ "parity-util-mem",
  "scale-info",
  "sp-core",
  "sp-runtime",
@@ -6246,7 +6454,7 @@ dependencies = [
  "futures-timer",
  "lazy_static",
  "lru 0.7.2",
- "axia-scale-codec",
+ "parity-scale-codec",
  "polkadot-erasure-coding",
  "polkadot-node-network-protocol",
  "polkadot-node-primitives",
@@ -6269,7 +6477,7 @@ dependencies = [
 name = "polkadot-erasure-coding"
 version = "0.9.17"
 dependencies = [
- "axia-scale-codec",
+ "parity-scale-codec",
  "polkadot-node-primitives",
  "polkadot-primitives",
  "reed-solomon-novelpoly",
@@ -6312,7 +6520,7 @@ dependencies = [
  "async-trait",
  "futures 0.3.21",
  "futures-timer",
- "axia-scale-codec",
+ "parity-scale-codec",
  "parking_lot",
  "polkadot-node-network-protocol",
  "polkadot-node-subsystem",
@@ -6333,7 +6541,7 @@ name = "polkadot-node-collation-generation"
 version = "0.9.17"
 dependencies = [
  "futures 0.3.21",
- "axia-scale-codec",
+ "parity-scale-codec",
  "polkadot-erasure-coding",
  "polkadot-node-primitives",
  "polkadot-node-subsystem",
@@ -6343,6 +6551,22 @@ dependencies = [
  "polkadot-primitives-test-helpers",
  "sp-core",
  "sp-maybe-compressed-blob",
+ "thiserror",
+ "tracing",
+]
+
+[[package]]
+name = "polkadot-node-core-allychains-inherent"
+version = "0.9.17"
+dependencies = [
+ "async-trait",
+ "futures 0.3.21",
+ "futures-timer",
+ "polkadot-node-subsystem",
+ "polkadot-primitives",
+ "sp-blockchain",
+ "sp-inherents",
+ "sp-runtime",
  "thiserror",
  "tracing",
 ]
@@ -6360,7 +6584,7 @@ dependencies = [
  "kvdb-memorydb",
  "lru 0.7.2",
  "merlin",
- "axia-scale-codec",
+ "parity-scale-codec",
  "parking_lot",
  "polkadot-node-jaeger",
  "polkadot-node-primitives",
@@ -6396,7 +6620,7 @@ dependencies = [
  "kvdb",
  "kvdb-memorydb",
  "log",
- "axia-scale-codec",
+ "parity-scale-codec",
  "parking_lot",
  "polkadot-erasure-coding",
  "polkadot-node-primitives",
@@ -6460,13 +6684,13 @@ dependencies = [
  "assert_matches",
  "async-trait",
  "futures 0.3.21",
- "axia-scale-codec",
+ "parity-scale-codec",
+ "polkadot-allychain",
  "polkadot-node-core-pvf",
  "polkadot-node-primitives",
  "polkadot-node-subsystem",
  "polkadot-node-subsystem-test-helpers",
  "polkadot-node-subsystem-util",
- "polkadot-allychain",
  "polkadot-primitives",
  "polkadot-primitives-test-helpers",
  "sp-core",
@@ -6481,7 +6705,7 @@ version = "0.9.17"
 dependencies = [
  "futures 0.3.21",
  "maplit",
- "axia-scale-codec",
+ "parity-scale-codec",
  "polkadot-node-primitives",
  "polkadot-node-subsystem",
  "polkadot-node-subsystem-test-helpers",
@@ -6503,7 +6727,7 @@ dependencies = [
  "futures-timer",
  "kvdb",
  "kvdb-memorydb",
- "axia-scale-codec",
+ "parity-scale-codec",
  "parking_lot",
  "polkadot-node-primitives",
  "polkadot-node-subsystem",
@@ -6524,7 +6748,7 @@ dependencies = [
  "kvdb",
  "kvdb-memorydb",
  "lru 0.7.2",
- "axia-scale-codec",
+ "parity-scale-codec",
  "polkadot-node-primitives",
  "polkadot-node-subsystem",
  "polkadot-node-subsystem-test-helpers",
@@ -6535,22 +6759,6 @@ dependencies = [
  "sp-core",
  "sp-keyring",
  "sp-keystore",
- "thiserror",
- "tracing",
-]
-
-[[package]]
-name = "polkadot-node-core-allychains-inherent"
-version = "0.9.17"
-dependencies = [
- "async-trait",
- "futures 0.3.21",
- "futures-timer",
- "polkadot-node-subsystem",
- "polkadot-primitives",
- "sp-blockchain",
- "sp-inherents",
- "sp-runtime",
  "thiserror",
  "tracing",
 ]
@@ -6586,11 +6794,11 @@ dependencies = [
  "futures 0.3.21",
  "futures-timer",
  "hex-literal",
- "axia-scale-codec",
+ "parity-scale-codec",
  "pin-project 1.0.10",
+ "polkadot-allychain",
  "polkadot-core-primitives",
  "polkadot-node-subsystem-util",
- "polkadot-allychain",
  "rand 0.8.5",
  "sc-executor",
  "sc-executor-common",
@@ -6637,7 +6845,7 @@ version = "0.9.17"
 dependencies = [
  "futures 0.3.21",
  "memory-lru",
- "axia-util-mem",
+ "parity-util-mem",
  "polkadot-node-primitives",
  "polkadot-node-subsystem",
  "polkadot-node-subsystem-test-helpers",
@@ -6660,7 +6868,7 @@ dependencies = [
  "lazy_static",
  "log",
  "mick-jaeger",
- "axia-scale-codec",
+ "parity-scale-codec",
  "parking_lot",
  "polkadot-node-primitives",
  "polkadot-primitives",
@@ -6674,6 +6882,8 @@ name = "polkadot-node-metrics"
 version = "0.9.17"
 dependencies = [
  "assert_cmd",
+ "axlib-prometheus-endpoint",
+ "axlib-test-utils",
  "bs58",
  "futures 0.3.21",
  "futures-timer",
@@ -6681,7 +6891,7 @@ dependencies = [
  "log",
  "metered-channel",
  "nix",
- "axia-scale-codec",
+ "parity-scale-codec",
  "polkadot-primitives",
  "polkadot-test-service",
  "prometheus-parse",
@@ -6690,8 +6900,6 @@ dependencies = [
  "sc-service",
  "sc-tracing",
  "sp-keyring",
- "axlib-prometheus-endpoint",
- "axlib-test-utils",
  "tempfile",
  "tokio",
  "tracing",
@@ -6704,7 +6912,7 @@ dependencies = [
  "async-trait",
  "derive_more",
  "futures 0.3.21",
- "axia-scale-codec",
+ "parity-scale-codec",
  "polkadot-node-jaeger",
  "polkadot-node-primitives",
  "polkadot-primitives",
@@ -6720,9 +6928,9 @@ version = "0.9.17"
 dependencies = [
  "bounded-vec",
  "futures 0.3.21",
- "axia-scale-codec",
- "polkadot-erasure-coding",
+ "parity-scale-codec",
  "polkadot-allychain",
+ "polkadot-erasure-coding",
  "polkadot-primitives",
  "schnorrkel",
  "serde",
@@ -6767,6 +6975,7 @@ dependencies = [
 name = "polkadot-node-subsystem-types"
 version = "0.9.17"
 dependencies = [
+ "axlib-prometheus-endpoint",
  "derive_more",
  "futures 0.3.21",
  "polkadot-node-jaeger",
@@ -6777,7 +6986,6 @@ dependencies = [
  "polkadot-statement-table",
  "sc-network",
  "smallvec",
- "axlib-prometheus-endpoint",
  "thiserror",
 ]
 
@@ -6795,7 +7003,7 @@ dependencies = [
  "log",
  "lru 0.7.2",
  "metered-channel",
- "axia-scale-codec",
+ "parity-scale-codec",
  "pin-project 1.0.10",
  "polkadot-node-jaeger",
  "polkadot-node-metrics",
@@ -6824,7 +7032,7 @@ dependencies = [
  "futures-timer",
  "lru 0.7.2",
  "metered-channel",
- "axia-util-mem",
+ "parity-util-mem",
  "parking_lot",
  "polkadot-node-metrics",
  "polkadot-node-network-protocol",
@@ -6868,22 +7076,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "polkadot-allychain"
-version = "0.9.17"
-dependencies = [
- "derive_more",
- "frame-support",
- "axia-scale-codec",
- "axia-util-mem",
- "polkadot-core-primitives",
- "scale-info",
- "serde",
- "sp-core",
- "sp-runtime",
- "sp-std",
-]
-
-[[package]]
 name = "polkadot-performance-test"
 version = "0.9.17"
 dependencies = [
@@ -6904,10 +7096,10 @@ dependencies = [
  "bitvec",
  "frame-system",
  "hex-literal",
- "axia-scale-codec",
- "axia-util-mem",
- "polkadot-core-primitives",
+ "parity-scale-codec",
+ "parity-util-mem",
  "polkadot-allychain",
+ "polkadot-core-primitives",
  "scale-info",
  "serde",
  "sp-api",
@@ -6940,6 +7132,7 @@ dependencies = [
 name = "polkadot-rpc"
 version = "0.9.17"
 dependencies = [
+ "axlib-frame-rpc-system",
  "beefy-gadget",
  "beefy-gadget-rpc",
  "jsonrpc-core",
@@ -6963,13 +7156,13 @@ dependencies = [
  "sp-consensus-babe",
  "sp-keystore",
  "sp-runtime",
- "axlib-frame-rpc-system",
 ]
 
 [[package]]
 name = "polkadot-runtime"
 version = "0.9.17"
 dependencies = [
+ "axlib-wasm-builder",
  "beefy-primitives",
  "bitvec",
  "frame-benchmarking",
@@ -7017,11 +7210,11 @@ dependencies = [
  "pallet-utility",
  "pallet-vesting",
  "pallet-xcm",
- "axia-scale-codec",
+ "parity-scale-codec",
  "polkadot-primitives",
+ "polkadot-runtime-allychains",
  "polkadot-runtime-common",
  "polkadot-runtime-constants",
- "polkadot-runtime-allychains",
  "rustc-hex",
  "scale-info",
  "separator",
@@ -7047,11 +7240,60 @@ dependencies = [
  "sp-trie",
  "sp-version",
  "static_assertions",
- "axlib-wasm-builder",
  "tiny-keccak",
  "trie-db",
  "xcm",
  "xcm-builder",
+ "xcm-executor",
+]
+
+[[package]]
+name = "polkadot-runtime-allychains"
+version = "0.9.17"
+dependencies = [
+ "assert_matches",
+ "bitflags",
+ "bitvec",
+ "derive_more",
+ "frame-benchmarking",
+ "frame-support",
+ "frame-support-test",
+ "frame-system",
+ "futures 0.3.21",
+ "hex-literal",
+ "log",
+ "pallet-authority-discovery",
+ "pallet-authorship",
+ "pallet-babe",
+ "pallet-balances",
+ "pallet-session",
+ "pallet-staking",
+ "pallet-timestamp",
+ "pallet-vesting",
+ "parity-scale-codec",
+ "polkadot-primitives",
+ "polkadot-primitives-test-helpers",
+ "polkadot-runtime-metrics",
+ "rand 0.8.5",
+ "rand_chacha 0.3.1",
+ "rustc-hex",
+ "sc-keystore",
+ "scale-info",
+ "serde",
+ "sp-api",
+ "sp-core",
+ "sp-inherents",
+ "sp-io",
+ "sp-keyring",
+ "sp-keystore",
+ "sp-runtime",
+ "sp-session",
+ "sp-staking",
+ "sp-std",
+ "sp-tracing",
+ "static_assertions",
+ "thousands",
+ "xcm",
  "xcm-executor",
 ]
 
@@ -7082,7 +7324,7 @@ dependencies = [
  "pallet-transaction-payment",
  "pallet-treasury",
  "pallet-vesting",
- "axia-scale-codec",
+ "parity-scale-codec",
  "polkadot-primitives",
  "polkadot-primitives-test-helpers",
  "polkadot-runtime-allychains",
@@ -7123,60 +7365,10 @@ name = "polkadot-runtime-metrics"
 version = "0.9.17"
 dependencies = [
  "bs58",
- "axia-scale-codec",
+ "parity-scale-codec",
  "polkadot-primitives",
  "sp-std",
  "sp-tracing",
-]
-
-[[package]]
-name = "polkadot-runtime-allychains"
-version = "0.9.17"
-dependencies = [
- "assert_matches",
- "bitflags",
- "bitvec",
- "derive_more",
- "frame-benchmarking",
- "frame-support",
- "frame-support-test",
- "frame-system",
- "futures 0.3.21",
- "hex-literal",
- "log",
- "pallet-authority-discovery",
- "pallet-authorship",
- "pallet-babe",
- "pallet-balances",
- "pallet-session",
- "pallet-staking",
- "pallet-timestamp",
- "pallet-vesting",
- "axia-scale-codec",
- "polkadot-primitives",
- "polkadot-primitives-test-helpers",
- "polkadot-runtime-metrics",
- "rand 0.8.5",
- "rand_chacha 0.3.1",
- "rustc-hex",
- "sc-keystore",
- "scale-info",
- "serde",
- "sp-api",
- "sp-core",
- "sp-inherents",
- "sp-io",
- "sp-keyring",
- "sp-keystore",
- "sp-runtime",
- "sp-session",
- "sp-staking",
- "sp-std",
- "sp-tracing",
- "static_assertions",
- "thousands",
- "xcm",
- "xcm-executor",
 ]
 
 [[package]]
@@ -7189,8 +7381,11 @@ dependencies = [
  "async-trait",
  "axctest-runtime",
  "axctest-runtime-constants",
+ "axlib-prometheus-endpoint",
  "beefy-gadget",
  "beefy-primitives",
+ "betanet-runtime",
+ "betanet-runtime-constants",
  "env_logger",
  "frame-system-rpc-runtime-api",
  "futures 0.3.21",
@@ -7204,6 +7399,7 @@ dependencies = [
  "pallet-mmr-primitives",
  "pallet-staking",
  "pallet-transaction-payment-rpc-runtime-api",
+ "polkadot-allychain",
  "polkadot-approval-distribution",
  "polkadot-availability-bitfield-distribution",
  "polkadot-availability-distribution",
@@ -7214,6 +7410,7 @@ dependencies = [
  "polkadot-gossip-support",
  "polkadot-network-bridge",
  "polkadot-node-collation-generation",
+ "polkadot-node-core-allychains-inherent",
  "polkadot-node-core-approval-voting",
  "polkadot-node-core-av-store",
  "polkadot-node-core-backing",
@@ -7222,7 +7419,6 @@ dependencies = [
  "polkadot-node-core-chain-api",
  "polkadot-node-core-chain-selection",
  "polkadot-node-core-dispute-coordinator",
- "polkadot-node-core-allychains-inherent",
  "polkadot-node-core-provisioner",
  "polkadot-node-core-pvf-checker",
  "polkadot-node-core-runtime-api",
@@ -7232,16 +7428,13 @@ dependencies = [
  "polkadot-node-subsystem-test-helpers",
  "polkadot-node-subsystem-util",
  "polkadot-overseer",
- "polkadot-allychain",
  "polkadot-primitives",
  "polkadot-rpc",
  "polkadot-runtime",
- "polkadot-runtime-constants",
  "polkadot-runtime-allychains",
+ "polkadot-runtime-constants",
  "polkadot-statement-distribution",
  "polkadot-test-client",
- "betanet-runtime",
- "betanet-runtime-constants",
  "sc-authority-discovery",
  "sc-basic-authorship",
  "sc-block-builder",
@@ -7281,7 +7474,6 @@ dependencies = [
  "sp-timestamp",
  "sp-transaction-pool",
  "sp-trie",
- "axlib-prometheus-endpoint",
  "thiserror",
  "tracing",
 ]
@@ -7296,7 +7488,7 @@ dependencies = [
  "futures 0.3.21",
  "futures-timer",
  "indexmap",
- "axia-scale-codec",
+ "parity-scale-codec",
  "polkadot-node-network-protocol",
  "polkadot-node-primitives",
  "polkadot-node-subsystem",
@@ -7320,7 +7512,7 @@ dependencies = [
 name = "polkadot-statement-table"
 version = "0.9.17"
 dependencies = [
- "axia-scale-codec",
+ "parity-scale-codec",
  "polkadot-primitives",
  "sp-core",
 ]
@@ -7329,8 +7521,9 @@ dependencies = [
 name = "polkadot-test-client"
 version = "0.9.17"
 dependencies = [
+ "axlib-test-client",
  "futures 0.3.21",
- "axia-scale-codec",
+ "parity-scale-codec",
  "polkadot-node-subsystem",
  "polkadot-primitives",
  "polkadot-test-runtime",
@@ -7348,7 +7541,6 @@ dependencies = [
  "sp-runtime",
  "sp-state-machine",
  "sp-timestamp",
- "axlib-test-client",
 ]
 
 [[package]]
@@ -7361,7 +7553,7 @@ dependencies = [
  "color-eyre",
  "futures 0.3.21",
  "futures-timer",
- "axia-util-mem",
+ "parity-util-mem",
  "polkadot-cli",
  "polkadot-node-core-backing",
  "polkadot-node-core-candidate-validation",
@@ -7382,6 +7574,7 @@ dependencies = [
 name = "polkadot-test-runtime"
 version = "0.9.17"
 dependencies = [
+ "axlib-wasm-builder",
  "beefy-primitives",
  "bitvec",
  "frame-election-provider-support",
@@ -7409,11 +7602,11 @@ dependencies = [
  "pallet-transaction-payment-rpc-runtime-api",
  "pallet-vesting",
  "pallet-xcm",
- "axia-scale-codec",
+ "parity-scale-codec",
  "polkadot-allychain",
  "polkadot-primitives",
- "polkadot-runtime-common",
  "polkadot-runtime-allychains",
+ "polkadot-runtime-common",
  "rustc-hex",
  "scale-info",
  "serde",
@@ -7436,7 +7629,6 @@ dependencies = [
  "sp-transaction-pool",
  "sp-trie",
  "sp-version",
- "axlib-wasm-builder",
  "test-runtime-constants",
  "tiny-keccak",
  "xcm",
@@ -7448,6 +7640,8 @@ dependencies = [
 name = "polkadot-test-service"
 version = "0.9.17"
 dependencies = [
+ "axlib-test-client",
+ "axlib-test-utils",
  "frame-benchmarking",
  "frame-system",
  "futures 0.1.31",
@@ -7456,14 +7650,14 @@ dependencies = [
  "pallet-balances",
  "pallet-staking",
  "pallet-transaction-payment",
+ "polkadot-allychain",
  "polkadot-node-primitives",
  "polkadot-node-subsystem",
  "polkadot-overseer",
- "polkadot-allychain",
  "polkadot-primitives",
  "polkadot-rpc",
- "polkadot-runtime-common",
  "polkadot-runtime-allychains",
+ "polkadot-runtime-common",
  "polkadot-service",
  "polkadot-test-runtime",
  "rand 0.8.5",
@@ -7491,8 +7685,6 @@ dependencies = [
  "sp-keyring",
  "sp-runtime",
  "sp-state-machine",
- "axlib-test-client",
- "axlib-test-utils",
  "tempfile",
  "test-runtime-constants",
  "tokio",
@@ -8027,12 +8219,12 @@ dependencies = [
 [[package]]
 name = "remote-externalities"
 version = "0.10.0-dev"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
  "env_logger",
  "jsonrpsee 0.8.0",
  "log",
- "axia-scale-codec",
+ "parity-scale-codec",
  "serde",
  "serde_json",
  "sp-core",
@@ -8125,91 +8317,6 @@ checksum = "7a62eca5cacf2c8261128631bed9f045598d40bfbe4b29f5163f0f802f8f44a7"
 dependencies = [
  "libc",
  "librocksdb-sys",
-]
-
-[[package]]
-name = "betanet-runtime"
-version = "0.9.17"
-dependencies = [
- "beefy-primitives",
- "bp-messages",
- "bp-betanet",
- "bp-runtime",
- "bp-wococo",
- "bridge-runtime-common",
- "frame-benchmarking",
- "frame-executive",
- "frame-support",
- "frame-system",
- "frame-system-rpc-runtime-api",
- "hex-literal",
- "log",
- "pallet-authority-discovery",
- "pallet-authorship",
- "pallet-babe",
- "pallet-balances",
- "pallet-beefy",
- "pallet-beefy-mmr",
- "pallet-bridge-dispatch",
- "pallet-bridge-grandpa",
- "pallet-bridge-messages",
- "pallet-collective",
- "pallet-grandpa",
- "pallet-im-online",
- "pallet-indices",
- "pallet-membership",
- "pallet-mmr",
- "pallet-mmr-primitives",
- "pallet-multisig",
- "pallet-offences",
- "pallet-proxy",
- "pallet-session",
- "pallet-staking",
- "pallet-sudo",
- "pallet-timestamp",
- "pallet-transaction-payment",
- "pallet-transaction-payment-rpc-runtime-api",
- "pallet-utility",
- "pallet-xcm",
- "axia-scale-codec",
- "polkadot-allychain",
- "polkadot-primitives",
- "polkadot-runtime-common",
- "polkadot-runtime-allychains",
- "betanet-runtime-constants",
- "scale-info",
- "serde",
- "serde_derive",
- "smallvec",
- "sp-api",
- "sp-authority-discovery",
- "sp-block-builder",
- "sp-consensus-babe",
- "sp-core",
- "sp-inherents",
- "sp-io",
- "sp-offchain",
- "sp-runtime",
- "sp-session",
- "sp-staking",
- "sp-std",
- "sp-transaction-pool",
- "sp-version",
- "axlib-wasm-builder",
- "xcm",
- "xcm-builder",
- "xcm-executor",
-]
-
-[[package]]
-name = "betanet-runtime-constants"
-version = "0.9.17"
-dependencies = [
- "frame-support",
- "polkadot-primitives",
- "polkadot-runtime-common",
- "smallvec",
- "sp-runtime",
 ]
 
 [[package]]
@@ -8374,7 +8481,7 @@ dependencies = [
 [[package]]
 name = "sc-allocator"
 version = "4.1.0-dev"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
  "log",
  "sp-core",
@@ -8385,15 +8492,16 @@ dependencies = [
 [[package]]
 name = "sc-authority-discovery"
 version = "0.10.0-dev"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
  "async-trait",
+ "axlib-prometheus-endpoint",
  "futures 0.3.21",
  "futures-timer",
  "ip_network",
  "libp2p",
  "log",
- "axia-scale-codec",
+ "parity-scale-codec",
  "prost",
  "prost-build",
  "rand 0.7.3",
@@ -8405,19 +8513,19 @@ dependencies = [
  "sp-core",
  "sp-keystore",
  "sp-runtime",
- "axlib-prometheus-endpoint",
  "thiserror",
 ]
 
 [[package]]
 name = "sc-basic-authorship"
 version = "0.10.0-dev"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
+ "axlib-prometheus-endpoint",
  "futures 0.3.21",
  "futures-timer",
  "log",
- "axia-scale-codec",
+ "parity-scale-codec",
  "sc-block-builder",
  "sc-client-api",
  "sc-proposer-metrics",
@@ -8429,15 +8537,14 @@ dependencies = [
  "sp-core",
  "sp-inherents",
  "sp-runtime",
- "axlib-prometheus-endpoint",
 ]
 
 [[package]]
 name = "sc-block-builder"
 version = "0.10.0-dev"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
- "axia-scale-codec",
+ "parity-scale-codec",
  "sc-client-api",
  "sp-api",
  "sp-block-builder",
@@ -8451,11 +8558,11 @@ dependencies = [
 [[package]]
 name = "sc-chain-spec"
 version = "4.0.0-dev"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
  "impl-trait-for-tuples",
  "memmap2 0.5.3",
- "axia-scale-codec",
+ "parity-scale-codec",
  "sc-chain-spec-derive",
  "sc-network",
  "sc-telemetry",
@@ -8468,7 +8575,7 @@ dependencies = [
 [[package]]
 name = "sc-chain-spec-derive"
 version = "4.0.0-dev"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
  "proc-macro-crate 1.1.3",
  "proc-macro2",
@@ -8479,7 +8586,7 @@ dependencies = [
 [[package]]
 name = "sc-cli"
 version = "0.10.0-dev"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
  "chrono",
  "clap",
@@ -8489,7 +8596,7 @@ dependencies = [
  "libp2p",
  "log",
  "names",
- "axia-scale-codec",
+ "parity-scale-codec",
  "rand 0.7.3",
  "regex",
  "rpassword",
@@ -8517,13 +8624,14 @@ dependencies = [
 [[package]]
 name = "sc-client-api"
 version = "4.0.0-dev"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
+ "axlib-prometheus-endpoint",
  "fnv",
  "futures 0.3.21",
  "hash-db",
  "log",
- "axia-scale-codec",
+ "parity-scale-codec",
  "parking_lot",
  "sc-executor",
  "sc-transaction-pool-api",
@@ -8539,13 +8647,12 @@ dependencies = [
  "sp-state-machine",
  "sp-storage",
  "sp-trie",
- "axlib-prometheus-endpoint",
 ]
 
 [[package]]
 name = "sc-client-db"
 version = "0.10.0-dev"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
  "hash-db",
  "kvdb",
@@ -8553,8 +8660,8 @@ dependencies = [
  "kvdb-rocksdb",
  "linked-hash-map",
  "log",
- "axia-db",
- "axia-scale-codec",
+ "parity-db",
+ "parity-scale-codec",
  "parking_lot",
  "sc-client-api",
  "sc-state-db",
@@ -8570,9 +8677,10 @@ dependencies = [
 [[package]]
 name = "sc-consensus"
 version = "0.10.0-dev"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
  "async-trait",
+ "axlib-prometheus-endpoint",
  "futures 0.3.21",
  "futures-timer",
  "libp2p",
@@ -8587,16 +8695,16 @@ dependencies = [
  "sp-core",
  "sp-runtime",
  "sp-state-machine",
- "axlib-prometheus-endpoint",
  "thiserror",
 ]
 
 [[package]]
 name = "sc-consensus-babe"
 version = "0.10.0-dev"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
  "async-trait",
+ "axlib-prometheus-endpoint",
  "fork-tree",
  "futures 0.3.21",
  "log",
@@ -8604,7 +8712,7 @@ dependencies = [
  "num-bigint",
  "num-rational 0.2.4",
  "num-traits",
- "axia-scale-codec",
+ "parity-scale-codec",
  "parking_lot",
  "rand 0.7.3",
  "retain_mut",
@@ -8630,14 +8738,13 @@ dependencies = [
  "sp-keystore",
  "sp-runtime",
  "sp-version",
- "axlib-prometheus-endpoint",
  "thiserror",
 ]
 
 [[package]]
 name = "sc-consensus-babe-rpc"
 version = "0.10.0-dev"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
  "futures 0.3.21",
  "jsonrpc-core",
@@ -8661,10 +8768,10 @@ dependencies = [
 [[package]]
 name = "sc-consensus-epochs"
 version = "0.10.0-dev"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
  "fork-tree",
- "axia-scale-codec",
+ "parity-scale-codec",
  "sc-client-api",
  "sc-consensus",
  "sp-blockchain",
@@ -8674,13 +8781,13 @@ dependencies = [
 [[package]]
 name = "sc-consensus-slots"
 version = "0.10.0-dev"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
  "async-trait",
  "futures 0.3.21",
  "futures-timer",
  "log",
- "axia-scale-codec",
+ "parity-scale-codec",
  "sc-client-api",
  "sc-consensus",
  "sc-telemetry",
@@ -8699,7 +8806,7 @@ dependencies = [
 [[package]]
 name = "sc-consensus-uncles"
 version = "0.10.0-dev"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
  "sc-client-api",
  "sp-authorship",
@@ -8710,13 +8817,13 @@ dependencies = [
 [[package]]
 name = "sc-executor"
 version = "0.10.0-dev"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
  "lazy_static",
  "libsecp256k1",
  "log",
  "lru 0.6.6",
- "axia-scale-codec",
+ "parity-scale-codec",
  "parking_lot",
  "sc-executor-common",
  "sc-executor-wasmi",
@@ -8738,10 +8845,10 @@ dependencies = [
 [[package]]
 name = "sc-executor-common"
 version = "0.10.0-dev"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
  "environmental",
- "axia-scale-codec",
+ "parity-scale-codec",
  "sc-allocator",
  "sp-core",
  "sp-maybe-compressed-blob",
@@ -8755,10 +8862,10 @@ dependencies = [
 [[package]]
 name = "sc-executor-wasmi"
 version = "0.10.0-dev"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
  "log",
- "axia-scale-codec",
+ "parity-scale-codec",
  "sc-allocator",
  "sc-executor-common",
  "scoped-tls",
@@ -8771,13 +8878,13 @@ dependencies = [
 [[package]]
 name = "sc-executor-wasmtime"
 version = "0.10.0-dev"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
  "cfg-if 1.0.0",
  "libc",
  "log",
- "axia-scale-codec",
- "axia-wasm 0.42.2",
+ "parity-scale-codec",
+ "parity-wasm 0.42.2",
  "sc-allocator",
  "sc-executor-common",
  "sp-core",
@@ -8789,16 +8896,17 @@ dependencies = [
 [[package]]
 name = "sc-finality-grandpa"
 version = "0.10.0-dev"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
  "async-trait",
+ "axlib-prometheus-endpoint",
  "dyn-clone",
  "finality-grandpa",
  "fork-tree",
  "futures 0.3.21",
  "futures-timer",
  "log",
- "axia-scale-codec",
+ "parity-scale-codec",
  "parking_lot",
  "rand 0.8.5",
  "sc-block-builder",
@@ -8820,14 +8928,13 @@ dependencies = [
  "sp-finality-grandpa",
  "sp-keystore",
  "sp-runtime",
- "axlib-prometheus-endpoint",
  "thiserror",
 ]
 
 [[package]]
 name = "sc-finality-grandpa-rpc"
 version = "0.10.0-dev"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
  "finality-grandpa",
  "futures 0.3.21",
@@ -8836,7 +8943,7 @@ dependencies = [
  "jsonrpc-derive",
  "jsonrpc-pubsub",
  "log",
- "axia-scale-codec",
+ "parity-scale-codec",
  "sc-client-api",
  "sc-finality-grandpa",
  "sc-rpc",
@@ -8851,13 +8958,13 @@ dependencies = [
 [[package]]
 name = "sc-informant"
 version = "0.10.0-dev"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
  "ansi_term",
  "futures 0.3.21",
  "futures-timer",
  "log",
- "axia-util-mem",
+ "parity-util-mem",
  "sc-client-api",
  "sc-network",
  "sc-transaction-pool-api",
@@ -8868,7 +8975,7 @@ dependencies = [
 [[package]]
 name = "sc-keystore"
 version = "4.0.0-dev"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
  "async-trait",
  "hex",
@@ -8883,11 +8990,12 @@ dependencies = [
 [[package]]
 name = "sc-network"
 version = "0.10.0-dev"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
  "async-std",
  "async-trait",
  "asynchronous-codec 0.5.0",
+ "axlib-prometheus-endpoint",
  "bitflags",
  "bytes 1.1.0",
  "cid",
@@ -8903,7 +9011,7 @@ dependencies = [
  "linked_hash_set",
  "log",
  "lru 0.7.2",
- "axia-scale-codec",
+ "parity-scale-codec",
  "parking_lot",
  "pin-project 1.0.10",
  "prost",
@@ -8923,7 +9031,6 @@ dependencies = [
  "sp-core",
  "sp-finality-grandpa",
  "sp-runtime",
- "axlib-prometheus-endpoint",
  "thiserror",
  "unsigned-varint 0.6.0",
  "void",
@@ -8933,8 +9040,9 @@ dependencies = [
 [[package]]
 name = "sc-network-gossip"
 version = "0.10.0-dev"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
+ "axlib-prometheus-endpoint",
  "futures 0.3.21",
  "futures-timer",
  "libp2p",
@@ -8942,14 +9050,13 @@ dependencies = [
  "lru 0.7.2",
  "sc-network",
  "sp-runtime",
- "axlib-prometheus-endpoint",
  "tracing",
 ]
 
 [[package]]
 name = "sc-offchain"
 version = "4.0.0-dev"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
  "bytes 1.1.0",
  "fnv",
@@ -8960,7 +9067,7 @@ dependencies = [
  "hyper-rustls",
  "num_cpus",
  "once_cell",
- "axia-scale-codec",
+ "parity-scale-codec",
  "parking_lot",
  "rand 0.7.3",
  "sc-client-api",
@@ -8977,7 +9084,7 @@ dependencies = [
 [[package]]
 name = "sc-peerset"
 version = "4.0.0-dev"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
  "futures 0.3.21",
  "libp2p",
@@ -8990,23 +9097,23 @@ dependencies = [
 [[package]]
 name = "sc-proposer-metrics"
 version = "0.10.0-dev"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
- "log",
  "axlib-prometheus-endpoint",
+ "log",
 ]
 
 [[package]]
 name = "sc-rpc"
 version = "4.0.0-dev"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
  "futures 0.3.21",
  "hash-db",
  "jsonrpc-core",
  "jsonrpc-pubsub",
  "log",
- "axia-scale-codec",
+ "parity-scale-codec",
  "parking_lot",
  "sc-block-builder",
  "sc-chain-spec",
@@ -9030,7 +9137,7 @@ dependencies = [
 [[package]]
 name = "sc-rpc-api"
 version = "0.10.0-dev"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
  "futures 0.3.21",
  "jsonrpc-core",
@@ -9038,7 +9145,7 @@ dependencies = [
  "jsonrpc-derive",
  "jsonrpc-pubsub",
  "log",
- "axia-scale-codec",
+ "parity-scale-codec",
  "parking_lot",
  "sc-chain-spec",
  "sc-transaction-pool-api",
@@ -9055,8 +9162,9 @@ dependencies = [
 [[package]]
 name = "sc-rpc-server"
 version = "4.0.0-dev"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
+ "axlib-prometheus-endpoint",
  "futures 0.3.21",
  "jsonrpc-core",
  "jsonrpc-http-server",
@@ -9065,16 +9173,16 @@ dependencies = [
  "jsonrpc-ws-server",
  "log",
  "serde_json",
- "axlib-prometheus-endpoint",
  "tokio",
 ]
 
 [[package]]
 name = "sc-service"
 version = "0.10.0-dev"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
  "async-trait",
+ "axlib-prometheus-endpoint",
  "directories",
  "exit-future",
  "futures 0.3.21",
@@ -9083,8 +9191,8 @@ dependencies = [
  "jsonrpc-core",
  "jsonrpc-pubsub",
  "log",
- "axia-scale-codec",
- "axia-util-mem",
+ "parity-scale-codec",
+ "parity-util-mem",
  "parking_lot",
  "pin-project 1.0.10",
  "rand 0.7.3",
@@ -9125,7 +9233,6 @@ dependencies = [
  "sp-transaction-storage-proof",
  "sp-trie",
  "sp-version",
- "axlib-prometheus-endpoint",
  "tempfile",
  "thiserror",
  "tokio",
@@ -9136,12 +9243,12 @@ dependencies = [
 [[package]]
 name = "sc-state-db"
 version = "0.10.0-dev"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
  "log",
- "axia-scale-codec",
- "axia-util-mem",
- "axia-util-mem-derive",
+ "parity-scale-codec",
+ "parity-util-mem",
+ "parity-util-mem-derive",
  "parking_lot",
  "sc-client-api",
  "sp-core",
@@ -9150,12 +9257,12 @@ dependencies = [
 [[package]]
 name = "sc-sync-state-rpc"
 version = "0.10.0-dev"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
  "jsonrpc-core",
  "jsonrpc-core-client",
  "jsonrpc-derive",
- "axia-scale-codec",
+ "parity-scale-codec",
  "sc-chain-spec",
  "sc-client-api",
  "sc-consensus-babe",
@@ -9172,7 +9279,7 @@ dependencies = [
 [[package]]
 name = "sc-telemetry"
 version = "4.0.0-dev"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
  "chrono",
  "futures 0.3.21",
@@ -9190,7 +9297,7 @@ dependencies = [
 [[package]]
 name = "sc-tracing"
 version = "4.0.0-dev"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
  "ansi_term",
  "atty",
@@ -9221,7 +9328,7 @@ dependencies = [
 [[package]]
 name = "sc-tracing-proc-macro"
 version = "4.0.0-dev"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
  "proc-macro-crate 1.1.3",
  "proc-macro2",
@@ -9232,14 +9339,15 @@ dependencies = [
 [[package]]
 name = "sc-transaction-pool"
 version = "4.0.0-dev"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
+ "axlib-prometheus-endpoint",
  "futures 0.3.21",
  "futures-timer",
  "linked-hash-map",
  "log",
- "axia-scale-codec",
- "axia-util-mem",
+ "parity-scale-codec",
+ "parity-util-mem",
  "parking_lot",
  "retain_mut",
  "sc-client-api",
@@ -9252,14 +9360,13 @@ dependencies = [
  "sp-runtime",
  "sp-tracing",
  "sp-transaction-pool",
- "axlib-prometheus-endpoint",
  "thiserror",
 ]
 
 [[package]]
 name = "sc-transaction-pool-api"
 version = "4.0.0-dev"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
  "futures 0.3.21",
  "log",
@@ -9272,7 +9379,7 @@ dependencies = [
 [[package]]
 name = "sc-utils"
 version = "4.0.0-dev"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
  "futures 0.3.21",
  "futures-timer",
@@ -9290,7 +9397,7 @@ dependencies = [
  "bitvec",
  "cfg-if 1.0.0",
  "derive_more",
- "axia-scale-codec",
+ "parity-scale-codec",
  "scale-info-derive",
  "serde",
 ]
@@ -9626,7 +9733,7 @@ name = "slot-range-helper"
 version = "0.9.17"
 dependencies = [
  "enumn",
- "axia-scale-codec",
+ "parity-scale-codec",
  "paste",
  "sp-runtime",
  "sp-std",
@@ -9711,11 +9818,11 @@ dependencies = [
 [[package]]
 name = "sp-api"
 version = "4.0.0-dev"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
  "hash-db",
  "log",
- "axia-scale-codec",
+ "parity-scale-codec",
  "sp-api-proc-macro",
  "sp-core",
  "sp-runtime",
@@ -9728,7 +9835,7 @@ dependencies = [
 [[package]]
 name = "sp-api-proc-macro"
 version = "4.0.0-dev"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
  "blake2-rfc",
  "proc-macro-crate 1.1.3",
@@ -9740,9 +9847,9 @@ dependencies = [
 [[package]]
 name = "sp-application-crypto"
 version = "5.0.0"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
- "axia-scale-codec",
+ "parity-scale-codec",
  "scale-info",
  "serde",
  "sp-core",
@@ -9753,11 +9860,11 @@ dependencies = [
 [[package]]
 name = "sp-arithmetic"
 version = "4.0.0"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
  "integer-sqrt",
  "num-traits",
- "axia-scale-codec",
+ "parity-scale-codec",
  "scale-info",
  "serde",
  "sp-debug-derive",
@@ -9768,9 +9875,9 @@ dependencies = [
 [[package]]
 name = "sp-authority-discovery"
 version = "4.0.0-dev"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
- "axia-scale-codec",
+ "parity-scale-codec",
  "scale-info",
  "sp-api",
  "sp-application-crypto",
@@ -9781,10 +9888,10 @@ dependencies = [
 [[package]]
 name = "sp-authorship"
 version = "4.0.0-dev"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
  "async-trait",
- "axia-scale-codec",
+ "parity-scale-codec",
  "sp-inherents",
  "sp-runtime",
  "sp-std",
@@ -9793,9 +9900,9 @@ dependencies = [
 [[package]]
 name = "sp-block-builder"
 version = "4.0.0-dev"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
- "axia-scale-codec",
+ "parity-scale-codec",
  "sp-api",
  "sp-inherents",
  "sp-runtime",
@@ -9805,12 +9912,12 @@ dependencies = [
 [[package]]
 name = "sp-blockchain"
 version = "4.0.0-dev"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
  "futures 0.3.21",
  "log",
  "lru 0.7.2",
- "axia-scale-codec",
+ "parity-scale-codec",
  "parking_lot",
  "sp-api",
  "sp-consensus",
@@ -9823,13 +9930,13 @@ dependencies = [
 [[package]]
 name = "sp-consensus"
 version = "0.10.0-dev"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
  "async-trait",
  "futures 0.3.21",
  "futures-timer",
  "log",
- "axia-scale-codec",
+ "parity-scale-codec",
  "sp-core",
  "sp-inherents",
  "sp-runtime",
@@ -9842,11 +9949,11 @@ dependencies = [
 [[package]]
 name = "sp-consensus-babe"
 version = "0.10.0-dev"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
  "async-trait",
  "merlin",
- "axia-scale-codec",
+ "parity-scale-codec",
  "scale-info",
  "serde",
  "sp-api",
@@ -9865,9 +9972,9 @@ dependencies = [
 [[package]]
 name = "sp-consensus-slots"
 version = "0.10.0-dev"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
- "axia-scale-codec",
+ "parity-scale-codec",
  "scale-info",
  "serde",
  "sp-arithmetic",
@@ -9877,9 +9984,9 @@ dependencies = [
 [[package]]
 name = "sp-consensus-vrf"
 version = "0.10.0-dev"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
- "axia-scale-codec",
+ "parity-scale-codec",
  "schnorrkel",
  "sp-core",
  "sp-runtime",
@@ -9889,7 +9996,7 @@ dependencies = [
 [[package]]
 name = "sp-core"
 version = "5.0.0"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
  "base58",
  "bitflags",
@@ -9907,8 +10014,8 @@ dependencies = [
  "log",
  "merlin",
  "num-traits",
- "axia-scale-codec",
- "axia-util-mem",
+ "parity-scale-codec",
+ "parity-util-mem",
  "parking_lot",
  "primitive-types",
  "rand 0.7.3",
@@ -9925,7 +10032,7 @@ dependencies = [
  "sp-std",
  "sp-storage",
  "ss58-registry",
- "axlib-bip39",
+ "substrate-bip39",
  "thiserror",
  "tiny-bip39",
  "tiny-keccak",
@@ -9937,7 +10044,7 @@ dependencies = [
 [[package]]
 name = "sp-core-hashing"
 version = "4.0.0"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
  "blake2-rfc",
  "byteorder",
@@ -9950,7 +10057,7 @@ dependencies = [
 [[package]]
 name = "sp-core-hashing-proc-macro"
 version = "4.0.0-dev"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
  "proc-macro2",
  "quote",
@@ -9961,7 +10068,7 @@ dependencies = [
 [[package]]
 name = "sp-database"
 version = "4.0.0-dev"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
  "kvdb",
  "parking_lot",
@@ -9970,7 +10077,7 @@ dependencies = [
 [[package]]
 name = "sp-debug-derive"
 version = "4.0.0"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
  "proc-macro2",
  "quote",
@@ -9980,10 +10087,10 @@ dependencies = [
 [[package]]
 name = "sp-externalities"
 version = "0.11.0"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
  "environmental",
- "axia-scale-codec",
+ "parity-scale-codec",
  "sp-std",
  "sp-storage",
 ]
@@ -9991,11 +10098,11 @@ dependencies = [
 [[package]]
 name = "sp-finality-grandpa"
 version = "4.0.0-dev"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
  "finality-grandpa",
  "log",
- "axia-scale-codec",
+ "parity-scale-codec",
  "scale-info",
  "serde",
  "sp-api",
@@ -10009,11 +10116,11 @@ dependencies = [
 [[package]]
 name = "sp-inherents"
 version = "4.0.0-dev"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
  "async-trait",
  "impl-trait-for-tuples",
- "axia-scale-codec",
+ "parity-scale-codec",
  "sp-core",
  "sp-runtime",
  "sp-std",
@@ -10023,13 +10130,13 @@ dependencies = [
 [[package]]
 name = "sp-io"
 version = "5.0.0"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
  "futures 0.3.21",
  "hash-db",
  "libsecp256k1",
  "log",
- "axia-scale-codec",
+ "parity-scale-codec",
  "parking_lot",
  "sp-core",
  "sp-externalities",
@@ -10047,7 +10154,7 @@ dependencies = [
 [[package]]
 name = "sp-keyring"
 version = "5.0.0"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
  "lazy_static",
  "sp-core",
@@ -10058,12 +10165,12 @@ dependencies = [
 [[package]]
 name = "sp-keystore"
 version = "0.11.0"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
  "async-trait",
  "futures 0.3.21",
  "merlin",
- "axia-scale-codec",
+ "parity-scale-codec",
  "parking_lot",
  "schnorrkel",
  "serde",
@@ -10075,7 +10182,7 @@ dependencies = [
 [[package]]
 name = "sp-maybe-compressed-blob"
 version = "4.1.0-dev"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
  "thiserror",
  "zstd",
@@ -10084,9 +10191,9 @@ dependencies = [
 [[package]]
 name = "sp-npos-elections"
 version = "4.0.0-dev"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
- "axia-scale-codec",
+ "parity-scale-codec",
  "scale-info",
  "serde",
  "sp-arithmetic",
@@ -10099,7 +10206,7 @@ dependencies = [
 [[package]]
 name = "sp-npos-elections-solution-type"
 version = "4.0.0-dev"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
  "proc-macro-crate 1.1.3",
  "proc-macro2",
@@ -10110,7 +10217,7 @@ dependencies = [
 [[package]]
 name = "sp-offchain"
 version = "4.0.0-dev"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
  "sp-api",
  "sp-core",
@@ -10120,7 +10227,7 @@ dependencies = [
 [[package]]
 name = "sp-panic-handler"
 version = "4.0.0"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
  "backtrace",
  "lazy_static",
@@ -10130,7 +10237,7 @@ dependencies = [
 [[package]]
 name = "sp-rpc"
 version = "5.0.0"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
  "rustc-hash",
  "serde",
@@ -10140,14 +10247,14 @@ dependencies = [
 [[package]]
 name = "sp-runtime"
 version = "5.0.0"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
  "either",
  "hash256-std-hasher",
  "impl-trait-for-tuples",
  "log",
- "axia-scale-codec",
- "axia-util-mem",
+ "parity-scale-codec",
+ "parity-util-mem",
  "paste",
  "rand 0.7.3",
  "scale-info",
@@ -10162,10 +10269,10 @@ dependencies = [
 [[package]]
 name = "sp-runtime-interface"
 version = "5.0.0"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
  "impl-trait-for-tuples",
- "axia-scale-codec",
+ "parity-scale-codec",
  "primitive-types",
  "sp-externalities",
  "sp-runtime-interface-proc-macro",
@@ -10179,7 +10286,7 @@ dependencies = [
 [[package]]
 name = "sp-runtime-interface-proc-macro"
 version = "4.0.0"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
  "Inflector",
  "proc-macro-crate 1.1.3",
@@ -10191,7 +10298,7 @@ dependencies = [
 [[package]]
 name = "sp-serializer"
 version = "4.0.0-dev"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
  "serde",
  "serde_json",
@@ -10200,9 +10307,9 @@ dependencies = [
 [[package]]
 name = "sp-session"
 version = "4.0.0-dev"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
- "axia-scale-codec",
+ "parity-scale-codec",
  "scale-info",
  "sp-api",
  "sp-core",
@@ -10214,9 +10321,9 @@ dependencies = [
 [[package]]
 name = "sp-staking"
 version = "4.0.0-dev"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
- "axia-scale-codec",
+ "parity-scale-codec",
  "scale-info",
  "sp-runtime",
  "sp-std",
@@ -10225,12 +10332,12 @@ dependencies = [
 [[package]]
 name = "sp-state-machine"
 version = "0.11.0"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
  "hash-db",
  "log",
  "num-traits",
- "axia-scale-codec",
+ "parity-scale-codec",
  "parking_lot",
  "rand 0.7.3",
  "smallvec",
@@ -10248,15 +10355,15 @@ dependencies = [
 [[package]]
 name = "sp-std"
 version = "4.0.0"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 
 [[package]]
 name = "sp-storage"
 version = "5.0.0"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
  "impl-serde",
- "axia-scale-codec",
+ "parity-scale-codec",
  "ref-cast",
  "serde",
  "sp-debug-derive",
@@ -10266,7 +10373,7 @@ dependencies = [
 [[package]]
 name = "sp-tasks"
 version = "4.0.0-dev"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
  "log",
  "sp-core",
@@ -10279,12 +10386,12 @@ dependencies = [
 [[package]]
 name = "sp-timestamp"
 version = "4.0.0-dev"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
  "async-trait",
  "futures-timer",
  "log",
- "axia-scale-codec",
+ "parity-scale-codec",
  "sp-api",
  "sp-inherents",
  "sp-runtime",
@@ -10295,9 +10402,9 @@ dependencies = [
 [[package]]
 name = "sp-tracing"
 version = "4.0.0"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
- "axia-scale-codec",
+ "parity-scale-codec",
  "sp-std",
  "tracing",
  "tracing-core",
@@ -10307,7 +10414,7 @@ dependencies = [
 [[package]]
 name = "sp-transaction-pool"
 version = "4.0.0-dev"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
  "sp-api",
  "sp-runtime",
@@ -10316,11 +10423,11 @@ dependencies = [
 [[package]]
 name = "sp-transaction-storage-proof"
 version = "4.0.0-dev"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
  "async-trait",
  "log",
- "axia-scale-codec",
+ "parity-scale-codec",
  "scale-info",
  "sp-core",
  "sp-inherents",
@@ -10332,11 +10439,11 @@ dependencies = [
 [[package]]
 name = "sp-trie"
 version = "5.0.0"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
  "hash-db",
  "memory-db",
- "axia-scale-codec",
+ "parity-scale-codec",
  "scale-info",
  "sp-core",
  "sp-std",
@@ -10347,11 +10454,11 @@ dependencies = [
 [[package]]
 name = "sp-version"
 version = "4.0.0-dev"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
  "impl-serde",
- "axia-scale-codec",
- "axia-wasm 0.42.2",
+ "parity-scale-codec",
+ "parity-wasm 0.42.2",
  "scale-info",
  "serde",
  "sp-core-hashing-proc-macro",
@@ -10364,9 +10471,9 @@ dependencies = [
 [[package]]
 name = "sp-version-proc-macro"
 version = "4.0.0-dev"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
- "axia-scale-codec",
+ "parity-scale-codec",
  "proc-macro2",
  "quote",
  "syn",
@@ -10375,11 +10482,11 @@ dependencies = [
 [[package]]
 name = "sp-wasm-interface"
 version = "5.0.0"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
  "impl-trait-for-tuples",
  "log",
- "axia-scale-codec",
+ "parity-scale-codec",
  "sp-std",
  "wasmi",
  "wasmtime",
@@ -10428,7 +10535,7 @@ dependencies = [
  "pallet-election-provider-multi-phase",
  "pallet-staking",
  "pallet-transaction-payment",
- "axia-scale-codec",
+ "parity-scale-codec",
  "paste",
  "polkadot-core-primitives",
  "polkadot-runtime",
@@ -10522,13 +10629,13 @@ dependencies = [
 [[package]]
 name = "sub-tokens"
 version = "0.1.0"
-source = "git+https://github.com/axiatech/axlib-debug-kit?branch=master#e12503ab781e913735dc389865a3b8b4a6c6399d"
+source = "git+https://github.com/paritytech/substrate-debug-kit?branch=master#e12503ab781e913735dc389865a3b8b4a6c6399d"
 dependencies = [
  "separator",
 ]
 
 [[package]]
-name = "axlib-bip39"
+name = "substrate-bip39"
 version = "0.4.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "49eee6965196b32f882dd2ee85a92b1dbead41b04e53907f269de3b0dc04733c"
@@ -10538,113 +10645,6 @@ dependencies = [
  "schnorrkel",
  "sha2 0.9.9",
  "zeroize",
-]
-
-[[package]]
-name = "axlib-build-script-utils"
-version = "3.0.0"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
-dependencies = [
- "platforms",
-]
-
-[[package]]
-name = "axlib-frame-rpc-system"
-version = "4.0.0-dev"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
-dependencies = [
- "frame-system-rpc-runtime-api",
- "futures 0.3.21",
- "jsonrpc-core",
- "jsonrpc-core-client",
- "jsonrpc-derive",
- "log",
- "axia-scale-codec",
- "sc-client-api",
- "sc-rpc-api",
- "sc-transaction-pool-api",
- "sp-api",
- "sp-block-builder",
- "sp-blockchain",
- "sp-core",
- "sp-runtime",
-]
-
-[[package]]
-name = "axlib-prometheus-endpoint"
-version = "0.10.0-dev"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
-dependencies = [
- "async-std",
- "futures-util",
- "hyper",
- "log",
- "prometheus",
- "thiserror",
- "tokio",
-]
-
-[[package]]
-name = "axlib-test-client"
-version = "2.0.1"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
-dependencies = [
- "async-trait",
- "futures 0.3.21",
- "hex",
- "axia-scale-codec",
- "sc-client-api",
- "sc-client-db",
- "sc-consensus",
- "sc-executor",
- "sc-offchain",
- "sc-service",
- "serde",
- "serde_json",
- "sp-blockchain",
- "sp-consensus",
- "sp-core",
- "sp-keyring",
- "sp-keystore",
- "sp-runtime",
- "sp-state-machine",
-]
-
-[[package]]
-name = "axlib-test-utils"
-version = "4.0.0-dev"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
-dependencies = [
- "futures 0.3.21",
- "axlib-test-utils-derive",
- "tokio",
-]
-
-[[package]]
-name = "axlib-test-utils-derive"
-version = "0.10.0-dev"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
-dependencies = [
- "proc-macro-crate 1.1.3",
- "proc-macro2",
- "quote",
- "syn",
-]
-
-[[package]]
-name = "axlib-wasm-builder"
-version = "5.0.0-dev"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
-dependencies = [
- "ansi_term",
- "build-helper",
- "cargo_metadata",
- "sp-maybe-compressed-blob",
- "strum",
- "tempfile",
- "toml",
- "walkdir",
- "wasm-gc-api",
 ]
 
 [[package]]
@@ -10721,12 +10721,12 @@ checksum = "507e9898683b6c43a9aa55b64259b721b52ba226e0f3779137e50ad114a4c90b"
 name = "test-allychain-adder"
 version = "0.9.17"
 dependencies = [
+ "axlib-wasm-builder",
  "dlmalloc",
- "axia-scale-codec",
+ "parity-scale-codec",
  "polkadot-allychain",
  "sp-io",
  "sp-std",
- "axlib-wasm-builder",
  "tiny-keccak",
 ]
 
@@ -10734,16 +10734,17 @@ dependencies = [
 name = "test-allychain-adder-collator"
 version = "0.9.17"
 dependencies = [
+ "axlib-test-utils",
  "clap",
  "futures 0.3.21",
  "futures-timer",
  "log",
- "axia-scale-codec",
+ "parity-scale-codec",
+ "polkadot-allychain",
  "polkadot-cli",
  "polkadot-node-core-pvf",
  "polkadot-node-primitives",
  "polkadot-node-subsystem",
- "polkadot-allychain",
  "polkadot-primitives",
  "polkadot-service",
  "polkadot-test-service",
@@ -10751,7 +10752,6 @@ dependencies = [
  "sc-service",
  "sp-core",
  "sp-keyring",
- "axlib-test-utils",
  "test-allychain-adder",
  "tokio",
 ]
@@ -10767,7 +10767,7 @@ dependencies = [
 name = "test-allychains"
 version = "0.9.17"
 dependencies = [
- "axia-scale-codec",
+ "parity-scale-codec",
  "sp-core",
  "test-allychain-adder",
  "test-allychain-halt",
@@ -11211,12 +11211,12 @@ checksum = "59547bce71d9c38b83d9c0e92b6066c4253371f15005def0c30d9657f50c7642"
 [[package]]
 name = "try-runtime-cli"
 version = "0.10.0-dev"
-source = "git+https://github.com/axtend/axlib?branch=c92f69d#666d75b90cc197b1cf668cdcceb24a2afe565a1e"
+source = "git+https://github.com/axtend/axlib?branch=c92f69d#025ee232293976e8abe88cfd291b39b483d8a01a"
 dependencies = [
  "clap",
  "jsonrpsee 0.4.1",
  "log",
- "axia-scale-codec",
+ "parity-scale-codec",
  "remote-externalities",
  "sc-chain-spec",
  "sc-cli",
@@ -11575,7 +11575,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "d0c32691b6c7e6c14e7f8fd55361a9088b507aa49620fcd06c09b3a1082186b9"
 dependencies = [
  "log",
- "axia-wasm 0.32.0",
+ "parity-wasm 0.32.0",
  "rustc-demangle",
 ]
 
@@ -11585,7 +11585,7 @@ version = "0.1.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "962e5b0401bbb6c887f54e69b8c496ea36f704df65db73e81fd5ff8dc3e63a9f"
 dependencies = [
- "axia-wasm 0.42.2",
+ "parity-wasm 0.42.2",
 ]
 
 [[package]]
@@ -11614,7 +11614,7 @@ dependencies = [
  "memory_units",
  "num-rational 0.2.4",
  "num-traits",
- "axia-wasm 0.42.2",
+ "parity-wasm 0.42.2",
  "wasmi-validation",
 ]
 
@@ -11624,7 +11624,7 @@ version = "0.4.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "165343ecd6c018fc09ebcae280752702c9a2ef3e6f8d02f1cfcbdb53ef6d7937"
 dependencies = [
- "axia-wasm 0.42.2",
+ "parity-wasm 0.42.2",
 ]
 
 [[package]]
@@ -11955,7 +11955,7 @@ dependencies = [
  "derivative",
  "impl-trait-for-tuples",
  "log",
- "axia-scale-codec",
+ "parity-scale-codec",
  "scale-info",
  "xcm-procedural",
 ]
@@ -11970,7 +11970,7 @@ dependencies = [
  "pallet-balances",
  "pallet-transaction-payment",
  "pallet-xcm",
- "axia-scale-codec",
+ "parity-scale-codec",
  "polkadot-allychain",
  "polkadot-runtime-allychains",
  "scale-info",
@@ -11991,7 +11991,7 @@ dependencies = [
  "frame-support",
  "impl-trait-for-tuples",
  "log",
- "axia-scale-codec",
+ "parity-scale-codec",
  "sp-arithmetic",
  "sp-core",
  "sp-io",
@@ -12035,10 +12035,10 @@ name = "xcm-simulator"
 version = "0.9.17"
 dependencies = [
  "frame-support",
- "axia-scale-codec",
+ "parity-scale-codec",
  "paste",
- "polkadot-core-primitives",
  "polkadot-allychain",
+ "polkadot-core-primitives",
  "polkadot-runtime-allychains",
  "sp-io",
  "sp-std",
@@ -12054,9 +12054,9 @@ dependencies = [
  "frame-system",
  "pallet-balances",
  "pallet-xcm",
- "axia-scale-codec",
- "polkadot-core-primitives",
+ "parity-scale-codec",
  "polkadot-allychain",
+ "polkadot-core-primitives",
  "polkadot-runtime-allychains",
  "scale-info",
  "sp-core",
@@ -12078,9 +12078,9 @@ dependencies = [
  "honggfuzz",
  "pallet-balances",
  "pallet-xcm",
- "axia-scale-codec",
- "polkadot-core-primitives",
+ "parity-scale-codec",
  "polkadot-allychain",
+ "polkadot-core-primitives",
  "polkadot-runtime-allychains",
  "scale-info",
  "sp-core",
@@ -12109,9 +12109,9 @@ dependencies = [
 
 [[package]]
 name = "zeroize"
-version = "1.5.2"
+version = "1.5.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "7c88870063c39ee00ec285a2f8d6a966e5b6fb2becc4e8dac77ed0d370ed6006"
+checksum = "50344758e2f40e3a1fcfc8f6f91aa57b5f8ebd8d27919fe6451f15aaaf9ee608"
 dependencies = [
  "zeroize_derive",
 ]
@@ -12134,7 +12134,7 @@ version = "0.9.17"
 dependencies = [
  "futures-util",
  "lazy_static",
- "axia-scale-codec",
+ "parity-scale-codec",
  "reqwest",
  "serde",
  "serde_json",
