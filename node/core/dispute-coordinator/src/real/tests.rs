@@ -30,7 +30,7 @@ use futures::{
 };
 
 use kvdb::KeyValueDB;
-use axia_scale_codec::Encode;
+use parity_scale_codec::Encode;
 
 use polkadot_node_primitives::SignedDisputeStatement;
 use polkadot_node_subsystem::{

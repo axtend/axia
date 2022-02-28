@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Axia Bridges Common.  If not, see <http://www.gnu.org/licenses/>.
 
-use axia_util_mem::MallocSizeOf;
+use parity_util_mem::MallocSizeOf;
 use scale_info::TypeInfo;
 use sp_runtime::traits::CheckEqual;
 

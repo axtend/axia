@@ -17,7 +17,7 @@
 use std::collections::btree_map::BTreeMap;
 
 use memory_lru::{MemoryLruCache, ResidentSize};
-use axia_util_mem::{MallocSizeOf, MallocSizeOfExt};
+use parity_util_mem::{MallocSizeOf, MallocSizeOfExt};
 use sp_consensus_babe::Epoch;
 
 use polkadot_primitives::{

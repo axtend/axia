@@ -19,7 +19,7 @@
 use super::*;
 pub use polkadot_node_metrics::metrics::{self, prometheus, Metrics as MetricsTrait};
 
-use axia_util_mem::MemoryAllocationSnapshot;
+use parity_util_mem::MemoryAllocationSnapshot;
 
 /// Overseer Prometheus metrics.
 #[derive(Clone)]

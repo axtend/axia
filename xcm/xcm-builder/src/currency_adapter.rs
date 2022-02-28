@@ -52,7 +52,7 @@ impl From<Error> for XcmError {
 ///
 /// # Example
 /// ```
-/// use axia_scale_codec::Decode;
+/// use parity_scale_codec::Decode;
 /// use frame_support::{parameter_types, PalletId};
 /// use sp_runtime::traits::{AccountIdConversion, TrailingZeroInput};
 /// use xcm::latest::prelude::*;

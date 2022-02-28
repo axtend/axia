@@ -28,7 +28,7 @@ use async_std::{
 	os::unix::net::UnixStream,
 	path::{Path, PathBuf},
 };
-use axia_scale_codec::{Decode, Encode};
+use parity_scale_codec::{Decode, Encode};
 use sp_core::hexdisplay::HexDisplay;
 use std::{any::Any, panic, sync::Arc, time::Duration};
 

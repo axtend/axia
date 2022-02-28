@@ -129,7 +129,7 @@ mod tests {
 	use assert_matches::assert_matches;
 	use futures::{executor, future};
 
-	use axia_scale_codec::Encode;
+	use parity_scale_codec::Encode;
 	use sp_core::testing::TaskExecutor;
 
 	use polkadot_node_primitives::BlockData;

@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Axia.  If not, see <http://www.gnu.org/licenses/>.
 
-use axia_scale_codec::{Decode, Encode};
+use parity_scale_codec::{Decode, Encode};
 use sp_std::{borrow::Borrow, convert::TryFrom, prelude::*, result::Result};
 use xcm::latest::{MultiLocation, OriginKind};
 

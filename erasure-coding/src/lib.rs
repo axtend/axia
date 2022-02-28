@@ -26,7 +26,7 @@
 
 use std::convert::TryFrom;
 
-use axia_scale_codec::{Decode, Encode};
+use parity_scale_codec::{Decode, Encode};
 use polkadot_node_primitives::{AvailableData, Proof};
 use polkadot_primitives::v0::{self, BlakeTwo256, Hash as H256, HashT};
 use sp_core::Blake2Hasher;
@@ -324,12 +324,12 @@ struct ShardInput<'a, I> {
 	cur_shard: Option<(&'a [u8], usize)>,
 }
 
-impl<'a, I: Iterator<Item = &'a [u8]>> axia_scale_codec::Input for ShardInput<'a, I> {
-	fn remaining_len(&mut self) -> Result<Option<usize>, axia_scale_codec::Error> {
+impl<'a, I: Iterator<Item = &'a [u8]>> parity_scale_codec::Input for ShardInput<'a, I> {
+	fn remaining_len(&mut self) -> Result<Option<usize>, parity_scale_codec::Error> {
 		Ok(Some(self.remaining_len))
 	}
 
-	fn read(&mut self, into: &mut [u8]) -> Result<(), axia_scale_codec::Error> {
+	fn read(&mut self, into: &mut [u8]) -> Result<(), parity_scale_codec::Error> {
 		let mut read_bytes = 0;
 
 		loop {

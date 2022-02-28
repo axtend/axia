@@ -25,7 +25,7 @@ use polkadot_primitives::v1::{
 use std::sync::Arc;
 
 use kvdb::{DBTransaction, KeyValueDB};
-use axia_scale_codec::{Decode, Encode};
+use parity_scale_codec::{Decode, Encode};
 
 use crate::{
 	error::{Fatal, FatalResult},
@@ -162,7 +162,7 @@ pub enum Error {
 	#[error(transparent)]
 	Io(#[from] std::io::Error),
 	#[error(transparent)]
-	Codec(#[from] axia_scale_codec::Error),
+	Codec(#[from] parity_scale_codec::Error),
 }
 
 impl From<Error> for crate::error::Error {

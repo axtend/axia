@@ -19,7 +19,7 @@
 #![deny(missing_docs)]
 
 use futures::{channel::mpsc, future::FutureExt, join, select, sink::SinkExt, stream::StreamExt};
-use axia_scale_codec::Encode;
+use parity_scale_codec::Encode;
 use polkadot_node_primitives::{AvailableData, CollationGenerationConfig, PoV};
 use polkadot_node_subsystem::{
 	messages::{AllMessages, CollationGenerationMessage, CollatorProtocolMessage},

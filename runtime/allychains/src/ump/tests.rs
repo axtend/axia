@@ -260,7 +260,7 @@ fn verify_relay_dispatch_queue_size_is_externally_accessible() {
 	// Make sure that the relay dispatch queue size storage entry is accessible via well known
 	// keys and is decodable into a (u32, u32).
 
-	use axia_scale_codec::Decode as _;
+	use parity_scale_codec::Decode as _;
 	use primitives::v1::well_known_keys;
 
 	let a = ParaId::from(228);

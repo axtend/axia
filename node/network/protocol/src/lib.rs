@@ -19,7 +19,7 @@
 #![deny(unused_crate_dependencies)]
 #![warn(missing_docs)]
 
-use axia_scale_codec::{Decode, Encode};
+use parity_scale_codec::{Decode, Encode};
 use polkadot_primitives::v1::{BlockNumber, Hash};
 use std::{collections::HashMap, fmt};
 
@@ -281,7 +281,7 @@ impl View {
 
 /// v1 protocol types.
 pub mod v1 {
-	use axia_scale_codec::{Decode, Encode};
+	use parity_scale_codec::{Decode, Encode};
 	use std::convert::TryFrom;
 
 	use polkadot_primitives::v1::{

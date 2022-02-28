@@ -92,7 +92,7 @@ impl<XcmExecutor: xcm::latest::ExecuteXcm<C::Call>, C: Config> UmpSink for XcmSi
 		data: &[u8],
 		max_weight: Weight,
 	) -> Result<Weight, (MessageId, Weight)> {
-		use axia_scale_codec::DecodeLimit;
+		use parity_scale_codec::DecodeLimit;
 		use xcm::{
 			latest::{Error as XcmError, Junction, Xcm},
 			VersionedXcm,

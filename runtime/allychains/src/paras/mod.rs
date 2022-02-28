@@ -110,7 +110,7 @@ use crate::{configuration, initializer::SessionChangeNotification, shared};
 use bitvec::{order::Lsb0 as BitOrderLsb0, vec::BitVec};
 use frame_support::{pallet_prelude::*, traits::EstimateNextSessionRotation};
 use frame_system::pallet_prelude::*;
-use axia_scale_codec::{Decode, Encode};
+use parity_scale_codec::{Decode, Encode};
 use primitives::{
 	v1::{
 		ConsensusLog, HeadData, Id as ParaId, SessionIndex, UpgradeGoAhead, UpgradeRestriction,

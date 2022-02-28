@@ -26,7 +26,7 @@ use futures::{
 	pin_mut, Future, SinkExt,
 };
 use futures_timer::Delay;
-use axia_scale_codec::{Decode, Encode};
+use parity_scale_codec::{Decode, Encode};
 
 use sc_network::config::RequestResponseConfig;
 

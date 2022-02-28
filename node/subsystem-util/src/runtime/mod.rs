@@ -20,7 +20,7 @@ use std::cmp::max;
 
 use lru::LruCache;
 
-use axia_scale_codec::Encode;
+use parity_scale_codec::Encode;
 use sp_application_crypto::AppKey;
 use sp_core::crypto::ByteArray;
 use sp_keystore::{CryptoStore, SyncCryptoStorePtr};

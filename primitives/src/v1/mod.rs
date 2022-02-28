@@ -17,7 +17,7 @@
 //! `V1` Primitives.
 
 use bitvec::vec::BitVec;
-use axia_scale_codec::{Decode, Encode};
+use parity_scale_codec::{Decode, Encode};
 use scale_info::TypeInfo;
 use sp_std::prelude::*;
 
@@ -49,7 +49,7 @@ pub use crate::v0::{
 };
 
 #[cfg(feature = "std")]
-use axia_util_mem::{MallocSizeOf, MallocSizeOfOps};
+use parity_util_mem::{MallocSizeOf, MallocSizeOfOps};
 
 // More exports from v0 for std.
 #[cfg(feature = "std")]
@@ -73,7 +73,7 @@ pub use metrics::{
 pub mod well_known_keys {
 	use super::{HrmpChannelId, Id};
 	use hex_literal::hex;
-	use axia_scale_codec::Encode as _;
+	use parity_scale_codec::Encode as _;
 	use sp_io::hashing::twox_64;
 	use sp_std::prelude::*;
 
@@ -1128,7 +1128,7 @@ impl ConsensusLog {
 	/// Attempt to convert a reference to a generic digest item into a consensus log.
 	pub fn from_digest_item(
 		digest_item: &runtime_primitives::DigestItem,
-	) -> Result<Option<Self>, axia_scale_codec::Error> {
+	) -> Result<Option<Self>, parity_scale_codec::Error> {
 		match digest_item {
 			runtime_primitives::DigestItem::Consensus(id, encoded) if id == &AXIA_ENGINE_ID =>
 				Ok(Some(Self::decode(&mut &encoded[..])?)),

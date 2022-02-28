@@ -44,7 +44,7 @@ pub mod v1 {
 	// Copied over from configuration.rs @ 656dd280f266dc56bd0cf1dbe3ca232960912f34 and removed
 	// all the comments.
 	#[derive(
-		axia_scale_codec::Encode, axia_scale_codec::Decode, scale_info::TypeInfo, Debug, Clone,
+		parity_scale_codec::Encode, parity_scale_codec::Decode, scale_info::TypeInfo, Debug, Clone,
 	)]
 	pub struct HostConfiguration<BlockNumber> {
 		pub max_code_size: u32,

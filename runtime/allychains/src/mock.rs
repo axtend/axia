@@ -29,7 +29,7 @@ use frame_support::{
 	weights::Weight,
 };
 use frame_support_test::TestRandomness;
-use axia_scale_codec::Decode;
+use parity_scale_codec::Decode;
 use primitives::v1::{
 	AuthorityDiscoveryId, Balance, BlockNumber, Header, Moment, SessionIndex, UpwardMessage,
 	ValidatorIndex,

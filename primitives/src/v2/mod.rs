@@ -18,13 +18,13 @@
 
 use crate::v1;
 
-use axia_scale_codec::{Decode, Encode};
+use parity_scale_codec::{Decode, Encode};
 use primitives::RuntimeDebug;
 use scale_info::TypeInfo;
 use sp_std::{collections::btree_map::BTreeMap, prelude::*};
 
 #[cfg(feature = "std")]
-use axia_util_mem::MallocSizeOf;
+use parity_util_mem::MallocSizeOf;
 
 /// Information about validator sets of a session.
 #[derive(Clone, Encode, Decode, RuntimeDebug, TypeInfo)]

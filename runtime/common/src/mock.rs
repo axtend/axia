@@ -21,7 +21,7 @@ use frame_support::{
 	dispatch::{DispatchError, DispatchResult},
 	weights::Weight,
 };
-use axia_scale_codec::{Decode, Encode};
+use parity_scale_codec::{Decode, Encode};
 use primitives::v1::{HeadData, Id as ParaId, ValidationCode};
 use sp_runtime::{traits::SaturatedConversion, Permill};
 use std::{cell::RefCell, collections::HashMap};

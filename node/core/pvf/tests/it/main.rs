@@ -15,7 +15,7 @@
 // along with Axia.  If not, see <http://www.gnu.org/licenses/>.
 
 use async_std::sync::Mutex;
-use axia_scale_codec::Encode as _;
+use parity_scale_codec::Encode as _;
 use polkadot_node_core_pvf::{
 	start, Config, InvalidCandidate, Metrics, Pvf, ValidationError, ValidationHost,
 };

@@ -19,7 +19,7 @@
 use crate::{BlockData, HeadData};
 use core::panic;
 use allychain::primitives::{HeadData as GenericHeadData, ValidationResult};
-use axia_scale_codec::{Decode, Encode};
+use parity_scale_codec::{Decode, Encode};
 use sp_std::vec::Vec;
 
 #[no_mangle]

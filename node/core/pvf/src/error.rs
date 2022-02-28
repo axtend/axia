@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Axia.  If not, see <http://www.gnu.org/licenses/>.
 
-use axia_scale_codec::{Decode, Encode};
+use parity_scale_codec::{Decode, Encode};
 
 /// Result of PVF preparation performed by the validation host.
 pub type PrepareResult = Result<(), PrepareError>;

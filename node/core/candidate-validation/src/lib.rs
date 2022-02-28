@@ -45,7 +45,7 @@ use polkadot_primitives::v1::{
 	PersistedValidationData, ValidationCode, ValidationCodeHash,
 };
 
-use axia_scale_codec::Encode;
+use parity_scale_codec::Encode;
 
 use futures::{channel::oneshot, prelude::*};
 

@@ -23,7 +23,7 @@ use core::{
 	result,
 };
 use derivative::Derivative;
-use axia_scale_codec::{self, Decode, Encode};
+use parity_scale_codec::{self, Decode, Encode};
 use scale_info::TypeInfo;
 
 mod junction;

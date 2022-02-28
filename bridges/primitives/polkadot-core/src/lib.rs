@@ -29,7 +29,7 @@ use frame_support::{
 	Blake2_128Concat, RuntimeDebug, StorageHasher, Twox128,
 };
 use frame_system::limits;
-use axia_scale_codec::Compact;
+use parity_scale_codec::Compact;
 use scale_info::{StaticTypeInfo, TypeInfo};
 use sp_core::Hasher as HasherT;
 use sp_runtime::{
@@ -265,16 +265,16 @@ pub struct SignedExtensions<Call> {
 	_data: sp_std::marker::PhantomData<Call>,
 }
 
-impl<Call> axia_scale_codec::Encode for SignedExtensions<Call> {
+impl<Call> parity_scale_codec::Encode for SignedExtensions<Call> {
 	fn using_encoded<R, F: FnOnce(&[u8]) -> R>(&self, f: F) -> R {
 		self.encode_payload.using_encoded(f)
 	}
 }
 
-impl<Call> axia_scale_codec::Decode for SignedExtensions<Call> {
-	fn decode<I: axia_scale_codec::Input>(
+impl<Call> parity_scale_codec::Decode for SignedExtensions<Call> {
+	fn decode<I: parity_scale_codec::Input>(
 		_input: &mut I,
-	) -> Result<Self, axia_scale_codec::Error> {
+	) -> Result<Self, parity_scale_codec::Error> {
 		unimplemented!("SignedExtensions are never meant to be decoded, they are only used to create transaction");
 	}
 }
@@ -327,7 +327,7 @@ impl<Call> SignedExtensions<Call> {
 
 impl<Call> sp_runtime::traits::SignedExtension for SignedExtensions<Call>
 where
-	Call: axia_scale_codec::Codec
+	Call: parity_scale_codec::Codec
 		+ sp_std::fmt::Debug
 		+ Sync
 		+ Send
@@ -393,7 +393,7 @@ impl Convert<sp_core::H256, AccountId> for AccountIdConverter {
 pub fn account_info_storage_key(id: &AccountId) -> Vec<u8> {
 	let module_prefix_hashed = Twox128::hash(b"System");
 	let storage_prefix_hashed = Twox128::hash(b"Account");
-	let key_hashed = axia_scale_codec::Encode::using_encoded(id, Blake2_128Concat::hash);
+	let key_hashed = parity_scale_codec::Encode::using_encoded(id, Blake2_128Concat::hash);
 
 	let mut final_key = Vec::with_capacity(
 		module_prefix_hashed.len() + storage_prefix_hashed.len() + key_hashed.len(),
@@ -409,7 +409,7 @@ pub fn account_info_storage_key(id: &AccountId) -> Vec<u8> {
 #[cfg(test)]
 mod tests {
 	use super::*;
-	use axia_scale_codec::Decode;
+	use parity_scale_codec::Decode;
 	use sp_runtime::{codec::Encode, traits::TrailingZeroInput};
 
 	#[test]

@@ -21,7 +21,7 @@
 
 use thiserror::Error;
 
-use axia_scale_codec::{Decode, Encode};
+use parity_scale_codec::{Decode, Encode};
 
 use super::{InvalidDisputeVote, SignedDisputeStatement, ValidDisputeVote};
 use polkadot_primitives::{

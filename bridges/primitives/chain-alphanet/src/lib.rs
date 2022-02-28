@@ -66,7 +66,7 @@ pub const VERSION: RuntimeVersion = RuntimeVersion {
 ///
 /// We are not currently submitting any Alphanet transactions => it is empty.
 #[derive(
-	axia_scale_codec::Encode, axia_scale_codec::Decode, Debug, PartialEq, Eq, Clone, TypeInfo,
+	parity_scale_codec::Encode, parity_scale_codec::Decode, Debug, PartialEq, Eq, Clone, TypeInfo,
 )]
 pub enum Call {}
 

@@ -19,7 +19,7 @@
 use sc_network::PeerId;
 use thiserror::Error;
 
-use axia_scale_codec::Error as DecodingError;
+use parity_scale_codec::Error as DecodingError;
 
 /// Errors that happen during reception/decoding of incoming requests.
 #[derive(Debug, Error, derive_more::From)]

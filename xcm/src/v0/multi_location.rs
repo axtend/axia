@@ -18,7 +18,7 @@
 
 use super::Junction;
 use core::{mem, result};
-use axia_scale_codec::{self, Decode, Encode};
+use parity_scale_codec::{self, Decode, Encode};
 
 /// A relative path between state-bearing consensus systems.
 ///

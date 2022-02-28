@@ -46,7 +46,7 @@ use futures::{
 	select,
 	stream::{SelectAll, Stream},
 };
-use axia_scale_codec::Encode;
+use parity_scale_codec::Encode;
 use pin_project::pin_project;
 
 use polkadot_primitives::{

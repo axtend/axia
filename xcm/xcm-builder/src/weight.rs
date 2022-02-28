@@ -18,7 +18,7 @@ use frame_support::{
 	traits::{tokens::currency::Currency as CurrencyT, Get, OnUnbalanced as OnUnbalancedT},
 	weights::{constants::WEIGHT_PER_SECOND, GetDispatchInfo, Weight, WeightToFeePolynomial},
 };
-use axia_scale_codec::Decode;
+use parity_scale_codec::Decode;
 use sp_runtime::traits::{SaturatedConversion, Saturating, Zero};
 use sp_std::{convert::TryInto, marker::PhantomData, result::Result};
 use xcm::latest::prelude::*;

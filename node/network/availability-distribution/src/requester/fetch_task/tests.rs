@@ -16,7 +16,7 @@
 
 use std::{collections::HashMap, convert::TryFrom};
 
-use axia_scale_codec::Encode;
+use parity_scale_codec::Encode;
 
 use futures::{
 	channel::{mpsc, oneshot},

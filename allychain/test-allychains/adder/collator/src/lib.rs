@@ -18,7 +18,7 @@
 
 use futures::channel::oneshot;
 use futures_timer::Delay;
-use axia_scale_codec::{Decode, Encode};
+use parity_scale_codec::{Decode, Encode};
 use polkadot_node_primitives::{
 	Collation, CollationResult, CollationSecondedSignal, CollatorFn, MaybeCompressedPoV, PoV,
 	Statement,

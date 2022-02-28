@@ -104,7 +104,7 @@ pub use polkadot_node_metrics::{
 	Metronome,
 };
 
-use axia_util_mem::MemoryAllocationTracker;
+use parity_util_mem::MemoryAllocationTracker;
 
 pub use polkadot_overseer_gen as gen;
 pub use polkadot_overseer_gen::{

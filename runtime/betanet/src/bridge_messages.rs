@@ -376,7 +376,7 @@ mod tests {
 	use super::*;
 	use bp_messages::{target_chain::ProvedLaneMessages, MessageData, MessageKey};
 	use bridge_runtime_common::messages;
-	use axia_scale_codec::{Decode, Encode};
+	use parity_scale_codec::{Decode, Encode};
 	use sp_runtime::traits::TrailingZeroInput;
 
 	#[test]

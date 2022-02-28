@@ -41,7 +41,7 @@ use polkadot_node_primitives::BlockWeight;
 use polkadot_primitives::v1::{BlockNumber, Hash};
 
 use kvdb::{DBTransaction, KeyValueDB};
-use axia_scale_codec::{Decode, Encode};
+use parity_scale_codec::{Decode, Encode};
 
 use std::sync::Arc;
 

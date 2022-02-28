@@ -31,7 +31,7 @@ use crate::{
 use frame_support::{pallet_prelude::*, traits::Currency};
 use frame_system::pallet_prelude::*;
 pub use pallet::*;
-use axia_scale_codec::{Decode, Encode, MaxEncodedLen};
+use parity_scale_codec::{Decode, Encode, MaxEncodedLen};
 use primitives::v1::Id as ParaId;
 use runtime_allychains::{
 	configuration,

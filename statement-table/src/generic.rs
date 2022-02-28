@@ -32,7 +32,7 @@ use std::{
 
 use primitives::v1::{ValidatorSignature, ValidityAttestation as PrimitiveValidityAttestation};
 
-use axia_scale_codec::{Decode, Encode};
+use parity_scale_codec::{Decode, Encode};
 
 /// Context for the statement table.
 pub trait Context {

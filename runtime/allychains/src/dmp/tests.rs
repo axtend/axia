@@ -17,7 +17,7 @@
 use super::*;
 use crate::mock::{new_test_ext, Configuration, Dmp, MockGenesisConfig, Paras, System};
 use hex_literal::hex;
-use axia_scale_codec::Encode;
+use parity_scale_codec::Encode;
 use primitives::v1::BlockNumber;
 
 pub(crate) fn run_to_block(to: BlockNumber, new_session: Option<Vec<BlockNumber>>) {

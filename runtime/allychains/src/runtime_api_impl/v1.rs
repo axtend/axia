@@ -179,7 +179,7 @@ pub fn availability_cores<T: initializer::Config>() -> Vec<CoreState<T::Hash, T:
 /// Returns current block number being processed and the corresponding root hash.
 fn current_relay_parent<T: frame_system::Config>(
 ) -> (<T as frame_system::Config>::BlockNumber, <T as frame_system::Config>::Hash) {
-	use axia_scale_codec::Decode as _;
+	use parity_scale_codec::Decode as _;
 	let state_version = <frame_system::Pallet<T>>::runtime_version().state_version();
 	let relay_parent_number = <frame_system::Pallet<T>>::block_number();
 	let relay_parent_storage_root = T::Hash::decode(&mut &sp_io::storage::root(state_version)[..])

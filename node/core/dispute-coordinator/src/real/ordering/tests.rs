@@ -19,7 +19,7 @@ use std::{sync::Arc, time::Duration};
 use assert_matches::assert_matches;
 
 use futures::future::join;
-use axia_scale_codec::Encode;
+use parity_scale_codec::Encode;
 use sp_core::testing::TaskExecutor;
 
 use ::test_helpers::{dummy_collator, dummy_collator_signature, dummy_hash};

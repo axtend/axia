@@ -20,7 +20,7 @@ use assert_matches::assert_matches;
 use futures::{executor, future};
 use futures_timer::Delay;
 
-use axia_scale_codec::Encode;
+use parity_scale_codec::Encode;
 use polkadot_node_network_protocol::request_response::IncomingRequest;
 
 use super::*;

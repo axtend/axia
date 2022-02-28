@@ -24,7 +24,7 @@ use polkadot_node_subsystem::{
 use polkadot_node_subsystem_util::{rolling_session_window::SessionsUnavailable, runtime};
 
 use crate::LOG_TARGET;
-use axia_scale_codec::Error as CodecError;
+use parity_scale_codec::Error as CodecError;
 
 /// Errors for this subsystem.
 #[derive(Debug, Error)]

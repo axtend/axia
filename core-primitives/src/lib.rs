@@ -20,9 +20,9 @@
 //!
 //! These core Axia types are used by the relay chain and the Allychains.
 
-use axia_scale_codec::{Decode, Encode};
+use parity_scale_codec::{Decode, Encode};
 #[cfg(feature = "std")]
-use axia_util_mem::MallocSizeOf;
+use parity_util_mem::MallocSizeOf;
 use scale_info::TypeInfo;
 use sp_runtime::{
 	generic,

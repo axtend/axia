@@ -16,7 +16,7 @@
 
 use std::time::{SystemTime, UNIX_EPOCH};
 
-use axia_scale_codec::{Decode, Encode};
+use parity_scale_codec::{Decode, Encode};
 use polkadot_primitives::v1::{CandidateHash, SessionIndex};
 
 use crate::LOG_TARGET;
