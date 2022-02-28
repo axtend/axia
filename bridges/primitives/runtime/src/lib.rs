@@ -49,10 +49,10 @@ pub const RIALTO_CHAIN_ID: ChainId = *b"rlto";
 pub const MILLAU_CHAIN_ID: ChainId = *b"mlau";
 
 /// Bridge-with-Axia instance id.
-pub const AXIA_CHAIN_ID: ChainId = *b"paxc";
+pub const AXIA_CHAIN_ID: ChainId = *b"pdot";
 
 /// Bridge-with-AxiaTest instance id.
-pub const AXIATEST_CHAIN_ID: ChainId = *b"axcta";
+pub const AXIATEST_CHAIN_ID: ChainId = *b"ksma";
 
 /// Bridge-with-Betanet instance id.
 pub const BETANET_CHAIN_ID: ChainId = *b"roco";
