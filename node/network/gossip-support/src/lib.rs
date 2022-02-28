@@ -1,18 +1,18 @@
-// Copyright 2021 Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// Copyright 2021 Axia Technologies (UK) Ltd.
+// This file is part of Axia.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// Axia is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// Axia is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with Axia.  If not, see <http://www.gnu.org/licenses/>.
 
 //! This subsystem is responsible for keeping track of session changes
 //! and issuing a connection request to the relevant validators
@@ -61,7 +61,7 @@ mod metrics;
 
 use metrics::Metrics;
 
-const LOG_TARGET: &str = "parachain::gossip-support";
+const LOG_TARGET: &str = "allychain::gossip-support";
 // How much time should we wait to reissue a connection request
 // since the last authority discovery resolution failure.
 const BACKOFF_DURATION: Duration = Duration::from_secs(5);
@@ -69,10 +69,10 @@ const BACKOFF_DURATION: Duration = Duration::from_secs(5);
 /// Duration after which we consider low connectivity a problem.
 ///
 /// Especially at startup low connectivity is expected (authority discovery cache needs to be
-/// populated). Authority discovery on Kusama takes around 8 minutes, so warning after 10 minutes
+/// populated). Authority discovery on AxiaTest takes around 8 minutes, so warning after 10 minutes
 /// should be fine:
 ///
-/// https://github.com/paritytech/substrate/blob/fc49802f263529160635471c8a17888846035f5d/client/authority-discovery/src/lib.rs#L88
+/// https://github.com/axiatech/axlib/blob/fc49802f263529160635471c8a17888846035f5d/client/authority-discovery/src/lib.rs#L88
 const LOW_CONNECTIVITY_WARN_DELAY: Duration = Duration::from_secs(600);
 
 /// If connectivity is lower than this in percent, issue warning in logs.
@@ -121,7 +121,7 @@ where
 	pub fn new(keystore: SyncCryptoStorePtr, authority_discovery: AD, metrics: Metrics) -> Self {
 		// Initialize metrics to `0`.
 		metrics.on_is_not_authority();
-		metrics.on_is_not_parachain_validator();
+		metrics.on_is_not_allychain_validator();
 
 		Self {
 			keystore,
@@ -268,7 +268,7 @@ where
 				},
 				Err(util::Error::NotAValidator) => {
 					self.metrics.on_is_not_authority();
-					self.metrics.on_is_not_parachain_validator();
+					self.metrics.on_is_not_allychain_validator();
 					None
 				},
 				// Don't update on runtime errors.
@@ -276,16 +276,16 @@ where
 			};
 
 			if let Some(validator_index) = maybe_index {
-				// The subset of authorities participating in parachain consensus.
-				let parachain_validators_this_session = session_info.validators;
+				// The subset of authorities participating in allychain consensus.
+				let allychain_validators_this_session = session_info.validators;
 
-				// First `maxValidators` entries are the parachain validators. We'll check
+				// First `maxValidators` entries are the allychain validators. We'll check
 				// if our index is in this set to avoid searching for the keys.
-				// https://github.com/paritytech/polkadot/blob/a52dca2be7840b23c19c153cf7e110b1e3e475f8/runtime/parachains/src/configuration.rs#L148
-				if validator_index < parachain_validators_this_session.len() {
-					self.metrics.on_is_parachain_validator();
+				// https://github.com/axiatech/polkadot/blob/a52dca2be7840b23c19c153cf7e110b1e3e475f8/runtime/allychains/src/configuration.rs#L148
+				if validator_index < allychain_validators_this_session.len() {
+					self.metrics.on_is_allychain_validator();
 				} else {
-					self.metrics.on_is_not_parachain_validator();
+					self.metrics.on_is_not_allychain_validator();
 				}
 			}
 		}
@@ -397,7 +397,7 @@ where
 			.filter(|(a, _)| !self.connected_authorities.contains_key(a));
 		// TODO: Make that warning once connectivity issues are fixed (no point in warning, if
 		// we already know it is broken.
-		// https://github.com/paritytech/polkadot/issues/3921
+		// https://github.com/axiatech/polkadot/issues/3921
 		if connected_ratio <= LOW_CONNECTIVITY_WARN_THRESHOLD {
 			tracing::debug!(
 				target: LOG_TARGET,
@@ -449,8 +449,8 @@ async fn ensure_i_am_an_authority(
 
 /// We partition the list of all sorted `authorities` into `sqrt(len)` groups of `sqrt(len)` size
 /// and form a matrix where each validator is connected to all validators in its row and column.
-/// This is similar to `[web3]` research proposed topology, except for the groups are not parachain
-/// groups (because not all validators are parachain validators and the group size is small),
+/// This is similar to `[web3]` research proposed topology, except for the groups are not allychain
+/// groups (because not all validators are allychain validators and the group size is small),
 /// but formed randomly via BABE randomness from two epochs ago.
 /// This limits the amount of gossip peers to 2 * `sqrt(len)` and ensures the diameter of 2.
 ///

@@ -1,13 +1,13 @@
 [package]
 name = "bp-test-utils"
 version = "0.1.0"
-authors = ["Parity Technologies <admin@parity.io>"]
+authors = ["Axia Technologies <admin@axia.io>"]
 edition = "2018"
 license = "GPL-3.0-or-later WITH Classpath-exception-2.0"
 
 [dependencies]
 bp-header-chain = { path = "../header-chain", default-features = false  }
-codec = { package = "parity-scale-codec", version = "2.2.0", default-features = false }
+codec = { package = "axia-scale-codec", version = "2.2.0", default-features = false }
 ed25519-dalek = { version = "1.0", default-features = false, features = ["u64_backend"] }
 finality-grandpa = { version = "0.14.4", default-features = false }
 sp-application-crypto = { git = "https://github.com/axtend/axlib", default-features = false , branch = "c92f69d" }

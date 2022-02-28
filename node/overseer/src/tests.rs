@@ -1,18 +1,18 @@
-// Copyright 2020 Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// Copyright 2020 Axia Technologies (UK) Ltd.
+// This file is part of Axia.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// Axia is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// Axia is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with Axia.  If not, see <http://www.gnu.org/licenses/>.
 
 use futures::{executor, pending, pin_mut, poll, select, stream, FutureExt};
 use std::{collections::HashMap, sync::atomic, task::Poll};
@@ -37,7 +37,7 @@ use crate::{
 	self as overseer,
 	dummy::{dummy_overseer_builder, one_for_all_overseer_builder},
 	gen::Delay,
-	HeadSupportsParachains,
+	HeadSupportsAllychains,
 };
 use metered_channel as metered;
 
@@ -156,10 +156,10 @@ where
 	}
 }
 
-struct MockSupportsParachains;
+struct MockSupportsAllychains;
 
-impl HeadSupportsParachains for MockSupportsParachains {
-	fn head_supports_parachains(&self, _head: &Hash) -> bool {
+impl HeadSupportsAllychains for MockSupportsAllychains {
+	fn head_supports_allychains(&self, _head: &Hash) -> bool {
 		true
 	}
 }
@@ -175,7 +175,7 @@ fn overseer_works() {
 
 		let mut s1_rx = s1_rx.fuse();
 		let mut s2_rx = s2_rx.fuse();
-		let (overseer, handle) = dummy_overseer_builder(spawner, MockSupportsParachains, None)
+		let (overseer, handle) = dummy_overseer_builder(spawner, MockSupportsAllychains, None)
 			.unwrap()
 			.replace_candidate_validation(move |_| TestSubsystem1(s1_tx))
 			.replace_candidate_backing(move |_| TestSubsystem2(s2_tx))
@@ -236,7 +236,7 @@ fn overseer_metrics_work() {
 
 		let registry = prometheus::Registry::new();
 		let (overseer, handle) =
-			dummy_overseer_builder(spawner, MockSupportsParachains, Some(&registry))
+			dummy_overseer_builder(spawner, MockSupportsAllychains, Some(&registry))
 				.unwrap()
 				.leaves(block_info_to_pair(vec![first_block]))
 				.build()
@@ -280,9 +280,9 @@ fn extract_metrics(registry: &prometheus::Registry) -> HashMap<&'static str, u64
 			.get_value() as u64
 	};
 
-	let activated = extract("polkadot_parachain_activated_heads_total");
-	let deactivated = extract("polkadot_parachain_deactivated_heads_total");
-	let relayed = extract("polkadot_parachain_messages_relayed_total");
+	let activated = extract("polkadot_allychain_activated_heads_total");
+	let deactivated = extract("polkadot_allychain_deactivated_heads_total");
+	let relayed = extract("polkadot_allychain_messages_relayed_total");
 	let mut result = HashMap::new();
 	result.insert("activated", activated);
 	result.insert("deactivated", deactivated);
@@ -298,7 +298,7 @@ fn overseer_ends_on_subsystem_exit() {
 	let spawner = sp_core::testing::TaskExecutor::new();
 
 	executor::block_on(async move {
-		let (overseer, _handle) = dummy_overseer_builder(spawner, MockSupportsParachains, None)
+		let (overseer, _handle) = dummy_overseer_builder(spawner, MockSupportsAllychains, None)
 			.unwrap()
 			.replace_candidate_backing(|_| ReturnOnStart)
 			.build()
@@ -401,7 +401,7 @@ fn overseer_start_stop_works() {
 		let (tx_5, mut rx_5) = metered::channel(64);
 		let (tx_6, mut rx_6) = metered::channel(64);
 
-		let (overseer, handle) = dummy_overseer_builder(spawner, MockSupportsParachains, None)
+		let (overseer, handle) = dummy_overseer_builder(spawner, MockSupportsAllychains, None)
 			.unwrap()
 			.replace_candidate_validation(move |_| TestSubsystem5(tx_5))
 			.replace_candidate_backing(move |_| TestSubsystem6(tx_6))
@@ -500,7 +500,7 @@ fn overseer_finalize_works() {
 
 		// start with two forks of different height.
 
-		let (overseer, handle) = dummy_overseer_builder(spawner, MockSupportsParachains, None)
+		let (overseer, handle) = dummy_overseer_builder(spawner, MockSupportsAllychains, None)
 			.unwrap()
 			.replace_candidate_validation(move |_| TestSubsystem5(tx_5))
 			.replace_candidate_backing(move |_| TestSubsystem6(tx_6))
@@ -596,7 +596,7 @@ fn overseer_finalize_leaf_preserves_it() {
 
 		// start with two forks at height 1.
 
-		let (overseer, handle) = dummy_overseer_builder(spawner, MockSupportsParachains, None)
+		let (overseer, handle) = dummy_overseer_builder(spawner, MockSupportsAllychains, None)
 			.unwrap()
 			.replace_candidate_validation(move |_| TestSubsystem5(tx_5))
 			.replace_candidate_backing(move |_| TestSubsystem6(tx_6))
@@ -686,7 +686,7 @@ fn do_not_send_empty_leaves_update_on_block_finalization() {
 
 		let (tx_5, mut rx_5) = metered::channel(64);
 
-		let (overseer, handle) = dummy_overseer_builder(spawner, MockSupportsParachains, None)
+		let (overseer, handle) = dummy_overseer_builder(spawner, MockSupportsAllychains, None)
 			.unwrap()
 			.replace_candidate_backing(move |_| TestSubsystem6(tx_5))
 			.build()
@@ -937,7 +937,7 @@ fn overseer_all_subsystems_receive_signals_and_messages() {
 		);
 
 		let (overseer, handle) =
-			one_for_all_overseer_builder(spawner, MockSupportsParachains, subsystem, None)
+			one_for_all_overseer_builder(spawner, MockSupportsAllychains, subsystem, None)
 				.unwrap()
 				.build()
 				.unwrap();

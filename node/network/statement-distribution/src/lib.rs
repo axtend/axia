@@ -1,18 +1,18 @@
-// Copyright 2021 Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// Copyright 2021 Axia Technologies (UK) Ltd.
+// This file is part of Axia.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// Axia is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// Axia is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with Axia.  If not, see <http://www.gnu.org/licenses/>.
 
 //! The Statement Distribution Subsystem.
 //!
@@ -23,7 +23,7 @@
 #![warn(missing_docs)]
 
 use error::{log_error, FatalResult, NonFatalResult};
-use parity_scale_codec::Encode;
+use axia_scale_codec::Encode;
 
 use polkadot_node_network_protocol::{
 	peer_set::{IsAuthority, PeerSet},
@@ -98,7 +98,7 @@ const BENEFIT_VALID_RESPONSE: Rep =
 /// Typically we will only keep 1, but when a validator equivocates we will need to track 2.
 const VC_THRESHOLD: usize = 2;
 
-const LOG_TARGET: &str = "parachain::statement-distribution";
+const LOG_TARGET: &str = "allychain::statement-distribution";
 
 /// Large statements should be rare.
 const MAX_LARGE_STATEMENTS_PER_SENDER: usize = 20;
@@ -214,7 +214,7 @@ struct PeerRelayParentKnowledge {
 	/// How many large statements this peer already sent us.
 	///
 	/// Flood protection for large statements is rather hard and as soon as we get
-	/// `https://github.com/paritytech/polkadot/issues/2979` implemented also no longer necessary.
+	/// `https://github.com/axiatech/polkadot/issues/2979` implemented also no longer necessary.
 	/// Reason: We keep messages around until we fetched the payload, but if a node makes up
 	/// statements and never provides the data, we will keep it around for the slot duration. Not
 	/// even signature checking would help, as the sender, if a validator, can just sign arbitrary
@@ -624,7 +624,7 @@ struct ActiveHeadData {
 	statements: IndexMap<StoredStatementComparator, SignedFullStatement>,
 	/// Large statements we are waiting for with associated meta data.
 	waiting_large_statements: HashMap<CandidateHash, LargeStatementStatus>,
-	/// The parachain validators at the head's child session index.
+	/// The allychain validators at the head's child session index.
 	validators: Vec<ValidatorId>,
 	/// The current session index of this fork.
 	session_index: sp_staking::SessionIndex,
@@ -1798,7 +1798,7 @@ impl StatementDistributionSubsystem {
 						"New active leaf",
 					);
 
-					// Retrieve the parachain validators at the child of the head we track.
+					// Retrieve the allychain validators at the child of the head we track.
 					let session_index =
 						runtime.get_session_index_for_child(ctx.sender(), relay_parent).await?;
 					let info = runtime
@@ -1971,14 +1971,14 @@ impl metrics::Metrics for Metrics {
 		let metrics = MetricsInner {
 			statements_distributed: prometheus::register(
 				prometheus::Counter::new(
-					"polkadot_parachain_statements_distributed_total",
+					"polkadot_allychain_statements_distributed_total",
 					"Number of candidate validity statements distributed to other peers.",
 				)?,
 				registry,
 			)?,
 			sent_requests: prometheus::register(
 				prometheus::Counter::new(
-					"polkadot_parachain_statement_distribution_sent_requests_total",
+					"polkadot_allychain_statement_distribution_sent_requests_total",
 					"Number of large statement fetching requests sent.",
 				)?,
 				registry,
@@ -1986,7 +1986,7 @@ impl metrics::Metrics for Metrics {
 			received_responses: prometheus::register(
 				prometheus::CounterVec::new(
 					prometheus::Opts::new(
-						"polkadot_parachain_statement_distribution_received_responses_total",
+						"polkadot_allychain_statement_distribution_received_responses_total",
 						"Number of received responses for large statement data.",
 					),
 					&["success"],
@@ -1995,21 +1995,21 @@ impl metrics::Metrics for Metrics {
 			)?,
 			active_leaves_update: prometheus::register(
 				prometheus::Histogram::with_opts(prometheus::HistogramOpts::new(
-					"polkadot_parachain_statement_distribution_active_leaves_update",
+					"polkadot_allychain_statement_distribution_active_leaves_update",
 					"Time spent within `statement_distribution::active_leaves_update`",
 				))?,
 				registry,
 			)?,
 			share: prometheus::register(
 				prometheus::Histogram::with_opts(prometheus::HistogramOpts::new(
-					"polkadot_parachain_statement_distribution_share",
+					"polkadot_allychain_statement_distribution_share",
 					"Time spent within `statement_distribution::share`",
 				))?,
 				registry,
 			)?,
 			network_bridge_update_v1: prometheus::register(
 				prometheus::Histogram::with_opts(prometheus::HistogramOpts::new(
-					"polkadot_parachain_statement_distribution_network_bridge_update_v1",
+					"polkadot_allychain_statement_distribution_network_bridge_update_v1",
 					"Time spent within `statement_distribution::network_bridge_update_v1`",
 				))?,
 				registry,

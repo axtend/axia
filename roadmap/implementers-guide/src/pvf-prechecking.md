@@ -4,9 +4,9 @@
 
 ## Motivation
 
-Parachains' and parathreads' validation function is described by a wasm module that we refer to as a PVF. Since it's a wasm module the typical way of executing it is to compile it to machine code. Typically an optimizing compiler consists of algorithms that are able to optimize the resulting machine code heavily. However, while those algorithms perform quite well for a typical wasm code produced by standard toolchains (e.g. rustc/LLVM), those algorithms can be abused to consume a lot of resources. Moreover, since those algorithms are rather complex there is a lot of room for a bug that can crash the compiler.
+Allychains' and parathreads' validation function is described by a wasm module that we refer to as a PVF. Since it's a wasm module the typical way of executing it is to compile it to machine code. Typically an optimizing compiler consists of algorithms that are able to optimize the resulting machine code heavily. However, while those algorithms perform quite well for a typical wasm code produced by standard toolchains (e.g. rustc/LLVM), those algorithms can be abused to consume a lot of resources. Moreover, since those algorithms are rather complex there is a lot of room for a bug that can crash the compiler.
 
-If compilation of a Parachain Validation Function (PVF) takes too long or uses too much memory, this can leave a node in limbo as to whether a candidate of that parachain is valid or not. 
+If compilation of a Allychain Validation Function (PVF) takes too long or uses too much memory, this can leave a node in limbo as to whether a candidate of that allychain is valid or not. 
 
 The amount of time that a PVF takes to compile is a subjective resource limit and as such PVFs may be maliciously crafted so that there is e.g. a 50/50 split of validators which can and cannot compile and execute the PVF.
 
@@ -15,14 +15,14 @@ This has the following implications:
 - In approval checking, there may be many no-shows, leading to slow finality
 - In disputes, neither side may reach supermajority. Nobody will get slashed and the chain will not be reverted or finalized.
 
-As a result of this issue we need a fairly hard guarantee that the PVFs of registered parachains/threads can be compiled within a reasonable amount of time.
+As a result of this issue we need a fairly hard guarantee that the PVFs of registered allychains/threads can be compiled within a reasonable amount of time.
 
 ## Solution
 
 The problem is solved by having a pre-checking process which is run when a new validation code is included in the chain. A new PVF can be added in two cases:
 
-- A new parachain or parathread is registered.
-- An existing parachain or parathread signalled an upgrade of its validation code.
+- A new allychain or parathread is registered.
+- An existing allychain or parathread signalled an upgrade of its validation code.
 
 Before any of those operations finish, the PVF pre-checking vote is initiated. The PVF pre-checking vote is identified by the PVF code hash that is being voted on. If there is already PVF pre-checking process running, then no
 new PVF pre-checking vote will be started. Instead, the operation just subscribes to the existing vote.
@@ -44,7 +44,7 @@ The logic described above is implemented by the [paras] module.
 
 On the node-side, there is a PVF pre-checking [subsystem][pvf-prechecker-subsystem] that scans the chain for new PVFs via using [runtime APIs][pvf-runtime-api]. Upon finding a new PVF, the subsystem will initiate a PVF pre-checking request and wait for the result. Whenever the result is obtained, the subsystem will use the [runtime API][pvf-runtime-api] to submit a vote for the PVF. The vote is an unsigned transaction. The vote will be distributed via the gossip similarly to a normal transaction. Eventually a block producer will include the vote into the block where it will be handled by the [runtime][paras].
 
-[#3211]: https://github.com/paritytech/polkadot/issues/3211
+[#3211]: https://github.com/axiatech/polkadot/issues/3211
 [paras]: runtime/paras.md
 [pvf-runtime-api]: runtime-api/pvf-prechecking.md
 [pvf-prechecker-subsystem]: node/utility/pvf-prechecker.md

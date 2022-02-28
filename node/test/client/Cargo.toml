@@ -1,20 +1,20 @@
 [package]
 name = "polkadot-test-client"
 version = "0.9.17"
-authors = ["Parity Technologies <admin@parity.io>"]
+authors = ["Axia Technologies <admin@axia.io>"]
 edition = "2018"
 
 [dependencies]
-parity-scale-codec = { version = "2.3.1", default-features = false, features = ["derive"] }
+axia-scale-codec = { version = "2.3.1", default-features = false, features = ["derive"] }
 
-# Polkadot dependencies
+# Axia dependencies
 polkadot-test-runtime = { path = "../../../runtime/test-runtime" }
 polkadot-test-service = { path = "../service" }
 polkadot-primitives = { path = "../../../primitives" }
 polkadot-node-subsystem = { path = "../../subsystem" }
 
-# Substrate dependencies
-substrate-test-client = { git = "https://github.com/axtend/axlib", branch = "c92f69d" }
+# Axlib dependencies
+axlib-test-client = { git = "https://github.com/axtend/axlib", branch = "c92f69d" }
 sc-service = { git = "https://github.com/axtend/axlib", branch = "c92f69d" }
 sc-block-builder = { git = "https://github.com/axtend/axlib", branch = "c92f69d" }
 sc-consensus = { git = "https://github.com/axtend/axlib", branch = "c92f69d" }

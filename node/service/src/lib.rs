@@ -1,26 +1,26 @@
-// Copyright 2017-2021 Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// Copyright 2017-2021 Axia Technologies (UK) Ltd.
+// This file is part of Axia.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// Axia is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// Axia is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with Axia.  If not, see <http://www.gnu.org/licenses/>.
 
-//! Polkadot service. Specialized wrapper over substrate service.
+//! Axia service. Specialized wrapper over axlib service.
 
 #![deny(unused_results)]
 
 pub mod chain_spec;
 mod grandpa_support;
-mod parachains_db;
+mod allychains_db;
 mod relay_chain_selection;
 
 #[cfg(feature = "full-node")]
@@ -54,7 +54,7 @@ pub use sp_core::traits::SpawnNamed;
 #[cfg(feature = "full-node")]
 pub use {
 	polkadot_overseer::{Handle, Overseer, OverseerConnector, OverseerHandle},
-	polkadot_primitives::v2::ParachainHost,
+	polkadot_primitives::v2::AllychainHost,
 	relay_chain_selection::SelectRelayChain,
 	sc_client_api::AuxStore,
 	sp_authority_discovery::AuthorityDiscoveryApi,
@@ -75,19 +75,19 @@ use telemetry::TelemetryWorker;
 #[cfg(feature = "full-node")]
 use telemetry::{Telemetry, TelemetryWorkerHandle};
 
-#[cfg(feature = "rococo-native")]
-pub use polkadot_client::RococoExecutorDispatch;
+#[cfg(feature = "betanet-native")]
+pub use polkadot_client::BetanetExecutorDispatch;
 
-#[cfg(feature = "westend-native")]
-pub use polkadot_client::WestendExecutorDispatch;
+#[cfg(feature = "alphanet-native")]
+pub use polkadot_client::AlphanetExecutorDispatch;
 
-#[cfg(feature = "kusama-native")]
-pub use polkadot_client::KusamaExecutorDispatch;
+#[cfg(feature = "axctest-native")]
+pub use polkadot_client::AxiaTestExecutorDispatch;
 
 #[cfg(feature = "polkadot-native")]
-pub use polkadot_client::PolkadotExecutorDispatch;
+pub use polkadot_client::AxiaExecutorDispatch;
 
-pub use chain_spec::{KusamaChainSpec, PolkadotChainSpec, RococoChainSpec, WestendChainSpec};
+pub use chain_spec::{AxiaTestChainSpec, AxiaChainSpec, BetanetChainSpec, AlphanetChainSpec};
 pub use consensus_common::{block_validation::Chain, Proposal, SelectChain};
 #[cfg(feature = "full-node")]
 pub use polkadot_client::{
@@ -101,7 +101,7 @@ use sc_executor::NativeElseWasmExecutor;
 pub use sc_executor::NativeExecutionDispatch;
 pub use service::{
 	config::{DatabaseSource, PrometheusConfig},
-	ChainSpec, Configuration, Error as SubstrateServiceError, PruningMode, Role, RuntimeGenesis,
+	ChainSpec, Configuration, Error as AxlibServiceError, PruningMode, Role, RuntimeGenesis,
 	TFullBackend, TFullCallExecutor, TFullClient, TaskManager, TransactionPoolOptions,
 };
 pub use sp_api::{ApiRef, ConstructRuntimeApi, Core as CoreApi, ProvideRuntimeApi, StateBackend};
@@ -112,14 +112,14 @@ pub use sp_runtime::{
 	},
 };
 
-#[cfg(feature = "kusama-native")]
-pub use kusama_runtime;
+#[cfg(feature = "axctest-native")]
+pub use axctest_runtime;
 #[cfg(feature = "polkadot-native")]
 pub use polkadot_runtime;
-#[cfg(feature = "rococo-native")]
-pub use rococo_runtime;
-#[cfg(feature = "westend-native")]
-pub use westend_runtime;
+#[cfg(feature = "betanet-native")]
+pub use betanet_runtime;
+#[cfg(feature = "alphanet-native")]
+pub use alphanet_runtime;
 
 /// The maximum number of active leaves we forward to the [`Overseer`] on startup.
 #[cfg(any(test, feature = "full-node"))]
@@ -201,7 +201,7 @@ pub enum Error {
 	AddrFormatInvalid(#[from] std::net::AddrParseError),
 
 	#[error(transparent)]
-	Sub(#[from] SubstrateServiceError),
+	Sub(#[from] AxlibServiceError),
 
 	#[error(transparent)]
 	Blockchain(#[from] sp_blockchain::Error),
@@ -233,20 +233,20 @@ pub enum Error {
 	DatabasePathRequired,
 
 	#[cfg(feature = "full-node")]
-	#[error("Expected at least one of polkadot, kusama, westend or rococo runtime feature")]
+	#[error("Expected at least one of polkadot, axctest, alphanet or betanet runtime feature")]
 	NoRuntime,
 }
 
 /// Can be called for a `Configuration` to identify which network the configuration targets.
 pub trait IdentifyVariant {
-	/// Returns if this is a configuration for the `Kusama` network.
-	fn is_kusama(&self) -> bool;
+	/// Returns if this is a configuration for the `AxiaTest` network.
+	fn is_axctest(&self) -> bool;
 
-	/// Returns if this is a configuration for the `Westend` network.
-	fn is_westend(&self) -> bool;
+	/// Returns if this is a configuration for the `Alphanet` network.
+	fn is_alphanet(&self) -> bool;
 
-	/// Returns if this is a configuration for the `Rococo` network.
-	fn is_rococo(&self) -> bool;
+	/// Returns if this is a configuration for the `Betanet` network.
+	fn is_betanet(&self) -> bool;
 
 	/// Returns if this is a configuration for the `Wococo` test network.
 	fn is_wococo(&self) -> bool;
@@ -259,14 +259,14 @@ pub trait IdentifyVariant {
 }
 
 impl IdentifyVariant for Box<dyn ChainSpec> {
-	fn is_kusama(&self) -> bool {
-		self.id().starts_with("kusama") || self.id().starts_with("ksm")
+	fn is_axctest(&self) -> bool {
+		self.id().starts_with("axctest") || self.id().starts_with("axct")
 	}
-	fn is_westend(&self) -> bool {
-		self.id().starts_with("westend") || self.id().starts_with("wnd")
+	fn is_alphanet(&self) -> bool {
+		self.id().starts_with("alphanet") || self.id().starts_with("wnd")
 	}
-	fn is_rococo(&self) -> bool {
-		self.id().starts_with("rococo") || self.id().starts_with("rco")
+	fn is_betanet(&self) -> bool {
+		self.id().starts_with("betanet") || self.id().starts_with("rco")
 	}
 	fn is_wococo(&self) -> bool {
 		self.id().starts_with("wococo") || self.id().starts_with("wco")
@@ -442,8 +442,8 @@ where
 		client.clone(),
 	);
 
-	let grandpa_hard_forks = if config.chain_spec.is_kusama() {
-		grandpa_support::kusama_hard_forks()
+	let grandpa_hard_forks = if config.chain_spec.is_axctest() {
+		grandpa_support::axctest_hard_forks()
 	} else {
 		Vec::new()
 	};
@@ -698,7 +698,7 @@ where
 	let backoff_authoring_blocks = {
 		let mut backoff = sc_consensus_slots::BackoffAuthoringOnFinalizedHeadLagging::default();
 
-		if config.chain_spec.is_rococo() ||
+		if config.chain_spec.is_betanet() ||
 			config.chain_spec.is_wococo() ||
 			config.chain_spec.is_versi()
 		{
@@ -731,9 +731,9 @@ where
 	let auth_or_collator = role.is_authority() || is_collator.is_collator();
 	let requires_overseer_for_chain_sel = local_keystore.is_some() && auth_or_collator;
 
-	let disputes_enabled = chain_spec.is_rococo() ||
-		chain_spec.is_kusama() ||
-		chain_spec.is_westend() ||
+	let disputes_enabled = chain_spec.is_betanet() ||
+		chain_spec.is_axctest() ||
+		chain_spec.is_alphanet() ||
 		chain_spec.is_versi() ||
 		chain_spec.is_wococo();
 
@@ -771,9 +771,9 @@ where
 	let shared_voter_state = rpc_setup;
 	let auth_disc_publish_non_global_ips = config.network.allow_non_globals_in_dht;
 
-	// Note: GrandPa is pushed before the Polkadot-specific protocols. This doesn't change
+	// Note: GrandPa is pushed before the Axia-specific protocols. This doesn't change
 	// anything in terms of behaviour, but makes the logs more consistent with the other
-	// Substrate nodes.
+	// Axlib nodes.
 	let grandpa_protocol_name = grandpa::protocol_standard_name(
 		&client.block_hash(0).ok().flatten().expect("Genesis block exists; qed"),
 		&config.chain_spec,
@@ -787,7 +787,7 @@ where
 		&client.block_hash(0).ok().flatten().expect("Genesis block exists; qed"),
 		&config.chain_spec,
 	);
-	if chain_spec.is_rococo() || chain_spec.is_wococo() || chain_spec.is_versi() {
+	if chain_spec.is_betanet() || chain_spec.is_wococo() || chain_spec.is_versi() {
 		config
 			.network
 			.extra_sets
@@ -813,8 +813,8 @@ where
 	let (dispute_req_receiver, cfg) = IncomingRequest::get_config_receiver();
 	config.network.request_response_protocols.push(cfg);
 
-	let grandpa_hard_forks = if config.chain_spec.is_kusama() {
-		grandpa_support::kusama_hard_forks()
+	let grandpa_hard_forks = if config.chain_spec.is_axctest() {
+		grandpa_support::axctest_hard_forks()
 	} else {
 		Vec::new()
 	};
@@ -856,18 +856,18 @@ where
 		);
 	}
 
-	let parachains_db = crate::parachains_db::open_creating(
+	let allychains_db = crate::allychains_db::open_creating(
 		config.database.path().ok_or(Error::DatabasePathRequired)?.into(),
-		crate::parachains_db::CacheSizes::default(),
+		crate::allychains_db::CacheSizes::default(),
 	)?;
 
 	let availability_config = AvailabilityConfig {
-		col_data: crate::parachains_db::REAL_COLUMNS.col_availability_data,
-		col_meta: crate::parachains_db::REAL_COLUMNS.col_availability_meta,
+		col_data: crate::allychains_db::REAL_COLUMNS.col_availability_data,
+		col_meta: crate::allychains_db::REAL_COLUMNS.col_availability_meta,
 	};
 
 	let approval_voting_config = ApprovalVotingConfig {
-		col_data: crate::parachains_db::REAL_COLUMNS.col_approval_data,
+		col_data: crate::allychains_db::REAL_COLUMNS.col_approval_data,
 		slot_duration_millis: slot_duration.as_millis() as u64,
 	};
 
@@ -884,12 +884,12 @@ where
 	};
 
 	let chain_selection_config = ChainSelectionConfig {
-		col_data: crate::parachains_db::REAL_COLUMNS.col_chain_selection_data,
+		col_data: crate::allychains_db::REAL_COLUMNS.col_chain_selection_data,
 		stagnant_check_interval: chain_selection_subsystem::StagnantCheckInterval::never(),
 	};
 
 	let dispute_coordinator_config = DisputeCoordinatorConfig {
-		col_data: crate::parachains_db::REAL_COLUMNS.col_dispute_coordinator_data,
+		col_data: crate::allychains_db::REAL_COLUMNS.col_dispute_coordinator_data,
 	};
 
 	let rpc_handlers = service::spawn_tasks(service::SpawnTasksParams {
@@ -968,7 +968,7 @@ where
 					leaves: active_leaves,
 					keystore,
 					runtime_client: overseer_client.clone(),
-					parachains_db,
+					allychains_db,
 					network_service: network.clone(),
 					authority_discovery_service,
 					pov_req_receiver,
@@ -1057,7 +1057,7 @@ where
 				let overseer_handle = overseer_handle.clone();
 
 				async move {
-					let parachain = polkadot_node_core_parachains_inherent::ParachainsInherentDataProvider::create(
+					let allychain = polkadot_node_core_allychains_inherent::AllychainsInherentDataProvider::create(
 						&*client_clone,
 						overseer_handle,
 						parent,
@@ -1076,7 +1076,7 @@ where
 							slot_duration,
 						);
 
-					Ok((timestamp, slot, uncles, parachain))
+					Ok((timestamp, slot, uncles, allychain))
 				}
 			},
 			force_authoring,
@@ -1097,8 +1097,8 @@ where
 	let keystore_opt =
 		if role.is_authority() { Some(keystore_container.sync_keystore()) } else { None };
 
-	// We currently only run the BEEFY gadget on the Rococo and Wococo testnets.
-	if enable_beefy && (chain_spec.is_rococo() || chain_spec.is_wococo() || chain_spec.is_versi()) {
+	// We currently only run the BEEFY gadget on the Betanet and Wococo testnets.
+	if enable_beefy && (chain_spec.is_betanet() || chain_spec.is_wococo() || chain_spec.is_versi()) {
 		let beefy_params = beefy_gadget::BeefyParams {
 			client: client.clone(),
 			backend: backend.clone(),
@@ -1125,7 +1125,7 @@ where
 	}
 
 	let config = grandpa::Config {
-		// FIXME substrate#1578 make this available through chainspec
+		// FIXME axlib#1578 make this available through chainspec
 		gossip_duration: Duration::from_millis(1000),
 		justification_period: 512,
 		name: Some(name),
@@ -1139,7 +1139,7 @@ where
 	let enable_grandpa = !disable_grandpa;
 	if enable_grandpa {
 		// start the full GRANDPA voter
-		// NOTE: unlike in substrate we are currently running the full
+		// NOTE: unlike in axlib we are currently running the full
 		// GRANDPA voter protocol for all full nodes (regardless of whether
 		// they're validators or not). at this point the full voter should
 		// provide better guarantees of block and vote data availability than
@@ -1231,27 +1231,27 @@ pub fn new_chain_ops(
 
 	let telemetry_worker_handle = None;
 
-	#[cfg(feature = "rococo-native")]
-	if config.chain_spec.is_rococo() ||
+	#[cfg(feature = "betanet-native")]
+	if config.chain_spec.is_betanet() ||
 		config.chain_spec.is_wococo() ||
 		config.chain_spec.is_versi()
 	{
-		return chain_ops!(config, jaeger_agent, telemetry_worker_handle; rococo_runtime, RococoExecutorDispatch, Rococo)
+		return chain_ops!(config, jaeger_agent, telemetry_worker_handle; betanet_runtime, BetanetExecutorDispatch, Betanet)
 	}
 
-	#[cfg(feature = "kusama-native")]
-	if config.chain_spec.is_kusama() {
-		return chain_ops!(config, jaeger_agent, telemetry_worker_handle; kusama_runtime, KusamaExecutorDispatch, Kusama)
+	#[cfg(feature = "axctest-native")]
+	if config.chain_spec.is_axctest() {
+		return chain_ops!(config, jaeger_agent, telemetry_worker_handle; axctest_runtime, AxiaTestExecutorDispatch, AxiaTest)
 	}
 
-	#[cfg(feature = "westend-native")]
-	if config.chain_spec.is_westend() {
-		return chain_ops!(config, jaeger_agent, telemetry_worker_handle; westend_runtime, WestendExecutorDispatch, Westend)
+	#[cfg(feature = "alphanet-native")]
+	if config.chain_spec.is_alphanet() {
+		return chain_ops!(config, jaeger_agent, telemetry_worker_handle; alphanet_runtime, AlphanetExecutorDispatch, Alphanet)
 	}
 
 	#[cfg(feature = "polkadot-native")]
 	{
-		return chain_ops!(config, jaeger_agent, telemetry_worker_handle; polkadot_runtime, PolkadotExecutorDispatch, Polkadot)
+		return chain_ops!(config, jaeger_agent, telemetry_worker_handle; polkadot_runtime, AxiaExecutorDispatch, Axia)
 	}
 	#[cfg(not(feature = "polkadot-native"))]
 	Err(Error::NoRuntime)
@@ -1259,7 +1259,7 @@ pub fn new_chain_ops(
 
 /// Build a full node.
 ///
-/// The actual "flavor", aka if it will use `Polkadot`, `Rococo` or `Kusama` is determined based on
+/// The actual "flavor", aka if it will use `Axia`, `Betanet` or `AxiaTest` is determined based on
 /// [`IdentifyVariant`] using the chain spec.
 ///
 /// `overseer_enable_anyways` always enables the overseer, based on the provided `OverseerGenerator`,
@@ -1276,12 +1276,12 @@ pub fn build_full(
 	overseer_enable_anyways: bool,
 	overseer_gen: impl OverseerGen,
 ) -> Result<NewFull<Client>, Error> {
-	#[cfg(feature = "rococo-native")]
-	if config.chain_spec.is_rococo() ||
+	#[cfg(feature = "betanet-native")]
+	if config.chain_spec.is_betanet() ||
 		config.chain_spec.is_wococo() ||
 		config.chain_spec.is_versi()
 	{
-		return new_full::<rococo_runtime::RuntimeApi, RococoExecutorDispatch, _>(
+		return new_full::<betanet_runtime::RuntimeApi, BetanetExecutorDispatch, _>(
 			config,
 			is_collator,
 			grandpa_pause,
@@ -1292,12 +1292,12 @@ pub fn build_full(
 			overseer_enable_anyways,
 			overseer_gen,
 		)
-		.map(|full| full.with_client(Client::Rococo))
+		.map(|full| full.with_client(Client::Betanet))
 	}
 
-	#[cfg(feature = "kusama-native")]
-	if config.chain_spec.is_kusama() {
-		return new_full::<kusama_runtime::RuntimeApi, KusamaExecutorDispatch, _>(
+	#[cfg(feature = "axctest-native")]
+	if config.chain_spec.is_axctest() {
+		return new_full::<axctest_runtime::RuntimeApi, AxiaTestExecutorDispatch, _>(
 			config,
 			is_collator,
 			grandpa_pause,
@@ -1308,12 +1308,12 @@ pub fn build_full(
 			overseer_enable_anyways,
 			overseer_gen,
 		)
-		.map(|full| full.with_client(Client::Kusama))
+		.map(|full| full.with_client(Client::AxiaTest))
 	}
 
-	#[cfg(feature = "westend-native")]
-	if config.chain_spec.is_westend() {
-		return new_full::<westend_runtime::RuntimeApi, WestendExecutorDispatch, _>(
+	#[cfg(feature = "alphanet-native")]
+	if config.chain_spec.is_alphanet() {
+		return new_full::<alphanet_runtime::RuntimeApi, AlphanetExecutorDispatch, _>(
 			config,
 			is_collator,
 			grandpa_pause,
@@ -1324,12 +1324,12 @@ pub fn build_full(
 			overseer_enable_anyways,
 			overseer_gen,
 		)
-		.map(|full| full.with_client(Client::Westend))
+		.map(|full| full.with_client(Client::Alphanet))
 	}
 
 	#[cfg(feature = "polkadot-native")]
 	{
-		return new_full::<polkadot_runtime::RuntimeApi, PolkadotExecutorDispatch, _>(
+		return new_full::<polkadot_runtime::RuntimeApi, AxiaExecutorDispatch, _>(
 			config,
 			is_collator,
 			grandpa_pause,
@@ -1340,7 +1340,7 @@ pub fn build_full(
 			overseer_enable_anyways,
 			overseer_gen,
 		)
-		.map(|full| full.with_client(Client::Polkadot))
+		.map(|full| full.with_client(Client::Axia))
 	}
 
 	#[cfg(not(feature = "polkadot-native"))]

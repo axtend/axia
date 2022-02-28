@@ -1,20 +1,20 @@
-// Copyright 2019-2020 Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// Copyright 2019-2020 Axia Technologies (UK) Ltd.
+// This file is part of Axia.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// Axia is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// Axia is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with Axia.  If not, see <http://www.gnu.org/licenses/>.
 
-//! Auctioning system to determine the set of Parachains in operation. This includes logic for the
+//! Auctioning system to determine the set of Allychains in operation. This includes logic for the
 //! auctioning mechanism and for reserving balance as part of the "payment". Unreserving the balance
 //! happens elsewhere.
 
@@ -29,7 +29,7 @@ use frame_support::{
 	weights::Weight,
 };
 pub use pallet::*;
-use parity_scale_codec::Decode;
+use axia_scale_codec::Decode;
 use primitives::v1::Id as ParaId;
 use sp_runtime::traits::{CheckedSub, One, Saturating, Zero};
 use sp_std::{mem::swap, prelude::*};
@@ -72,7 +72,7 @@ type LeasePeriodOf<T> =
 // Winning data type. This encodes the top bidders of each range together with their bid.
 type WinningData<T> = [Option<(<T as frame_system::Config>::AccountId, ParaId, BalanceOf<T>)>;
 	SlotRange::SLOT_RANGE_COUNT];
-// Winners data type. This encodes each of the final winners of a parachain auction, the parachain
+// Winners data type. This encodes each of the final winners of a allychain auction, the allychain
 // index assigned to them, their winning bid and the range that they won.
 type WinnersData<T> =
 	Vec<(<T as frame_system::Config>::AccountId, ParaId, BalanceOf<T>, SlotRange)>;
@@ -100,7 +100,7 @@ pub mod pallet {
 			LeasePeriod = Self::BlockNumber,
 		>;
 
-		/// The parachain registrar type.
+		/// The allychain registrar type.
 		type Registrar: Registrar<AccountId = Self::AccountId>;
 
 		/// The number of blocks over which an auction may be retroactively ended.
@@ -137,9 +137,9 @@ pub mod pallet {
 		Reserved(T::AccountId, BalanceOf<T>, BalanceOf<T>),
 		/// Funds were unreserved since bidder is no longer active. `[bidder, amount]`
 		Unreserved(T::AccountId, BalanceOf<T>),
-		/// Someone attempted to lease the same slot twice for a parachain. The amount is held in reserve
-		/// but no parachain slot has been leased.
-		/// `[parachain_id, leaser, amount]`
+		/// Someone attempted to lease the same slot twice for a allychain. The amount is held in reserve
+		/// but no allychain slot has been leased.
+		/// `[allychain_id, leaser, amount]`
 		ReserveConfiscated(ParaId, T::AccountId, BalanceOf<T>),
 		/// A new bid has been accepted as the current winner.
 		/// `[who, para_id, amount, first_slot, last_slot]`
@@ -197,13 +197,13 @@ pub mod pallet {
 
 	#[pallet::extra_constants]
 	impl<T: Config> Pallet<T> {
-		//TODO: rename to snake case after https://github.com/paritytech/substrate/issues/8826 fixed.
+		//TODO: rename to snake case after https://github.com/axiatech/axlib/issues/8826 fixed.
 		#[allow(non_snake_case)]
 		fn SlotRangeCount() -> u32 {
 			SlotRange::SLOT_RANGE_COUNT as u32
 		}
 
-		//TODO: rename to snake case after https://github.com/paritytech/substrate/issues/8826 fixed.
+		//TODO: rename to snake case after https://github.com/axiatech/axlib/issues/8826 fixed.
 		#[allow(non_snake_case)]
 		fn LeasePeriodsPerSlot() -> u32 {
 			SlotRange::LEASE_PERIODS_PER_SLOT as u32
@@ -259,8 +259,8 @@ pub mod pallet {
 			Self::do_new_auction(duration, lease_period_index)
 		}
 
-		/// Make a new bid from an account (including a parachain account) for deploying a new
-		/// parachain.
+		/// Make a new bid from an account (including a allychain account) for deploying a new
+		/// allychain.
 		///
 		/// Multiple simultaneous bids from the same bidder are allowed only as long as all active
 		/// bids overlap each other (i.e. are mutually exclusive). Bids cannot be redacted.
@@ -273,7 +273,7 @@ pub mod pallet {
 		/// absolute lease period index value, not an auction-specific offset.
 		/// - `last_slot` is the last lease period index of the range to bid on. This is the
 		/// absolute lease period index value, not an auction-specific offset.
-		/// - `amount` is the amount to bid to be held as deposit for the parachain should the
+		/// - `amount` is the amount to bid to be held as deposit for the allychain should the
 		/// bid win. This amount is held throughout the range.
 		#[pallet::weight(T::WeightInfo::bid())]
 		pub fn bid(

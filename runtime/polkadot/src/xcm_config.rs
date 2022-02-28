@@ -1,23 +1,23 @@
-// Copyright 2022 Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// Copyright 2022 Axia Technologies (UK) Ltd.
+// This file is part of Axia.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// Axia is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// Axia is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with Axia.  If not, see <http://www.gnu.org/licenses/>.
 
-//! XCM configuration for Polkadot.
+//! XCM configuration for Axia.
 
 use super::{
-	parachains_origin, AccountId, Balances, Call, CouncilCollective, Event, Origin, ParaId,
+	allychains_origin, AccountId, Balances, Call, CouncilCollective, Event, Origin, ParaId,
 	Runtime, WeightToFee, XcmPallet,
 };
 use frame_support::{
@@ -29,21 +29,21 @@ use runtime_common::{xcm_sender, ToAuthor};
 use xcm::latest::prelude::*;
 use xcm_builder::{
 	AccountId32Aliases, AllowKnownQueryResponses, AllowSubscriptionsFrom,
-	AllowTopLevelPaidExecutionFrom, BackingToPlurality, ChildParachainAsNative,
-	ChildParachainConvertsVia, CurrencyAdapter as XcmCurrencyAdapter, FixedWeightBounds,
+	AllowTopLevelPaidExecutionFrom, BackingToPlurality, ChildAllychainAsNative,
+	ChildAllychainConvertsVia, CurrencyAdapter as XcmCurrencyAdapter, FixedWeightBounds,
 	IsConcrete, LocationInverter, SignedAccountId32AsNative, SignedToAccountId32,
 	SovereignSignedViaLocation, TakeWeightCredit, UsingComponents,
 };
 
 parameter_types! {
-	/// The location of the DOT token, from the context of this chain. Since this token is native to this
+	/// The location of the AXC token, from the context of this chain. Since this token is native to this
 	/// chain, we make it synonymous with it and thus it is the `Here` location, which means "equivalent to
 	/// the context".
-	pub const DotLocation: MultiLocation = Here.into();
-	/// The Polkadot network ID. This is named.
-	pub const PolkadotNetwork: NetworkId = NetworkId::Polkadot;
+	pub const AxcLocation: MultiLocation = Here.into();
+	/// The Axia network ID. This is named.
+	pub const AxiaNetwork: NetworkId = NetworkId::Axia;
 	/// Our XCM location ancestry - i.e. what, if anything, `Parent` means evaluated in our context. Since
-	/// Polkadot is a top-level relay-chain, there is no ancestry.
+	/// Axia is a top-level relay-chain, there is no ancestry.
 	pub const Ancestry: MultiLocation = Here.into();
 	/// The check account, which holds any native assets that have been teleported out and not back in (yet).
 	pub CheckAccount: AccountId = XcmPallet::check_account();
@@ -52,21 +52,21 @@ parameter_types! {
 /// The canonical means of converting a `MultiLocation` into an `AccountId`, used when we want to determine
 /// the sovereign account controlled by a location.
 pub type SovereignAccountOf = (
-	// We can convert a child parachain using the standard `AccountId` conversion.
-	ChildParachainConvertsVia<ParaId, AccountId>,
+	// We can convert a child allychain using the standard `AccountId` conversion.
+	ChildAllychainConvertsVia<ParaId, AccountId>,
 	// We can directly alias an `AccountId32` into a local account.
-	AccountId32Aliases<PolkadotNetwork, AccountId>,
+	AccountId32Aliases<AxiaNetwork, AccountId>,
 );
 
 /// Our asset transactor. This is what allows us to interest with the runtime facilities from the point of
 /// view of XCM-only concepts like `MultiLocation` and `MultiAsset`.
 ///
-/// Ours is only aware of the Balances pallet, which is mapped to `DotLocation`.
+/// Ours is only aware of the Balances pallet, which is mapped to `AxcLocation`.
 pub type LocalAssetTransactor = XcmCurrencyAdapter<
 	// Use this currency:
 	Balances,
 	// Use this currency when it is a fungible asset matching the given location or name:
-	IsConcrete<DotLocation>,
+	IsConcrete<AxcLocation>,
 	// We can convert the MultiLocations with our converter above:
 	SovereignAccountOf,
 	// Our chain's account ID type (we can't get away without mentioning it explicitly):
@@ -79,10 +79,10 @@ pub type LocalAssetTransactor = XcmCurrencyAdapter<
 type LocalOriginConverter = (
 	// A `Signed` origin of the sovereign account that the original location controls.
 	SovereignSignedViaLocation<SovereignAccountOf, Origin>,
-	// A child parachain, natively expressed, has the `Parachain` origin.
-	ChildParachainAsNative<parachains_origin::Origin, Origin>,
+	// A child allychain, natively expressed, has the `Allychain` origin.
+	ChildAllychainAsNative<allychains_origin::Origin, Origin>,
 	// The AccountId32 location type can be expressed natively as a `Signed` origin.
-	SignedAccountId32AsNative<PolkadotNetwork, Origin>,
+	SignedAccountId32AsNative<AxiaNetwork, Origin>,
 );
 
 parameter_types! {
@@ -96,20 +96,20 @@ parameter_types! {
 /// The XCM router. When we want to send an XCM message, we use this type. It amalgamates all of our
 /// individual routers.
 pub type XcmRouter = (
-	// Only one router so far - use DMP to communicate with child parachains.
-	xcm_sender::ChildParachainRouter<Runtime, XcmPallet>,
+	// Only one router so far - use DMP to communicate with child allychains.
+	xcm_sender::ChildAllychainRouter<Runtime, XcmPallet>,
 );
 
 parameter_types! {
-	pub const Polkadot: MultiAssetFilter = Wild(AllOf { fun: WildFungible, id: Concrete(DotLocation::get()) });
-	pub const PolkadotForStatemint: (MultiAssetFilter, MultiLocation) = (Polkadot::get(), Parachain(1000).into());
+	pub const Axia: MultiAssetFilter = Wild(AllOf { fun: WildFungible, id: Concrete(AxcLocation::get()) });
+	pub const AxiaForStatemint: (MultiAssetFilter, MultiLocation) = (Axia::get(), Allychain(1000).into());
 }
 
-pub type TrustedTeleporters = (xcm_builder::Case<PolkadotForStatemint>,);
+pub type TrustedTeleporters = (xcm_builder::Case<AxiaForStatemint>,);
 
 match_type! {
-	pub type OnlyParachains: impl Contains<MultiLocation> = {
-		MultiLocation { parents: 0, interior: X1(Parachain(_)) }
+	pub type OnlyAllychains: impl Contains<MultiLocation> = {
+		MultiLocation { parents: 0, interior: X1(Allychain(_)) }
 	};
 }
 
@@ -122,7 +122,7 @@ pub type Barrier = (
 	// Expected responses are OK.
 	AllowKnownQueryResponses<XcmPallet>,
 	// Subscriptions for version tracking are OK.
-	AllowSubscriptionsFrom<OnlyParachains>,
+	AllowSubscriptionsFrom<OnlyAllychains>,
 );
 
 pub struct XcmConfig;
@@ -137,7 +137,7 @@ impl xcm_executor::Config for XcmConfig {
 	type Barrier = Barrier;
 	type Weigher = FixedWeightBounds<BaseXcmWeight, Call, MaxInstructions>;
 	// The weight trader piggybacks on the existing transaction-fee conversion logic.
-	type Trader = UsingComponents<WeightToFee, DotLocation, AccountId, Balances, ToAuthor<Runtime>>;
+	type Trader = UsingComponents<WeightToFee, AxcLocation, AccountId, Balances, ToAuthor<Runtime>>;
 	type ResponseHandler = XcmPallet;
 	type AssetTrap = XcmPallet;
 	type AssetClaims = XcmPallet;
@@ -161,7 +161,7 @@ pub type LocalOriginToLocation = (
 		CouncilBodyId,
 	>,
 	// And a usual Signed origin to be used in XCM as a corresponding AccountId32
-	SignedToAccountId32<Origin, AccountId, PolkadotNetwork>,
+	SignedToAccountId32<Origin, AccountId, AxiaNetwork>,
 );
 
 impl pallet_xcm::Config for Runtime {

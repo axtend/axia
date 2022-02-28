@@ -1,18 +1,18 @@
-// Copyright 2021 Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// Copyright 2021 Axia Technologies (UK) Ltd.
+// This file is part of Axia.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// Axia is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// Axia is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with Axia.  If not, see <http://www.gnu.org/licenses/>.
 
 //! Make the set of voting bag thresholds to be used in `voter_bags.rs`.
 //!
@@ -22,17 +22,17 @@
 
 use clap::{ArgEnum, Parser};
 use generate_bags::generate_thresholds;
-use kusama_runtime::Runtime as KusamaRuntime;
-use polkadot_runtime::Runtime as PolkadotRuntime;
+use axctest_runtime::Runtime as AxiaTestRuntime;
+use polkadot_runtime::Runtime as AxiaRuntime;
 use std::path::{Path, PathBuf};
-use westend_runtime::Runtime as WestendRuntime;
+use alphanet_runtime::Runtime as AlphanetRuntime;
 
 #[derive(Clone, Debug, ArgEnum)]
 #[clap(rename_all = "PascalCase")]
 enum Runtime {
-	Westend,
-	Kusama,
-	Polkadot,
+	Alphanet,
+	AxiaTest,
+	Axia,
 }
 
 impl Runtime {
@@ -40,9 +40,9 @@ impl Runtime {
 		&self,
 	) -> Box<dyn FnOnce(usize, &Path, u128, u128) -> Result<(), std::io::Error>> {
 		match self {
-			Runtime::Westend => Box::new(generate_thresholds::<WestendRuntime>),
-			Runtime::Kusama => Box::new(generate_thresholds::<KusamaRuntime>),
-			Runtime::Polkadot => Box::new(generate_thresholds::<PolkadotRuntime>),
+			Runtime::Alphanet => Box::new(generate_thresholds::<AlphanetRuntime>),
+			Runtime::AxiaTest => Box::new(generate_thresholds::<AxiaTestRuntime>),
+			Runtime::Axia => Box::new(generate_thresholds::<AxiaRuntime>),
 		}
 	}
 }
@@ -54,7 +54,7 @@ struct Opt {
 	n_bags: usize,
 
 	/// Which runtime to generate.
-	#[clap(long, ignore_case = true, arg_enum, default_value = "Polkadot")]
+	#[clap(long, ignore_case = true, arg_enum, default_value = "Axia")]
 	runtime: Runtime,
 
 	/// Where to write the output.

@@ -1,20 +1,20 @@
-// Copyright 2018-2020 Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// Copyright 2018-2020 Axia Technologies (UK) Ltd.
+// This file is part of Axia.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// Axia is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// Axia is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with Axia.  If not, see <http://www.gnu.org/licenses/>.
 
-//! As part of Polkadot's availability system, certain pieces of data
+//! As part of Axia's availability system, certain pieces of data
 //! for each block are required to be kept available.
 //!
 //! The way we accomplish this is by erasure coding the data into n pieces
@@ -26,7 +26,7 @@
 
 use std::convert::TryFrom;
 
-use parity_scale_codec::{Decode, Encode};
+use axia_scale_codec::{Decode, Encode};
 use polkadot_node_primitives::{AvailableData, Proof};
 use polkadot_primitives::v0::{self, BlakeTwo256, Hash as H256, HashT};
 use sp_core::Blake2Hasher;
@@ -324,12 +324,12 @@ struct ShardInput<'a, I> {
 	cur_shard: Option<(&'a [u8], usize)>,
 }
 
-impl<'a, I: Iterator<Item = &'a [u8]>> parity_scale_codec::Input for ShardInput<'a, I> {
-	fn remaining_len(&mut self) -> Result<Option<usize>, parity_scale_codec::Error> {
+impl<'a, I: Iterator<Item = &'a [u8]>> axia_scale_codec::Input for ShardInput<'a, I> {
+	fn remaining_len(&mut self) -> Result<Option<usize>, axia_scale_codec::Error> {
 		Ok(Some(self.remaining_len))
 	}
 
-	fn read(&mut self, into: &mut [u8]) -> Result<(), parity_scale_codec::Error> {
+	fn read(&mut self, into: &mut [u8]) -> Result<(), axia_scale_codec::Error> {
 		let mut read_bytes = 0;
 
 		loop {

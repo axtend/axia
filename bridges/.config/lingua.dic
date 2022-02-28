@@ -21,7 +21,7 @@ Chain1
 Chain2
 ChainSpec
 ChainTime
-DOT/S
+AXC/S
 ERC-20
 Ethereum
 FN
@@ -87,7 +87,7 @@ U256
 Unparsed
 Vec
 WND/S
-Westend/MS
+Alphanet/MS
 Wococo/MS
 XCM/S
 XCMP/M
@@ -101,7 +101,7 @@ auth
 auths/SM
 backoff
 benchmarking/MS
-best_substrate_header
+best_axlib_header
 bitfield/MS
 blake2/MS
 blockchain/MS
@@ -149,7 +149,7 @@ keccak
 keccak256/M
 keyring
 keystore/MS
-kusama/S
+axctest/S
 lane
 malus
 max_value
@@ -170,7 +170,7 @@ pallet_bridge_grandpa
 pallet_bridge_messages
 pallet_message_lane
 parablock/MS
-parachain/MS
+allychain/MS
 param/MS
 parameterize/D
 plancks

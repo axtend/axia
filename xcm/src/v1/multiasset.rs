@@ -1,18 +1,18 @@
-// Copyright 2020 Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// Copyright 2020 Axia Technologies (UK) Ltd.
+// This file is part of Axia.
 
-// Substrate is free software: you can redistribute it and/or modify
+// Axlib is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Substrate is distributed in the hope that it will be useful,
+// Axlib is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with Axia.  If not, see <http://www.gnu.org/licenses/>.
 
 //! Cross-Consensus Message format asset data structures.
 //!
@@ -30,7 +30,7 @@ use core::{
 	convert::{TryFrom, TryInto},
 	result,
 };
-use parity_scale_codec::{self as codec, Decode, Encode};
+use axia_scale_codec::{self as codec, Decode, Encode};
 use scale_info::TypeInfo;
 
 /// A general identifier for an instance of a non-fungible asset class.
@@ -291,7 +291,7 @@ impl TryFrom<Vec<super::super::v0::MultiAsset>> for MultiAsset {
 pub struct MultiAssets(Vec<MultiAsset>);
 
 impl Decode for MultiAssets {
-	fn decode<I: codec::Input>(input: &mut I) -> Result<Self, parity_scale_codec::Error> {
+	fn decode<I: codec::Input>(input: &mut I) -> Result<Self, axia_scale_codec::Error> {
 		Self::from_sorted_and_deduplicated(Vec::<MultiAsset>::decode(input)?)
 			.map_err(|()| "Out of order".into())
 	}

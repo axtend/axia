@@ -1,13 +1,13 @@
 [package]
 name = "polkadot-node-core-dispute-coordinator"
 version = "0.9.17"
-authors = ["Parity Technologies <admin@parity.io>"]
+authors = ["Axia Technologies <admin@axia.io>"]
 edition = "2018"
 
 [dependencies]
 futures = "0.3.21"
 tracing = "0.1.29"
-parity-scale-codec = "2"
+axia-scale-codec = "2"
 kvdb = "0.10.0"
 thiserror = "1.0.30"
 lru = "0.7.2"

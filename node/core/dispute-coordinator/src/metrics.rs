@@ -1,18 +1,18 @@
-// Copyright 2020 Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// Copyright 2020 Axia Technologies (UK) Ltd.
+// This file is part of Axia.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// Axia is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// Axia is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with Axia.  If not, see <http://www.gnu.org/licenses/>.
 
 use polkadot_node_subsystem_util::metrics::{self, prometheus};
 
@@ -81,7 +81,7 @@ impl metrics::Metrics for Metrics {
 		let metrics = MetricsInner {
 			open: prometheus::register(
 				prometheus::Counter::with_opts(prometheus::Opts::new(
-					"polkadot_parachain_candidate_disputes_total",
+					"polkadot_allychain_candidate_disputes_total",
 					"Total number of raised disputes.",
 				))?,
 				registry,
@@ -89,7 +89,7 @@ impl metrics::Metrics for Metrics {
 			concluded: prometheus::register(
 				prometheus::CounterVec::new(
 					prometheus::Opts::new(
-						"polkadot_parachain_candidate_dispute_concluded",
+						"polkadot_allychain_candidate_dispute_concluded",
 						"Concluded dispute votes, sorted by candidate is `valid` and `invalid`.",
 					),
 					&["validity"],
@@ -99,7 +99,7 @@ impl metrics::Metrics for Metrics {
 			votes: prometheus::register(
 				prometheus::CounterVec::new(
 					prometheus::Opts::new(
-						"polkadot_parachain_candidate_dispute_votes",
+						"polkadot_allychain_candidate_dispute_votes",
 						"Accumulated dispute votes, sorted by candidate is `valid` and `invalid`.",
 					),
 					&["validity"],
@@ -109,7 +109,7 @@ impl metrics::Metrics for Metrics {
 			queued_participations: prometheus::register(
 				prometheus::CounterVec::new(
 					prometheus::Opts::new(
-						"polkadot_parachain_dispute_participations",
+						"polkadot_allychain_dispute_participations",
 						"Total number of queued participations, grouped by priority and best-effort. (Not every queueing will necessarily lead to an actual participation because of duplicates.)",
 					),
 					&["priority"],

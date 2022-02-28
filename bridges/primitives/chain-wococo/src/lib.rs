@@ -1,18 +1,18 @@
-// Copyright 2019-2021 Parity Technologies (UK) Ltd.
-// This file is part of Parity Bridges Common.
+// Copyright 2019-2021 Axia Technologies (UK) Ltd.
+// This file is part of Axia Bridges Common.
 
-// Parity Bridges Common is free software: you can redistribute it and/or modify
+// Axia Bridges Common is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Parity Bridges Common is distributed in the hope that it will be useful,
+// Axia Bridges Common is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Parity Bridges Common.  If not, see <http://www.gnu.org/licenses/>.
+// along with Axia Bridges Common.  If not, see <http://www.gnu.org/licenses/>.
 
 #![cfg_attr(not(feature = "std"), no_std)]
 // RuntimeApi generated functions
@@ -24,21 +24,21 @@ use bp_messages::{LaneId, MessageDetails, MessageNonce, UnrewardedRelayersState}
 use sp_std::prelude::*;
 
 pub use bp_polkadot_core::*;
-// Rococo runtime = Wococo runtime
-pub use bp_rococo::{WeightToFee, PAY_INBOUND_DISPATCH_FEE_WEIGHT, SESSION_LENGTH, VERSION};
+// Betanet runtime = Wococo runtime
+pub use bp_betanet::{WeightToFee, PAY_INBOUND_DISPATCH_FEE_WEIGHT, SESSION_LENGTH, VERSION};
 
 /// Wococo Chain
-pub type Wococo = PolkadotLike;
+pub type Wococo = AxiaLike;
 
-// We use this to get the account on Wococo (target) which is derived from Rococo's (source)
+// We use this to get the account on Wococo (target) which is derived from Betanet's (source)
 // account.
-pub fn derive_account_from_rococo_id(id: bp_runtime::SourceAccount<AccountId>) -> AccountId {
-	let encoded_id = bp_runtime::derive_account_id(bp_runtime::ROCOCO_CHAIN_ID, id);
+pub fn derive_account_from_betanet_id(id: bp_runtime::SourceAccount<AccountId>) -> AccountId {
+	let encoded_id = bp_runtime::derive_account_id(bp_runtime::BETANET_CHAIN_ID, id);
 	AccountIdConverter::convert(encoded_id)
 }
 
-/// Name of the With-Rococo messages pallet instance in the Wococo runtime.
-pub const WITH_ROCOCO_MESSAGES_PALLET_NAME: &str = "BridgeRococoMessages";
+/// Name of the With-Betanet messages pallet instance in the Wococo runtime.
+pub const WITH_BETANET_MESSAGES_PALLET_NAME: &str = "BridgeBetanetMessages";
 
 /// Name of the `WococoFinalityApi::best_finalized` runtime method.
 pub const BEST_FINALIZED_WOCOCO_HEADER_METHOD: &str = "WococoFinalityApi_best_finalized";

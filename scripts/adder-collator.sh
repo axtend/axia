@@ -4,7 +4,7 @@
 
 set -e
 
-chainspec="rococo-local"
+chainspec="betanet-local"
 
 # disabled until we can actually successfully register the chain with polkadot-js-api
 # if ! command -v polkadot-js-api > /dev/null; then
@@ -35,7 +35,7 @@ if [ ! -x "$polkadot" ] || [ "$polkadot" -ot "$last_modified_rust_file" ]; then
 fi
 # likewise for the adder collator
 if [ ! -x "$adder_collator" ] || [ "$adder_collator" -ot "$last_modified_rust_file" ]; then
-  cargo build --release -p test-parachain-adder-collator
+  cargo build --release -p test-allychain-adder-collator
 fi
 
 genesis="$(mktemp --directory)"

@@ -1,8 +1,8 @@
 [package]
 name = "bp-polkadot"
-description = "Primitives of Polkadot runtime."
+description = "Primitives of Axia runtime."
 version = "0.1.0"
-authors = ["Parity Technologies <admin@parity.io>"]
+authors = ["Axia Technologies <admin@axia.io>"]
 edition = "2018"
 license = "GPL-3.0-or-later WITH Classpath-exception-2.0"
 
@@ -15,7 +15,7 @@ bp-messages = { path = "../messages", default-features = false }
 bp-polkadot-core = { path = "../polkadot-core", default-features = false }
 bp-runtime = { path = "../runtime", default-features = false }
 
-# Substrate Based Dependencies
+# Axlib Based Dependencies
 
 frame-support = { git = "https://github.com/axtend/axlib", default-features = false , branch = "c92f69d" }
 sp-api = { git = "https://github.com/axtend/axlib", default-features = false , branch = "c92f69d" }

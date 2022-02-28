@@ -1,14 +1,14 @@
 # Do I need this ?
 
-Polkadot nodes collect and produce Prometheus metrics and logs. These include health, performance and debug 
+Axia nodes collect and produce Prometheus metrics and logs. These include health, performance and debug 
 information such as last finalized block, height of the chain, and many other deeper implementation details 
-of the Polkadot/Substrate node subsystems. These are crucial pieces of information that one needs to successfully 
+of the Axia/Axlib node subsystems. These are crucial pieces of information that one needs to successfully 
 monitor the liveliness and performance of a network and its validators.
 
 # How does it work ?
 
 Just import the dashboard JSON files from this folder in your Grafana installation. All dashboards are grouped in 
-folder percategory (like for example `parachains`). The files have been created by Grafana export functionality and
+folder percategory (like for example `allychains`). The files have been created by Grafana export functionality and
 follow the data model specified [here](https://grafana.com/docs/grafana/latest/dashboards/json-model/).
 
 We aim to keep the dashboards here in sync with the implementation, except dashboards for development and 
@@ -49,15 +49,15 @@ track node warning and error log rates. These can be further investigated in Gra
 
 Requires Loki for log aggregation and querying.
 
-[Dashboard JSON](general/kusama_deployment.json)
+[Dashboard JSON](general/axctest_deployment.json)
 
-## Parachain Status
+## Allychain Status
 
 This dashboard allows you to see at a glance how fast are candidates approved, disputed and
-finalized. It was originally designed for observing liveliness after parachain deployment in
- Kusama/Polkadot, but can be useful generally in production or testing.
+finalized. It was originally designed for observing liveliness after allychain deployment in
+ AxiaTest/Axia, but can be useful generally in production or testing.
 
-It includes panels covering key subsystems of the parachain node side implementation:
+It includes panels covering key subsystems of the allychain node side implementation:
 - Backing
 - PVF execution
 - Approval voting
@@ -67,7 +67,7 @@ It includes panels covering key subsystems of the parachain node side implementa
 It is important to note that this dashboard applies only for validator nodes. The prometheus 
 queries assume the `instance` label value contains the string `validator` only for validator nodes. 
 
-[Dashboard JSON](parachains/status.json)
+[Dashboard JSON](allychains/status.json)
 
 ### Key liveliness indicators
 - **Relay chain finality lag**. How far behind finality is compared to the current best block. By design,
@@ -78,11 +78,11 @@ block and the metric is computed during relay chain selection.
 - **Disputes finality lag**. How far behind the chain head is the last approved and non disputed block. 
 This value is always higher than approval checking lag as it further restricts finality to only undisputed 
 chains.
-- **PVF preparation and execution time**. Each parachain has it's own PVF (parachain validation function): 
+- **PVF preparation and execution time**. Each allychain has it's own PVF (allychain validation function): 
 a wasm blob that is executed by validators during backing, approval checking and disputing. The PVF 
 preparation time refers to the time it takes for the PVF wasm to be compiled. This step is done once and 
 then result cached. PVF execution will use the resulting artifact to execute the PVF for a given candidate. 
-PVFs are expected to have a limited execution time to ensure there is enough time left for the parachain 
+PVFs are expected to have a limited execution time to ensure there is enough time left for the allychain 
 block to be included in the relay block.
 - **Time to recover and check candidate**. This is part of approval voting and covers the time it takes 
 to recover the candidate block available data from other validators, check it (includes PVF execution time)

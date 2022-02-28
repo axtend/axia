@@ -1,18 +1,18 @@
-// Copyright 2020 Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// Copyright 2020 Axia Technologies (UK) Ltd.
+// This file is part of Axia.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// Axia is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// Axia is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with Axia.  If not, see <http://www.gnu.org/licenses/>.
 
 use super::*;
 use assert_matches::assert_matches;
@@ -140,7 +140,7 @@ async fn send_message_from_peer(
 
 fn fake_assignment_cert(block_hash: Hash, validator: ValidatorIndex) -> IndirectAssignmentCert {
 	let ctx = schnorrkel::signing_context(RELAY_VRF_MODULO_CONTEXT);
-	let msg = b"WhenParachains?";
+	let msg = b"WhenAllychains?";
 	let mut prng = rand_core::OsRng;
 	let keypair = schnorrkel::Keypair::generate_with(&mut prng);
 	let (inout, proof, _) = keypair.vrf_sign(ctx.bytes(msg));
@@ -258,7 +258,7 @@ fn try_import_the_same_assignment() {
 	});
 }
 
-/// <https://github.com/paritytech/polkadot/pull/2160#discussion_r547594835>
+/// <https://github.com/axiatech/polkadot/pull/2160#discussion_r547594835>
 ///
 /// 1. Send a view update that removes block B from their view.
 /// 2. Send a message from B that they incur `COST_UNEXPECTED_MESSAGE` for,
@@ -346,7 +346,7 @@ fn spam_attack_results_in_negative_reputation_change() {
 /// Upon receiving them, they both will try to send the message each other.
 /// This test makes sure they will not punish each other for such duplicate messages.
 ///
-/// See <https://github.com/paritytech/polkadot/issues/2499>.
+/// See <https://github.com/axiatech/polkadot/issues/2499>.
 #[test]
 fn peer_sending_us_the_same_we_just_sent_them_is_ok() {
 	let parent_hash = Hash::repeat_byte(0xFF);

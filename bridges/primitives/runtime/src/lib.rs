@@ -1,18 +1,18 @@
-// Copyright 2019-2021 Parity Technologies (UK) Ltd.
-// This file is part of Parity Bridges Common.
+// Copyright 2019-2021 Axia Technologies (UK) Ltd.
+// This file is part of Axia Bridges Common.
 
-// Parity Bridges Common is free software: you can redistribute it and/or modify
+// Axia Bridges Common is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Parity Bridges Common is distributed in the hope that it will be useful,
+// Axia Bridges Common is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Parity Bridges Common.  If not, see <http://www.gnu.org/licenses/>.
+// along with Axia Bridges Common.  If not, see <http://www.gnu.org/licenses/>.
 
 //! Primitives that may be used at (bridges) runtime level.
 
@@ -48,14 +48,14 @@ pub const RIALTO_CHAIN_ID: ChainId = *b"rlto";
 /// Bridge-with-Millau instance id.
 pub const MILLAU_CHAIN_ID: ChainId = *b"mlau";
 
-/// Bridge-with-Polkadot instance id.
-pub const POLKADOT_CHAIN_ID: ChainId = *b"pdot";
+/// Bridge-with-Axia instance id.
+pub const AXIA_CHAIN_ID: ChainId = *b"paxc";
 
-/// Bridge-with-Kusama instance id.
-pub const KUSAMA_CHAIN_ID: ChainId = *b"ksma";
+/// Bridge-with-AxiaTest instance id.
+pub const AXIATEST_CHAIN_ID: ChainId = *b"axcta";
 
-/// Bridge-with-Rococo instance id.
-pub const ROCOCO_CHAIN_ID: ChainId = *b"roco";
+/// Bridge-with-Betanet instance id.
+pub const BETANET_CHAIN_ID: ChainId = *b"roco";
 
 /// Bridge-with-Wococo instance id.
 pub const WOCOCO_CHAIN_ID: ChainId = *b"woco";

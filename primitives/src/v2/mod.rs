@@ -1,37 +1,37 @@
-// Copyright 2021 Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// Copyright 2021 Axia Technologies (UK) Ltd.
+// This file is part of Axia.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// Axia is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// Axia is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with Axia.  If not, see <http://www.gnu.org/licenses/>.
 
 //! `V2` Primitives.
 
 use crate::v1;
 
-use parity_scale_codec::{Decode, Encode};
+use axia_scale_codec::{Decode, Encode};
 use primitives::RuntimeDebug;
 use scale_info::TypeInfo;
 use sp_std::{collections::btree_map::BTreeMap, prelude::*};
 
 #[cfg(feature = "std")]
-use parity_util_mem::MallocSizeOf;
+use axia_util_mem::MallocSizeOf;
 
 /// Information about validator sets of a session.
 #[derive(Clone, Encode, Decode, RuntimeDebug, TypeInfo)]
 #[cfg_attr(feature = "std", derive(PartialEq, MallocSizeOf))]
 pub struct SessionInfo {
 	/****** New in v2 *******/
-	/// All the validators actively participating in parachain consensus.
+	/// All the validators actively participating in allychain consensus.
 	/// Indices are into the broader validator set.
 	pub active_validator_indices: Vec<v1::ValidatorIndex>,
 	/// A secure random seed for the session, gathered from BABE.
@@ -43,8 +43,8 @@ pub struct SessionInfo {
 	/// Validators in canonical ordering.
 	///
 	/// NOTE: There might be more authorities in the current session, than `validators` participating
-	/// in parachain consensus. See
-	/// [`max_validators`](https://github.com/paritytech/polkadot/blob/a52dca2be7840b23c19c153cf7e110b1e3e475f8/runtime/parachains/src/configuration.rs#L148).
+	/// in allychain consensus. See
+	/// [`max_validators`](https://github.com/axiatech/polkadot/blob/a52dca2be7840b23c19c153cf7e110b1e3e475f8/runtime/allychains/src/configuration.rs#L148).
 	///
 	/// `SessionInfo::validators` will be limited to to `max_validators` when set.
 	pub validators: Vec<v1::ValidatorId>,
@@ -52,15 +52,15 @@ pub struct SessionInfo {
 	///
 	/// NOTE: The first `validators.len()` entries will match the corresponding validators in
 	/// `validators`, afterwards any remaining authorities can be found. This is any authorities not
-	/// participating in parachain consensus - see
-	/// [`max_validators`](https://github.com/paritytech/polkadot/blob/a52dca2be7840b23c19c153cf7e110b1e3e475f8/runtime/parachains/src/configuration.rs#L148)
+	/// participating in allychain consensus - see
+	/// [`max_validators`](https://github.com/axiatech/polkadot/blob/a52dca2be7840b23c19c153cf7e110b1e3e475f8/runtime/allychains/src/configuration.rs#L148)
 	#[cfg_attr(feature = "std", ignore_malloc_size_of = "outside type")]
 	pub discovery_keys: Vec<v1::AuthorityDiscoveryId>,
 	/// The assignment keys for validators.
 	///
 	/// NOTE: There might be more authorities in the current session, than validators participating
-	/// in parachain consensus. See
-	/// [`max_validators`](https://github.com/paritytech/polkadot/blob/a52dca2be7840b23c19c153cf7e110b1e3e475f8/runtime/parachains/src/configuration.rs#L148).
+	/// in allychain consensus. See
+	/// [`max_validators`](https://github.com/axiatech/polkadot/blob/a52dca2be7840b23c19c153cf7e110b1e3e475f8/runtime/allychains/src/configuration.rs#L148).
 	///
 	/// Therefore:
 	/// ```ignore
@@ -134,9 +134,9 @@ impl PvfCheckStatement {
 }
 
 sp_api::decl_runtime_apis! {
-	/// The API for querying the state of parachains on-chain.
+	/// The API for querying the state of allychains on-chain.
 	#[api_version(2)]
-	pub trait ParachainHost<H: Encode + Decode = v1::Hash, N: Encode + Decode = v1::BlockNumber> {
+	pub trait AllychainHost<H: Encode + Decode = v1::Hash, N: Encode + Decode = v1::BlockNumber> {
 		/// Get the current validators.
 		fn validators() -> Vec<v1::ValidatorId>;
 
@@ -210,22 +210,22 @@ sp_api::decl_runtime_apis! {
 
 		/// Get the session info for the given session, if stored.
 		///
-		/// NOTE: This function is only available since parachain host version 2.
+		/// NOTE: This function is only available since allychain host version 2.
 		fn session_info(index: v1::SessionIndex) -> Option<SessionInfo>;
 
 		/// Submits a PVF pre-checking statement into the transaction pool.
 		///
-		/// NOTE: This function is only available since parachain host version 2.
+		/// NOTE: This function is only available since allychain host version 2.
 		fn submit_pvf_check_statement(stmt: PvfCheckStatement, signature: v1::ValidatorSignature);
 
 		/// Returns code hashes of PVFs that require pre-checking by validators in the active set.
 		///
-		/// NOTE: This function is only available since parachain host version 2.
+		/// NOTE: This function is only available since allychain host version 2.
 		fn pvfs_require_precheck() -> Vec<v1::ValidationCodeHash>;
 
 		/// Fetch the hash of the validation code used by a para, making the given `OccupiedCoreAssumption`.
 		///
-		/// NOTE: This function is only available since parachain host version 2.
+		/// NOTE: This function is only available since allychain host version 2.
 		fn validation_code_hash(para_id: v1::Id, assumption: v1::OccupiedCoreAssumption)
 			-> Option<v1::ValidationCodeHash>;
 	}

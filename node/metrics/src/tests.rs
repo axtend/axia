@@ -1,31 +1,31 @@
-// Copyright 2021 Parity Technologies (UK) Ltd.
-// This file is part of Substrate.
+// Copyright 2021 Axia Technologies (UK) Ltd.
+// This file is part of Axlib.
 
-// Substrate is free software: you can redistribute it and/or modify
+// Axlib is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Substrate is distributed in the hope that it will be useful,
+// Axlib is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Substrate.  If not, see <http://www.gnu.org/licenses/>.
+// along with Axlib.  If not, see <http://www.gnu.org/licenses/>.
 
-//! Polkadot runtime metrics integration test.
+//! Axia runtime metrics integration test.
 
 use hyper::{Client, Uri};
 use polkadot_test_service::{node_config, run_validator_node, test_prometheus_config};
-use primitives::v1::metric_definitions::PARACHAIN_INHERENT_DATA_BITFIELDS_PROCESSED;
+use primitives::v1::metric_definitions::ALLYCHAIN_INHERENT_DATA_BITFIELDS_PROCESSED;
 use sc_client_api::{execution_extensions::ExecutionStrategies, ExecutionStrategy};
 use sp_keyring::AccountKeyring::*;
 use std::{collections::HashMap, convert::TryFrom};
 
 const DEFAULT_PROMETHEUS_PORT: u16 = 9616;
 
-#[substrate_test_utils::test]
+#[axlib_test_utils::test]
 async fn runtime_can_publish_metrics() {
 	let mut alice_config =
 		node_config(|| {}, tokio::runtime::Handle::current(), Alice, Vec::new(), true);
@@ -70,7 +70,7 @@ async fn runtime_can_publish_metrics() {
 	// There should be at least 1 bitfield processed by now.
 	assert!(
 		*metrics
-			.get(&PARACHAIN_INHERENT_DATA_BITFIELDS_PROCESSED.name.to_owned())
+			.get(&ALLYCHAIN_INHERENT_DATA_BITFIELDS_PROCESSED.name.to_owned())
 			.unwrap() > 1
 	);
 }

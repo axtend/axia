@@ -1,26 +1,26 @@
-// Copyright 2020 Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// Copyright 2020 Axia Technologies (UK) Ltd.
+// This file is part of Axia.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// Axia is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// Axia is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with Axia.  If not, see <http://www.gnu.org/licenses/>.
 
-//! The Network Bridge Subsystem - protocol multiplexer for Polkadot.
+//! The Network Bridge Subsystem - protocol multiplexer for Axia.
 
 #![deny(unused_crate_dependencies)]
 #![warn(missing_docs)]
 
 use futures::{prelude::*, stream::BoxStream};
-use parity_scale_codec::{Decode, Encode};
+use axia_scale_codec::{Decode, Encode};
 use parking_lot::Mutex;
 use sc_network::Event as NetworkEvent;
 use sp_consensus::SyncOracle;
@@ -73,7 +73,7 @@ const MALFORMED_VIEW_COST: Rep = Rep::CostMajor("Malformed view");
 const EMPTY_VIEW_COST: Rep = Rep::CostMajor("Peer sent us an empty view");
 
 // network bridge log target
-const LOG_TARGET: &'static str = "parachain::network-bridge";
+const LOG_TARGET: &'static str = "allychain::network-bridge";
 
 /// Metrics for the network bridge.
 #[derive(Clone, Default)]
@@ -167,8 +167,8 @@ impl metrics::Metrics for Metrics {
 			peer_count: prometheus::register(
 				prometheus::GaugeVec::new(
 					prometheus::Opts::new(
-						"polkadot_parachain_peer_count",
-						"The number of peers on a parachain-related peer-set",
+						"polkadot_allychain_peer_count",
+						"The number of peers on a allychain-related peer-set",
 					),
 					&["protocol"]
 				)?,
@@ -177,8 +177,8 @@ impl metrics::Metrics for Metrics {
 			connected_events: prometheus::register(
 				prometheus::CounterVec::new(
 					prometheus::Opts::new(
-						"polkadot_parachain_peer_connect_events_total",
-						"The number of peer connect events on a parachain notifications protocol",
+						"polkadot_allychain_peer_connect_events_total",
+						"The number of peer connect events on a allychain notifications protocol",
 					),
 					&["protocol"]
 				)?,
@@ -187,8 +187,8 @@ impl metrics::Metrics for Metrics {
 			disconnected_events: prometheus::register(
 				prometheus::CounterVec::new(
 					prometheus::Opts::new(
-						"polkadot_parachain_peer_disconnect_events_total",
-						"The number of peer disconnect events on a parachain notifications protocol",
+						"polkadot_allychain_peer_disconnect_events_total",
+						"The number of peer disconnect events on a allychain notifications protocol",
 					),
 					&["protocol"]
 				)?,
@@ -197,8 +197,8 @@ impl metrics::Metrics for Metrics {
 			desired_peer_count: prometheus::register(
 				prometheus::GaugeVec::new(
 					prometheus::Opts::new(
-						"polkadot_parachain_desired_peer_count",
-						"The number of peers that the local node is expected to connect to on a parachain-related peer-set (either including or not including unresolvable authorities, depending on whether `ConnectToValidators` or `ConnectToValidatorsResolved` was used.)",
+						"polkadot_allychain_desired_peer_count",
+						"The number of peers that the local node is expected to connect to on a allychain-related peer-set (either including or not including unresolvable authorities, depending on whether `ConnectToValidators` or `ConnectToValidatorsResolved` was used.)",
 					),
 					&["protocol"]
 				)?,
@@ -207,8 +207,8 @@ impl metrics::Metrics for Metrics {
 			notifications_received: prometheus::register(
 				prometheus::CounterVec::new(
 					prometheus::Opts::new(
-						"polkadot_parachain_notifications_received_total",
-						"The number of notifications received on a parachain protocol",
+						"polkadot_allychain_notifications_received_total",
+						"The number of notifications received on a allychain protocol",
 					),
 					&["protocol"]
 				)?,
@@ -217,8 +217,8 @@ impl metrics::Metrics for Metrics {
 			notifications_sent: prometheus::register(
 				prometheus::CounterVec::new(
 					prometheus::Opts::new(
-						"polkadot_parachain_notifications_sent_total",
-						"The number of notifications sent on a parachain protocol",
+						"polkadot_allychain_notifications_sent_total",
+						"The number of notifications sent on a allychain protocol",
 					),
 					&["protocol"]
 				)?,
@@ -227,8 +227,8 @@ impl metrics::Metrics for Metrics {
 			bytes_received: prometheus::register(
 				prometheus::CounterVec::new(
 					prometheus::Opts::new(
-						"polkadot_parachain_notification_bytes_received_total",
-						"The number of bytes received on a parachain notification protocol",
+						"polkadot_allychain_notification_bytes_received_total",
+						"The number of bytes received on a allychain notification protocol",
 					),
 					&["protocol"]
 				)?,
@@ -237,8 +237,8 @@ impl metrics::Metrics for Metrics {
 			bytes_sent: prometheus::register(
 				prometheus::CounterVec::new(
 					prometheus::Opts::new(
-						"polkadot_parachain_notification_bytes_sent_total",
-						"The number of bytes sent on a parachain notification protocol",
+						"polkadot_allychain_notification_bytes_sent_total",
+						"The number of bytes sent on a allychain notification protocol",
 					),
 					&["protocol"]
 				)?,

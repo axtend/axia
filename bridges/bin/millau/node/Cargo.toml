@@ -1,12 +1,12 @@
 [package]
 name = "millau-bridge-node"
-description = "Substrate node compatible with Millau runtime"
+description = "Axlib node compatible with Millau runtime"
 version = "0.1.0"
-authors = ["Parity Technologies <admin@parity.io>"]
+authors = ["Axia Technologies <admin@axia.io>"]
 edition = "2018"
 build = "build.rs"
-homepage = "https://substrate.dev"
-repository = "https://github.com/paritytech/parity-bridges-common/"
+homepage = "https://axlib.dev"
+repository = "https://github.com/axiatech/axia-bridges-common/"
 license = "GPL-3.0-or-later WITH Classpath-exception-2.0"
 
 [dependencies]
@@ -21,7 +21,7 @@ bp-runtime = { path = "../../../primitives/runtime" }
 millau-runtime = { path = "../runtime" }
 pallet-bridge-messages = { path = "../../../modules/messages" }
 
-# Substrate Dependencies
+# Axlib Dependencies
 
 beefy-gadget = { git = "https://github.com/axtend/axlib", branch = "c92f69d" }
 beefy-gadget-rpc = { git = "https://github.com/axtend/axlib", branch = "c92f69d" }
@@ -50,10 +50,10 @@ sp-core = { git = "https://github.com/axtend/axlib", branch = "c92f69d" }
 sp-finality-grandpa = { git = "https://github.com/axtend/axlib", branch = "c92f69d" }
 sp-runtime = { git = "https://github.com/axtend/axlib", branch = "c92f69d" }
 sp-timestamp = { git = "https://github.com/axtend/axlib", branch = "c92f69d" }
-substrate-frame-rpc-system = { git = "https://github.com/axtend/axlib", branch = "c92f69d" }
+axlib-frame-rpc-system = { git = "https://github.com/axtend/axlib", branch = "c92f69d" }
 
 [build-dependencies]
-substrate-build-script-utils = { git = "https://github.com/axtend/axlib", branch = "c92f69d" }
+axlib-build-script-utils = { git = "https://github.com/axtend/axlib", branch = "c92f69d" }
 frame-benchmarking-cli = { git = "https://github.com/axtend/axlib", branch = "c92f69d" }
 
 [features]

@@ -1,6 +1,6 @@
 # `ParaInherent`
 
-This module is responsible for providing all data given to the runtime by the block author to the various parachains modules. The entry-point is mandatory, in that it must be invoked exactly once within every block, and it is also "inherent", in that it is provided with no origin by the block author. The data within it carries its own authentication; i.e. the data takes the form of signed statements by validators. If any of the steps within fails, the entry-point is considered as having failed and the block will be invalid.
+This module is responsible for providing all data given to the runtime by the block author to the various allychains modules. The entry-point is mandatory, in that it must be invoked exactly once within every block, and it is also "inherent", in that it is provided with no origin by the block author. The data within it carries its own authentication; i.e. the data takes the form of signed statements by validators. If any of the steps within fails, the entry-point is considered as having failed and the block will be invalid.
 
 This module does not have the same initialization/finalization concerns as the others, as it only requires that entry points be triggered after all modules have initialized and that finalization happens after entry points are triggered. Both of these are assumptions we have already made about the runtime's order of operations, so this module doesn't need to be initialized or finalized by the `Initializer`.
 
@@ -33,7 +33,7 @@ OnChainVotes: Option<ScrapedOnChainVotes>,
     1. Ensure the origin is none.
     1. Ensure `Included` is set as `None`.
     1. Set `Included` as `Some`.
-    1. Unpack `ParachainsInherentData` into `signed_bitfields`, `backed_candidates`, `parent_header`, and `disputes`.
+    1. Unpack `AllychainsInherentData` into `signed_bitfields`, `backed_candidates`, `parent_header`, and `disputes`.
     1. Hash the parent header and make sure that it corresponds to the block hash of the parent (tracked by the `frame_system` FRAME module).
     1. Calculate the `candidate_weight`, `bitfields_weight`, and `disputes_weight`.
     1. If the sum of `candidate_weight`, `bitfields_weight`, and `disputes_weight` is greater than the max block weight we do the following with the goal of prioritizing the inclusion of disputes without making it game-able by block authors:
@@ -65,7 +65,7 @@ OnChainVotes: Option<ScrapedOnChainVotes>,
 
 # Routines
 
-* `create_inherent_inner(data: &InherentData) -> Option<ParachainsInherentData<T::Header>>`
+* `create_inherent_inner(data: &InherentData) -> Option<AllychainsInherentData<T::Header>>`
   1. Unpack `InherentData` into its parts, `bitfields`, `backed_candidates`, `disputes` and the `parent_header`. If data cannot be unpacked return `None`.
   1. Hash the `parent_header` and make sure that it corresponds to the block hash of the parent (tracked by the `frame_system` FRAME module).
   1. Invoke `Disputes::filter_multi_dispute_data` to remove duplicates et al from `disputes`.
@@ -85,4 +85,4 @@ OnChainVotes: Option<ScrapedOnChainVotes>,
   1. create a `rng` from `rand_chacha::ChaChaRng::from_seed(compute_entropy::<T>(parent_hash))`.
   1. Invoke `limit_disputes` with the max block weight and `rng`, storing the returned weigh in `remaining_weight`.
   1. Fill up the remaining of the block weight with backed candidates and bitfields by invoking `apply_weight_limit` with `remaining_weigh` and `rng`.
-  1. Return `Some(ParachainsInherentData { bitfields, backed_candidates, disputes, parent_header }`.
+  1. Return `Some(AllychainsInherentData { bitfields, backed_candidates, disputes, parent_header }`.

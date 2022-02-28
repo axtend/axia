@@ -2,13 +2,13 @@
 name = "pallet-bridge-messages"
 description = "Module that allows bridged chains to exchange messages using lane concept."
 version = "0.1.0"
-authors = ["Parity Technologies <admin@parity.io>"]
+authors = ["Axia Technologies <admin@axia.io>"]
 edition = "2018"
 license = "GPL-3.0-or-later WITH Classpath-exception-2.0"
 
 [dependencies]
 bitvec = { version = "0.20", default-features = false, features = ["alloc"] }
-codec = { package = "parity-scale-codec", version = "2.2.0", default-features = false }
+codec = { package = "axia-scale-codec", version = "2.2.0", default-features = false }
 log = { version = "0.4.14", default-features = false }
 num-traits = { version = "0.2", default-features = false }
 scale-info = { version = "1.0", default-features = false, features = ["derive"] }
@@ -20,7 +20,7 @@ bp-message-dispatch = { path = "../../primitives/message-dispatch", default-feat
 bp-messages = { path = "../../primitives/messages", default-features = false }
 bp-runtime = { path = "../../primitives/runtime", default-features = false }
 
-# Substrate Dependencies
+# Axlib Dependencies
 
 frame-benchmarking = { git = "https://github.com/axtend/axlib", default-features = false, optional = true , branch = "c92f69d" }
 frame-support = { git = "https://github.com/axtend/axlib", default-features = false , branch = "c92f69d" }

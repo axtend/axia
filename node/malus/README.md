@@ -14,25 +14,25 @@ To define integration tests create file
 in the toml format as used with [zombienet][zombienet]
 under `./integrationtests` describing the network to spawn and
 also the `feature` file (with `.feature` extension ) using the format
-defined in the [DSL doc](https://github.com/paritytech/zombienet/blob/main/docs/testing-dsl-definition.md).
+defined in the [DSL doc](https://github.com/axiatech/zombienet/blob/main/docs/testing-dsl-definition.md).
 
 ## Usage
 
-> Assumes you already gained permissiones, ping in element @javier:matrix.parity.io to get access.
+> Assumes you already gained permissiones, ping in element @javier:matrix.axia.io to get access.
 > and you have cloned the [zombienet][zombienet] repo.
 
 To launch a test case in the development cluster use (e.g. for the  ./node/malus/integrationtests/0001-dispute-valid-block.toml):
 
 ```sh
 # declare the containers pulled in by zombie-net test definitions
-export MALUS_IMAGE=docker.io/paritypr/malus:4131-ccd09bbf
-export ZOMBIENET_INTEGRATION_TEST_IMAGE=docker.io/paritypr/synth-wave:4131-0.9.12-ccd09bbf-29a1ac18
-export COL_IMAGE=docker.io/paritypr/colander:4131-ccd09bbf
+export MALUS_IMAGE=docker.io/axiapr/malus:4131-ccd09bbf
+export ZOMBIENET_INTEGRATION_TEST_IMAGE=docker.io/axiapr/synth-wave:4131-0.9.12-ccd09bbf-29a1ac18
+export COL_IMAGE=docker.io/axiapr/colander:4131-ccd09bbf
 
 # login chore, once, with the values as provided in the above guide
 gcloud auth login
-gcloud config set project "parity-zombienet"
-gcloud container clusters get-credentials "parity-zombienet" --zone "europe-west3-b" --project parity-zombienet
+gcloud config set project "axia-zombienet"
+gcloud container clusters get-credentials "axia-zombienet" --zone "europe-west3-b" --project axia-zombienet
 
 # launching the actual test
 cd zombienet
@@ -48,12 +48,12 @@ This will also teardown the namespace after completion.
 ## Container Image Building Note
 
 In order to build the container image you need to have the latest changes from
-polkadot and substrate master branches.
+polkadot and axlib master branches.
 
 ```sh
 pwd # run this from the current dir
-podman build -t paritypr/malus:v1 -f Containerfile ../../..
+podman build -t axiapr/malus:v1 -f Containerfile ../../..
 ```
 
-[zombienet]: https://github.com/paritytech/zombienet
-[gke]: (https://github.com/paritytech/gurke/blob/main/docs/How-to-setup-access-to-gke-k8s-cluster.md)
+[zombienet]: https://github.com/axiatech/zombienet
+[gke]: (https://github.com/axiatech/gurke/blob/main/docs/How-to-setup-access-to-gke-k8s-cluster.md)

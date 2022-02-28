@@ -2,7 +2,7 @@
 
 # THIS SCRIPT IS NOT INTENDED FOR USE IN PRODUCTION ENVIRONMENT
 #
-# This scripts periodically calls the Substrate relay binary to generate messages. These messages
+# This scripts periodically calls the Axlib relay binary to generate messages. These messages
 # are sent from the Millau network to the Rialto network.
 
 set -eu
@@ -31,7 +31,7 @@ while true
 do
 	rand_sleep
 	echo "Initiating token-swap between Rialto and Millau"
-	/home/user/substrate-relay \
+	/home/user/axlib-relay \
 		swap-tokens \
 		millau-to-rialto \
 		--source-host $SOURCE_HOST \

@@ -1,0 +1,19 @@
+[package]
+name = "betanet-runtime-constants"
+version = "0.9.17"
+authors = ["Axia Technologies <admin@axia.io>"]
+edition = "2021"
+
+[dependencies]
+smallvec = "1.6.1"
+
+frame-support = { git = "https://github.com/axtend/axlib", default-features = false , branch = "c92f69d" }
+primitives = { package = "polkadot-primitives", path = "../../../primitives", default-features = false }
+runtime-common = { package = "polkadot-runtime-common", path = "../../common", default-features = false }
+sp-runtime = { git = "https://github.com/axtend/axlib", default-features = false , branch = "c92f69d" }
+
+[features]
+default = ["std"]
+std = [
+	"sp-runtime/std"
+]

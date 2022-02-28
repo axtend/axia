@@ -1,7 +1,7 @@
 [package]
 name = "polkadot-voter-bags"
 version = "0.9.17"
-authors = ["Parity Technologies <admin@parity.io>"]
+authors = ["Axia Technologies <admin@axia.io>"]
 edition = "2018"
 
 [dependencies]
@@ -10,6 +10,6 @@ clap = { version = "3.0", features = ["derive"] }
 generate-bags = { git = "https://github.com/axtend/axlib", branch = "c92f69d" }
 sp-io = { git = "https://github.com/axtend/axlib", branch = "c92f69d" }
 
-westend-runtime = { path = "../../runtime/westend" }
-kusama-runtime = { path = "../../runtime/kusama" }
+alphanet-runtime = { path = "../../runtime/alphanet" }
+axctest-runtime = { path = "../../runtime/axctest" }
 polkadot-runtime = { path = "../../runtime/polkadot" }

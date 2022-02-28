@@ -1,18 +1,18 @@
-// Copyright 2017-2021 Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// Copyright 2017-2021 Axia Technologies (UK) Ltd.
+// This file is part of Axia.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// Axia is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// Axia is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with Axia.  If not, see <http://www.gnu.org/licenses/>.
 
 //! Provides the possibility to coordination between malicious actors and
 //! the zombienet test-runner, allowing to reference runtime's generated
@@ -21,7 +21,7 @@
 
 use futures_util::{SinkExt, StreamExt};
 use lazy_static::lazy_static;
-use parity_scale_codec as codec;
+use axia_scale_codec as codec;
 use serde::{Deserialize, Serialize};
 use std::{env, sync::Mutex};
 use tokio::sync::broadcast;

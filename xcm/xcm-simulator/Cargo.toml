@@ -1,12 +1,12 @@
 [package]
 name = "xcm-simulator"
 version = "0.9.17"
-authors = ["Parity Technologies <admin@parity.io>"]
+authors = ["Axia Technologies <admin@axia.io>"]
 description = "Test kit to simulate cross-chain message passing and XCM execution"
 edition = "2018"
 
 [dependencies]
-codec = { package = "parity-scale-codec", version = "2.0.0" }
+codec = { package = "axia-scale-codec", version = "2.0.0" }
 paste = "1.0.6"
 
 frame-support = { git = "https://github.com/axtend/axlib", branch = "c92f69d" }
@@ -16,5 +16,5 @@ sp-std = { git = "https://github.com/axtend/axlib", branch = "c92f69d" }
 xcm = { path = "../" }
 xcm-executor = { path = "../xcm-executor" }
 polkadot-core-primitives = { path = "../../core-primitives"}
-polkadot-parachain = { path = "../../parachain" }
-polkadot-runtime-parachains = { path = "../../runtime/parachains" }
+polkadot-allychain = { path = "../../allychain" }
+polkadot-runtime-allychains = { path = "../../runtime/allychains" }

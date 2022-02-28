@@ -1,7 +1,7 @@
 [package]
 name = "polkadot-node-subsystem-types"
 version = "0.9.17"
-authors = ["Parity Technologies <admin@parity.io>"]
+authors = ["Axia Technologies <admin@axia.io>"]
 edition = "2018"
 description = "Subsystem traits and message definitions"
 
@@ -16,5 +16,5 @@ polkadot-node-jaeger = { path = "../jaeger" }
 polkadot-overseer-gen = { path = "../overseer/overseer-gen" }
 sc-network = { git = "https://github.com/axtend/axlib", branch = "c92f69d" }
 smallvec = "1.6.1"
-substrate-prometheus-endpoint = { git = "https://github.com/axtend/axlib", branch = "c92f69d" }
+axlib-prometheus-endpoint = { git = "https://github.com/axtend/axlib", branch = "c92f69d" }
 thiserror = "1.0.30"

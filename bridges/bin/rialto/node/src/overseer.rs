@@ -1,20 +1,20 @@
-// Copyright 2019-2021 Parity Technologies (UK) Ltd.
-// This file is part of Parity Bridges Common.
+// Copyright 2019-2021 Axia Technologies (UK) Ltd.
+// This file is part of Axia Bridges Common.
 
-// Parity Bridges Common is free software: you can redistribute it and/or modify
+// Axia Bridges Common is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Parity Bridges Common is distributed in the hope that it will be useful,
+// Axia Bridges Common is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Parity Bridges Common.  If not, see <http://www.gnu.org/licenses/>.
+// along with Axia Bridges Common.  If not, see <http://www.gnu.org/licenses/>.
 
-//! This is almost 1:1 copy of `node/service/src/overseer.rs` file from Polkadot repository.
+//! This is almost 1:1 copy of `node/service/src/overseer.rs` file from Axia repository.
 //! The only exception is that we don't support db upgrades => no `upgrade.rs` module.
 
 // this warning comes from `polkadot_overseer::AllSubsystems` type
@@ -36,7 +36,7 @@ use polkadot_overseer::{
 	metrics::Metrics as OverseerMetrics, BlockInfo, MetricsTrait, Overseer, InitializedOverseerBuilder,
 	OverseerConnector, OverseerHandle,
 };
-use polkadot_primitives::v1::ParachainHost;
+use polkadot_primitives::v1::AllychainHost;
 use sc_authority_discovery::Service as AuthorityDiscoveryService;
 use sc_client_api::AuxStore;
 use sc_keystore::LocalKeystore;
@@ -45,7 +45,7 @@ use sp_blockchain::HeaderBackend;
 use sp_consensus_babe::BabeApi;
 use sp_core::traits::SpawnNamed;
 use std::sync::Arc;
-use substrate_prometheus_endpoint::Registry;
+use axlib_prometheus_endpoint::Registry;
 
 pub use polkadot_approval_distribution::ApprovalDistribution as ApprovalDistributionSubsystem;
 pub use polkadot_availability_bitfield_distribution::BitfieldDistribution as BitfieldDistributionSubsystem;
@@ -72,7 +72,7 @@ pub use polkadot_statement_distribution::StatementDistributionSubsystem;
 pub struct OverseerGenArgs<'a, Spawner, RuntimeClient>
 where
 	RuntimeClient: 'static + ProvideRuntimeApi<Block> + HeaderBackend<Block> + AuxStore,
-	RuntimeClient::Api: ParachainHost<Block> + BabeApi<Block> + AuthorityDiscoveryApi<Block>,
+	RuntimeClient::Api: AllychainHost<Block> + BabeApi<Block> + AuthorityDiscoveryApi<Block>,
 	Spawner: 'static + SpawnNamed + Clone + Unpin,
 {
 	/// Set of initial relay chain leaves to track.
@@ -81,8 +81,8 @@ where
 	pub keystore: Arc<LocalKeystore>,
 	/// Runtime client generic, providing the `ProvieRuntimeApi` trait besides others.
 	pub runtime_client: Arc<RuntimeClient>,
-	/// The underlying key value store for the parachains.
-	pub parachains_db: Arc<dyn kvdb::KeyValueDB>,
+	/// The underlying key value store for the allychains.
+	pub allychains_db: Arc<dyn kvdb::KeyValueDB>,
 	/// Underlying network service implementation.
 	pub network_service: Arc<sc_network::NetworkService<Block, Hash>>,
 	/// Underlying authority discovery service.
@@ -120,7 +120,7 @@ pub fn prepared_overseer_builder<Spawner, RuntimeClient>(
 		leaves,
 		keystore,
 		runtime_client,
-		parachains_db,
+		allychains_db,
 		network_service,
 		authority_discovery_service,
 		pov_req_receiver,
@@ -170,7 +170,7 @@ pub fn prepared_overseer_builder<Spawner, RuntimeClient>(
 >
 where
 	RuntimeClient: 'static + ProvideRuntimeApi<Block> + HeaderBackend<Block> + AuxStore,
-	RuntimeClient::Api: ParachainHost<Block> + BabeApi<Block> + AuthorityDiscoveryApi<Block>,
+	RuntimeClient::Api: AllychainHost<Block> + BabeApi<Block> + AuthorityDiscoveryApi<Block>,
 	Spawner: 'static + SpawnNamed + Clone + Unpin,
 {
 	use polkadot_node_subsystem_util::metrics::Metrics;
@@ -189,7 +189,7 @@ where
 			Metrics::register(registry)?,
 		))
 		.availability_store(AvailabilityStoreSubsystem::new(
-			parachains_db.clone(),
+			allychains_db.clone(),
 			availability_config,
 			Metrics::register(registry)?,
 		))
@@ -236,7 +236,7 @@ where
 		.approval_distribution(ApprovalDistributionSubsystem::new(Metrics::register(registry)?))
 		.approval_voting(ApprovalVotingSubsystem::with_config(
 			approval_voting_config,
-			parachains_db.clone(),
+			allychains_db.clone(),
 			keystore.clone(),
 			Box::new(network_service),
 			Metrics::register(registry)?,
@@ -246,7 +246,7 @@ where
 			authority_discovery_service.clone(),
 		))
 		.dispute_coordinator(DisputeCoordinatorSubsystem::new(
-			parachains_db.clone(),
+			allychains_db.clone(),
 			dispute_coordinator_config,
 			keystore.clone(),
 			Metrics::register(registry)?,
@@ -257,7 +257,7 @@ where
 			authority_discovery_service,
 			Metrics::register(registry)?,
 		))
-		.chain_selection(ChainSelectionSubsystem::new(chain_selection_config, parachains_db))
+		.chain_selection(ChainSelectionSubsystem::new(chain_selection_config, allychains_db))
 		.leaves(Vec::from_iter(
 			leaves
 				.into_iter()
@@ -266,7 +266,7 @@ where
 		.activation_external_listeners(Default::default())
 		.span_per_active_leaf(Default::default())
 		.active_leaves(Default::default())
-		.supports_parachains(runtime_client)
+		.supports_allychains(runtime_client)
 		.known_leaves(LruCache::new(KNOWN_LEAVES_CACHE_SIZE))
 		.metrics(metrics)
 		.spawner(spawner);
@@ -286,7 +286,7 @@ pub trait OverseerGen {
 	) -> Result<(Overseer<Spawner, Arc<RuntimeClient>>, OverseerHandle), Error>
 	where
 		RuntimeClient: 'static + ProvideRuntimeApi<Block> + HeaderBackend<Block> + AuxStore,
-		RuntimeClient::Api: ParachainHost<Block> + BabeApi<Block> + AuthorityDiscoveryApi<Block>,
+		RuntimeClient::Api: AllychainHost<Block> + BabeApi<Block> + AuthorityDiscoveryApi<Block>,
 		Spawner: 'static + SpawnNamed + Clone + Unpin,
 	{
 		let gen = RealOverseerGen;
@@ -310,7 +310,7 @@ impl OverseerGen for RealOverseerGen {
 	) -> Result<(Overseer<Spawner, Arc<RuntimeClient>>, OverseerHandle), Error>
 	where
 		RuntimeClient: 'static + ProvideRuntimeApi<Block> + HeaderBackend<Block> + AuxStore,
-		RuntimeClient::Api: ParachainHost<Block> + BabeApi<Block> + AuthorityDiscoveryApi<Block>,
+		RuntimeClient::Api: AllychainHost<Block> + BabeApi<Block> + AuthorityDiscoveryApi<Block>,
 		Spawner: 'static + SpawnNamed + Clone + Unpin,
 	{
 		prepared_overseer_builder(args)?

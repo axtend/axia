@@ -1,20 +1,20 @@
-// Copyright 2021 Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// Copyright 2021 Axia Technologies (UK) Ltd.
+// This file is part of Axia.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// Axia is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// Axia is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with Axia.  If not, see <http://www.gnu.org/licenses/>.
 
-//! Overview over request/responses as used in `Polkadot`.
+//! Overview over request/responses as used in `Axia`.
 //!
 //! `enum Protocol` .... List of all supported protocols.
 //!
@@ -168,7 +168,7 @@ impl Protocol {
 				max_response_size: STATEMENT_RESPONSE_SIZE,
 				// We need statement fetching to be fast and will try our best at the responding
 				// side to answer requests within that timeout, assuming a bandwidth of 500Mbit/s
-				// - which is the recommended minimum bandwidth for nodes on Kusama as of April
+				// - which is the recommended minimum bandwidth for nodes on AxiaTest as of April
 				// 2021.
 				// Responders will reject requests, if it is unlikely they can serve them within
 				// the timeout, so the requester can immediately try another node, instead of
@@ -237,7 +237,7 @@ impl Protocol {
 		}
 	}
 
-	/// Get the protocol name of this protocol, as understood by substrate networking.
+	/// Get the protocol name of this protocol, as understood by axlib networking.
 	pub fn into_protocol_name(self) -> Cow<'static, str> {
 		self.get_protocol_name_static().into()
 	}

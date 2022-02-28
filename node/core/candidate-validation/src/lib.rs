@@ -1,18 +1,18 @@
-// Copyright 2020-2021 Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// Copyright 2020-2021 Axia Technologies (UK) Ltd.
+// This file is part of Axia.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// Axia is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// Axia is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with Axia.  If not, see <http://www.gnu.org/licenses/>.
 
 //! The Candidate Validation subsystem.
 //!
@@ -39,13 +39,13 @@ use polkadot_node_subsystem::{
 	SubsystemResult, SubsystemSender,
 };
 use polkadot_node_subsystem_util::metrics::{self, prometheus};
-use polkadot_parachain::primitives::{ValidationParams, ValidationResult as WasmValidationResult};
+use polkadot_allychain::primitives::{ValidationParams, ValidationResult as WasmValidationResult};
 use polkadot_primitives::v1::{
 	CandidateCommitments, CandidateDescriptor, Hash, OccupiedCoreAssumption,
 	PersistedValidationData, ValidationCode, ValidationCodeHash,
 };
 
-use parity_scale_codec::Encode;
+use axia_scale_codec::Encode;
 
 use futures::{channel::oneshot, prelude::*};
 
@@ -56,7 +56,7 @@ use async_trait::async_trait;
 #[cfg(test)]
 mod tests;
 
-const LOG_TARGET: &'static str = "parachain::candidate-validation";
+const LOG_TARGET: &'static str = "allychain::candidate-validation";
 
 /// Configuration for the candidate validation subsystem
 #[derive(Clone)]
@@ -716,7 +716,7 @@ impl metrics::Metrics for Metrics {
 			validation_requests: prometheus::register(
 				prometheus::CounterVec::new(
 					prometheus::Opts::new(
-						"polkadot_parachain_validation_requests_total",
+						"polkadot_allychain_validation_requests_total",
 						"Number of validation requests served.",
 					),
 					&["validity"],
@@ -725,21 +725,21 @@ impl metrics::Metrics for Metrics {
 			)?,
 			validate_from_chain_state: prometheus::register(
 				prometheus::Histogram::with_opts(prometheus::HistogramOpts::new(
-					"polkadot_parachain_candidate_validation_validate_from_chain_state",
+					"polkadot_allychain_candidate_validation_validate_from_chain_state",
 					"Time spent within `candidate_validation::validate_from_chain_state`",
 				))?,
 				registry,
 			)?,
 			validate_from_exhaustive: prometheus::register(
 				prometheus::Histogram::with_opts(prometheus::HistogramOpts::new(
-					"polkadot_parachain_candidate_validation_validate_from_exhaustive",
+					"polkadot_allychain_candidate_validation_validate_from_exhaustive",
 					"Time spent within `candidate_validation::validate_from_exhaustive`",
 				))?,
 				registry,
 			)?,
 			validate_candidate_exhaustive: prometheus::register(
 				prometheus::Histogram::with_opts(prometheus::HistogramOpts::new(
-					"polkadot_parachain_candidate_validation_validate_candidate_exhaustive",
+					"polkadot_allychain_candidate_validation_validate_candidate_exhaustive",
 					"Time spent within `candidate_validation::validate_candidate_exhaustive`",
 				))?,
 				registry,

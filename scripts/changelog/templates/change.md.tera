@@ -1,5 +1,5 @@
 {# This macro shows ONE change #}
-{%- macro change(c, cml="[C]", dot="[P]", sub="[S]") -%}
+{%- macro change(c, cml="[C]", axc="[P]", sub="[S]") -%}
 
 {%- if c.meta.C and c.meta.C.value >= 7 -%}
 {%- set prio = " ‼️ HIGH" -%}
@@ -26,8 +26,8 @@
 {%- endif -%}
 
 {%- if c.html_url is containing("polkadot") -%}
-{%- set repo = dot -%}
-{%- elif c.html_url is containing("substrate") -%}
+{%- set repo = axc -%}
+{%- elif c.html_url is containing("axlib") -%}
 {%- set repo = sub -%}
 {%- else -%}
 {%- set repo = "   " -%}

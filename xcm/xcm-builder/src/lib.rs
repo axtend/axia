@@ -1,18 +1,18 @@
-// Copyright 2020 Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// Copyright 2020 Axia Technologies (UK) Ltd.
+// This file is part of Axia.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// Axia is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// Axia is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with Axia.  If not, see <http://www.gnu.org/licenses/>.
 
 //! # XCM-Builder
 //!
@@ -30,22 +30,22 @@ pub mod test_utils;
 
 mod location_conversion;
 pub use location_conversion::{
-	Account32Hash, AccountId32Aliases, AccountKey20Aliases, ChildParachainConvertsVia,
-	LocationInverter, ParentIsPreset, SiblingParachainConvertsVia,
+	Account32Hash, AccountId32Aliases, AccountKey20Aliases, ChildAllychainConvertsVia,
+	LocationInverter, ParentIsPreset, SiblingAllychainConvertsVia,
 };
 
 mod origin_conversion;
 pub use origin_conversion::{
-	BackingToPlurality, ChildParachainAsNative, ChildSystemParachainAsSuperuser, EnsureXcmOrigin,
-	ParentAsSuperuser, RelayChainAsNative, SiblingParachainAsNative,
-	SiblingSystemParachainAsSuperuser, SignedAccountId32AsNative, SignedAccountKey20AsNative,
+	BackingToPlurality, ChildAllychainAsNative, ChildSystemAllychainAsSuperuser, EnsureXcmOrigin,
+	ParentAsSuperuser, RelayChainAsNative, SiblingAllychainAsNative,
+	SiblingSystemAllychainAsSuperuser, SignedAccountId32AsNative, SignedAccountKey20AsNative,
 	SignedToAccountId32, SovereignSignedViaLocation,
 };
 
 mod barriers;
 pub use barriers::{
 	AllowKnownQueryResponses, AllowSubscriptionsFrom, AllowTopLevelPaidExecutionFrom,
-	AllowUnpaidExecutionFrom, IsChildSystemParachain, TakeWeightCredit,
+	AllowUnpaidExecutionFrom, IsChildSystemAllychain, TakeWeightCredit,
 };
 
 mod currency_adapter;

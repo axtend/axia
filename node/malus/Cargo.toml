@@ -3,7 +3,7 @@ name = "polkadot-test-malus"
 description = "Misbehaving nodes for local testnets, system and Simnet tests."
 license = "GPL-3.0-only"
 version = "0.9.17"
-authors = ["Parity Technologies <admin@parity.io>"]
+authors = ["Axia Technologies <admin@axia.io>"]
 edition = "2018"
 readme = "README.md"
 publish = false
@@ -23,7 +23,7 @@ polkadot-node-core-backing = { path = "../core/backing" }
 polkadot-node-primitives = { path = "../primitives" }
 polkadot-primitives = { path = "../../primitives" }
 polkadot-node-core-pvf = { path = "../core/pvf" }
-parity-util-mem = { version = "0.10.0", default-features = false, features = ["jemalloc-global"] }
+axia-util-mem = { version = "0.10.0", default-features = false, features = ["jemalloc-global"] }
 color-eyre = { version = "0.6.0", default-features = false }
 assert_matches = "1.5"
 async-trait = "0.1.52"

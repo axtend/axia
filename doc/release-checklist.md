@@ -3,8 +3,8 @@
 
 ### Burn In
 
-Ensure that Parity DevOps has run the new release on Westend, Kusama, and
-Polkadot validators for at least 12 hours prior to publishing the release.
+Ensure that Axia DevOps has run the new release on Alphanet, AxiaTest, and
+Axia validators for at least 12 hours prior to publishing the release.
 
 ### Build Artifacts
 
@@ -57,7 +57,7 @@ functions. Compare the metadata of the current and new runtimes and ensure that
 the `module index, call index` tuples map to the same set of functions. In case
 of a breaking change, increase `transaction_version`.
 
-To verify the order has not changed, you may manually start the following [Github Action](https://github.com/paritytech/polkadot/actions/workflows/extrinsic-ordering-check-from-bin.yml). It takes around a minute to run and will produce the report as artifact you need to manually check.
+To verify the order has not changed, you may manually start the following [Github Action](https://github.com/axiatech/polkadot/actions/workflows/extrinsic-ordering-check-from-bin.yml). It takes around a minute to run and will produce the report as artifact you need to manually check.
 
 The things to look for in the output are lines like:
   - `[Identity] idx 28 -> 25 (calls 15)` - indicates the index for `Identity` has changed
@@ -77,13 +77,13 @@ date to include them.
 
 There are three benchmarking machines reserved for updating the weights at
 release-time. To initialise a benchmark run for each production runtime
-(westend, kusama, polkadot):
-* Go to https://gitlab.parity.io/parity/polkadot/-/pipelines?page=1&scope=branches&ref=master
+(alphanet, axctest, polkadot):
+* Go to https://gitlab.axia.io/axia/polkadot/-/pipelines?page=1&scope=branches&ref=master
 * Click the link to the last pipeline run for master
 * Start each of the manual jobs:
-  * 'update_westend_weights'
+  * 'update_alphanet_weights'
   * 'update_polkadot_weights'
-  * 'update_kusama_weights'
+  * 'update_axctest_weights'
 * When these jobs have completed (it takes a few hours), a git PATCH file will
     be available to download as an artifact. 
 * On your local machine, branch off master
@@ -92,7 +92,7 @@ release-time. To initialise a benchmark run for each production runtime
 * The weights should be (Currently manually) checked to make sure there are no
     big outliers (i.e., twice or half the weight).
 
-### Polkadot JS
+### Axia JS
 
-Ensure that a release of [Polkadot JS API]() contains any new types or
+Ensure that a release of [Axia JS API]() contains any new types or
 interfaces necessary to interact with the new runtime.

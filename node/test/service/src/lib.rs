@@ -1,20 +1,20 @@
-// Copyright 2020 Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// Copyright 2020 Axia Technologies (UK) Ltd.
+// This file is part of Axia.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// Axia is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// Axia is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with Axia.  If not, see <http://www.gnu.org/licenses/>.
 
-//! Polkadot test service only.
+//! Axia test service only.
 
 #![warn(missing_docs)]
 
@@ -27,7 +27,7 @@ use polkadot_node_subsystem::messages::{CollationGenerationMessage, CollatorProt
 use polkadot_overseer::Handle;
 use polkadot_primitives::v1::{Balance, CollatorPair, HeadData, Id as ParaId, ValidationCode};
 use polkadot_runtime_common::BlockHashCount;
-use polkadot_runtime_parachains::paras::ParaGenesisArgs;
+use polkadot_runtime_allychains::paras::ParaGenesisArgs;
 use polkadot_service::{
 	ClientHandle, Error, ExecuteWithClient, FullClient, IsCollator, NewFull, PrometheusConfig,
 };
@@ -55,15 +55,15 @@ use std::{
 	path::PathBuf,
 	sync::Arc,
 };
-use substrate_test_client::{
+use axlib_test_client::{
 	BlockchainEventsExt, RpcHandlersExt, RpcTransactionError, RpcTransactionOutput,
 };
 
-/// Declare an instance of the native executor named `PolkadotTestExecutorDispatch`. Include the wasm binary as the
+/// Declare an instance of the native executor named `AxiaTestExecutorDispatch`. Include the wasm binary as the
 /// equivalent wasm code.
-pub struct PolkadotTestExecutorDispatch;
+pub struct AxiaTestExecutorDispatch;
 
-impl sc_executor::NativeExecutionDispatch for PolkadotTestExecutorDispatch {
+impl sc_executor::NativeExecutionDispatch for AxiaTestExecutorDispatch {
 	type ExtendHostFunctions = frame_benchmarking::benchmarking::HostFunctions;
 
 	fn dispatch(method: &str, data: &[u8]) -> Option<Vec<u8>> {
@@ -76,7 +76,7 @@ impl sc_executor::NativeExecutionDispatch for PolkadotTestExecutorDispatch {
 }
 
 /// The client type being used by the test service.
-pub type Client = FullClient<polkadot_test_runtime::RuntimeApi, PolkadotTestExecutorDispatch>;
+pub type Client = FullClient<polkadot_test_runtime::RuntimeApi, AxiaTestExecutorDispatch>;
 
 pub use polkadot_service::FullBackend;
 
@@ -87,7 +87,7 @@ pub fn new_full(
 	is_collator: IsCollator,
 	worker_program_path: Option<PathBuf>,
 ) -> Result<NewFull<Arc<Client>>, Error> {
-	polkadot_service::new_full::<polkadot_test_runtime::RuntimeApi, PolkadotTestExecutorDispatch, _>(
+	polkadot_service::new_full::<polkadot_test_runtime::RuntimeApi, AxiaTestExecutorDispatch, _>(
 		config,
 		is_collator,
 		None,
@@ -117,7 +117,7 @@ pub fn test_prometheus_config(port: u16) -> PrometheusConfig {
 	)
 }
 
-/// Create a Polkadot `Configuration`.
+/// Create a Axia `Configuration`.
 ///
 /// By default an in-memory socket will be used, therefore you need to provide boot
 /// nodes if you want the future node to be connected to other nodes.
@@ -214,17 +214,17 @@ pub fn node_config(
 pub fn run_validator_node(
 	config: Configuration,
 	worker_program_path: Option<PathBuf>,
-) -> PolkadotTestNode {
+) -> AxiaTestNode {
 	let multiaddr = config.network.listen_addresses[0].clone();
 	let NewFull { task_manager, client, network, rpc_handlers, overseer_handle, .. } =
 		new_full(config, IsCollator::No, worker_program_path)
-			.expect("could not create Polkadot test service");
+			.expect("could not create Axia test service");
 
 	let overseer_handle = overseer_handle.expect("test node must have an overseer handle");
 	let peer_id = network.local_peer_id().clone();
 	let addr = MultiaddrWithPeerId { multiaddr, peer_id };
 
-	PolkadotTestNode { task_manager, client, overseer_handle, addr, rpc_handlers }
+	AxiaTestNode { task_manager, client, overseer_handle, addr, rpc_handlers }
 }
 
 /// Run a test collator node that uses the test runtime.
@@ -238,29 +238,29 @@ pub fn run_validator_node(
 /// # Note
 ///
 /// The collator functionality still needs to be registered at the node! This can be done using
-/// [`PolkadotTestNode::register_collator`].
+/// [`AxiaTestNode::register_collator`].
 pub fn run_collator_node(
 	tokio_handle: tokio::runtime::Handle,
 	key: Sr25519Keyring,
 	storage_update_func: impl Fn(),
 	boot_nodes: Vec<MultiaddrWithPeerId>,
 	collator_pair: CollatorPair,
-) -> PolkadotTestNode {
+) -> AxiaTestNode {
 	let config = node_config(storage_update_func, tokio_handle, key, boot_nodes, false);
 	let multiaddr = config.network.listen_addresses[0].clone();
 	let NewFull { task_manager, client, network, rpc_handlers, overseer_handle, .. } =
 		new_full(config, IsCollator::Yes(collator_pair), None)
-			.expect("could not create Polkadot test service");
+			.expect("could not create Axia test service");
 
 	let overseer_handle = overseer_handle.expect("test node must have an overseer handle");
 	let peer_id = network.local_peer_id().clone();
 	let addr = MultiaddrWithPeerId { multiaddr, peer_id };
 
-	PolkadotTestNode { task_manager, client, overseer_handle, addr, rpc_handlers }
+	AxiaTestNode { task_manager, client, overseer_handle, addr, rpc_handlers }
 }
 
-/// A Polkadot test node instance used for testing.
-pub struct PolkadotTestNode {
+/// A Axia test node instance used for testing.
+pub struct AxiaTestNode {
 	/// `TaskManager`'s instance.
 	pub task_manager: TaskManager,
 	/// Client's instance.
@@ -273,7 +273,7 @@ pub struct PolkadotTestNode {
 	pub rpc_handlers: RpcHandlers,
 }
 
-impl PolkadotTestNode {
+impl AxiaTestNode {
 	/// Send an extrinsic to this node.
 	pub async fn send_extrinsic(
 		&self,
@@ -285,8 +285,8 @@ impl PolkadotTestNode {
 		self.rpc_handlers.send_transaction(extrinsic.into()).await
 	}
 
-	/// Register a parachain at this relay chain.
-	pub async fn register_parachain(
+	/// Register a allychain at this relay chain.
+	pub async fn register_allychain(
 		&self,
 		id: ParaId,
 		validation_code: impl Into<ValidationCode>,
@@ -297,7 +297,7 @@ impl PolkadotTestNode {
 			genesis: ParaGenesisArgs {
 				genesis_head: genesis_head.into(),
 				validation_code: validation_code.into(),
-				parachain: true,
+				allychain: true,
 			},
 		};
 

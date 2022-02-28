@@ -1,12 +1,12 @@
 [package]
-authors = ["Parity Technologies <admin@parity.io>"]
+authors = ["Axia Technologies <admin@axia.io>"]
 edition = "2018"
 name = "xcm-builder"
 description = "Tools & types for building with XCM and its executor."
 version = "0.9.17"
 
 [dependencies]
-parity-scale-codec = { version = "2.3.1", default-features = false, features = ["derive"] }
+axia-scale-codec = { version = "2.3.1", default-features = false, features = ["derive"] }
 scale-info = { version = "1.0", default-features = false, features = ["derive"] }
 xcm = { path = "..", default-features = false }
 xcm-executor = { path = "../xcm-executor", default-features = false }
@@ -19,20 +19,20 @@ frame-system = { git = "https://github.com/axtend/axlib", default-features = fal
 pallet-transaction-payment = { git = "https://github.com/axtend/axlib", default-features = false , branch = "c92f69d" }
 log = { version = "0.4.0", default-features = false }
 
-# Polkadot dependencies
-polkadot-parachain = { path = "../../parachain", default-features = false }
+# Axia dependencies
+polkadot-allychain = { path = "../../allychain", default-features = false }
 
 [dev-dependencies]
 sp-core = { git = "https://github.com/axtend/axlib", branch = "c92f69d" }
 pallet-balances = { git = "https://github.com/axtend/axlib", branch = "c92f69d" }
 pallet-xcm = { path = "../pallet-xcm" }
-polkadot-runtime-parachains = { path = "../../runtime/parachains" }
+polkadot-runtime-allychains = { path = "../../runtime/allychains" }
 [features]
 default = ["std"]
 runtime-benchmarks = []
 std = [
 	"log/std",
-	"parity-scale-codec/std",
+	"axia-scale-codec/std",
 	"scale-info/std",
 	"xcm/std",
 	"xcm-executor/std",
@@ -41,6 +41,6 @@ std = [
 	"sp-io/std",
 	"sp-runtime/std",
 	"frame-support/std",
-	"polkadot-parachain/std",
+	"polkadot-allychain/std",
 	"pallet-transaction-payment/std",
 ]

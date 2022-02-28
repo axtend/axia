@@ -1,18 +1,18 @@
-// Copyright 2020 Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// Copyright 2020 Axia Technologies (UK) Ltd.
+// This file is part of Axia.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// Axia is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// Axia is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with Axia.  If not, see <http://www.gnu.org/licenses/>.
 
 //! The Collator Protocol allows collators and validators talk to each other.
 //! This subsystem implements both sides of the collator protocol.
@@ -44,7 +44,7 @@ use error::{FatalResult, Result};
 mod collator_side;
 mod validator_side;
 
-const LOG_TARGET: &'static str = "parachain::collator-protocol";
+const LOG_TARGET: &'static str = "allychain::collator-protocol";
 
 /// A collator eviction policy - how fast to evict collators which are inactive.
 #[derive(Debug, Clone, Copy)]
@@ -75,7 +75,7 @@ pub enum ProtocolSide {
 		/// Prometheus metrics for validators.
 		metrics: validator_side::Metrics,
 	},
-	/// Collators operate on a parachain.
+	/// Collators operate on a allychain.
 	Collator(
 		PeerId,
 		CollatorPair,

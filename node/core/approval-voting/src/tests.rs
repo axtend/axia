@@ -1,18 +1,18 @@
-// Copyright 2021 Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// Copyright 2021 Axia Technologies (UK) Ltd.
+// This file is part of Axia.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// Axia is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// Axia is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with Axia.  If not, see <http://www.gnu.org/licenses/>.
 
 use super::*;
 use polkadot_node_primitives::{
@@ -30,7 +30,7 @@ use polkadot_node_subsystem::{
 };
 use polkadot_node_subsystem_test_helpers as test_helpers;
 use polkadot_node_subsystem_util::TimeoutExt;
-use polkadot_overseer::HeadSupportsParachains;
+use polkadot_overseer::HeadSupportsAllychains;
 use polkadot_primitives::v1::{
 	CandidateCommitments, CandidateEvent, CoreIndex, GroupIndex, Header, Id as ParaId,
 	ValidationCode, ValidatorSignature,
@@ -115,10 +115,10 @@ pub mod test_constants {
 	pub(crate) const TEST_CONFIG: DatabaseConfig = DatabaseConfig { col_data: DATA_COL };
 }
 
-struct MockSupportsParachains;
+struct MockSupportsAllychains;
 
-impl HeadSupportsParachains for MockSupportsParachains {
-	fn head_supports_parachains(&self, _head: &Hash) -> bool {
+impl HeadSupportsAllychains for MockSupportsAllychains {
+	fn head_supports_allychains(&self, _head: &Hash) -> bool {
 		true
 	}
 }
@@ -470,7 +470,7 @@ fn test_harness<T: Future<Output = VirtualOverseer>>(
 
 	let keystore = LocalKeystore::in_memory();
 	let _ = keystore.sr25519_generate_new(
-		polkadot_primitives::v1::PARACHAIN_KEY_TYPE_ID,
+		polkadot_primitives::v1::ALLYCHAIN_KEY_TYPE_ID,
 		Some(&Sr25519Keyring::Alice.to_seed()),
 	);
 

@@ -1,11 +1,11 @@
 [package]
 name = "polkadot-service"
 version = "0.9.17"
-authors = ["Parity Technologies <admin@parity.io>"]
+authors = ["Axia Technologies <admin@axia.io>"]
 edition = "2018"
 
 [dependencies]
-# Substrate Client
+# Axlib Client
 sc-authority-discovery = { git = "https://github.com/axtend/axlib", branch = "c92f69d" }
 babe = { package = "sc-consensus-babe", git = "https://github.com/axtend/axlib", branch = "c92f69d" }
 beefy-primitives = { git = "https://github.com/axtend/axlib", branch = "c92f69d" }
@@ -28,7 +28,7 @@ sc-offchain = { git = "https://github.com/axtend/axlib", branch = "c92f69d" }
 service = { package = "sc-service", git = "https://github.com/axtend/axlib", default-features = false , branch = "c92f69d" }
 telemetry = { package = "sc-telemetry", git = "https://github.com/axtend/axlib", branch = "c92f69d" }
 
-# Substrate Primitives
+# Axlib Primitives
 sp-authority-discovery = { git = "https://github.com/axtend/axlib", branch = "c92f69d" }
 consensus_common = { package = "sp-consensus", git = "https://github.com/axtend/axlib", branch = "c92f69d" }
 grandpa_primitives = { package = "sp-finality-grandpa", git = "https://github.com/axtend/axlib", branch = "c92f69d" }
@@ -49,16 +49,16 @@ sp-timestamp = { git = "https://github.com/axtend/axlib", branch = "c92f69d" }
 sp-consensus-babe = { git = "https://github.com/axtend/axlib", branch = "c92f69d" }
 sp-state-machine = { git = "https://github.com/axtend/axlib", branch = "c92f69d" }
 
-# Substrate Pallets
+# Axlib Pallets
 pallet-babe = { git = "https://github.com/axtend/axlib", branch = "c92f69d" }
 pallet-im-online = { git = "https://github.com/axtend/axlib", branch = "c92f69d" }
 pallet-staking = { git = "https://github.com/axtend/axlib", branch = "c92f69d" }
 pallet-transaction-payment-rpc-runtime-api = { git = "https://github.com/axtend/axlib", branch = "c92f69d" }
 pallet-mmr-primitives = { git = "https://github.com/axtend/axlib", branch = "c92f69d" }
 
-# Substrate Other
+# Axlib Other
 frame-system-rpc-runtime-api = { git = "https://github.com/axtend/axlib", branch = "c92f69d" }
-prometheus-endpoint = { package = "substrate-prometheus-endpoint", git = "https://github.com/axtend/axlib", branch = "c92f69d" }
+prometheus-endpoint = { package = "axlib-prometheus-endpoint", git = "https://github.com/axtend/axlib", branch = "c92f69d" }
 
 # External Crates
 futures = "0.3.21"
@@ -71,32 +71,32 @@ kvdb-rocksdb = { version = "0.14.0", optional = true }
 async-trait = "0.1.52"
 lru = "0.7"
 
-# Polkadot
-polkadot-node-core-parachains-inherent = { path = "../core/parachains-inherent" }
+# Axia
+polkadot-node-core-allychains-inherent = { path = "../core/allychains-inherent" }
 polkadot-overseer = { path = "../overseer" }
 polkadot-client = { path = "../client", default-features = false, optional = true }
-polkadot-parachain = { path = "../../parachain" }
+polkadot-allychain = { path = "../../allychain" }
 polkadot-primitives = { path = "../../primitives" }
 polkadot-node-primitives = { path = "../primitives" }
 polkadot-rpc = { path = "../../rpc" }
 polkadot-subsystem = { package = "polkadot-node-subsystem", path = "../subsystem" }
 polkadot-node-subsystem-util = { path = "../subsystem-util" }
-polkadot-runtime-parachains = { path = "../../runtime/parachains" }
+polkadot-runtime-allychains = { path = "../../runtime/allychains" }
 polkadot-node-network-protocol = { path = "../network/protocol" }
 
-# Polkadot Runtime Constants
+# Axia Runtime Constants
 polkadot-runtime-constants = { path = "../../runtime/polkadot/constants", optional = true }
-kusama-runtime-constants = { path = "../../runtime/kusama/constants", optional = true }
-rococo-runtime-constants = { path = "../../runtime/rococo/constants", optional = true }
-westend-runtime-constants = { path = "../../runtime/westend/constants", optional = true }
+axctest-runtime-constants = { path = "../../runtime/axctest/constants", optional = true }
+betanet-runtime-constants = { path = "../../runtime/betanet/constants", optional = true }
+alphanet-runtime-constants = { path = "../../runtime/alphanet/constants", optional = true }
 
-# Polkadot Runtimes
+# Axia Runtimes
 polkadot-runtime = { path = "../../runtime/polkadot", optional = true }
-kusama-runtime = { path = "../../runtime/kusama", optional = true }
-westend-runtime = { path = "../../runtime/westend", optional = true }
-rococo-runtime = { path = "../../runtime/rococo", optional = true }
+axctest-runtime = { path = "../../runtime/axctest", optional = true }
+alphanet-runtime = { path = "../../runtime/alphanet", optional = true }
+betanet-runtime = { path = "../../runtime/betanet", optional = true }
 
-# Polkadot Subsystems
+# Axia Subsystems
 polkadot-approval-distribution = { path = "../network/approval-distribution", optional = true }
 polkadot-availability-bitfield-distribution = { path = "../network/bitfield-distribution", optional = true }
 polkadot-availability-distribution = { path = "../network/availability-distribution", optional = true }
@@ -159,39 +159,39 @@ full-node = [
 	"kvdb-rocksdb"
 ]
 
-# Configure the native runtimes to use. Polkadot is enabled by default.
+# Configure the native runtimes to use. Axia is enabled by default.
 #
 # Validators require the native runtime currently
 polkadot-native = [ "polkadot-runtime", "polkadot-runtime-constants", "polkadot-client/polkadot" ]
-kusama-native = [ "kusama-runtime", "kusama-runtime-constants", "polkadot-client/kusama" ]
-westend-native = [ "westend-runtime", "westend-runtime-constants", "polkadot-client/westend" ]
-rococo-native = [ "rococo-runtime", "rococo-runtime-constants", "polkadot-client/rococo" ]
+axctest-native = [ "axctest-runtime", "axctest-runtime-constants", "polkadot-client/axctest" ]
+alphanet-native = [ "alphanet-runtime", "alphanet-runtime-constants", "polkadot-client/alphanet" ]
+betanet-native = [ "betanet-runtime", "betanet-runtime-constants", "polkadot-client/betanet" ]
 
 runtime-benchmarks = [
 	"polkadot-runtime/runtime-benchmarks",
-	"kusama-runtime/runtime-benchmarks",
-	"westend-runtime/runtime-benchmarks",
-	"rococo-runtime/runtime-benchmarks"
+	"axctest-runtime/runtime-benchmarks",
+	"alphanet-runtime/runtime-benchmarks",
+	"betanet-runtime/runtime-benchmarks"
 ]
 try-runtime = [
 	"polkadot-runtime/try-runtime",
-	"kusama-runtime/try-runtime",
-	"westend-runtime/try-runtime",
-	"rococo-runtime/try-runtime",
+	"axctest-runtime/try-runtime",
+	"alphanet-runtime/try-runtime",
+	"betanet-runtime/try-runtime",
 ]
 fast-runtime = [
 	"polkadot-runtime/fast-runtime",
-	"kusama-runtime/fast-runtime",
-	"westend-runtime/fast-runtime",
-	"rococo-runtime/fast-runtime",
+	"axctest-runtime/fast-runtime",
+	"alphanet-runtime/fast-runtime",
+	"betanet-runtime/fast-runtime",
 ]
 
 malus = ["full-node"]
 runtime-metrics = [
 	"polkadot-client/runtime-metrics",
-	"rococo-runtime/runtime-metrics",
-	"westend-runtime/runtime-metrics",
-	"kusama-runtime/runtime-metrics",
+	"betanet-runtime/runtime-metrics",
+	"alphanet-runtime/runtime-metrics",
+	"axctest-runtime/runtime-metrics",
 	"polkadot-runtime/runtime-metrics",
-	"polkadot-runtime-parachains/runtime-metrics"
+	"polkadot-runtime-allychains/runtime-metrics"
 ]

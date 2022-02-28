@@ -1,25 +1,25 @@
-// Copyright 2020-2021 Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// Copyright 2020-2021 Axia Technologies (UK) Ltd.
+// This file is part of Axia.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// Axia is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// Axia is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with Axia.  If not, see <http://www.gnu.org/licenses/>.
 
 use std::{borrow::Cow, collections::HashSet, sync::Arc};
 
 use async_trait::async_trait;
 use futures::{prelude::*, stream::BoxStream};
 
-use parity_scale_codec::Encode;
+use axia_scale_codec::Encode;
 
 use sc_network::{
 	config::parse_addr, multiaddr::Multiaddr, Event as NetworkEvent, IfDisconnected,
@@ -73,7 +73,7 @@ pub(crate) fn send_message<M>(
 #[async_trait]
 pub trait Network: Clone + Send + 'static {
 	/// Get a stream of all events occurring on the network. This may include events unrelated
-	/// to the Polkadot protocol - the user of this function should filter only for events related
+	/// to the Axia protocol - the user of this function should filter only for events related
 	/// to the [`VALIDATION_PROTOCOL_NAME`](VALIDATION_PROTOCOL_NAME)
 	/// or [`COLLATION_PROTOCOL_NAME`](COLLATION_PROTOCOL_NAME)
 	fn event_stream(&mut self) -> BoxStream<'static, NetworkEvent>;

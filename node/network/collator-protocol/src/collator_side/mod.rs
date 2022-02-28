@@ -1,18 +1,18 @@
-// Copyright 2020 Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// Copyright 2020 Axia Technologies (UK) Ltd.
+// This file is part of Axia.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// Axia is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// Axia is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with Axia.  If not, see <http://www.gnu.org/licenses/>.
 
 use std::{
 	collections::{HashMap, HashSet, VecDeque},
@@ -66,7 +66,7 @@ const COST_APPARENT_FLOOD: Rep =
 ///
 /// This is to protect from a single slow validator preventing collations from happening.
 ///
-/// For considerations on this value, see: https://github.com/paritytech/polkadot/issues/4386
+/// For considerations on this value, see: https://github.com/axiatech/polkadot/issues/4386
 const MAX_UNSHARED_UPLOAD_TIME: Duration = Duration::from_millis(150);
 
 #[derive(Clone, Default)]
@@ -112,28 +112,28 @@ impl metrics::Metrics for Metrics {
 		let metrics = MetricsInner {
 			advertisements_made: prometheus::register(
 				prometheus::Counter::new(
-					"polkadot_parachain_collation_advertisements_made_total",
+					"polkadot_allychain_collation_advertisements_made_total",
 					"A number of collation advertisements sent to validators.",
 				)?,
 				registry,
 			)?,
 			collations_send_requested: prometheus::register(
 				prometheus::Counter::new(
-					"polkadot_parachain_collations_sent_requested_total",
+					"polkadot_allychain_collations_sent_requested_total",
 					"A number of collations requested to be sent to validators.",
 				)?,
 				registry,
 			)?,
 			collations_sent: prometheus::register(
 				prometheus::Counter::new(
-					"polkadot_parachain_collations_sent_total",
+					"polkadot_allychain_collations_sent_total",
 					"A number of collations sent to validators.",
 				)?,
 				registry,
 			)?,
 			process_msg: prometheus::register(
 				prometheus::Histogram::with_opts(prometheus::HistogramOpts::new(
-					"polkadot_parachain_collator_protocol_collator_process_msg",
+					"polkadot_allychain_collator_protocol_collator_process_msg",
 					"Time spent within `collator_protocol_collator::process_msg`",
 				))?,
 				registry,

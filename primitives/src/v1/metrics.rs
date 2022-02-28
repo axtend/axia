@@ -1,22 +1,22 @@
-// Copyright 2021 Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// Copyright 2021 Axia Technologies (UK) Ltd.
+// This file is part of Axia.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// Axia is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// Axia is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with Axia.  If not, see <http://www.gnu.org/licenses/>.
 
 //! Runtime metric primitives.
 
-use parity_scale_codec::{Decode, Encode};
+use axia_scale_codec::{Decode, Encode};
 use sp_std::prelude::*;
 
 /// Runtime metric operations.
@@ -127,52 +127,52 @@ pub mod metric_definitions {
 		pub labels: &'a [&'static str],
 	}
 
-	/// Counts parachain inherent data weights. Use `before` and `after` labels to differentiate
+	/// Counts allychain inherent data weights. Use `before` and `after` labels to differentiate
 	/// between the weight before and after filtering.
-	pub const PARACHAIN_INHERENT_DATA_WEIGHT: CounterVecDefinition = CounterVecDefinition {
-		name: "polkadot_parachain_inherent_data_weight",
+	pub const ALLYCHAIN_INHERENT_DATA_WEIGHT: CounterVecDefinition = CounterVecDefinition {
+		name: "polkadot_allychain_inherent_data_weight",
 		description: "Inherent data weight before and after filtering",
 		labels: &["when"],
 	};
 
 	/// Counts the number of bitfields processed in `enter_inner`.
-	pub const PARACHAIN_INHERENT_DATA_BITFIELDS_PROCESSED: CounterDefinition = CounterDefinition {
-		name: "polkadot_parachain_inherent_data_bitfields_processed",
+	pub const ALLYCHAIN_INHERENT_DATA_BITFIELDS_PROCESSED: CounterDefinition = CounterDefinition {
+		name: "polkadot_allychain_inherent_data_bitfields_processed",
 		description: "Counts the number of bitfields processed in `enter_inner`.",
 	};
 
-	/// Counts the `total`, `sanitized` and `included` number of parachain block candidates
+	/// Counts the `total`, `sanitized` and `included` number of allychain block candidates
 	/// in `enter_inner`.
-	pub const PARACHAIN_INHERENT_DATA_CANDIDATES_PROCESSED: CounterVecDefinition =
+	pub const ALLYCHAIN_INHERENT_DATA_CANDIDATES_PROCESSED: CounterVecDefinition =
 		CounterVecDefinition {
-			name: "polkadot_parachain_inherent_data_candidates_processed",
+			name: "polkadot_allychain_inherent_data_candidates_processed",
 			description:
-				"Counts the number of parachain block candidates processed in `enter_inner`.",
+				"Counts the number of allychain block candidates processed in `enter_inner`.",
 			labels: &["category"],
 		};
 
 	/// Counts the number of `imported`, `current` and `concluded_invalid` dispute statements sets
 	/// processed in `enter_inner`. The `current` label refers to the disputes statement sets of
 	/// the current session.
-	pub const PARACHAIN_INHERENT_DATA_DISPUTE_SETS_PROCESSED: CounterVecDefinition =
+	pub const ALLYCHAIN_INHERENT_DATA_DISPUTE_SETS_PROCESSED: CounterVecDefinition =
 		CounterVecDefinition {
-			name: "polkadot_parachain_inherent_data_dispute_sets_processed",
+			name: "polkadot_allychain_inherent_data_dispute_sets_processed",
 			description: "Counts the number of dispute statements sets processed in `enter_inner`.",
 			labels: &["category"],
 		};
 
 	/// Counts the number of dispute statements sets included in a block in `enter_inner`.
-	pub const PARACHAIN_INHERENT_DATA_DISPUTE_SETS_INCLUDED: CounterDefinition =
+	pub const ALLYCHAIN_INHERENT_DATA_DISPUTE_SETS_INCLUDED: CounterDefinition =
 		CounterDefinition {
-			name: "polkadot_parachain_inherent_data_dispute_sets_included",
+			name: "polkadot_allychain_inherent_data_dispute_sets_included",
 			description:
 				"Counts the number of dispute statements sets included in a block in `enter_inner`.",
 		};
 
 	/// Counts the number of `valid` and `invalid` bitfields signature checked in `enter_inner`.
-	pub const PARACHAIN_CREATE_INHERENT_BITFIELDS_SIGNATURE_CHECKS: CounterVecDefinition =
+	pub const ALLYCHAIN_CREATE_INHERENT_BITFIELDS_SIGNATURE_CHECKS: CounterVecDefinition =
 		CounterVecDefinition {
-			name: "polkadot_parachain_create_inherent_bitfields_signature_checks",
+			name: "polkadot_allychain_create_inherent_bitfields_signature_checks",
 			description: "Counts the number of bitfields signature checked in `enter_inner`.",
 			labels: &["validity"],
 		};

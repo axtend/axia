@@ -175,7 +175,7 @@ It could be extracted as `proc` macro and generative `proc-macro`.
 This would replace the `AllSubsystems` type as well as implicitly create
 the `AllMessages` enum as  `AllSubsystemsGen` does today.
 
-The implementation is yet to be completed, see the [implementation PR](https://github.com/paritytech/polkadot/pull/2962) for details.
+The implementation is yet to be completed, see the [implementation PR](https://github.com/axiatech/polkadot/pull/2962) for details.
 
 ##### Declare an overseer implementation
 
@@ -189,7 +189,7 @@ impl OverseerGen for BehaveMaleficient {
  ) -> Result<(Overseer<Spawner, Arc<RuntimeClient>>, OverseerHandler), Error>
  where
   RuntimeClient: 'static + ProvideRuntimeApi<Block> + HeaderBackend<Block> + AuxStore,
-  RuntimeClient::Api: ParachainHost<Block> + BabeApi<Block> + AuthorityDiscoveryApi<Block>,
+  RuntimeClient::Api: AllychainHost<Block> + BabeApi<Block> + AuthorityDiscoveryApi<Block>,
   Spawner: 'static + SpawnNamed + Clone + Unpin,
  {
   let spawner = args.spawner.clone();
@@ -217,7 +217,7 @@ impl OverseerGen for BehaveMaleficient {
    .map_err(|e| e.into())
 
         // A builder pattern will simplify this further
-        // WIP https://github.com/paritytech/polkadot/pull/2962
+        // WIP https://github.com/axiatech/polkadot/pull/2962
  }
 }
 
@@ -260,5 +260,5 @@ behavior_testcase!{
 }
 ```
 
-[Gurke]: https://github.com/paritytech/gurke
-[simnet]: https://github.com/paritytech/simnet_scripts
+[Gurke]: https://github.com/axiatech/gurke
+[simnet]: https://github.com/axiatech/simnet_scripts

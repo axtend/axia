@@ -1,18 +1,18 @@
-// Copyright 2021 Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// Copyright 2021 Axia Technologies (UK) Ltd.
+// This file is part of Axia.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// Axia is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// Axia is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with Axia.  If not, see <http://www.gnu.org/licenses/>.
 
 use std::marker::PhantomData;
 
@@ -21,7 +21,7 @@ use futures::{
 	StreamExt,
 };
 
-use parity_scale_codec::{Decode, Encode};
+use axia_scale_codec::{Decode, Encode};
 
 use sc_network::{config as netconfig, config::RequestResponseConfig, PeerId};
 
@@ -33,7 +33,7 @@ pub use error::{Error, Fatal, NonFatal, Result};
 
 /// A request coming in, including a sender for sending responses.
 ///
-/// Typed `IncomingRequest`s, see `IncomingRequest::get_config_receiver` and substrate
+/// Typed `IncomingRequest`s, see `IncomingRequest::get_config_receiver` and axlib
 /// `NetworkConfiguration` for more information.
 #[derive(Debug)]
 pub struct IncomingRequest<Req> {
@@ -53,7 +53,7 @@ where
 	/// Create configuration for `NetworkConfiguration::request_response_porotocols` and a
 	/// corresponding typed receiver.
 	///
-	/// This Register that config with substrate networking and receive incoming requests via the
+	/// This Register that config with axlib networking and receive incoming requests via the
 	/// returned `IncomingRequestReceiver`.
 	pub fn get_config_receiver() -> (IncomingRequestReceiver<Req>, RequestResponseConfig) {
 		let (raw, cfg) = Req::PROTOCOL.get_config();
@@ -73,7 +73,7 @@ where
 		}
 	}
 
-	/// Try building from raw substrate request.
+	/// Try building from raw axlib request.
 	///
 	/// This function will fail if the request cannot be decoded and will apply passed in
 	/// reputation changes in that case.
@@ -106,7 +106,7 @@ where
 		Ok(Self::new(peer, payload, pending_response))
 	}
 
-	/// Convert into raw untyped substrate `IncomingRequest`.
+	/// Convert into raw untyped axlib `IncomingRequest`.
 	///
 	/// This is mostly useful for testing.
 	pub fn into_raw(self) -> sc_network::config::IncomingRequest {

@@ -1,7 +1,7 @@
 [package]
 name = "polkadot-node-subsystem-util"
 version = "0.9.17"
-authors = ["Parity Technologies <admin@parity.io>"]
+authors = ["Axia Technologies <admin@axia.io>"]
 edition = "2018"
 description = "Subsystem traits and message definitions"
 
@@ -9,7 +9,7 @@ description = "Subsystem traits and message definitions"
 async-trait = "0.1.52"
 futures = "0.3.21"
 itertools = "0.10"
-parity-scale-codec = { version = "2.3.1", default-features = false, features = ["derive"] }
+axia-scale-codec = { version = "2.3.1", default-features = false, features = ["derive"] }
 pin-project = "1.0.9"
 rand = "0.8.3"
 thiserror = "1.0.30"

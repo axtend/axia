@@ -1,12 +1,12 @@
 [package]
 name = "xcm-simulator-fuzzer"
 version = "0.9.17"
-authors = ["Parity Technologies <admin@parity.io>"]
+authors = ["Axia Technologies <admin@axia.io>"]
 description = "Examples of xcm-simulator usage."
 edition = "2018"
 
 [dependencies]
-codec = { package = "parity-scale-codec", version = "2.0.0" }
+codec = { package = "axia-scale-codec", version = "2.0.0" }
 honggfuzz = "0.5.54"
 scale-info = { version = "1.0", features = ["derive"] }
 
@@ -24,8 +24,8 @@ xcm-executor = { path = "../../xcm-executor" }
 xcm-builder = { path = "../../xcm-builder" }
 pallet-xcm = { path = "../../pallet-xcm" }
 polkadot-core-primitives = { path = "../../../core-primitives" }
-polkadot-runtime-parachains = { path = "../../../runtime/parachains" }
-polkadot-parachain = { path = "../../../parachain" }
+polkadot-runtime-allychains = { path = "../../../runtime/allychains" }
+polkadot-allychain = { path = "../../../allychain" }
 
 [[bin]]
 path = "src/fuzz.rs"

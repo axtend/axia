@@ -1,20 +1,20 @@
-// Copyright 2021 Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// Copyright 2021 Axia Technologies (UK) Ltd.
+// This file is part of Axia.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// Axia is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// Axia is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with Axia.  If not, see <http://www.gnu.org/licenses/>.
 
-use parity_scale_codec::{Decode, Encode};
+use axia_scale_codec::{Decode, Encode};
 use scale_info::TypeInfo;
 
 #[cfg(feature = "std")]
@@ -301,7 +301,7 @@ impl<Payload, RealPayload> From<Signed<Payload, RealPayload>>
 /// This helper trait ensures that we can encode `Statement` as `CompactStatement`,
 /// and anything as itself.
 ///
-/// This resembles `parity_scale_codec::EncodeLike`, but it's distinct:
+/// This resembles `axia_scale_codec::EncodeLike`, but it's distinct:
 /// `EncodeLike` is a marker trait which asserts at the typesystem level that
 /// one type's encoding is a valid encoding for another type. It doesn't
 /// perform any type conversion when encoding.

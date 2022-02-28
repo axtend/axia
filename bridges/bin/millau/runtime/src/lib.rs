@@ -1,18 +1,18 @@
-// Copyright 2019-2021 Parity Technologies (UK) Ltd.
-// This file is part of Parity Bridges Common.
+// Copyright 2019-2021 Axia Technologies (UK) Ltd.
+// This file is part of Axia Bridges Common.
 
-// Parity Bridges Common is free software: you can redistribute it and/or modify
+// Axia Bridges Common is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Parity Bridges Common is distributed in the hope that it will be useful,
+// Axia Bridges Common is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Parity Bridges Common.  If not, see <http://www.gnu.org/licenses/>.
+// along with Axia Bridges Common.  If not, see <http://www.gnu.org/licenses/>.
 
 //! The Millau runtime. This can be compiled with `#[no_std]`, ready for Wasm.
 
@@ -191,7 +191,7 @@ impl frame_system::Config for Runtime {
 	type OnKilledAccount = ();
 	/// The data to be stored in an account.
 	type AccountData = pallet_balances::AccountData<Balance>;
-	// TODO: update me (https://github.com/paritytech/parity-bridges-common/issues/78)
+	// TODO: update me (https://github.com/axiatech/axia-bridges-common/issues/78)
 	/// Weight information for the extrinsics of this pallet.
 	type SystemWeightInfo = ();
 	/// Block and extrinsics weights: base values and limits.
@@ -202,7 +202,7 @@ impl frame_system::Config for Runtime {
 	type DbWeight = DbWeight;
 	/// The designated `SS58` prefix of this chain.
 	type SS58Prefix = SS58Prefix;
-	/// The set code logic, just the default since we're not a parachain.
+	/// The set code logic, just the default since we're not a allychain.
 	type OnSetCode = ();
 	type MaxConsumers = frame_support::traits::ConstU32<16>;
 }
@@ -246,7 +246,7 @@ impl pallet_grandpa::Config for Runtime {
 		GrandpaId,
 	)>>::IdentificationTuple;
 	type HandleEquivocation = ();
-	// TODO: update me (https://github.com/paritytech/parity-bridges-common/issues/78)
+	// TODO: update me (https://github.com/axiatech/axia-bridges-common/issues/78)
 	type WeightInfo = ();
 	type MaxAuthorities = MaxAuthorities;
 }
@@ -282,7 +282,7 @@ parameter_types! {
 impl pallet_beefy_mmr::Config for Runtime {
 	type LeafVersion = LeafVersion;
 	type BeefyAuthorityToMerkleLeaf = pallet_beefy_mmr::BeefyEcdsaToEthereum;
-	type ParachainHeads = ();
+	type AllychainHeads = ();
 }
 
 parameter_types! {
@@ -294,7 +294,7 @@ impl pallet_timestamp::Config for Runtime {
 	type Moment = u64;
 	type OnTimestampSet = Aura;
 	type MinimumPeriod = MinimumPeriod;
-	// TODO: update me (https://github.com/paritytech/parity-bridges-common/issues/78)
+	// TODO: update me (https://github.com/axiatech/axia-bridges-common/issues/78)
 	type WeightInfo = ();
 }
 
@@ -314,7 +314,7 @@ impl pallet_balances::Config for Runtime {
 	type DustRemoval = ();
 	type ExistentialDeposit = ExistentialDeposit;
 	type AccountStore = System;
-	// TODO: update me (https://github.com/paritytech/parity-bridges-common/issues/78)
+	// TODO: update me (https://github.com/axiatech/axia-bridges-common/issues/78)
 	type WeightInfo = ();
 	type MaxLocks = MaxLocks;
 	type MaxReserves = MaxReserves;
@@ -326,7 +326,7 @@ parameter_types! {
 	pub const TransactionByteFee: Balance = 1;
 	pub const OperationalFeeMultiplier: u8 = 5;
 	// values for following parameters are copied from polkadot repo, but it is fine
-	// not to sync them - we're not going to make Rialto a full copy of one of Polkadot-like chains
+	// not to sync them - we're not going to make Rialto a full copy of one of Axia-like chains
 	pub const TargetBlockFullness: Perquintill = Perquintill::from_percent(25);
 	pub AdjustmentVariable: Multiplier = Multiplier::saturating_from_rational(3, 100_000);
 	pub MinimumMultiplier: Multiplier = Multiplier::saturating_from_rational(1, 1_000_000u128);
@@ -365,7 +365,7 @@ impl pallet_session::Config for Runtime {
 	type SessionManager = pallet_shift_session_manager::Pallet<Runtime>;
 	type SessionHandler = <SessionKeys as OpaqueKeys>::KeyTypeIdProviders;
 	type Keys = SessionKeys;
-	// TODO: update me (https://github.com/paritytech/parity-bridges-common/issues/78)
+	// TODO: update me (https://github.com/axiatech/axia-bridges-common/issues/78)
 	type WeightInfo = ();
 }
 
@@ -393,9 +393,9 @@ impl pallet_bridge_grandpa::Config for Runtime {
 	type WeightInfo = pallet_bridge_grandpa::weights::RialtoWeight<Runtime>;
 }
 
-pub type WestendGrandpaInstance = pallet_bridge_grandpa::Instance1;
-impl pallet_bridge_grandpa::Config<WestendGrandpaInstance> for Runtime {
-	type BridgedChain = bp_westend::Westend;
+pub type AlphanetGrandpaInstance = pallet_bridge_grandpa::Instance1;
+impl pallet_bridge_grandpa::Config<AlphanetGrandpaInstance> for Runtime {
+	type BridgedChain = bp_alphanet::Alphanet;
 	type MaxRequests = MaxRequests;
 	type HeadersToKeep = HeadersToKeep;
 
@@ -423,7 +423,7 @@ pub type WithRialtoMessagesInstance = ();
 
 impl pallet_bridge_messages::Config<WithRialtoMessagesInstance> for Runtime {
 	type Event = Event;
-	// TODO: https://github.com/paritytech/parity-bridges-common/issues/390
+	// TODO: https://github.com/axiatech/axia-bridges-common/issues/390
 	type WeightInfo = pallet_bridge_messages::weights::RialtoWeight<Runtime>;
 	type Parameter = rialto_messages::MillauToRialtoMessagesParameter;
 	type MaxMessagesToPruneAtOnce = MaxMessagesToPruneAtOnce;
@@ -515,8 +515,8 @@ construct_runtime!(
 		BridgeRialtoMessages: pallet_bridge_messages::{Pallet, Call, Storage, Event<T>, Config<T>},
 		BridgeRialtoTokenSwap: pallet_bridge_token_swap::{Pallet, Call, Storage, Event<T>},
 
-		// Westend bridge modules.
-		BridgeWestendGrandpa: pallet_bridge_grandpa::<Instance1>::{Pallet, Call, Config<T>, Storage},
+		// Alphanet bridge modules.
+		BridgeAlphanetGrandpa: pallet_bridge_grandpa::<Instance1>::{Pallet, Call, Config<T>, Storage},
 	}
 );
 
@@ -750,14 +750,14 @@ impl_runtime_apis! {
 		}
 	}
 
-	impl bp_westend::WestendFinalityApi<Block> for Runtime {
-		fn best_finalized() -> (bp_westend::BlockNumber, bp_westend::Hash) {
-			let header = BridgeWestendGrandpa::best_finalized();
+	impl bp_alphanet::AlphanetFinalityApi<Block> for Runtime {
+		fn best_finalized() -> (bp_alphanet::BlockNumber, bp_alphanet::Hash) {
+			let header = BridgeAlphanetGrandpa::best_finalized();
 			(header.number, header.hash())
 		}
 
-		fn is_known_header(hash: bp_westend::Hash) -> bool {
-			BridgeWestendGrandpa::is_known_header(hash)
+		fn is_known_header(hash: bp_alphanet::Hash) -> bool {
+			BridgeAlphanetGrandpa::is_known_header(hash)
 		}
 	}
 
@@ -898,7 +898,7 @@ mod tests {
 
 	#[test]
 	fn ensure_millau_message_lane_weights_are_correct() {
-		// TODO: https://github.com/paritytech/parity-bridges-common/issues/390
+		// TODO: https://github.com/axiatech/axia-bridges-common/issues/390
 		type Weights = pallet_bridge_messages::weights::RialtoWeight<Runtime>;
 
 		pallet_bridge_messages::ensure_weights_are_correct::<Weights>(

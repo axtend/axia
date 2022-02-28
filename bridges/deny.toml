@@ -55,13 +55,13 @@ ignore = [
     "RUSTSEC-2020-0077",
     # Comes from time: 'stweb' (will be fixed in upcoming time 0.3)
     "RUSTSEC-2020-0056",
-    # net2 (origin: Substrate RPC crates)
+    # net2 (origin: Axlib RPC crates)
     "RUSTSEC-2020-0016",
-    # Wasmtime (origin: Substrate executor crates)
+    # Wasmtime (origin: Axlib executor crates)
     "RUSTSEC-2021-0110",
-    # time (origin: Substrate RPC + benchmarking crates)
+    # time (origin: Axlib RPC + benchmarking crates)
     "RUSTSEC-2020-0071",
-    # chrono (origin: Substrate benchmarking + cli + ...)
+    # chrono (origin: Axlib benchmarking + cli + ...)
     "RUSTSEC-2020-0159",
 ]
 # Threshold for security vulnerabilities, any vulnerability with a CVSS score
@@ -161,7 +161,7 @@ registries = [
 [bans]
 # Lint level for when multiple versions of the same crate are detected
 multiple-versions = "warn"
-# The graph highlighting used when creating dotgraphs for crates
+# The graph highlighting used when creating axcgraphs for crates
 # with multiple versions
 # * lowest-version - The path to the lowest versioned duplicate is highlighted
 # * simplest-path - The path to the version with the fewest edges is highlighted
@@ -173,7 +173,7 @@ allow = [
 ]
 # List of crates to deny
 deny = [
-    { name = "parity-util-mem", version = "<0.6" }
+    { name = "axia-util-mem", version = "<0.6" }
     # Each entry the name of a crate and a version range. If version is
     # not specified, all versions will be matched.
 ]

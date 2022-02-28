@@ -1,7 +1,7 @@
 [package]
 name = "polkadot-test-service"
 version = "0.9.17"
-authors = ["Parity Technologies <admin@parity.io>"]
+authors = ["Axia Technologies <admin@axia.io>"]
 edition = "2018"
 
 [dependencies]
@@ -13,10 +13,10 @@ rand = "0.8.3"
 tempfile = "3.2.0"
 tokio = "1.15.0"
 
-# Polkadot dependencies
+# Axia dependencies
 polkadot-overseer = { path = "../../overseer" }
 polkadot-primitives = { path = "../../../primitives" }
-polkadot-parachain = { path = "../../../parachain" }
+polkadot-allychain = { path = "../../../allychain" }
 polkadot-rpc = { path = "../../../rpc" }
 polkadot-runtime-common = { path = "../../../runtime/common" }
 polkadot-service = { path = "../../service" }
@@ -24,9 +24,9 @@ polkadot-node-subsystem = { path = "../../subsystem" }
 polkadot-node-primitives = { path = "../../primitives" }
 polkadot-test-runtime = { path = "../../../runtime/test-runtime" }
 test-runtime-constants = { path = "../../../runtime/test-runtime/constants" }
-polkadot-runtime-parachains = { path = "../../../runtime/parachains" }
+polkadot-runtime-allychains = { path = "../../../runtime/allychains" }
 
-# Substrate dependencies
+# Axlib dependencies
 sp-authority-discovery = { git = "https://github.com/axtend/axlib", branch = "c92f69d" }
 sc-authority-discovery = { git = "https://github.com/axtend/axlib", branch = "c92f69d" }
 babe = { package = "sc-consensus-babe", git = "https://github.com/axtend/axlib", branch = "c92f69d" }
@@ -55,12 +55,12 @@ sp-core = { git = "https://github.com/axtend/axlib", branch = "c92f69d" }
 sp-keyring = { git = "https://github.com/axtend/axlib", branch = "c92f69d" }
 sp-runtime = { git = "https://github.com/axtend/axlib", branch = "c92f69d" }
 sp-state-machine = { git = "https://github.com/axtend/axlib", branch = "c92f69d" }
-substrate-test-client = { git = "https://github.com/axtend/axlib", branch = "c92f69d" }
+axlib-test-client = { git = "https://github.com/axtend/axlib", branch = "c92f69d" }
 
 [dev-dependencies]
 pallet-balances = { git = "https://github.com/axtend/axlib", default-features = false , branch = "c92f69d" }
 serde_json = "1.0.78"
-substrate-test-utils = { git = "https://github.com/axtend/axlib", branch = "c92f69d" }
+axlib-test-utils = { git = "https://github.com/axtend/axlib", branch = "c92f69d" }
 tokio = { version = "1.15", features = ["macros"] }
 
 [features]

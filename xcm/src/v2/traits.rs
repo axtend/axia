@@ -1,12 +1,12 @@
-// Copyright 2020 Parity Technologies (UK) Ltd.
+// Copyright 2020 Axia Technologies (UK) Ltd.
 // This file is part of Cumulus.
 
-// Substrate is free software: you can redistribute it and/or modify
+// Axlib is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Substrate is distributed in the hope that it will be useful,
+// Axlib is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
@@ -17,7 +17,7 @@
 //! Cross-Consensus Message format data structures.
 
 use core::result;
-use parity_scale_codec::{Decode, Encode};
+use axia_scale_codec::{Decode, Encode};
 use scale_info::TypeInfo;
 
 use super::*;
@@ -238,7 +238,7 @@ pub type SendResult = result::Result<(), SendError>;
 /// # Example
 /// ```rust
 /// # use xcm::v2::prelude::*;
-/// # use parity_scale_codec::Encode;
+/// # use axia_scale_codec::Encode;
 ///
 /// /// A sender that only passes the message through and does nothing.
 /// struct Sender1;

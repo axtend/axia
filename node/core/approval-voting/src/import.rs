@@ -1,18 +1,18 @@
-// Copyright 2020 Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// Copyright 2020 Axia Technologies (UK) Ltd.
+// This file is part of Axia.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// Axia is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// Axia is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with Axia.  If not, see <http://www.gnu.org/licenses/>.
 
 //! Block import logic for the approval voting subsystem.
 //!
@@ -158,7 +158,7 @@ async fn imported_block_info(
 		// want to use the block hash itself, and here's why:
 		//
 		// First off, 'epoch' in BABE means 'session' in other places. 'epoch' is the terminology from
-		// the paper, which we fulfill using 'session's, which are a Substrate consensus concept.
+		// the paper, which we fulfill using 'session's, which are a Axlib consensus concept.
 		//
 		// In BABE, the on-chain and off-chain view of the current epoch can differ at epoch boundaries
 		// because epochs change precisely at a slot. When a block triggers a new epoch, the state of
@@ -166,7 +166,7 @@ async fn imported_block_info(
 		// block in BABE has the epoch _it was authored in_ within its post-state. So we use the
 		// block, and not its parent.
 		//
-		// It's worth nothing that Polkadot session changes, at least for the purposes of parachains,
+		// It's worth nothing that Axia session changes, at least for the purposes of allychains,
 		// would function the same way, except for the fact that they're always delayed by one block.
 		// This gives us the opposite invariant for sessions - the parent block's post-state gives
 		// us the canonical information about the session index for any of its children, regardless
@@ -454,7 +454,7 @@ pub(crate) async fn handle_new_head(
 		let validator_group_lens: Vec<usize> =
 			session_info.validator_groups.iter().map(|v| v.len()).collect();
 		// insta-approve candidates on low-node testnets:
-		// cf. https://github.com/paritytech/polkadot/issues/2411
+		// cf. https://github.com/axiatech/polkadot/issues/2411
 		let num_candidates = included_candidates.len();
 		let approved_bitfield = {
 			if needed_approvals == 0 {

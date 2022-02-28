@@ -1,18 +1,18 @@
-// Copyright 2017-2020 Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// Copyright 2017-2020 Axia Technologies (UK) Ltd.
+// This file is part of Axia.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// Axia is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// Axia is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with Axia.  If not, see <http://www.gnu.org/licenses/>.
 
 //! Message types for the overseer and subsystems.
 //!
@@ -196,7 +196,7 @@ pub enum CollatorProtocolMessage {
 	CollateOn(ParaId),
 	/// Provide a collation to distribute to validators with an optional result sender.
 	///
-	/// The result sender should be informed when at least one parachain validator seconded the collation. It is also
+	/// The result sender should be informed when at least one allychain validator seconded the collation. It is also
 	/// completely okay to just drop the sender.
 	DistributeCollation(CandidateReceipt, PoV, Option<oneshot::Sender<CollationSecondedSignal>>),
 	/// Report a collator as having provided an invalid collation. This should lead to disconnect
@@ -346,7 +346,7 @@ pub enum NetworkBridgeMessage {
 	/// NOTE: Messages will be processed in order.
 	SendCollationMessages(Vec<(Vec<PeerId>, protocol_v1::CollationProtocol)>),
 
-	/// Send requests via substrate request/response.
+	/// Send requests via axlib request/response.
 	/// Second parameter, tells what to do if we are not yet connected to the peer.
 	SendRequests(Vec<Requests>, IfDisconnected),
 
@@ -653,7 +653,7 @@ pub enum RuntimeApiRequest {
 	/// Get validation code by its hash, either past, current or future code can be returned, as long as state is still
 	/// available.
 	ValidationCodeByHash(ValidationCodeHash, RuntimeApiSender<Option<ValidationCode>>),
-	/// Get a the candidate pending availability for a particular parachain by parachain / core index
+	/// Get a the candidate pending availability for a particular allychain by allychain / core index
 	CandidatePendingAvailability(ParaId, RuntimeApiSender<Option<CommittedCandidateReceipt>>),
 	/// Get all events concerning candidates (backing, inclusion, time-out) in the parent of
 	/// the block in whose state this request is executed.

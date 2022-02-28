@@ -2,7 +2,7 @@
 name = "polkadot-node-core-chain-selection"
 description = "Chain Selection Subsystem"
 version = "0.9.17"
-authors = ["Parity Technologies <admin@parity.io>"]
+authors = ["Axia Technologies <admin@axia.io>"]
 edition = "2018"
 
 [dependencies]
@@ -15,7 +15,7 @@ polkadot-node-subsystem = { path = "../../subsystem" }
 polkadot-node-subsystem-util = { path = "../../subsystem-util" }
 kvdb = "0.10.0"
 thiserror = "1.0.30"
-parity-scale-codec = "2"
+axia-scale-codec = "2"
 
 [dev-dependencies]
 polkadot-node-subsystem-test-helpers = { path = "../../subsystem-test-helpers" }

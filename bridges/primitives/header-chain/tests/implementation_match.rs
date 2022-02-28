@@ -1,18 +1,18 @@
-// Copyright 2020-2021 Parity Technologies (UK) Ltd.
-// This file is part of Parity Bridges Common.
+// Copyright 2020-2021 Axia Technologies (UK) Ltd.
+// This file is part of Axia Bridges Common.
 
-// Parity Bridges Common is free software: you can redistribute it and/or modify
+// Axia Bridges Common is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Parity Bridges Common is distributed in the hope that it will be useful,
+// Axia Bridges Common is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Parity Bridges Common.  If not, see <http://www.gnu.org/licenses/>.
+// along with Axia Bridges Common.  If not, see <http://www.gnu.org/licenses/>.
 
 //! Tests inside this module are made to ensure that our custom justification verification
 //! implementation works exactly as `fn finality_grandpa::validate_commit`.
@@ -239,9 +239,9 @@ fn same_result_when_authority_equivocates_twice_in_a_round() {
 	let mut justification = make_default_justification(&test_header(1));
 	// there's some code in the original implementation that should return an error when
 	// same authority submits more than two different votes in a single round:
-	// https://github.com/paritytech/finality-grandpa/blob/6aeea2d1159d0f418f0b86e70739f2130629ca09/src/lib.rs#L473
+	// https://github.com/axiatech/finality-grandpa/blob/6aeea2d1159d0f418f0b86e70739f2130629ca09/src/lib.rs#L473
 	// but there's also a code that prevents this from happening:
-	// https://github.com/paritytech/finality-grandpa/blob/6aeea2d1159d0f418f0b86e70739f2130629ca09/src/round.rs#L287
+	// https://github.com/axiatech/finality-grandpa/blob/6aeea2d1159d0f418f0b86e70739f2130629ca09/src/round.rs#L287
 	// => so now we are also just ignoring all votes from the same authority, except the first one
 	justification.commit.precommits.push(signed_precommit::<TestHeader>(
 		&ALICE,

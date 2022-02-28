@@ -10,16 +10,16 @@ HEAD_WS=ws://localhost:9944
 RELEASE_WS=ws://localhost:9945
 
 runtimes=(
-  "westend"
-  "kusama"
+  "alphanet"
+  "axctest"
   "polkadot"
 )
 
 # First we fetch the latest released binary
-latest_release=$(latest_release 'paritytech/polkadot')
+latest_release=$(latest_release 'axiatech/polkadot')
 RELEASE_BIN="./polkadot-$latest_release"
-echo "[+] Fetching binary for Polkadot version $latest_release"
-curl -L "https://github.com/paritytech/polkadot/releases/download/$latest_release/polkadot" > "$RELEASE_BIN" || exit 1
+echo "[+] Fetching binary for Axia version $latest_release"
+curl -L "https://github.com/axiatech/polkadot/releases/download/$latest_release/polkadot" > "$RELEASE_BIN" || exit 1
 chmod +x "$RELEASE_BIN"
 
 

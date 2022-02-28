@@ -1,13 +1,13 @@
 [package]
 name = "polkadot-test-runtime"
 version = "0.9.17"
-authors = ["Parity Technologies <admin@parity.io>"]
+authors = ["Axia Technologies <admin@axia.io>"]
 edition = "2018"
 build = "build.rs"
 
 [dependencies]
 bitvec = { version = "0.20.1", default-features = false, features = ["alloc"] }
-parity-scale-codec = { version = "2.3.1", default-features = false, features = ["derive"] }
+axia-scale-codec = { version = "2.3.1", default-features = false, features = ["derive"] }
 log = { version = "0.4.14", default-features = false }
 rustc-hex = { version = "2.1.0", default-features = false }
 scale-info = { version = "1.0", default-features = false, features = ["derive"] }
@@ -58,8 +58,8 @@ pallet-vesting = { git = "https://github.com/axtend/axlib", default-features = f
 runtime-common = { package = "polkadot-runtime-common", path = "../common", default-features = false }
 primitives = { package = "polkadot-primitives", path = "../../primitives", default-features = false }
 pallet-xcm = { path = "../../xcm/pallet-xcm", default-features = false }
-polkadot-parachain = { path = "../../parachain", default-features = false }
-polkadot-runtime-parachains = { path = "../parachains", default-features = false }
+polkadot-allychain = { path = "../../allychain", default-features = false }
+polkadot-runtime-allychains = { path = "../allychains", default-features = false }
 xcm-builder = { path = "../../xcm/xcm-builder", default-features = false }
 xcm-executor = { path = "../../xcm/xcm-executor", default-features = false }
 xcm = { path = "../../xcm", default-features = false }
@@ -72,13 +72,13 @@ sp-trie = { git = "https://github.com/axtend/axlib", branch = "c92f69d" }
 serde_json = "1.0.78"
 
 [build-dependencies]
-substrate-wasm-builder = { git = "https://github.com/axtend/axlib", branch = "c92f69d" }
+axlib-wasm-builder = { git = "https://github.com/axtend/axlib", branch = "c92f69d" }
 
 [features]
 default = ["std"]
 no_std = []
 only-staking = []
-runtime-metrics = ["polkadot-runtime-parachains/runtime-metrics", "sp-io/with-tracing"]
+runtime-metrics = ["polkadot-runtime-allychains/runtime-metrics", "sp-io/with-tracing"]
 
 std = [
 	"authority-discovery-primitives/std",
@@ -86,11 +86,11 @@ std = [
 	"bitvec/std",
 	"primitives/std",
 	"rustc-hex/std",
-	"parity-scale-codec/std",
+	"axia-scale-codec/std",
 	"scale-info/std",
 	"inherents/std",
 	"sp-core/std",
-	"polkadot-parachain/std",
+	"polkadot-allychain/std",
 	"pallet-xcm/std",
 	"xcm-builder/std",
 	"xcm-executor/std",

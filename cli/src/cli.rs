@@ -1,20 +1,20 @@
-// Copyright 2017-2020 Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// Copyright 2017-2020 Axia Technologies (UK) Ltd.
+// This file is part of Axia.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// Axia is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// Axia is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with Axia.  If not, see <http://www.gnu.org/licenses/>.
 
-//! Polkadot CLI library.
+//! Axia CLI library.
 
 use clap::{AppSettings, Parser};
 
@@ -85,17 +85,17 @@ pub struct RunCmd {
 	#[clap(flatten)]
 	pub base: sc_cli::RunCmd,
 
-	/// Force using Kusama native runtime.
-	#[clap(long = "force-kusama")]
-	pub force_kusama: bool,
+	/// Force using AxiaTest native runtime.
+	#[clap(long = "force-axctest")]
+	pub force_axctest: bool,
 
-	/// Force using Westend native runtime.
-	#[clap(long = "force-westend")]
-	pub force_westend: bool,
+	/// Force using Alphanet native runtime.
+	#[clap(long = "force-alphanet")]
+	pub force_alphanet: bool,
 
-	/// Force using Rococo native runtime.
-	#[clap(long = "force-rococo")]
-	pub force_rococo: bool,
+	/// Force using Betanet native runtime.
+	#[clap(long = "force-betanet")]
+	pub force_betanet: bool,
 
 	/// Setup a GRANDPA scheduled voting pause.
 	///
@@ -106,7 +106,7 @@ pub struct RunCmd {
 	#[clap(long = "grandpa-pause", number_of_values(2))]
 	pub grandpa_pause: Vec<u32>,
 
-	/// Enable the BEEFY gadget (only on Rococo or Wococo for now).
+	/// Enable the BEEFY gadget (only on Betanet or Wococo for now).
 	#[clap(long)]
 	pub beefy: bool,
 

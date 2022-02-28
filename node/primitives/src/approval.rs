@@ -1,25 +1,25 @@
-// Copyright 2017-2020 Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// Copyright 2017-2020 Axia Technologies (UK) Ltd.
+// This file is part of Axia.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// Axia is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// Axia is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with Axia.  If not, see <http://www.gnu.org/licenses/>.
 
 //! Types relevant for approval.
 
 pub use sp_consensus_babe::Slot;
 pub use sp_consensus_vrf::schnorrkel::{Randomness, VRFOutput, VRFProof};
 
-use parity_scale_codec::{Decode, Encode};
+use axia_scale_codec::{Decode, Encode};
 use polkadot_primitives::v1::{
 	BlockNumber, CandidateHash, CandidateIndex, CoreIndex, Hash, Header, ValidatorIndex,
 	ValidatorSignature,
@@ -56,7 +56,7 @@ pub const TRANCHE_RANDOMNESS_CONTEXT: &[u8] = b"A&V TRANCHE";
 pub struct RelayVRFStory(pub [u8; 32]);
 
 /// Different kinds of input data or criteria that can prove a validator's assignment
-/// to check a particular parachain.
+/// to check a particular allychain.
 #[derive(Debug, Clone, Encode, Decode, PartialEq, Eq)]
 pub enum AssignmentCertKind {
 	/// An assignment story based on the VRF that authorized the relay-chain block where the
@@ -182,7 +182,7 @@ impl UnsafeVRFOutput {
 /// Extract the slot number and relay VRF from a header.
 ///
 /// This fails if either there is no BABE `PreRuntime` digest or
-/// the digest has type `SecondaryPlain`, which Substrate nodes do
+/// the digest has type `SecondaryPlain`, which Axlib nodes do
 /// not produce or accept anymore.
 pub fn babe_unsafe_vrf_info(header: &Header) -> Option<UnsafeVRFOutput> {
 	use babe_primitives::digests::{CompatibleDigestItem, PreDigest};

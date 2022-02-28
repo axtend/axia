@@ -53,13 +53,13 @@ renderer = ERB.new(
 last_ref = 'refs/tags/' + github_client.latest_release(ENV['GITHUB_REPOSITORY']).tag_name
 logger("Last ref: " + last_ref)
 
-logger("Generate changelog for Polkadot")
+logger("Generate changelog for Axia")
 polkadot_cl = Changelog.new(
-  'paritytech/polkadot', last_ref, current_ref, token: token
+  'axiatech/polkadot', last_ref, current_ref, token: token
 )
 
-# Gets the substrate commit hash used for a given polkadot ref
-def get_substrate_commit(client, ref)
+# Gets the axlib commit hash used for a given polkadot ref
+def get_axlib_commit(client, ref)
   cargo = TOML::Parser.new(
     Base64.decode64(
       client.contents(
@@ -72,18 +72,18 @@ def get_substrate_commit(client, ref)
   cargo['package'].find { |p| p['name'] == 'sc-cli' }['source'].split('#').last
 end
 
-substrate_prev_sha = get_substrate_commit(github_client, last_ref)
-substrate_cur_sha = get_substrate_commit(github_client, current_ref)
+axlib_prev_sha = get_axlib_commit(github_client, last_ref)
+axlib_cur_sha = get_axlib_commit(github_client, current_ref)
 
-logger("Generate changelog for Substrate")
-substrate_cl = Changelog.new(
-  'paritytech/substrate', substrate_prev_sha, substrate_cur_sha,
+logger("Generate changelog for Axlib")
+axlib_cl = Changelog.new(
+  'axiatech/axlib', axlib_prev_sha, axlib_cur_sha,
   token: token,
   prefix: true
 )
 
 # Combine all changes into a single array and filter out companions
-all_changes = (polkadot_cl.changes + substrate_cl.changes).reject do |c|
+all_changes = (polkadot_cl.changes + axlib_cl.changes).reject do |c|
   c[:title] =~ /[Cc]ompanion/
 end
 
@@ -126,8 +126,8 @@ release_priority = Changelog.highest_priority_for_changes(client_changes)
 rustc_stable = ENV['RUSTC_STABLE']
 rustc_nightly = ENV['RUSTC_NIGHTLY']
 polkadot_runtime = get_runtime('polkadot', polkadot_path)
-kusama_runtime = get_runtime('kusama', polkadot_path)
-westend_runtime = get_runtime('westend', polkadot_path)
+axctest_runtime = get_runtime('axctest', polkadot_path)
+alphanet_runtime = get_runtime('alphanet', polkadot_path)
 
 # These json files should have been downloaded as part of the build-runtimes
 # github action
@@ -138,9 +138,9 @@ polkadot_json = JSON.parse(
   )
 )
 
-kusama_json = JSON.parse(
+axctest_json = JSON.parse(
   File.read(
-    "#{ENV['GITHUB_WORKSPACE']}/kusama-srtool-json/kusama_srtool_output.json"
+    "#{ENV['GITHUB_WORKSPACE']}/axctest-srtool-json/axctest_srtool_output.json"
   )
 )
 

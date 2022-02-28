@@ -1,18 +1,18 @@
-// Copyright 2019-2020 Parity Technologies (UK) Ltd.
-// This file is part of Parity Bridges Common.
+// Copyright 2019-2020 Axia Technologies (UK) Ltd.
+// This file is part of Axia Bridges Common.
 
-// Parity Bridges Common is free software: you can redistribute it and/or modify
+// Axia Bridges Common is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Parity Bridges Common is distributed in the hope that it will be useful,
+// Axia Bridges Common is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Parity Bridges Common.  If not, see <http://www.gnu.org/licenses/>.
+// along with Axia Bridges Common.  If not, see <http://www.gnu.org/licenses/>.
 
 use crate::{
 	error::{self, Error},
@@ -125,23 +125,23 @@ mod tests {
 	#[test]
 	fn parse_service_response_works() {
 		assert_eq!(
-			parse_service_response("$.kusama.usd", r#"{"kusama":{"usd":433.05}}"#).map_err(drop),
+			parse_service_response("$.axctest.usd", r#"{"axctest":{"usd":433.05}}"#).map_err(drop),
 			Ok(433.05),
 		);
 	}
 
 	#[test]
 	fn parse_service_response_rejects_negative_numbers() {
-		assert!(parse_service_response("$.kusama.usd", r#"{"kusama":{"usd":-433.05}}"#).is_err());
+		assert!(parse_service_response("$.axctest.usd", r#"{"axctest":{"usd":-433.05}}"#).is_err());
 	}
 
 	#[test]
 	fn parse_service_response_rejects_zero_numbers() {
-		assert!(parse_service_response("$.kusama.usd", r#"{"kusama":{"usd":0.0}}"#).is_err());
+		assert!(parse_service_response("$.axctest.usd", r#"{"axctest":{"usd":0.0}}"#).is_err());
 	}
 
 	#[test]
 	fn parse_service_response_rejects_nan() {
-		assert!(parse_service_response("$.kusama.usd", r#"{"kusama":{"usd":NaN}}"#).is_err());
+		assert!(parse_service_response("$.axctest.usd", r#"{"axctest":{"usd":NaN}}"#).is_err());
 	}
 }

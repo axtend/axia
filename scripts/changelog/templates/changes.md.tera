@@ -3,8 +3,8 @@
 
 ### Legend
 
-- {{ DOT }} Polkadot
-- {{ SUB }} Substrate
+- {{ AXC }} Axia
+- {{ SUB }} Axlib
 
 {% include "changes_client.md.tera" %}
 

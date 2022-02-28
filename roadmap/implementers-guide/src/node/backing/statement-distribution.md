@@ -47,7 +47,7 @@ statements per peer and have a hard limit on that number for flood protection.
 This is necessary as in the current code we only forward statements once we have
 all the data, therefore flood protection for large statement is a bit more
 subtle. This will become an obsolete problem once [off chain code
-upgrades](https://github.com/paritytech/polkadot/issues/2979) are implemented.
+upgrades](https://github.com/axiatech/polkadot/issues/2979) are implemented.
 
 ## Peer Knowledge Tracking
 
@@ -80,7 +80,7 @@ We also track how many statements we have received per peer, per candidate, and 
 
 ## Large statements
 
-Seconded statements can become quite large on parachain runtime upgrades for
+Seconded statements can become quite large on allychain runtime upgrades for
 example. For this reason, there exists a `LargeStatement` constructor for the
 `StatementDistributionMessage` wire message, which only contains light metadata
 of a statement. The actual candidate data is not included. This message type is
@@ -97,7 +97,7 @@ This mechanism should result in a good load distribution and therefore a rather
 optimal distribution path.
 
 With these optimizations, distribution of payloads in the size of up to 3 to 4
-MB should work with Kusama validator specifications. For scaling up even more,
+MB should work with AxiaTest validator specifications. For scaling up even more,
 runtime upgrades and message passing should be done off chain at some point.
 
 Flood protection considerations: For making DoS attacks slightly harder on this

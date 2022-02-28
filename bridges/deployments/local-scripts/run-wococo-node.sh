@@ -1,10 +1,10 @@
 #!/bin/bash
 
-# Run a development instance of the Wococo Substrate bridge node.
+# Run a development instance of the Wococo Axlib bridge node.
 # To override the default port just export WOCOCO_PORT=9955
 #
 # Note: This script will not work out of the box with the bridges
-# repo since it relies on a Polkadot binary.
+# repo since it relies on a Axia binary.
 
 WOCOCO_PORT="${WOCOCO_PORT:-9944}"
 

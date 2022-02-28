@@ -1,13 +1,13 @@
 [package]
 name = "polkadot-runtime"
 version = "0.9.17"
-authors = ["Parity Technologies <admin@parity.io>"]
+authors = ["Axia Technologies <admin@axia.io>"]
 edition = "2018"
 build = "build.rs"
 
 [dependencies]
 bitvec = { version = "0.20.1", default-features = false, features = ["alloc"] }
-parity-scale-codec = { version = "2.3.1", default-features = false, features = ["derive", "max-encoded-len"] }
+axia-scale-codec = { version = "2.3.1", default-features = false, features = ["derive", "max-encoded-len"] }
 scale-info = { version = "1.0", default-features = false, features = ["derive"] }
 log = { version = "0.4.14", default-features = false }
 rustc-hex = { version = "2.1.0", default-features = false }
@@ -81,7 +81,7 @@ pallet-session-benchmarking = { git = "https://github.com/axtend/axlib", default
 hex-literal = { version = "0.3.4", optional = true }
 
 runtime-common = { package = "polkadot-runtime-common", path = "../common", default-features = false }
-runtime-parachains = { package = "polkadot-runtime-parachains", path = "../parachains", default-features = false }
+runtime-allychains = { package = "polkadot-runtime-allychains", path = "../allychains", default-features = false }
 primitives = { package = "polkadot-primitives", path = "../../primitives", default-features = false }
 
 xcm = { package = "xcm", path = "../../xcm", default-features = false }
@@ -98,7 +98,7 @@ serde_json = "1.0.78"
 separator = "0.4.1"
 
 [build-dependencies]
-substrate-wasm-builder = { git = "https://github.com/axtend/axlib", branch = "c92f69d" }
+axlib-wasm-builder = { git = "https://github.com/axtend/axlib", branch = "c92f69d" }
 
 [features]
 default = ["std"]
@@ -109,7 +109,7 @@ std = [
 	"bitvec/std",
 	"primitives/std",
 	"rustc-hex/std",
-	"parity-scale-codec/std",
+	"axia-scale-codec/std",
 	"scale-info/std",
 	"inherents/std",
 	"sp-core/std",
@@ -208,7 +208,7 @@ runtime-benchmarks = [
 	"hex-literal",
   "xcm-builder/runtime-benchmarks",
 	"frame-election-provider-support/runtime-benchmarks",
-	"runtime-parachains/runtime-benchmarks",
+	"runtime-allychains/runtime-benchmarks",
 ]
 try-runtime = [
 	"frame-executive/try-runtime",
@@ -261,4 +261,4 @@ on-chain-release-build = [
 # Set timing constants (e.g. session period) to faster versions to speed up testing.
 fast-runtime = []
 
-runtime-metrics = ["runtime-parachains/runtime-metrics", "sp-io/with-tracing"]
+runtime-metrics = ["runtime-allychains/runtime-metrics", "sp-io/with-tracing"]

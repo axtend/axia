@@ -1,23 +1,23 @@
-// Copyright 2017-2020 Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// Copyright 2017-2020 Axia Technologies (UK) Ltd.
+// This file is part of Axia.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// Axia is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// Axia is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with Axia.  If not, see <http://www.gnu.org/licenses/>.
 
 use crate::cli::{Cli, Subcommand};
 use futures::future::TryFutureExt;
 use log::info;
-use sc_cli::{Role, RuntimeVersion, SubstrateCli};
+use sc_cli::{Role, RuntimeVersion, AxlibCli};
 use service::{self, IdentifyVariant};
 use sp_core::crypto::Ss58AddressFormatRegistry;
 
@@ -39,13 +39,13 @@ fn get_exec_name() -> Option<String> {
 		.and_then(|s| s.into_string().ok())
 }
 
-impl SubstrateCli for Cli {
+impl AxlibCli for Cli {
 	fn impl_name() -> String {
-		"Parity Polkadot".into()
+		"Axia Axia".into()
 	}
 
 	fn impl_version() -> String {
-		env!("SUBSTRATE_CLI_IMPL_VERSION").into()
+		env!("AXLIB_CLI_IMPL_VERSION").into()
 	}
 
 	fn description() -> String {
@@ -57,7 +57,7 @@ impl SubstrateCli for Cli {
 	}
 
 	fn support_url() -> String {
-		"https://github.com/paritytech/polkadot/issues/new".into()
+		"https://github.com/axiatech/polkadot/issues/new".into()
 	}
 
 	fn copyright_start_year() -> i32 {
@@ -71,7 +71,7 @@ impl SubstrateCli for Cli {
 	fn load_spec(&self, id: &str) -> std::result::Result<Box<dyn sc_service::ChainSpec>, String> {
 		let id = if id == "" {
 			let n = get_exec_name().unwrap_or_default();
-			["polkadot", "kusama", "westend", "rococo", "versi"]
+			["polkadot", "axctest", "alphanet", "betanet", "versi"]
 				.iter()
 				.cloned()
 				.find(|&chain| n.starts_with(chain))
@@ -80,16 +80,16 @@ impl SubstrateCli for Cli {
 			id
 		};
 		Ok(match id {
-			"kusama" => Box::new(service::chain_spec::kusama_config()?),
-			#[cfg(feature = "kusama-native")]
-			"kusama-dev" => Box::new(service::chain_spec::kusama_development_config()?),
-			#[cfg(feature = "kusama-native")]
-			"kusama-local" => Box::new(service::chain_spec::kusama_local_testnet_config()?),
-			#[cfg(feature = "kusama-native")]
-			"kusama-staging" => Box::new(service::chain_spec::kusama_staging_testnet_config()?),
-			#[cfg(not(feature = "kusama-native"))]
-			name if name.starts_with("kusama-") && !name.ends_with(".json") =>
-				Err(format!("`{}` only supported with `kusama-native` feature enabled.", name))?,
+			"axctest" => Box::new(service::chain_spec::axctest_config()?),
+			#[cfg(feature = "axctest-native")]
+			"axctest-dev" => Box::new(service::chain_spec::axctest_development_config()?),
+			#[cfg(feature = "axctest-native")]
+			"axctest-local" => Box::new(service::chain_spec::axctest_local_testnet_config()?),
+			#[cfg(feature = "axctest-native")]
+			"axctest-staging" => Box::new(service::chain_spec::axctest_staging_testnet_config()?),
+			#[cfg(not(feature = "axctest-native"))]
+			name if name.starts_with("axctest-") && !name.ends_with(".json") =>
+				Err(format!("`{}` only supported with `axctest-native` feature enabled.", name))?,
 			"polkadot" => Box::new(service::chain_spec::polkadot_config()?),
 			#[cfg(feature = "polkadot-native")]
 			"polkadot-dev" | "dev" => Box::new(service::chain_spec::polkadot_development_config()?),
@@ -97,60 +97,60 @@ impl SubstrateCli for Cli {
 			"polkadot-local" => Box::new(service::chain_spec::polkadot_local_testnet_config()?),
 			#[cfg(feature = "polkadot-native")]
 			"polkadot-staging" => Box::new(service::chain_spec::polkadot_staging_testnet_config()?),
-			"rococo" => Box::new(service::chain_spec::rococo_config()?),
-			#[cfg(feature = "rococo-native")]
-			"rococo-dev" => Box::new(service::chain_spec::rococo_development_config()?),
-			#[cfg(feature = "rococo-native")]
-			"rococo-local" => Box::new(service::chain_spec::rococo_local_testnet_config()?),
-			#[cfg(feature = "rococo-native")]
-			"rococo-staging" => Box::new(service::chain_spec::rococo_staging_testnet_config()?),
-			#[cfg(not(feature = "rococo-native"))]
-			name if name.starts_with("rococo-") && !name.ends_with(".json") =>
-				Err(format!("`{}` only supported with `rococo-native` feature enabled.", name))?,
-			"westend" => Box::new(service::chain_spec::westend_config()?),
-			#[cfg(feature = "westend-native")]
-			"westend-dev" => Box::new(service::chain_spec::westend_development_config()?),
-			#[cfg(feature = "westend-native")]
-			"westend-local" => Box::new(service::chain_spec::westend_local_testnet_config()?),
-			#[cfg(feature = "westend-native")]
-			"westend-staging" => Box::new(service::chain_spec::westend_staging_testnet_config()?),
-			#[cfg(not(feature = "westend-native"))]
-			name if name.starts_with("westend-") && !name.ends_with(".json") =>
-				Err(format!("`{}` only supported with `westend-native` feature enabled.", name))?,
+			"betanet" => Box::new(service::chain_spec::betanet_config()?),
+			#[cfg(feature = "betanet-native")]
+			"betanet-dev" => Box::new(service::chain_spec::betanet_development_config()?),
+			#[cfg(feature = "betanet-native")]
+			"betanet-local" => Box::new(service::chain_spec::betanet_local_testnet_config()?),
+			#[cfg(feature = "betanet-native")]
+			"betanet-staging" => Box::new(service::chain_spec::betanet_staging_testnet_config()?),
+			#[cfg(not(feature = "betanet-native"))]
+			name if name.starts_with("betanet-") && !name.ends_with(".json") =>
+				Err(format!("`{}` only supported with `betanet-native` feature enabled.", name))?,
+			"alphanet" => Box::new(service::chain_spec::alphanet_config()?),
+			#[cfg(feature = "alphanet-native")]
+			"alphanet-dev" => Box::new(service::chain_spec::alphanet_development_config()?),
+			#[cfg(feature = "alphanet-native")]
+			"alphanet-local" => Box::new(service::chain_spec::alphanet_local_testnet_config()?),
+			#[cfg(feature = "alphanet-native")]
+			"alphanet-staging" => Box::new(service::chain_spec::alphanet_staging_testnet_config()?),
+			#[cfg(not(feature = "alphanet-native"))]
+			name if name.starts_with("alphanet-") && !name.ends_with(".json") =>
+				Err(format!("`{}` only supported with `alphanet-native` feature enabled.", name))?,
 			"wococo" => Box::new(service::chain_spec::wococo_config()?),
-			#[cfg(feature = "rococo-native")]
+			#[cfg(feature = "betanet-native")]
 			"wococo-dev" => Box::new(service::chain_spec::wococo_development_config()?),
-			#[cfg(feature = "rococo-native")]
+			#[cfg(feature = "betanet-native")]
 			"wococo-local" => Box::new(service::chain_spec::wococo_local_testnet_config()?),
-			#[cfg(not(feature = "rococo-native"))]
+			#[cfg(not(feature = "betanet-native"))]
 			name if name.starts_with("wococo-") =>
-				Err(format!("`{}` only supported with `rococo-native` feature enabled.", name))?,
+				Err(format!("`{}` only supported with `betanet-native` feature enabled.", name))?,
 			"versi" => Box::new(service::chain_spec::versi_config()?),
-			#[cfg(feature = "rococo-native")]
+			#[cfg(feature = "betanet-native")]
 			"versi-dev" => Box::new(service::chain_spec::versi_development_config()?),
-			#[cfg(feature = "rococo-native")]
+			#[cfg(feature = "betanet-native")]
 			"versi-local" => Box::new(service::chain_spec::versi_local_testnet_config()?),
-			#[cfg(not(feature = "rococo-native"))]
+			#[cfg(not(feature = "betanet-native"))]
 			name if name.starts_with("versi-") =>
-				Err(format!("`{}` only supported with `rococo-native` feature enabled.", name))?,
+				Err(format!("`{}` only supported with `betanet-native` feature enabled.", name))?,
 			path => {
 				let path = std::path::PathBuf::from(path);
 
-				let chain_spec = Box::new(service::PolkadotChainSpec::from_json_file(path.clone())?)
+				let chain_spec = Box::new(service::AxiaChainSpec::from_json_file(path.clone())?)
 					as Box<dyn service::ChainSpec>;
 
 				// When `force_*` is given or the file name starts with the name of one of the known chains,
 				// we use the chain spec for the specific chain.
-				if self.run.force_rococo ||
-					chain_spec.is_rococo() ||
+				if self.run.force_betanet ||
+					chain_spec.is_betanet() ||
 					chain_spec.is_wococo() ||
 					chain_spec.is_versi()
 				{
-					Box::new(service::RococoChainSpec::from_json_file(path)?)
-				} else if self.run.force_kusama || chain_spec.is_kusama() {
-					Box::new(service::KusamaChainSpec::from_json_file(path)?)
-				} else if self.run.force_westend || chain_spec.is_westend() {
-					Box::new(service::WestendChainSpec::from_json_file(path)?)
+					Box::new(service::BetanetChainSpec::from_json_file(path)?)
+				} else if self.run.force_axctest || chain_spec.is_axctest() {
+					Box::new(service::AxiaTestChainSpec::from_json_file(path)?)
+				} else if self.run.force_alphanet || chain_spec.is_alphanet() {
+					Box::new(service::AlphanetChainSpec::from_json_file(path)?)
 				} else {
 					chain_spec
 				}
@@ -159,25 +159,25 @@ impl SubstrateCli for Cli {
 	}
 
 	fn native_runtime_version(spec: &Box<dyn service::ChainSpec>) -> &'static RuntimeVersion {
-		#[cfg(feature = "kusama-native")]
-		if spec.is_kusama() {
-			return &service::kusama_runtime::VERSION
+		#[cfg(feature = "axctest-native")]
+		if spec.is_axctest() {
+			return &service::axctest_runtime::VERSION
 		}
 
-		#[cfg(feature = "westend-native")]
-		if spec.is_westend() {
-			return &service::westend_runtime::VERSION
+		#[cfg(feature = "alphanet-native")]
+		if spec.is_alphanet() {
+			return &service::alphanet_runtime::VERSION
 		}
 
-		#[cfg(feature = "rococo-native")]
-		if spec.is_rococo() || spec.is_wococo() || spec.is_versi() {
-			return &service::rococo_runtime::VERSION
+		#[cfg(feature = "betanet-native")]
+		if spec.is_betanet() || spec.is_wococo() || spec.is_versi() {
+			return &service::betanet_runtime::VERSION
 		}
 
 		#[cfg(not(all(
-			feature = "rococo-native",
-			feature = "westend-native",
-			feature = "kusama-native"
+			feature = "betanet-native",
+			feature = "alphanet-native",
+			feature = "axctest-native"
 		)))]
 		let _ = spec;
 
@@ -187,17 +187,17 @@ impl SubstrateCli for Cli {
 		}
 
 		#[cfg(not(feature = "polkadot-native"))]
-		panic!("No runtime feature (polkadot, kusama, westend, rococo) is enabled")
+		panic!("No runtime feature (polkadot, axctest, alphanet, betanet) is enabled")
 	}
 }
 
 fn set_default_ss58_version(spec: &Box<dyn service::ChainSpec>) {
-	let ss58_version = if spec.is_kusama() {
-		Ss58AddressFormatRegistry::KusamaAccount
-	} else if spec.is_westend() {
-		Ss58AddressFormatRegistry::SubstrateAccount
+	let ss58_version = if spec.is_axctest() {
+		Ss58AddressFormatRegistry::AxiaTestAccount
+	} else if spec.is_alphanet() {
+		Ss58AddressFormatRegistry::AxlibAccount
 	} else {
-		Ss58AddressFormatRegistry::PolkadotAccount
+		Ss58AddressFormatRegistry::AxiaAccount
 	}
 	.into();
 
@@ -205,7 +205,7 @@ fn set_default_ss58_version(spec: &Box<dyn service::ChainSpec>) {
 }
 
 const DEV_ONLY_ERROR_PATTERN: &'static str =
-	"can only use subcommand with --chain [polkadot-dev, kusama-dev, westend-dev, rococo-dev, wococo-dev], got ";
+	"can only use subcommand with --chain [polkadot-dev, axctest-dev, alphanet-dev, betanet-dev, wococo-dev], got ";
 
 fn ensure_dev(spec: &Box<dyn service::ChainSpec>) -> std::result::Result<(), String> {
 	if spec.is_dev() {
@@ -258,11 +258,11 @@ where
 		Some((cli.run.grandpa_pause[0], cli.run.grandpa_pause[1]))
 	};
 
-	if chain_spec.is_kusama() {
+	if chain_spec.is_axctest() {
 		info!("----------------------------");
 		info!("This chain is not in any way");
 		info!("      endorsed by the       ");
-		info!("     KUSAMA FOUNDATION      ");
+		info!("     AXIATEST FOUNDATION      ");
 		info!("----------------------------");
 	}
 
@@ -300,7 +300,7 @@ pub fn run() -> Result<()> {
 			Ok(runner.sync_run(|config| cmd.run(config.chain_spec, config.network))?)
 		},
 		Some(Subcommand::CheckBlock(cmd)) => {
-			let runner = cli.create_runner(cmd).map_err(Error::SubstrateCli)?;
+			let runner = cli.create_runner(cmd).map_err(Error::AxlibCli)?;
 			let chain_spec = &runner.config().chain_spec;
 
 			set_default_ss58_version(chain_spec);
@@ -308,7 +308,7 @@ pub fn run() -> Result<()> {
 			runner.async_run(|mut config| {
 				let (client, _, import_queue, task_manager) =
 					service::new_chain_ops(&mut config, None)?;
-				Ok((cmd.run(client, import_queue).map_err(Error::SubstrateCli), task_manager))
+				Ok((cmd.run(client, import_queue).map_err(Error::AxlibCli), task_manager))
 			})
 		},
 		Some(Subcommand::ExportBlocks(cmd)) => {
@@ -319,8 +319,8 @@ pub fn run() -> Result<()> {
 
 			Ok(runner.async_run(|mut config| {
 				let (client, _, _, task_manager) =
-					service::new_chain_ops(&mut config, None).map_err(Error::PolkadotService)?;
-				Ok((cmd.run(client, config.database).map_err(Error::SubstrateCli), task_manager))
+					service::new_chain_ops(&mut config, None).map_err(Error::AxiaService)?;
+				Ok((cmd.run(client, config.database).map_err(Error::AxlibCli), task_manager))
 			})?)
 		},
 		Some(Subcommand::ExportState(cmd)) => {
@@ -331,7 +331,7 @@ pub fn run() -> Result<()> {
 
 			Ok(runner.async_run(|mut config| {
 				let (client, _, _, task_manager) = service::new_chain_ops(&mut config, None)?;
-				Ok((cmd.run(client, config.chain_spec).map_err(Error::SubstrateCli), task_manager))
+				Ok((cmd.run(client, config.chain_spec).map_err(Error::AxlibCli), task_manager))
 			})?)
 		},
 		Some(Subcommand::ImportBlocks(cmd)) => {
@@ -343,7 +343,7 @@ pub fn run() -> Result<()> {
 			Ok(runner.async_run(|mut config| {
 				let (client, _, import_queue, task_manager) =
 					service::new_chain_ops(&mut config, None)?;
-				Ok((cmd.run(client, import_queue).map_err(Error::SubstrateCli), task_manager))
+				Ok((cmd.run(client, import_queue).map_err(Error::AxlibCli), task_manager))
 			})?)
 		},
 		Some(Subcommand::PurgeChain(cmd)) => {
@@ -358,7 +358,7 @@ pub fn run() -> Result<()> {
 
 			Ok(runner.async_run(|mut config| {
 				let (client, backend, _, task_manager) = service::new_chain_ops(&mut config, None)?;
-				Ok((cmd.run(client, backend).map_err(Error::SubstrateCli), task_manager))
+				Ok((cmd.run(client, backend).map_err(Error::AxlibCli), task_manager))
 			})?)
 		},
 		Some(Subcommand::PvfPrepareWorker(cmd)) => {
@@ -406,23 +406,23 @@ pub fn run() -> Result<()> {
 
 			ensure_dev(chain_spec).map_err(Error::Other)?;
 
-			#[cfg(feature = "kusama-native")]
-			if chain_spec.is_kusama() {
+			#[cfg(feature = "axctest-native")]
+			if chain_spec.is_axctest() {
 				return Ok(runner.sync_run(|config| {
-					cmd.run::<service::kusama_runtime::Block, service::KusamaExecutorDispatch>(
+					cmd.run::<service::axctest_runtime::Block, service::AxiaTestExecutorDispatch>(
 						config,
 					)
-					.map_err(|e| Error::SubstrateCli(e))
+					.map_err(|e| Error::AxlibCli(e))
 				})?)
 			}
 
-			#[cfg(feature = "westend-native")]
-			if chain_spec.is_westend() {
+			#[cfg(feature = "alphanet-native")]
+			if chain_spec.is_alphanet() {
 				return Ok(runner.sync_run(|config| {
-					cmd.run::<service::westend_runtime::Block, service::WestendExecutorDispatch>(
+					cmd.run::<service::alphanet_runtime::Block, service::AlphanetExecutorDispatch>(
 						config,
 					)
-					.map_err(|e| Error::SubstrateCli(e))
+					.map_err(|e| Error::AxlibCli(e))
 				})?)
 			}
 
@@ -430,14 +430,14 @@ pub fn run() -> Result<()> {
 			#[cfg(feature = "polkadot-native")]
 			{
 				return Ok(runner.sync_run(|config| {
-					cmd.run::<service::polkadot_runtime::Block, service::PolkadotExecutorDispatch>(
+					cmd.run::<service::polkadot_runtime::Block, service::AxiaExecutorDispatch>(
 						config,
 					)
-					.map_err(|e| Error::SubstrateCli(e))
+					.map_err(|e| Error::AxlibCli(e))
 				})?)
 			}
 			#[cfg(not(feature = "polkadot-native"))]
-			panic!("No runtime feature (polkadot, kusama, westend, rococo) is enabled")
+			panic!("No runtime feature (polkadot, axctest, alphanet, betanet) is enabled")
 		},
 		Some(Subcommand::HostPerfCheck) => {
 			let mut builder = sc_cli::LoggerBuilder::new("");
@@ -456,31 +456,31 @@ pub fn run() -> Result<()> {
 			use sc_service::TaskManager;
 			let registry = &runner.config().prometheus_config.as_ref().map(|cfg| &cfg.registry);
 			let task_manager = TaskManager::new(runner.config().tokio_handle.clone(), *registry)
-				.map_err(|e| Error::SubstrateService(sc_service::Error::Prometheus(e)))?;
+				.map_err(|e| Error::AxlibService(sc_service::Error::Prometheus(e)))?;
 
 			ensure_dev(chain_spec).map_err(Error::Other)?;
 
-			#[cfg(feature = "kusama-native")]
-			if chain_spec.is_kusama() {
+			#[cfg(feature = "axctest-native")]
+			if chain_spec.is_axctest() {
 				return runner.async_run(|config| {
 					Ok((
-						cmd.run::<service::kusama_runtime::Block, service::KusamaExecutorDispatch>(
+						cmd.run::<service::axctest_runtime::Block, service::AxiaTestExecutorDispatch>(
 							config,
 						)
-						.map_err(Error::SubstrateCli),
+						.map_err(Error::AxlibCli),
 						task_manager,
 					))
 				})
 			}
 
-			#[cfg(feature = "westend-native")]
-			if chain_spec.is_westend() {
+			#[cfg(feature = "alphanet-native")]
+			if chain_spec.is_alphanet() {
 				return runner.async_run(|config| {
 					Ok((
-						cmd.run::<service::westend_runtime::Block, service::WestendExecutorDispatch>(
+						cmd.run::<service::alphanet_runtime::Block, service::AlphanetExecutorDispatch>(
 							config,
 						)
-						.map_err(Error::SubstrateCli),
+						.map_err(Error::AxlibCli),
 						task_manager,
 					))
 				})
@@ -490,16 +490,16 @@ pub fn run() -> Result<()> {
 			{
 				return runner.async_run(|config| {
 					Ok((
-						cmd.run::<service::polkadot_runtime::Block, service::PolkadotExecutorDispatch>(
+						cmd.run::<service::polkadot_runtime::Block, service::AxiaExecutorDispatch>(
 							config,
 						)
-						.map_err(Error::SubstrateCli),
+						.map_err(Error::AxlibCli),
 						task_manager,
 					))
 				})
 			}
 			#[cfg(not(feature = "polkadot-native"))]
-			panic!("No runtime feature (polkadot, kusama, westend, rococo) is enabled")
+			panic!("No runtime feature (polkadot, axctest, alphanet, betanet) is enabled")
 		},
 		#[cfg(not(feature = "try-runtime"))]
 		Some(Subcommand::TryRuntime) => Err(Error::Other(

@@ -1,7 +1,7 @@
 [package]
 name = "storage-proof-fuzzer"
 version = "0.1.0"
-authors = ["Parity Technologies <admin@parity.io>"]
+authors = ["Axia Technologies <admin@axia.io>"]
 edition = "2018"
 license = "GPL-3.0-or-later WITH Classpath-exception-2.0"
 
@@ -16,7 +16,7 @@ env_logger = "0.8.3"
 
 bp-runtime = { path = "../../primitives/runtime" }
 
-# Substrate Dependencies
+# Axlib Dependencies
 
 sp-core = { git = "https://github.com/axtend/axlib", branch = "c92f69d" }
 sp-state-machine = { git = "https://github.com/axtend/axlib", branch = "c92f69d" }

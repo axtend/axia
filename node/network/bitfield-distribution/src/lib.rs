@@ -1,18 +1,18 @@
-// Copyright 2020-2021 Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// Copyright 2020-2021 Axia Technologies (UK) Ltd.
+// This file is part of Axia.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// Axia is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// Axia is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with Axia.  If not, see <http://www.gnu.org/licenses/>.
 
 //! The bitfield distribution
 //!
@@ -154,7 +154,7 @@ impl PerRelayParentData {
 	}
 }
 
-const LOG_TARGET: &str = "parachain::bitfield-distribution";
+const LOG_TARGET: &str = "allychain::bitfield-distribution";
 
 /// The bitfield distribution subsystem.
 pub struct BitfieldDistribution {
@@ -756,35 +756,35 @@ impl metrics::Metrics for Metrics {
 		let metrics = MetricsInner {
 			gossipped_own_availability_bitfields: prometheus::register(
 				prometheus::Counter::new(
-					"polkadot_parachain_gossipped_own_availabilty_bitfields_total",
+					"polkadot_allychain_gossipped_own_availabilty_bitfields_total",
 					"Number of own availability bitfields sent to other peers.",
 				)?,
 				registry,
 			)?,
 			received_availability_bitfields: prometheus::register(
 				prometheus::Counter::new(
-					"polkadot_parachain_received_availabilty_bitfields_total",
+					"polkadot_allychain_received_availabilty_bitfields_total",
 					"Number of valid availability bitfields received from other peers.",
 				)?,
 				registry,
 			)?,
 			active_leaves_update: prometheus::register(
 				prometheus::Histogram::with_opts(prometheus::HistogramOpts::new(
-					"polkadot_parachain_bitfield_distribution_active_leaves_update",
+					"polkadot_allychain_bitfield_distribution_active_leaves_update",
 					"Time spent within `bitfield_distribution::active_leaves_update`",
 				))?,
 				registry,
 			)?,
 			handle_bitfield_distribution: prometheus::register(
 				prometheus::Histogram::with_opts(prometheus::HistogramOpts::new(
-					"polkadot_parachain_bitfield_distribution_handle_bitfield_distribution",
+					"polkadot_allychain_bitfield_distribution_handle_bitfield_distribution",
 					"Time spent within `bitfield_distribution::handle_bitfield_distribution`",
 				))?,
 				registry,
 			)?,
 			handle_network_msg: prometheus::register(
 				prometheus::Histogram::with_opts(prometheus::HistogramOpts::new(
-					"polkadot_parachain_bitfield_distribution_handle_network_msg",
+					"polkadot_allychain_bitfield_distribution_handle_network_msg",
 					"Time spent within `bitfield_distribution::handle_network_msg`",
 				))?,
 				registry,

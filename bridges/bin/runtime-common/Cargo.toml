@@ -1,14 +1,14 @@
 [package]
 name = "bridge-runtime-common"
 version = "0.1.0"
-authors = ["Parity Technologies <admin@parity.io>"]
+authors = ["Axia Technologies <admin@axia.io>"]
 edition = "2018"
-homepage = "https://substrate.dev"
-repository = "https://github.com/paritytech/parity-bridges-common/"
+homepage = "https://axlib.dev"
+repository = "https://github.com/axiatech/axia-bridges-common/"
 license = "GPL-3.0-or-later WITH Classpath-exception-2.0"
 
 [dependencies]
-codec = { package = "parity-scale-codec", version = "2.2.0", default-features = false, features = ["derive"] }
+codec = { package = "axia-scale-codec", version = "2.2.0", default-features = false, features = ["derive"] }
 ed25519-dalek = { version = "1.0", default-features = false, optional = true }
 hash-db = { version = "0.15.2", default-features = false }
 scale-info = { version = "1.0", default-features = false, features = ["derive"] }
@@ -22,7 +22,7 @@ pallet-bridge-dispatch = { path = "../../modules/dispatch", default-features = f
 pallet-bridge-grandpa = { path = "../../modules/grandpa", default-features = false }
 pallet-bridge-messages = { path = "../../modules/messages", default-features = false }
 
-# Substrate dependencies
+# Axlib dependencies
 
 frame-support = { git = "https://github.com/axtend/axlib", default-features = false , branch = "c92f69d" }
 pallet-transaction-payment = { git = "https://github.com/axtend/axlib", default-features = false , branch = "c92f69d" }

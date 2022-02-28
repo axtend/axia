@@ -1,18 +1,18 @@
-// Copyright 2020-2021 Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// Copyright 2020-2021 Axia Technologies (UK) Ltd.
+// This file is part of Axia.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// Axia is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// Axia is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with Axia.  If not, see <http://www.gnu.org/licenses/>.
 
 //! Implements a `CandidateBackingSubsystem`.
 
@@ -69,7 +69,7 @@ use thiserror::Error;
 #[cfg(test)]
 mod tests;
 
-const LOG_TARGET: &str = "parachain::candidate-backing";
+const LOG_TARGET: &str = "allychain::candidate-backing";
 
 /// Errors that can occur in candidate backing.
 #[derive(Debug, Error)]
@@ -192,12 +192,12 @@ struct AttestingData {
 
 /// How many votes we need to consider a candidate backed.
 fn minimum_votes(n_validators: usize) -> usize {
-	// Runtime change going live, see: https://github.com/paritytech/polkadot/pull/4437
+	// Runtime change going live, see: https://github.com/axiatech/polkadot/pull/4437
 	let old_runtime_value = n_validators / 2 + 1;
 	let new_runtime_value = std::cmp::min(2, n_validators);
 
 	// Until new runtime is live everywhere and we don't yet have
-	// https://github.com/paritytech/polkadot/issues/4576, we want to err on the higher value for
+	// https://github.com/axiatech/polkadot/issues/4576, we want to err on the higher value for
 	// secured block production:
 	std::cmp::max(old_runtime_value, new_runtime_value)
 }
@@ -1372,35 +1372,35 @@ impl metrics::Metrics for Metrics {
 		let metrics = MetricsInner {
 			signed_statements_total: prometheus::register(
 				prometheus::Counter::new(
-					"polkadot_parachain_candidate_backing_signed_statements_total",
+					"polkadot_allychain_candidate_backing_signed_statements_total",
 					"Number of statements signed.",
 				)?,
 				registry,
 			)?,
 			candidates_seconded_total: prometheus::register(
 				prometheus::Counter::new(
-					"polkadot_parachain_candidate_backing_candidates_seconded_total",
+					"polkadot_allychain_candidate_backing_candidates_seconded_total",
 					"Number of candidates seconded.",
 				)?,
 				registry,
 			)?,
 			process_second: prometheus::register(
 				prometheus::Histogram::with_opts(prometheus::HistogramOpts::new(
-					"polkadot_parachain_candidate_backing_process_second",
+					"polkadot_allychain_candidate_backing_process_second",
 					"Time spent within `candidate_backing::process_second`",
 				))?,
 				registry,
 			)?,
 			process_statement: prometheus::register(
 				prometheus::Histogram::with_opts(prometheus::HistogramOpts::new(
-					"polkadot_parachain_candidate_backing_process_statement",
+					"polkadot_allychain_candidate_backing_process_statement",
 					"Time spent within `candidate_backing::process_statement`",
 				))?,
 				registry,
 			)?,
 			get_backed_candidates: prometheus::register(
 				prometheus::Histogram::with_opts(prometheus::HistogramOpts::new(
-					"polkadot_parachain_candidate_backing_get_backed_candidates",
+					"polkadot_allychain_candidate_backing_get_backed_candidates",
 					"Time spent within `candidate_backing::get_backed_candidates`",
 				))?,
 				registry,

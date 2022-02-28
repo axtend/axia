@@ -1,18 +1,18 @@
-// Copyright 2020 Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// Copyright 2020 Axia Technologies (UK) Ltd.
+// This file is part of Axia.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// Axia is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// Axia is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with Axia.  If not, see <http://www.gnu.org/licenses/>.
 
 use always_assert::never;
 use futures::{
@@ -78,7 +78,7 @@ const BENEFIT_NOTIFY_GOOD: Rep =
 ///
 /// This is to protect from a single slow collator preventing collations from happening.
 ///
-/// With a collation size of 5MB and bandwidth of 500Mbit/s (requirement for Kusama validators),
+/// With a collation size of 5MB and bandwidth of 500Mbit/s (requirement for AxiaTest validators),
 /// the transfer should be possible within 0.1 seconds. 400 milliseconds should therefore be
 /// plenty, even with multiple heads and should be low enough for later collators to still be able
 /// to finish on time.
@@ -95,7 +95,7 @@ const ACTIVITY_POLL: Duration = Duration::from_millis(10);
 
 // How often to poll collation responses.
 // This is a hack that should be removed in a refactoring.
-// See https://github.com/paritytech/polkadot/issues/4182
+// See https://github.com/axiatech/polkadot/issues/4182
 const CHECK_COLLATIONS_POLL: Duration = Duration::from_millis(5);
 
 #[derive(Clone, Default)]
@@ -149,7 +149,7 @@ impl metrics::Metrics for Metrics {
 			collation_requests: prometheus::register(
 				prometheus::CounterVec::new(
 					prometheus::Opts::new(
-						"polkadot_parachain_collation_requests_total",
+						"polkadot_allychain_collation_requests_total",
 						"Number of collations requested from Collators.",
 					),
 					&["success"],
@@ -159,7 +159,7 @@ impl metrics::Metrics for Metrics {
 			process_msg: prometheus::register(
 				prometheus::Histogram::with_opts(
 					prometheus::HistogramOpts::new(
-						"polkadot_parachain_collator_protocol_validator_process_msg",
+						"polkadot_allychain_collator_protocol_validator_process_msg",
 						"Time spent within `collator_protocol_validator::process_msg`",
 					)
 				)?,
@@ -168,7 +168,7 @@ impl metrics::Metrics for Metrics {
 			handle_collation_request_result: prometheus::register(
 				prometheus::Histogram::with_opts(
 					prometheus::HistogramOpts::new(
-						"polkadot_parachain_collator_protocol_validator_handle_collation_request_result",
+						"polkadot_allychain_collator_protocol_validator_handle_collation_request_result",
 						"Time spent within `collator_protocol_validator::handle_collation_request_result`",
 					)
 				)?,
@@ -176,7 +176,7 @@ impl metrics::Metrics for Metrics {
 			)?,
 			collator_peer_count: prometheus::register(
 				prometheus::Gauge::new(
-					"polkadot_parachain_collator_peer_count",
+					"polkadot_allychain_collator_peer_count",
 					"Amount of collator peers connected",
 				)?,
 				registry,
@@ -405,7 +405,7 @@ impl ActiveParas {
 			// allow an incoming connection from that collator. If not even connecting to them
 			// directly.
 			//
-			// However, this'll work fine for parachains, as each parachain gets a dedicated
+			// However, this'll work fine for allychains, as each allychain gets a dedicated
 			// core.
 			if let Some(para_now) = para_now {
 				let entry = self.current_assignments.entry(para_now).or_default();
@@ -415,7 +415,7 @@ impl ActiveParas {
 						target: LOG_TARGET,
 						?relay_parent,
 						para_id = ?para_now,
-						"Assigned to a parachain",
+						"Assigned to a allychain",
 					);
 				}
 			}
@@ -438,7 +438,7 @@ impl ActiveParas {
 							tracing::debug!(
 								target: LOG_TARGET,
 								para_id = ?cur,
-								"Unassigned from a parachain",
+								"Unassigned from a allychain",
 							);
 						}
 					}
@@ -1390,7 +1390,7 @@ async fn poll_collation_response(
 					"Request timed out"
 				);
 				// For now we don't want to change reputation on timeout, to mitigate issues like
-				// this: https://github.com/paritytech/polkadot/issues/4617
+				// this: https://github.com/axiatech/polkadot/issues/4617
 				CollationFetchResult::Error(None)
 			},
 			Err(RequestError::NetworkError(err)) => {

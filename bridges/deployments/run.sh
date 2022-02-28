@@ -4,7 +4,7 @@
 #
 # To deploy a network you can run this script with the name of the bridge (or multiple bridges) you want to run.
 #
-# `./run.sh westend-millau rialto-millau`
+# `./run.sh alphanet-millau rialto-millau`
 #
 # To update a deployment to use the latest images available from the Docker Hub add the `update`
 # argument after the bridge name.
@@ -16,7 +16,7 @@
 # `./run.sh rialto-millau stop`
 #
 # Stopping the bridge will also bring down all networks that it uses. So if you have started multiple bridges
-# that are using the same network (like Millau in rialto-millau and westend-millau bridges), then stopping one
+# that are using the same network (like Millau in rialto-millau and alphanet-millau bridges), then stopping one
 # of these bridges will cause the other bridge to break.
 
 set -xeu
@@ -31,18 +31,18 @@ function show_help () {
   echo " "
   echo "Usage:"
   echo "  ./run.sh rialto-millau [stop|update]       Run Rialto <> Millau Networks & Bridge"
-  echo "  ./run.sh westend-millau [stop|update]      Run Westend -> Millau Networks & Bridge"
+  echo "  ./run.sh alphanet-millau [stop|update]      Run Alphanet -> Millau Networks & Bridge"
   echo " "
   echo "Options:"
   echo "  --no-monitoring                            Disable monitoring"
   echo "  --no-ui                                    Disable UI"
   echo " "
   echo "You can start multiple bridges at once by passing several bridge names:"
-  echo "  ./run.sh rialto-millau westend-millau [stop|update]"
+  echo "  ./run.sh rialto-millau alphanet-millau [stop|update]"
   exit 1
 }
 
-RIALTO=' -f ./networks/rialto.yml -f ./networks/rialto-parachain.yml'
+RIALTO=' -f ./networks/rialto.yml -f ./networks/rialto-allychain.yml'
 MILLAU=' -f ./networks/millau.yml'
 MONITORING=' -f ./monitoring/docker-compose.yml'
 UI=' -f ./ui/docker-compose.yml'
@@ -71,7 +71,7 @@ do
       MILLAU=''
       shift
       ;;
-    westend-millau)
+    alphanet-millau)
       BRIDGES+=($i)
       NETWORKS+=${MILLAU}
       MILLAU=''

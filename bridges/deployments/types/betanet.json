@@ -1,0 +1,16 @@
+{
+	"Address": "BetanetAddress",
+	"LookupSource": "BetanetLookupSource",
+	"Fee": "BetanetBalance",
+	"Balance": "BetanetBalance",
+	"BlockHash": "BetanetBlockHash",
+	"BlockNumber": "BetanetBlockNumber",
+	"BridgedBlockHash": "WococoBlockHash",
+	"BridgedBlockNumber": "WococoBlockNumber",
+	"BridgedHeader": "WococoHeader",
+	"Parameter": {
+		"_enum": {
+			"BetanetToWococoConversionRate": "u128"
+		}
+	}
+}

@@ -1,18 +1,18 @@
-// Copyright 2019-2021 Parity Technologies (UK) Ltd.
-// This file is part of Parity Bridges Common.
+// Copyright 2019-2021 Axia Technologies (UK) Ltd.
+// This file is part of Axia Bridges Common.
 
-// Parity Bridges Common is free software: you can redistribute it and/or modify
+// Axia Bridges Common is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Parity Bridges Common is distributed in the hope that it will be useful,
+// Axia Bridges Common is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Parity Bridges Common.  If not, see <http://www.gnu.org/licenses/>.
+// along with Axia Bridges Common.  If not, see <http://www.gnu.org/licenses/>.
 
 use beefy_primitives::crypto::AuthorityId as BeefyId;
 use bp_rialto::derive_account_from_millau_id;
@@ -29,7 +29,7 @@ use sp_core::{sr25519, Pair, Public};
 use sp_finality_grandpa::AuthorityId as GrandpaId;
 use sp_runtime::traits::{IdentifyAccount, Verify};
 
-/// Specialized `ChainSpec`. This is a specialization of the general Substrate ChainSpec type.
+/// Specialized `ChainSpec`. This is a specialization of the general Axlib ChainSpec type.
 pub type ChainSpec = sc_service::GenericChainSpec<GenesisConfig>;
 
 /// The chain specification option. This is expected to come in from the CLI and
@@ -243,10 +243,10 @@ fn testnet_genesis(
 		},
 		authority_discovery: Default::default(),
 		hrmp: Default::default(),
-		// this configuration is exact copy of configuration from Polkadot repo
-		// (see /node/service/src/chain_spec.rs:default_parachains_host_configuration)
+		// this configuration is exact copy of configuration from Axia repo
+		// (see /node/service/src/chain_spec.rs:default_allychains_host_configuration)
 		configuration: ConfigurationConfig {
-			config: polkadot_runtime_parachains::configuration::HostConfiguration {
+			config: polkadot_runtime_allychains::configuration::HostConfiguration {
 				validation_upgrade_frequency: 1u32,
 				validation_upgrade_delay: 1,
 				code_retention_period: 1200,
@@ -271,10 +271,10 @@ fn testnet_genesis(
 				hrmp_recipient_deposit: 0,
 				hrmp_channel_max_capacity: 8,
 				hrmp_channel_max_total_size: 8 * 1024,
-				hrmp_max_parachain_inbound_channels: 4,
+				hrmp_max_allychain_inbound_channels: 4,
 				hrmp_max_parathread_inbound_channels: 4,
 				hrmp_channel_max_message_size: 1024 * 1024,
-				hrmp_max_parachain_outbound_channels: 4,
+				hrmp_max_allychain_outbound_channels: 4,
 				hrmp_max_parathread_outbound_channels: 4,
 				hrmp_max_message_num_per_candidate: 5,
 				dispute_period: 6,

@@ -1,18 +1,18 @@
-// Copyright 2021 Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// Copyright 2021 Axia Technologies (UK) Ltd.
+// This file is part of Axia.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// Axia is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// Axia is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with Axia.  If not, see <http://www.gnu.org/licenses/>.
 
 //! Remote tests for bags-list pallet.
 
@@ -30,16 +30,16 @@ enum Command {
 #[derive(Clone, Debug, ArgEnum)]
 #[clap(rename_all = "PascalCase")]
 enum Runtime {
-	Polkadot,
-	Kusama,
-	Westend,
+	Axia,
+	AxiaTest,
+	Alphanet,
 }
 
 #[derive(Parser)]
 struct Cli {
-	#[clap(long, short, default_value = "wss://kusama-rpc.polkadot.io:443")]
+	#[clap(long, short, default_value = "wss://axctest-rpc.polkadot.io:443")]
 	uri: String,
-	#[clap(long, short, ignore_case = true, arg_enum, default_value = "kusama")]
+	#[clap(long, short, ignore_case = true, arg_enum, default_value = "axctest")]
 	runtime: Runtime,
 	#[clap(long, short, ignore_case = true, arg_enum, default_value = "SanityCheck")]
 	command: Command,
@@ -61,37 +61,37 @@ async fn main() {
 
 	use pallet_bags_list_remote_tests::*;
 	match options.runtime {
-		Runtime::Polkadot => sp_core::crypto::set_default_ss58_version(
+		Runtime::Axia => sp_core::crypto::set_default_ss58_version(
 			<polkadot_runtime::Runtime as frame_system::Config>::SS58Prefix::get()
 				.try_into()
 				.unwrap(),
 		),
-		Runtime::Kusama => sp_core::crypto::set_default_ss58_version(
-			<kusama_runtime::Runtime as frame_system::Config>::SS58Prefix::get()
+		Runtime::AxiaTest => sp_core::crypto::set_default_ss58_version(
+			<axctest_runtime::Runtime as frame_system::Config>::SS58Prefix::get()
 				.try_into()
 				.unwrap(),
 		),
-		Runtime::Westend => sp_core::crypto::set_default_ss58_version(
-			<westend_runtime::Runtime as frame_system::Config>::SS58Prefix::get()
+		Runtime::Alphanet => sp_core::crypto::set_default_ss58_version(
+			<alphanet_runtime::Runtime as frame_system::Config>::SS58Prefix::get()
 				.try_into()
 				.unwrap(),
 		),
 	};
 
 	match (options.runtime, options.command) {
-		(Runtime::Kusama, Command::CheckMigration) => {
-			use kusama_runtime::{Block, Runtime};
-			use kusama_runtime_constants::currency::UNITS;
+		(Runtime::AxiaTest, Command::CheckMigration) => {
+			use axctest_runtime::{Block, Runtime};
+			use axctest_runtime_constants::currency::UNITS;
 			migration::execute::<Runtime, Block>(UNITS as u64, "KSM", options.uri.clone()).await;
 		},
-		(Runtime::Kusama, Command::SanityCheck) => {
-			use kusama_runtime::{Block, Runtime};
-			use kusama_runtime_constants::currency::UNITS;
+		(Runtime::AxiaTest, Command::SanityCheck) => {
+			use axctest_runtime::{Block, Runtime};
+			use axctest_runtime_constants::currency::UNITS;
 			sanity_check::execute::<Runtime, Block>(UNITS as u64, "KSM", options.uri.clone()).await;
 		},
-		(Runtime::Kusama, Command::Snapshot) => {
-			use kusama_runtime::{Block, Runtime};
-			use kusama_runtime_constants::currency::UNITS;
+		(Runtime::AxiaTest, Command::Snapshot) => {
+			use axctest_runtime::{Block, Runtime};
+			use axctest_runtime_constants::currency::UNITS;
 			snapshot::execute::<Runtime, Block>(
 				options.snapshot_limit,
 				UNITS.try_into().unwrap(),
@@ -100,19 +100,19 @@ async fn main() {
 			.await;
 		},
 
-		(Runtime::Westend, Command::CheckMigration) => {
-			use westend_runtime::{Block, Runtime};
-			use westend_runtime_constants::currency::UNITS;
+		(Runtime::Alphanet, Command::CheckMigration) => {
+			use alphanet_runtime::{Block, Runtime};
+			use alphanet_runtime_constants::currency::UNITS;
 			migration::execute::<Runtime, Block>(UNITS as u64, "WND", options.uri.clone()).await;
 		},
-		(Runtime::Westend, Command::SanityCheck) => {
-			use westend_runtime::{Block, Runtime};
-			use westend_runtime_constants::currency::UNITS;
+		(Runtime::Alphanet, Command::SanityCheck) => {
+			use alphanet_runtime::{Block, Runtime};
+			use alphanet_runtime_constants::currency::UNITS;
 			sanity_check::execute::<Runtime, Block>(UNITS as u64, "WND", options.uri.clone()).await;
 		},
-		(Runtime::Westend, Command::Snapshot) => {
-			use westend_runtime::{Block, Runtime};
-			use westend_runtime_constants::currency::UNITS;
+		(Runtime::Alphanet, Command::Snapshot) => {
+			use alphanet_runtime::{Block, Runtime};
+			use alphanet_runtime_constants::currency::UNITS;
 			snapshot::execute::<Runtime, Block>(
 				options.snapshot_limit,
 				UNITS.try_into().unwrap(),
@@ -121,17 +121,17 @@ async fn main() {
 			.await;
 		},
 
-		(Runtime::Polkadot, Command::CheckMigration) => {
+		(Runtime::Axia, Command::CheckMigration) => {
 			use polkadot_runtime::{Block, Runtime};
 			use polkadot_runtime_constants::currency::UNITS;
-			migration::execute::<Runtime, Block>(UNITS as u64, "DOT", options.uri.clone()).await;
+			migration::execute::<Runtime, Block>(UNITS as u64, "AXC", options.uri.clone()).await;
 		},
-		(Runtime::Polkadot, Command::SanityCheck) => {
+		(Runtime::Axia, Command::SanityCheck) => {
 			use polkadot_runtime::{Block, Runtime};
 			use polkadot_runtime_constants::currency::UNITS;
-			sanity_check::execute::<Runtime, Block>(UNITS as u64, "DOT", options.uri.clone()).await;
+			sanity_check::execute::<Runtime, Block>(UNITS as u64, "AXC", options.uri.clone()).await;
 		},
-		(Runtime::Polkadot, Command::Snapshot) => {
+		(Runtime::Axia, Command::Snapshot) => {
 			use polkadot_runtime::{Block, Runtime};
 			use polkadot_runtime_constants::currency::UNITS;
 			snapshot::execute::<Runtime, Block>(

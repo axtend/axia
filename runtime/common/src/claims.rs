@@ -1,18 +1,18 @@
-// Copyright 2017-2020 Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// Copyright 2017-2020 Axia Technologies (UK) Ltd.
+// This file is part of Axia.
 
-// Substrate is free software: you can redistribute it and/or modify
+// Axlib is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Substrate is distributed in the hope that it will be useful,
+// Axlib is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Substrate.  If not, see <http://www.gnu.org/licenses/>.
+// along with Axlib.  If not, see <http://www.gnu.org/licenses/>.
 
 //! Pallet to process claims from Ethereum addresses.
 
@@ -22,7 +22,7 @@ use frame_support::{
 	weights::Weight,
 };
 pub use pallet::*;
-use parity_scale_codec::{Decode, Encode};
+use axia_scale_codec::{Decode, Encode};
 use primitives::v1::ValidityError;
 use scale_info::TypeInfo;
 #[cfg(feature = "std")]
@@ -183,7 +183,7 @@ pub mod pallet {
 	#[pallet::event]
 	#[pallet::generate_deposit(pub(super) fn deposit_event)]
 	pub enum Event<T: Config> {
-		/// Someone claimed some DOTs. `[who, ethereum_address, amount]`
+		/// Someone claimed some AXCs. `[who, ethereum_address, amount]`
 		Claimed(T::AccountId, EthereumAddress, BalanceOf<T>),
 	}
 
@@ -285,7 +285,7 @@ pub mod pallet {
 
 	#[pallet::call]
 	impl<T: Config> Pallet<T> {
-		/// Make a claim to collect your DOTs.
+		/// Make a claim to collect your AXCs.
 		///
 		/// The dispatch origin for this call must be _None_.
 		///
@@ -326,14 +326,14 @@ pub mod pallet {
 			Ok(())
 		}
 
-		/// Mint a new claim to collect DOTs.
+		/// Mint a new claim to collect AXCs.
 		///
 		/// The dispatch origin for this call must be _Root_.
 		///
 		/// Parameters:
 		/// - `who`: The Ethereum address allowed to collect this claim.
-		/// - `value`: The number of DOTs that will be claimed.
-		/// - `vesting_schedule`: An optional vesting schedule for these DOTs.
+		/// - `value`: The number of AXCs that will be claimed.
+		/// - `vesting_schedule`: An optional vesting schedule for these AXCs.
 		///
 		/// <weight>
 		/// The weight of this call is invariant over the input parameters.
@@ -362,7 +362,7 @@ pub mod pallet {
 			Ok(())
 		}
 
-		/// Make a claim to collect your DOTs by signing a statement.
+		/// Make a claim to collect your AXCs by signing a statement.
 		///
 		/// The dispatch origin for this call must be _None_.
 		///
@@ -703,7 +703,7 @@ mod tests {
 	use hex_literal::hex;
 	use secp_utils::*;
 
-	use parity_scale_codec::Encode;
+	use axia_scale_codec::Encode;
 	use sp_core::H256;
 	// The testing primitives are very useful for avoiding having to work with signatures
 	// or public keys. `u64` is used as the `AccountId` and no `Signature`s are required.

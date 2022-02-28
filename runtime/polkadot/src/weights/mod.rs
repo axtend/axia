@@ -1,4 +1,4 @@
-// Copyright (C) 2020 Parity Technologies (UK) Ltd.
+// Copyright (C) 2020 Axia Technologies (UK) Ltd.
 // SPDX-License-Identifier: Apache-2.0
 
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -44,8 +44,8 @@ pub mod runtime_common_claims;
 pub mod runtime_common_crowdloan;
 pub mod runtime_common_paras_registrar;
 pub mod runtime_common_slots;
-pub mod runtime_parachains_configuration;
-pub mod runtime_parachains_hrmp;
-pub mod runtime_parachains_initializer;
-pub mod runtime_parachains_paras;
-pub mod runtime_parachains_paras_inherent;
+pub mod runtime_allychains_configuration;
+pub mod runtime_allychains_hrmp;
+pub mod runtime_allychains_initializer;
+pub mod runtime_allychains_paras;
+pub mod runtime_allychains_paras_inherent;

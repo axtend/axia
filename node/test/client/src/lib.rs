@@ -1,22 +1,22 @@
-// Copyright 2020 Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// Copyright 2020 Axia Technologies (UK) Ltd.
+// This file is part of Axia.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// Axia is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// Axia is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with Axia.  If not, see <http://www.gnu.org/licenses/>.
 
-//! A Polkadot test client.
+//! A Axia test client.
 //!
-//! This test client is using the Polkadot test runtime.
+//! This test client is using the Axia test runtime.
 
 mod block_builder;
 
@@ -29,20 +29,20 @@ pub use block_builder::*;
 pub use polkadot_test_runtime as runtime;
 pub use polkadot_test_service::{
 	construct_extrinsic, construct_transfer_extrinsic, Client, FullBackend,
-	PolkadotTestExecutorDispatch,
+	AxiaTestExecutorDispatch,
 };
-pub use substrate_test_client::*;
+pub use axlib_test_client::*;
 
 /// Test client executor.
 pub type Executor = client::LocalCallExecutor<
 	Block,
 	FullBackend,
-	sc_executor::NativeElseWasmExecutor<PolkadotTestExecutorDispatch>,
+	sc_executor::NativeElseWasmExecutor<AxiaTestExecutorDispatch>,
 >;
 
-/// Test client builder for Polkadot.
+/// Test client builder for Axia.
 pub type TestClientBuilder =
-	substrate_test_client::TestClientBuilder<Block, Executor, FullBackend, GenesisParameters>;
+	axlib_test_client::TestClientBuilder<Block, Executor, FullBackend, GenesisParameters>;
 
 /// `LongestChain` type for the test runtime/client.
 pub type LongestChain = sc_consensus::LongestChain<FullBackend, Block>;
@@ -51,7 +51,7 @@ pub type LongestChain = sc_consensus::LongestChain<FullBackend, Block>;
 #[derive(Default)]
 pub struct GenesisParameters;
 
-impl substrate_test_client::GenesisInit for GenesisParameters {
+impl axlib_test_client::GenesisInit for GenesisParameters {
 	fn genesis_storage(&self) -> Storage {
 		polkadot_test_service::chain_spec::polkadot_local_testnet_genesis()
 			.build_storage()

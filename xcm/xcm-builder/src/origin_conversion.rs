@@ -1,24 +1,24 @@
-// Copyright 2020 Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// Copyright 2020 Axia Technologies (UK) Ltd.
+// This file is part of Axia.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// Axia is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// Axia is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with Axia.  If not, see <http://www.gnu.org/licenses/>.
 
 //! Various implementations for `ConvertOrigin`.
 
 use frame_support::traits::{EnsureOrigin, Get, GetBacking, OriginTrait};
 use frame_system::RawOrigin as SystemRawOrigin;
-use polkadot_parachain::primitives::IsSystem;
+use polkadot_allychain::primitives::IsSystem;
 use sp_std::{convert::TryInto, marker::PhantomData};
 use xcm::latest::{BodyId, BodyPart, Junction, Junctions::*, MultiLocation, NetworkId, OriginKind};
 use xcm_executor::traits::{Convert, ConvertOrigin};
@@ -67,29 +67,29 @@ impl<Origin: OriginTrait> ConvertOrigin<Origin> for ParentAsSuperuser<Origin> {
 	}
 }
 
-pub struct ChildSystemParachainAsSuperuser<ParaId, Origin>(PhantomData<(ParaId, Origin)>);
+pub struct ChildSystemAllychainAsSuperuser<ParaId, Origin>(PhantomData<(ParaId, Origin)>);
 impl<ParaId: IsSystem + From<u32>, Origin: OriginTrait> ConvertOrigin<Origin>
-	for ChildSystemParachainAsSuperuser<ParaId, Origin>
+	for ChildSystemAllychainAsSuperuser<ParaId, Origin>
 {
 	fn convert_origin(
 		origin: impl Into<MultiLocation>,
 		kind: OriginKind,
 	) -> Result<Origin, MultiLocation> {
 		let origin = origin.into();
-		log::trace!(target: "xcm::origin_conversion", "ChildSystemParachainAsSuperuser origin: {:?}, kind: {:?}", origin, kind);
+		log::trace!(target: "xcm::origin_conversion", "ChildSystemAllychainAsSuperuser origin: {:?}, kind: {:?}", origin, kind);
 		match (kind, origin) {
 			(
 				OriginKind::Superuser,
-				MultiLocation { parents: 0, interior: X1(Junction::Parachain(id)) },
+				MultiLocation { parents: 0, interior: X1(Junction::Allychain(id)) },
 			) if ParaId::from(id).is_system() => Ok(Origin::root()),
 			(_, origin) => Err(origin),
 		}
 	}
 }
 
-pub struct SiblingSystemParachainAsSuperuser<ParaId, Origin>(PhantomData<(ParaId, Origin)>);
+pub struct SiblingSystemAllychainAsSuperuser<ParaId, Origin>(PhantomData<(ParaId, Origin)>);
 impl<ParaId: IsSystem + From<u32>, Origin: OriginTrait> ConvertOrigin<Origin>
-	for SiblingSystemParachainAsSuperuser<ParaId, Origin>
+	for SiblingSystemAllychainAsSuperuser<ParaId, Origin>
 {
 	fn convert_origin(
 		origin: impl Into<MultiLocation>,
@@ -98,44 +98,44 @@ impl<ParaId: IsSystem + From<u32>, Origin: OriginTrait> ConvertOrigin<Origin>
 		let origin = origin.into();
 		log::trace!(
 			target: "xcm::origin_conversion",
-			"SiblingSystemParachainAsSuperuser origin: {:?}, kind: {:?}",
+			"SiblingSystemAllychainAsSuperuser origin: {:?}, kind: {:?}",
 			origin, kind,
 		);
 		match (kind, origin) {
 			(
 				OriginKind::Superuser,
-				MultiLocation { parents: 1, interior: X1(Junction::Parachain(id)) },
+				MultiLocation { parents: 1, interior: X1(Junction::Allychain(id)) },
 			) if ParaId::from(id).is_system() => Ok(Origin::root()),
 			(_, origin) => Err(origin),
 		}
 	}
 }
 
-pub struct ChildParachainAsNative<ParachainOrigin, Origin>(PhantomData<(ParachainOrigin, Origin)>);
-impl<ParachainOrigin: From<u32>, Origin: From<ParachainOrigin>> ConvertOrigin<Origin>
-	for ChildParachainAsNative<ParachainOrigin, Origin>
+pub struct ChildAllychainAsNative<AllychainOrigin, Origin>(PhantomData<(AllychainOrigin, Origin)>);
+impl<AllychainOrigin: From<u32>, Origin: From<AllychainOrigin>> ConvertOrigin<Origin>
+	for ChildAllychainAsNative<AllychainOrigin, Origin>
 {
 	fn convert_origin(
 		origin: impl Into<MultiLocation>,
 		kind: OriginKind,
 	) -> Result<Origin, MultiLocation> {
 		let origin = origin.into();
-		log::trace!(target: "xcm::origin_conversion", "ChildParachainAsNative origin: {:?}, kind: {:?}", origin, kind);
+		log::trace!(target: "xcm::origin_conversion", "ChildAllychainAsNative origin: {:?}, kind: {:?}", origin, kind);
 		match (kind, origin) {
 			(
 				OriginKind::Native,
-				MultiLocation { parents: 0, interior: X1(Junction::Parachain(id)) },
-			) => Ok(Origin::from(ParachainOrigin::from(id))),
+				MultiLocation { parents: 0, interior: X1(Junction::Allychain(id)) },
+			) => Ok(Origin::from(AllychainOrigin::from(id))),
 			(_, origin) => Err(origin),
 		}
 	}
 }
 
-pub struct SiblingParachainAsNative<ParachainOrigin, Origin>(
-	PhantomData<(ParachainOrigin, Origin)>,
+pub struct SiblingAllychainAsNative<AllychainOrigin, Origin>(
+	PhantomData<(AllychainOrigin, Origin)>,
 );
-impl<ParachainOrigin: From<u32>, Origin: From<ParachainOrigin>> ConvertOrigin<Origin>
-	for SiblingParachainAsNative<ParachainOrigin, Origin>
+impl<AllychainOrigin: From<u32>, Origin: From<AllychainOrigin>> ConvertOrigin<Origin>
+	for SiblingAllychainAsNative<AllychainOrigin, Origin>
 {
 	fn convert_origin(
 		origin: impl Into<MultiLocation>,
@@ -144,14 +144,14 @@ impl<ParachainOrigin: From<u32>, Origin: From<ParachainOrigin>> ConvertOrigin<Or
 		let origin = origin.into();
 		log::trace!(
 			target: "xcm::origin_conversion",
-			"SiblingParachainAsNative origin: {:?}, kind: {:?}",
+			"SiblingAllychainAsNative origin: {:?}, kind: {:?}",
 			origin, kind,
 		);
 		match (kind, origin) {
 			(
 				OriginKind::Native,
-				MultiLocation { parents: 1, interior: X1(Junction::Parachain(id)) },
-			) => Ok(Origin::from(ParachainOrigin::from(id))),
+				MultiLocation { parents: 1, interior: X1(Junction::Allychain(id)) },
+			) => Ok(Origin::from(AllychainOrigin::from(id))),
 			(_, origin) => Err(origin),
 		}
 	}

@@ -1,18 +1,18 @@
-// Copyright 2020 Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// Copyright 2020 Axia Technologies (UK) Ltd.
+// This file is part of Axia.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// Axia is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// Axia is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with Axia.  If not, see <http://www.gnu.org/licenses/>.
 
 //! The bitfield signing subsystem produces `SignedAvailabilityBitfield`s once per block.
 
@@ -51,7 +51,7 @@ mod tests;
 
 /// Delay between starting a bitfield signing job and its attempting to create a bitfield.
 const JOB_DELAY: Duration = Duration::from_millis(1500);
-const LOG_TARGET: &str = "parachain::bitfield-signing";
+const LOG_TARGET: &str = "allychain::bitfield-signing";
 
 /// Each `BitfieldSigningJob` prepares a signed bitfield for a single relay parent.
 pub struct BitfieldSigningJob;
@@ -210,14 +210,14 @@ impl metrics::Metrics for Metrics {
 		let metrics = MetricsInner {
 			bitfields_signed_total: prometheus::register(
 				prometheus::Counter::new(
-					"polkadot_parachain_bitfields_signed_total",
+					"polkadot_allychain_bitfields_signed_total",
 					"Number of bitfields signed.",
 				)?,
 				registry,
 			)?,
 			run: prometheus::register(
 				prometheus::Histogram::with_opts(prometheus::HistogramOpts::new(
-					"polkadot_parachain_bitfield_signing_run",
+					"polkadot_allychain_bitfield_signing_run",
 					"Time spent within `bitfield_signing::run`",
 				))?,
 				registry,

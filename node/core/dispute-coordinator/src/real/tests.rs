@@ -1,18 +1,18 @@
-// Copyright 2021 Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// Copyright 2021 Axia Technologies (UK) Ltd.
+// This file is part of Axia.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// Axia is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// Axia is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with Axia.  If not, see <http://www.gnu.org/licenses/>.
 
 use std::{
 	collections::HashMap,
@@ -30,7 +30,7 @@ use futures::{
 };
 
 use kvdb::KeyValueDB;
-use parity_scale_codec::Encode;
+use axia_scale_codec::Encode;
 
 use polkadot_node_primitives::SignedDisputeStatement;
 use polkadot_node_subsystem::{
@@ -83,7 +83,7 @@ fn make_keystore(accounts: &[Sr25519Keyring]) -> LocalKeystore {
 
 	for s in accounts.iter().copied().map(|k| k.to_seed()) {
 		store
-			.sr25519_generate_new(polkadot_primitives::v1::PARACHAIN_KEY_TYPE_ID, Some(s.as_str()))
+			.sr25519_generate_new(polkadot_primitives::v1::ALLYCHAIN_KEY_TYPE_ID, Some(s.as_str()))
 			.unwrap();
 	}
 

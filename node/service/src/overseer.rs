@@ -1,18 +1,18 @@
-// Copyright 2017-2020 Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// Copyright 2017-2020 Axia Technologies (UK) Ltd.
+// This file is part of Axia.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// Axia is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// Axia is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with Axia.  If not, see <http://www.gnu.org/licenses/>.
 
 use super::{AuthorityDiscoveryApi, Block, Error, Hash, IsCollator, Registry, SpawnNamed};
 use lru::LruCache;
@@ -27,14 +27,14 @@ use polkadot_node_network_protocol::request_response::{v1 as request_v1, Incomin
 #[cfg(any(feature = "malus", test))]
 pub use polkadot_overseer::{
 	dummy::{dummy_overseer_builder, DummySubsystem},
-	HeadSupportsParachains,
+	HeadSupportsAllychains,
 };
 use polkadot_overseer::{
 	metrics::Metrics as OverseerMetrics, BlockInfo, InitializedOverseerBuilder, MetricsTrait,
 	Overseer, OverseerConnector, OverseerHandle,
 };
 
-use polkadot_primitives::v2::ParachainHost;
+use polkadot_primitives::v2::AllychainHost;
 use sc_authority_discovery::Service as AuthorityDiscoveryService;
 use sc_client_api::AuxStore;
 use sc_keystore::LocalKeystore;
@@ -69,7 +69,7 @@ pub use polkadot_statement_distribution::StatementDistributionSubsystem;
 pub struct OverseerGenArgs<'a, Spawner, RuntimeClient>
 where
 	RuntimeClient: 'static + ProvideRuntimeApi<Block> + HeaderBackend<Block> + AuxStore,
-	RuntimeClient::Api: ParachainHost<Block> + BabeApi<Block> + AuthorityDiscoveryApi<Block>,
+	RuntimeClient::Api: AllychainHost<Block> + BabeApi<Block> + AuthorityDiscoveryApi<Block>,
 	Spawner: 'static + SpawnNamed + Clone + Unpin,
 {
 	/// Set of initial relay chain leaves to track.
@@ -78,8 +78,8 @@ where
 	pub keystore: Arc<LocalKeystore>,
 	/// Runtime client generic, providing the `ProvieRuntimeApi` trait besides others.
 	pub runtime_client: Arc<RuntimeClient>,
-	/// The underlying key value store for the parachains.
-	pub parachains_db: Arc<dyn kvdb::KeyValueDB>,
+	/// The underlying key value store for the allychains.
+	pub allychains_db: Arc<dyn kvdb::KeyValueDB>,
 	/// Underlying network service implementation.
 	pub network_service: Arc<sc_network::NetworkService<Block, Hash>>,
 	/// Underlying authority discovery service.
@@ -121,7 +121,7 @@ pub fn prepared_overseer_builder<'a, Spawner, RuntimeClient>(
 		leaves,
 		keystore,
 		runtime_client,
-		parachains_db,
+		allychains_db,
 		network_service,
 		authority_discovery_service,
 		pov_req_receiver,
@@ -174,7 +174,7 @@ pub fn prepared_overseer_builder<'a, Spawner, RuntimeClient>(
 >
 where
 	RuntimeClient: 'static + ProvideRuntimeApi<Block> + HeaderBackend<Block> + AuxStore,
-	RuntimeClient::Api: ParachainHost<Block> + BabeApi<Block> + AuthorityDiscoveryApi<Block>,
+	RuntimeClient::Api: AllychainHost<Block> + BabeApi<Block> + AuthorityDiscoveryApi<Block>,
 	Spawner: 'static + SpawnNamed + Clone + Unpin,
 {
 	use polkadot_node_subsystem_util::metrics::Metrics;
@@ -193,7 +193,7 @@ where
 			Metrics::register(registry)?,
 		))
 		.availability_store(AvailabilityStoreSubsystem::new(
-			parachains_db.clone(),
+			allychains_db.clone(),
 			availability_config,
 			Metrics::register(registry)?,
 		))
@@ -260,7 +260,7 @@ where
 		.approval_distribution(ApprovalDistributionSubsystem::new(Metrics::register(registry)?))
 		.approval_voting(ApprovalVotingSubsystem::with_config(
 			approval_voting_config,
-			parachains_db.clone(),
+			allychains_db.clone(),
 			keystore.clone(),
 			Box::new(network_service.clone()),
 			Metrics::register(registry)?,
@@ -272,7 +272,7 @@ where
 		))
 		.dispute_coordinator(if disputes_enabled {
 			DisputeCoordinatorSubsystem::new(
-				parachains_db.clone(),
+				allychains_db.clone(),
 				dispute_coordinator_config,
 				keystore.clone(),
 				Metrics::register(registry)?,
@@ -286,7 +286,7 @@ where
 			authority_discovery_service.clone(),
 			Metrics::register(registry)?,
 		))
-		.chain_selection(ChainSelectionSubsystem::new(chain_selection_config, parachains_db))
+		.chain_selection(ChainSelectionSubsystem::new(chain_selection_config, allychains_db))
 		.leaves(Vec::from_iter(
 			leaves
 				.into_iter()
@@ -295,7 +295,7 @@ where
 		.activation_external_listeners(Default::default())
 		.span_per_active_leaf(Default::default())
 		.active_leaves(Default::default())
-		.supports_parachains(runtime_client)
+		.supports_allychains(runtime_client)
 		.known_leaves(LruCache::new(KNOWN_LEAVES_CACHE_SIZE))
 		.metrics(metrics)
 		.spawner(spawner);
@@ -315,7 +315,7 @@ pub trait OverseerGen {
 	) -> Result<(Overseer<Spawner, Arc<RuntimeClient>>, OverseerHandle), Error>
 	where
 		RuntimeClient: 'static + ProvideRuntimeApi<Block> + HeaderBackend<Block> + AuxStore,
-		RuntimeClient::Api: ParachainHost<Block> + BabeApi<Block> + AuthorityDiscoveryApi<Block>,
+		RuntimeClient::Api: AllychainHost<Block> + BabeApi<Block> + AuthorityDiscoveryApi<Block>,
 		Spawner: 'static + SpawnNamed + Clone + Unpin,
 	{
 		let gen = RealOverseerGen;
@@ -339,7 +339,7 @@ impl OverseerGen for RealOverseerGen {
 	) -> Result<(Overseer<Spawner, Arc<RuntimeClient>>, OverseerHandle), Error>
 	where
 		RuntimeClient: 'static + ProvideRuntimeApi<Block> + HeaderBackend<Block> + AuxStore,
-		RuntimeClient::Api: ParachainHost<Block> + BabeApi<Block> + AuthorityDiscoveryApi<Block>,
+		RuntimeClient::Api: AllychainHost<Block> + BabeApi<Block> + AuthorityDiscoveryApi<Block>,
 		Spawner: 'static + SpawnNamed + Clone + Unpin,
 	{
 		prepared_overseer_builder(args)?

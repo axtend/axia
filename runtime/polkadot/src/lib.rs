@@ -1,20 +1,20 @@
-// Copyright 2017-2020 Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// Copyright 2017-2020 Axia Technologies (UK) Ltd.
+// This file is part of Axia.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// Axia is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// Axia is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with Axia.  If not, see <http://www.gnu.org/licenses/>.
 
-//! The Polkadot runtime. This can be compiled with `#[no_std]`, ready for Wasm.
+//! The Axia runtime. This can be compiled with `#[no_std]`, ready for Wasm.
 
 #![cfg_attr(not(feature = "std"), no_std)]
 // `construct_runtime!` does a lot of recursion and requires us to increase the limit to 256.
@@ -27,13 +27,13 @@ use runtime_common::{
 	OffchainSolutionWeightLimit, RocksDbWeight, SlowAdjustingFeeUpdate,
 };
 
-use runtime_parachains::{
-	configuration as parachains_configuration, dmp as parachains_dmp, hrmp as parachains_hrmp,
-	inclusion as parachains_inclusion, initializer as parachains_initializer,
-	origin as parachains_origin, paras as parachains_paras,
-	paras_inherent as parachains_paras_inherent, reward_points as parachains_reward_points,
-	runtime_api_impl::v1 as parachains_runtime_api_impl, scheduler as parachains_scheduler,
-	session_info as parachains_session_info, shared as parachains_shared, ump as parachains_ump,
+use runtime_allychains::{
+	configuration as allychains_configuration, dmp as allychains_dmp, hrmp as allychains_hrmp,
+	inclusion as allychains_inclusion, initializer as allychains_initializer,
+	origin as allychains_origin, paras as allychains_paras,
+	paras_inherent as allychains_paras_inherent, reward_points as allychains_reward_points,
+	runtime_api_impl::v1 as allychains_runtime_api_impl, scheduler as allychains_scheduler,
+	session_info as allychains_session_info, shared as allychains_shared, ump as allychains_ump,
 };
 
 use authority_discovery_primitives::AuthorityId as AuthorityDiscoveryId;
@@ -53,7 +53,7 @@ use pallet_im_online::sr25519::AuthorityId as ImOnlineId;
 use pallet_mmr_primitives as mmr;
 use pallet_session::historical as session_historical;
 use pallet_transaction_payment::{FeeDetails, RuntimeDispatchInfo};
-use parity_scale_codec::{Decode, Encode, MaxEncodedLen};
+use axia_scale_codec::{Decode, Encode, MaxEncodedLen};
 use primitives::{
 	v1::{
 		AccountId, AccountIndex, Balance, BlockNumber, CandidateEvent, CommittedCandidateReceipt,
@@ -108,11 +108,11 @@ pub mod xcm_config;
 #[cfg(feature = "std")]
 include!(concat!(env!("OUT_DIR"), "/wasm_binary.rs"));
 
-// Polkadot version identifier;
-/// Runtime version (Polkadot).
+// Axia version identifier;
+/// Runtime version (Axia).
 pub const VERSION: RuntimeVersion = RuntimeVersion {
 	spec_name: create_runtime_str!("polkadot"),
-	impl_name: create_runtime_str!("parity-polkadot"),
+	impl_name: create_runtime_str!("axia-polkadot"),
 	authoring_version: 0,
 	spec_version: 9170,
 	impl_version: 0,
@@ -283,7 +283,7 @@ parameter_types! {
 }
 
 impl pallet_preimage::Config for Runtime {
-	type WeightInfo = pallet_preimage::weights::SubstrateWeight<Runtime>;
+	type WeightInfo = pallet_preimage::weights::AxlibWeight<Runtime>;
 	type Event = Event;
 	type Currency = Balances;
 	type ManagerOrigin = EnsureRoot<AccountId>;
@@ -391,7 +391,7 @@ parameter_types! {
 	pub const UncleGenerations: u32 = 0;
 }
 
-// TODO: substrate#2986 implement this properly
+// TODO: axlib#2986 implement this properly
 impl pallet_authorship::Config for Runtime {
 	type FindAuthor = pallet_session::FindAccountFromAuthorIndex<Self, Babe>;
 	type UncleGenerations = UncleGenerations;
@@ -433,21 +433,21 @@ parameter_types! {
 	pub SignedPhase: u32 = prod_or_fast!(
 		EPOCH_DURATION_IN_SLOTS / 4,
 		(1 * MINUTES).min(EpochDuration::get().saturated_into::<u32>() / 2),
-		"DOT_SIGNED_PHASE"
+		"AXC_SIGNED_PHASE"
 	);
 	pub UnsignedPhase: u32 = prod_or_fast!(
 		EPOCH_DURATION_IN_SLOTS / 4,
 		(1 * MINUTES).min(EpochDuration::get().saturated_into::<u32>() / 2),
-		"DOT_UNSIGNED_PHASE"
+		"AXC_UNSIGNED_PHASE"
 	);
 
 	// signed config
 	pub const SignedMaxSubmissions: u32 = 16;
-	// 40 DOTs fixed deposit..
+	// 40 AXCs fixed deposit..
 	pub const SignedDepositBase: Balance = deposit(2, 0);
-	// 0.01 DOT per KB of solution data.
+	// 0.01 AXC per KB of solution data.
 	pub const SignedDepositByte: Balance = deposit(0, 10) / 1024;
-	// Each good submission will get 1 DOT as reward
+	// Each good submission will get 1 AXC as reward
 	pub SignedRewardBase: Balance = 1 * UNITS;
 	pub SolutionImprovementThreshold: Perbill = Perbill::from_rational(5u32, 10_000);
 
@@ -520,13 +520,13 @@ impl pallet_bags_list::Config for Runtime {
 
 // TODO #6469: This shouldn't be static, but a lazily cached value, not built unless needed, and
 // re-built in case input parameters have changed. The `ideal_stake` should be determined by the
-// amount of parachain slots being bid on: this should be around `(75 - 25.min(slots / 4))%`.
+// amount of allychain slots being bid on: this should be around `(75 - 25.min(slots / 4))%`.
 pallet_staking_reward_curve::build! {
 	const REWARD_CURVE: PiecewiseLinear<'static> = curve!(
 		min_inflation: 0_025_000,
 		max_inflation: 0_100_000,
-		// 3:2:1 staked : parachains : float.
-		// while there's no parachains, then this is 75% staked : 25% float.
+		// 3:2:1 staked : allychains : float.
+		// while there's no allychains, then this is 75% staked : 25% float.
 		ideal_stake: 0_750_000,
 		falloff: 0_050_000,
 		max_piece_count: 40,
@@ -609,12 +609,12 @@ impl pallet_identity::Config for Runtime {
 }
 
 parameter_types! {
-	pub LaunchPeriod: BlockNumber = prod_or_fast!(28 * DAYS, 1, "DOT_LAUNCH_PERIOD");
-	pub VotingPeriod: BlockNumber = prod_or_fast!(28 * DAYS, 1 * MINUTES, "DOT_VOTING_PERIOD");
-	pub FastTrackVotingPeriod: BlockNumber = prod_or_fast!(3 * HOURS, 1 * MINUTES, "DOT_FAST_TRACK_VOTING_PERIOD");
+	pub LaunchPeriod: BlockNumber = prod_or_fast!(28 * DAYS, 1, "AXC_LAUNCH_PERIOD");
+	pub VotingPeriod: BlockNumber = prod_or_fast!(28 * DAYS, 1 * MINUTES, "AXC_VOTING_PERIOD");
+	pub FastTrackVotingPeriod: BlockNumber = prod_or_fast!(3 * HOURS, 1 * MINUTES, "AXC_FAST_TRACK_VOTING_PERIOD");
 	pub const MinimumDeposit: Balance = 100 * DOLLARS;
-	pub EnactmentPeriod: BlockNumber = prod_or_fast!(28 * DAYS, 1, "DOT_ENACTMENT_PERIOD");
-	pub CooloffPeriod: BlockNumber = prod_or_fast!(7 * DAYS, 1, "DOT_COOLOFF_PERIOD");
+	pub EnactmentPeriod: BlockNumber = prod_or_fast!(28 * DAYS, 1, "AXC_ENACTMENT_PERIOD");
+	pub CooloffPeriod: BlockNumber = prod_or_fast!(7 * DAYS, 1, "AXC_COOLOFF_PERIOD");
 	pub const InstantAllowed: bool = true;
 	pub const MaxVotes: u32 = 100;
 	pub const MaxProposals: u32 = 100;
@@ -684,7 +684,7 @@ impl pallet_democracy::Config for Runtime {
 }
 
 parameter_types! {
-	pub CouncilMotionDuration: BlockNumber = prod_or_fast!(7 * DAYS, 2 * MINUTES, "DOT_MOTION_DURATION");
+	pub CouncilMotionDuration: BlockNumber = prod_or_fast!(7 * DAYS, 2 * MINUTES, "AXC_MOTION_DURATION");
 	pub const CouncilMaxProposals: u32 = 100;
 	pub const CouncilMaxMembers: u32 = 100;
 }
@@ -708,7 +708,7 @@ parameter_types! {
 	// additional data per vote is 32 bytes (account id).
 	pub const VotingBondFactor: Balance = deposit(0, 32);
 	/// Weekly council elections; scaling up to monthly eventually.
-	pub TermDuration: BlockNumber = prod_or_fast!(7 * DAYS, 2 * MINUTES, "DOT_TERM_DURATION");
+	pub TermDuration: BlockNumber = prod_or_fast!(7 * DAYS, 2 * MINUTES, "AXC_TERM_DURATION");
 	/// 13 members initially, to be increased to 23 eventually.
 	pub const DesiredMembers: u32 = 13;
 	pub const DesiredRunnersUp: u32 = 20;
@@ -959,7 +959,7 @@ parameter_types! {
 }
 
 parameter_types! {
-	pub Prefix: &'static [u8] = b"Pay DOTs to the Polkadot account:";
+	pub Prefix: &'static [u8] = b"Pay AXCs to the Axia account:";
 }
 
 impl claims::Config for Runtime {
@@ -1177,29 +1177,29 @@ impl pallet_proxy::Config for Runtime {
 	type AnnouncementDepositFactor = AnnouncementDepositFactor;
 }
 
-impl parachains_origin::Config for Runtime {}
+impl allychains_origin::Config for Runtime {}
 
-impl parachains_configuration::Config for Runtime {
-	type WeightInfo = weights::runtime_parachains_configuration::WeightInfo<Runtime>;
+impl allychains_configuration::Config for Runtime {
+	type WeightInfo = weights::runtime_allychains_configuration::WeightInfo<Runtime>;
 }
 
-impl parachains_shared::Config for Runtime {}
+impl allychains_shared::Config for Runtime {}
 
-impl parachains_session_info::Config for Runtime {}
+impl allychains_session_info::Config for Runtime {}
 
-impl parachains_inclusion::Config for Runtime {
+impl allychains_inclusion::Config for Runtime {
 	type Event = Event;
 	type DisputesHandler = ();
-	type RewardValidators = parachains_reward_points::RewardValidatorsWithEraPoints<Runtime>;
+	type RewardValidators = allychains_reward_points::RewardValidatorsWithEraPoints<Runtime>;
 }
 
 parameter_types! {
 	pub const ParasUnsignedPriority: TransactionPriority = TransactionPriority::max_value();
 }
 
-impl parachains_paras::Config for Runtime {
+impl allychains_paras::Config for Runtime {
 	type Event = Event;
-	type WeightInfo = weights::runtime_parachains_paras::WeightInfo<Runtime>;
+	type WeightInfo = weights::runtime_allychains_paras::WeightInfo<Runtime>;
 	type UnsignedPriority = ParasUnsignedPriority;
 	type NextSessionRotation = Babe;
 }
@@ -1208,32 +1208,32 @@ parameter_types! {
 	pub const FirstMessageFactorPercent: u64 = 100;
 }
 
-impl parachains_ump::Config for Runtime {
+impl allychains_ump::Config for Runtime {
 	type Event = Event;
 	type UmpSink = ();
 	type FirstMessageFactorPercent = FirstMessageFactorPercent;
 	type ExecuteOverweightOrigin = EnsureRoot<AccountId>;
 }
 
-impl parachains_dmp::Config for Runtime {}
+impl allychains_dmp::Config for Runtime {}
 
-impl parachains_hrmp::Config for Runtime {
+impl allychains_hrmp::Config for Runtime {
 	type Event = Event;
 	type Origin = Origin;
 	type Currency = Balances;
-	type WeightInfo = weights::runtime_parachains_hrmp::WeightInfo<Self>;
+	type WeightInfo = weights::runtime_allychains_hrmp::WeightInfo<Self>;
 }
 
-impl parachains_paras_inherent::Config for Runtime {
-	type WeightInfo = weights::runtime_parachains_paras_inherent::WeightInfo<Runtime>;
+impl allychains_paras_inherent::Config for Runtime {
+	type WeightInfo = weights::runtime_allychains_paras_inherent::WeightInfo<Runtime>;
 }
 
-impl parachains_scheduler::Config for Runtime {}
+impl allychains_scheduler::Config for Runtime {}
 
-impl parachains_initializer::Config for Runtime {
+impl allychains_initializer::Config for Runtime {
 	type Randomness = pallet_babe::RandomnessFromOneEpochAgo<Runtime>;
 	type ForceOrigin = EnsureRoot<AccountId>;
-	type WeightInfo = weights::runtime_parachains_initializer::WeightInfo<Runtime>;
+	type WeightInfo = weights::runtime_allychains_initializer::WeightInfo<Runtime>;
 }
 
 parameter_types! {
@@ -1255,13 +1255,13 @@ impl paras_registrar::Config for Runtime {
 
 parameter_types! {
 	// 12 weeks = 3 months per lease period -> 8 lease periods ~ 2 years
-	pub LeasePeriod: BlockNumber = prod_or_fast!(12 * WEEKS, 12 * WEEKS, "DOT_LEASE_PERIOD");
-	// Polkadot Genesis was on May 26, 2020.
-	// Target Parachain Onboarding Date: Dec 15, 2021.
+	pub LeasePeriod: BlockNumber = prod_or_fast!(12 * WEEKS, 12 * WEEKS, "AXC_LEASE_PERIOD");
+	// Axia Genesis was on May 26, 2020.
+	// Target Allychain Onboarding Date: Dec 15, 2021.
 	// Difference is 568 days.
 	// We want a lease period to start on the target onboarding date.
 	// 568 % (12 * 7) = 64 day offset
-	pub LeaseOffset: BlockNumber = prod_or_fast!(64 * DAYS, 0, "DOT_LEASE_OFFSET");
+	pub LeaseOffset: BlockNumber = prod_or_fast!(64 * DAYS, 0, "AXC_LEASE_OFFSET");
 }
 
 impl slots::Config for Runtime {
@@ -1390,21 +1390,21 @@ construct_runtime! {
 		// Provides a semi-sorted list of nominators for staking.
 		BagsList: pallet_bags_list::{Pallet, Call, Storage, Event<T>} = 37,
 
-		// Parachains pallets. Start indices at 50 to leave room.
-		ParachainsOrigin: parachains_origin::{Pallet, Origin} = 50,
-		Configuration: parachains_configuration::{Pallet, Call, Storage, Config<T>} = 51,
-		ParasShared: parachains_shared::{Pallet, Call, Storage} = 52,
-		ParaInclusion: parachains_inclusion::{Pallet, Call, Storage, Event<T>} = 53,
-		ParaInherent: parachains_paras_inherent::{Pallet, Call, Storage, Inherent} = 54,
-		ParaScheduler: parachains_scheduler::{Pallet, Storage} = 55,
-		Paras: parachains_paras::{Pallet, Call, Storage, Event, Config} = 56,
-		Initializer: parachains_initializer::{Pallet, Call, Storage} = 57,
-		Dmp: parachains_dmp::{Pallet, Call, Storage} = 58,
-		Ump: parachains_ump::{Pallet, Call, Storage, Event} = 59,
-		Hrmp: parachains_hrmp::{Pallet, Call, Storage, Event<T>, Config} = 60,
-		ParaSessionInfo: parachains_session_info::{Pallet, Storage} = 61,
+		// Allychains pallets. Start indices at 50 to leave room.
+		AllychainsOrigin: allychains_origin::{Pallet, Origin} = 50,
+		Configuration: allychains_configuration::{Pallet, Call, Storage, Config<T>} = 51,
+		ParasShared: allychains_shared::{Pallet, Call, Storage} = 52,
+		ParaInclusion: allychains_inclusion::{Pallet, Call, Storage, Event<T>} = 53,
+		ParaInherent: allychains_paras_inherent::{Pallet, Call, Storage, Inherent} = 54,
+		ParaScheduler: allychains_scheduler::{Pallet, Storage} = 55,
+		Paras: allychains_paras::{Pallet, Call, Storage, Event, Config} = 56,
+		Initializer: allychains_initializer::{Pallet, Call, Storage} = 57,
+		Dmp: allychains_dmp::{Pallet, Call, Storage} = 58,
+		Ump: allychains_ump::{Pallet, Call, Storage, Event} = 59,
+		Hrmp: allychains_hrmp::{Pallet, Call, Storage, Event<T>, Config} = 60,
+		ParaSessionInfo: allychains_session_info::{Pallet, Storage} = 61,
 
-		// Parachain Onboarding Pallets. Start indices at 70 to leave room.
+		// Allychain Onboarding Pallets. Start indices at 70 to leave room.
 		Registrar: paras_registrar::{Pallet, Call, Storage, Event<T>} = 70,
 		Slots: slots::{Pallet, Call, Storage, Event<T>} = 71,
 		Auctions: auctions::{Pallet, Call, Storage, Event<T>} = 72,
@@ -1453,7 +1453,7 @@ pub type SignedPayload = generic::SignedPayload<Call, SignedExtra>;
 
 /// A migration struct to fix some deposits in the council election pallet.
 ///
-/// See more details here: https://github.com/paritytech/polkadot/issues/4160
+/// See more details here: https://github.com/axiatech/polkadot/issues/4160
 pub struct FixCouncilDepositMigration;
 
 impl FixCouncilDepositMigration {
@@ -1613,7 +1613,7 @@ impl FixCouncilDepositMigration {
 		let count = accounts.len() as u64;
 		accounts.into_iter().map(AccountId::from).for_each(|who| {
 			use frame_support::traits::ReservableCurrency;
-			// unreserve up to 4.95 DOTs, if they still have it.
+			// unreserve up to 4.95 AXCs, if they still have it.
 			let leftover = Balances::unreserve(&who, 495 * UNITS / 100);
 			if check && !leftover.is_zero() {
 				log::warn!(
@@ -1711,18 +1711,18 @@ extern crate frame_benchmarking;
 #[cfg(feature = "runtime-benchmarks")]
 mod benches {
 	define_benchmarks!(
-		// Polkadot
+		// Axia
 		// NOTE: Make sure to prefix these with `runtime_common::` so
 		// the that path resolves correctly in the generated file.
 		[runtime_common::claims, Claims]
 		[runtime_common::crowdloan, Crowdloan]
 		[runtime_common::slots, Slots]
 		[runtime_common::paras_registrar, Registrar]
-		[runtime_parachains::configuration, Configuration]
-		[runtime_parachains::initializer, Initializer]
-		[runtime_parachains::paras, Paras]
-		[runtime_parachains::paras_inherent, ParaInherent]
-		// Substrate
+		[runtime_allychains::configuration, Configuration]
+		[runtime_allychains::initializer, Initializer]
+		[runtime_allychains::paras, Paras]
+		[runtime_allychains::paras_inherent, ParaInherent]
+		// Axlib
 		[pallet_bags_list, BagsList]
 		[pallet_balances, Balances]
 		[frame_benchmarking::baseline, Baseline::<Runtime>]
@@ -1811,29 +1811,29 @@ sp_api::impl_runtime_apis! {
 		}
 	}
 
-	impl primitives::v2::ParachainHost<Block, Hash, BlockNumber> for Runtime {
+	impl primitives::v2::AllychainHost<Block, Hash, BlockNumber> for Runtime {
 		fn validators() -> Vec<ValidatorId> {
-			parachains_runtime_api_impl::validators::<Runtime>()
+			allychains_runtime_api_impl::validators::<Runtime>()
 		}
 
 		fn validator_groups() -> (Vec<Vec<ValidatorIndex>>, GroupRotationInfo<BlockNumber>) {
-			parachains_runtime_api_impl::validator_groups::<Runtime>()
+			allychains_runtime_api_impl::validator_groups::<Runtime>()
 		}
 
 		fn availability_cores() -> Vec<CoreState<Hash, BlockNumber>> {
-			parachains_runtime_api_impl::availability_cores::<Runtime>()
+			allychains_runtime_api_impl::availability_cores::<Runtime>()
 		}
 
 		fn persisted_validation_data(para_id: ParaId, assumption: OccupiedCoreAssumption)
 			-> Option<PersistedValidationData<Hash, BlockNumber>> {
-			parachains_runtime_api_impl::persisted_validation_data::<Runtime>(para_id, assumption)
+			allychains_runtime_api_impl::persisted_validation_data::<Runtime>(para_id, assumption)
 		}
 
 		fn assumed_validation_data(
 			para_id: ParaId,
 			expected_persisted_validation_data_hash: Hash,
 		) -> Option<(PersistedValidationData<Hash, BlockNumber>, ValidationCodeHash)> {
-			parachains_runtime_api_impl::assumed_validation_data::<Runtime>(
+			allychains_runtime_api_impl::assumed_validation_data::<Runtime>(
 				para_id,
 				expected_persisted_validation_data_hash,
 			)
@@ -1843,24 +1843,24 @@ sp_api::impl_runtime_apis! {
 			para_id: ParaId,
 			outputs: primitives::v1::CandidateCommitments,
 		) -> bool {
-			parachains_runtime_api_impl::check_validation_outputs::<Runtime>(para_id, outputs)
+			allychains_runtime_api_impl::check_validation_outputs::<Runtime>(para_id, outputs)
 		}
 
 		fn session_index_for_child() -> SessionIndex {
-			parachains_runtime_api_impl::session_index_for_child::<Runtime>()
+			allychains_runtime_api_impl::session_index_for_child::<Runtime>()
 		}
 
 		fn validation_code(para_id: ParaId, assumption: OccupiedCoreAssumption)
 			-> Option<ValidationCode> {
-			parachains_runtime_api_impl::validation_code::<Runtime>(para_id, assumption)
+			allychains_runtime_api_impl::validation_code::<Runtime>(para_id, assumption)
 		}
 
 		fn candidate_pending_availability(para_id: ParaId) -> Option<CommittedCandidateReceipt<Hash>> {
-			parachains_runtime_api_impl::candidate_pending_availability::<Runtime>(para_id)
+			allychains_runtime_api_impl::candidate_pending_availability::<Runtime>(para_id)
 		}
 
 		fn candidate_events() -> Vec<CandidateEvent<Hash>> {
-			parachains_runtime_api_impl::candidate_events::<Runtime, _>(|ev| {
+			allychains_runtime_api_impl::candidate_events::<Runtime, _>(|ev| {
 				match ev {
 					Event::ParaInclusion(ev) => {
 						Some(ev)
@@ -1871,42 +1871,42 @@ sp_api::impl_runtime_apis! {
 		}
 
 		fn session_info(index: SessionIndex) -> Option<SessionInfo> {
-			parachains_runtime_api_impl::session_info::<Runtime>(index)
+			allychains_runtime_api_impl::session_info::<Runtime>(index)
 		}
 
 		fn dmq_contents(recipient: ParaId) -> Vec<InboundDownwardMessage<BlockNumber>> {
-			parachains_runtime_api_impl::dmq_contents::<Runtime>(recipient)
+			allychains_runtime_api_impl::dmq_contents::<Runtime>(recipient)
 		}
 
 		fn inbound_hrmp_channels_contents(
 			recipient: ParaId
 		) -> BTreeMap<ParaId, Vec<InboundHrmpMessage<BlockNumber>>> {
-			parachains_runtime_api_impl::inbound_hrmp_channels_contents::<Runtime>(recipient)
+			allychains_runtime_api_impl::inbound_hrmp_channels_contents::<Runtime>(recipient)
 		}
 
 		fn validation_code_by_hash(hash: ValidationCodeHash) -> Option<ValidationCode> {
-			parachains_runtime_api_impl::validation_code_by_hash::<Runtime>(hash)
+			allychains_runtime_api_impl::validation_code_by_hash::<Runtime>(hash)
 		}
 
 		fn on_chain_votes() -> Option<ScrapedOnChainVotes<Hash>> {
-			parachains_runtime_api_impl::on_chain_votes::<Runtime>()
+			allychains_runtime_api_impl::on_chain_votes::<Runtime>()
 		}
 
 		fn submit_pvf_check_statement(
 			stmt: primitives::v2::PvfCheckStatement,
 			signature: primitives::v1::ValidatorSignature,
 		) {
-			parachains_runtime_api_impl::submit_pvf_check_statement::<Runtime>(stmt, signature)
+			allychains_runtime_api_impl::submit_pvf_check_statement::<Runtime>(stmt, signature)
 		}
 
 		fn pvfs_require_precheck() -> Vec<ValidationCodeHash> {
-			parachains_runtime_api_impl::pvfs_require_precheck::<Runtime>()
+			allychains_runtime_api_impl::pvfs_require_precheck::<Runtime>()
 		}
 
 		fn validation_code_hash(para_id: ParaId, assumption: OccupiedCoreAssumption)
 			-> Option<ValidationCodeHash>
 		{
-			parachains_runtime_api_impl::validation_code_hash::<Runtime>(para_id, assumption)
+			allychains_runtime_api_impl::validation_code_hash::<Runtime>(para_id, assumption)
 		}
 	}
 
@@ -1970,7 +1970,7 @@ sp_api::impl_runtime_apis! {
 			_set_id: fg_primitives::SetId,
 			authority_id: fg_primitives::AuthorityId,
 		) -> Option<fg_primitives::OpaqueKeyOwnershipProof> {
-			use parity_scale_codec::Encode;
+			use axia_scale_codec::Encode;
 
 			Historical::prove((fg_primitives::KEY_TYPE, authority_id))
 				.map(|p| p.encode())
@@ -2011,7 +2011,7 @@ sp_api::impl_runtime_apis! {
 			_slot: babe_primitives::Slot,
 			authority_id: babe_primitives::AuthorityId,
 		) -> Option<babe_primitives::OpaqueKeyOwnershipProof> {
-			use parity_scale_codec::Encode;
+			use axia_scale_codec::Encode;
 
 			Historical::prove((babe_primitives::KEY_TYPE, authority_id))
 				.map(|p| p.encode())
@@ -2247,7 +2247,7 @@ mod test_fees {
 			"can support {} voters in a single block for council elections; total bond {}",
 			voters, cost_dollars,
 		);
-		assert!(cost_dollars > 150_000); // DOLLAR ~ new DOT ~ 10e10
+		assert!(cost_dollars > 150_000); // DOLLAR ~ new AXC ~ 10e10
 	}
 
 	#[test]
@@ -2280,7 +2280,7 @@ mod test_fees {
 	#[test]
 	fn signed_deposit_is_sensible() {
 		// ensure this number does not change, or that it is checked after each change.
-		// a 1 MB solution should take (40 + 10) DOTs of deposit.
+		// a 1 MB solution should take (40 + 10) AXCs of deposit.
 		let deposit = SignedDepositBase::get() + (SignedDepositByte::get() * 1024 * 1024);
 		assert_eq_error_rate!(deposit, 50 * DOLLARS, DOLLARS);
 	}

@@ -1,18 +1,18 @@
-// Copyright 2019-2021 Parity Technologies (UK) Ltd.
-// This file is part of Parity Bridges Common.
+// Copyright 2019-2021 Axia Technologies (UK) Ltd.
+// This file is part of Axia Bridges Common.
 
-// Parity Bridges Common is free software: you can redistribute it and/or modify
+// Axia Bridges Common is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Parity Bridges Common is distributed in the hope that it will be useful,
+// Axia Bridges Common is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Parity Bridges Common.  If not, see <http://www.gnu.org/licenses/>.
+// along with Axia Bridges Common.  If not, see <http://www.gnu.org/licenses/>.
 
 //! The Rialto runtime. This can be compiled with `#[no_std]`, ready for Wasm.
 
@@ -31,7 +31,7 @@
 include!(concat!(env!("OUT_DIR"), "/wasm_binary.rs"));
 
 pub mod millau_messages;
-pub mod parachains;
+pub mod allychains;
 
 use crate::millau_messages::{ToMillauMessagePayload, WithMillauMessageBridge};
 
@@ -195,7 +195,7 @@ impl frame_system::Config for Runtime {
 	type OnKilledAccount = ();
 	/// The data to be stored in an account.
 	type AccountData = pallet_balances::AccountData<Balance>;
-	// TODO: update me (https://github.com/paritytech/parity-bridges-common/issues/78)
+	// TODO: update me (https://github.com/axiatech/axia-bridges-common/issues/78)
 	/// Weight information for the extrinsics of this pallet.
 	type SystemWeightInfo = ();
 	/// Block and extrinsics weights: base values and limits.
@@ -206,7 +206,7 @@ impl frame_system::Config for Runtime {
 	type DbWeight = DbWeight;
 	/// The designated `SS58` prefix of this chain.
 	type SS58Prefix = SS58Prefix;
-	/// The set code logic, just the default since we're not a parachain.
+	/// The set code logic, just the default since we're not a allychain.
 	type OnSetCode = ();
 	type MaxConsumers = frame_support::traits::ConstU32<16>;
 }
@@ -276,7 +276,7 @@ impl pallet_grandpa::Config for Runtime {
 		GrandpaId,
 	)>>::IdentificationTuple;
 	type HandleEquivocation = ();
-	// TODO: update me (https://github.com/paritytech/parity-bridges-common/issues/78)
+	// TODO: update me (https://github.com/axiatech/axia-bridges-common/issues/78)
 	type WeightInfo = ();
 	type MaxAuthorities = MaxAuthorities;
 }
@@ -310,7 +310,7 @@ parameter_types! {
 impl pallet_beefy_mmr::Config for Runtime {
 	type LeafVersion = LeafVersion;
 	type BeefyAuthorityToMerkleLeaf = pallet_beefy_mmr::BeefyEcdsaToEthereum;
-	type ParachainHeads = ();
+	type AllychainHeads = ();
 }
 
 parameter_types! {
@@ -322,7 +322,7 @@ impl pallet_timestamp::Config for Runtime {
 	type Moment = bp_rialto::Moment;
 	type OnTimestampSet = Babe;
 	type MinimumPeriod = MinimumPeriod;
-	// TODO: update me (https://github.com/paritytech/parity-bridges-common/issues/78)
+	// TODO: update me (https://github.com/axiatech/axia-bridges-common/issues/78)
 	type WeightInfo = ();
 }
 
@@ -342,7 +342,7 @@ impl pallet_balances::Config for Runtime {
 	type DustRemoval = ();
 	type ExistentialDeposit = ExistentialDeposit;
 	type AccountStore = System;
-	// TODO: update me (https://github.com/paritytech/parity-bridges-common/issues/78)
+	// TODO: update me (https://github.com/axiatech/axia-bridges-common/issues/78)
 	type WeightInfo = ();
 	type MaxLocks = MaxLocks;
 	type MaxReserves = MaxReserves;
@@ -354,7 +354,7 @@ parameter_types! {
 	pub const TransactionByteFee: Balance = 1;
 	pub const OperationalFeeMultiplier: u8 = 5;
 	// values for following parameters are copied from polkadot repo, but it is fine
-	// not to sync them - we're not going to make Rialto a full copy of one of Polkadot-like chains
+	// not to sync them - we're not going to make Rialto a full copy of one of Axia-like chains
 	pub const TargetBlockFullness: Perquintill = Perquintill::from_percent(25);
 	pub AdjustmentVariable: Multiplier = Multiplier::saturating_from_rational(3, 100_000);
 	pub MinimumMultiplier: Multiplier = Multiplier::saturating_from_rational(1, 1_000_000u128);
@@ -387,7 +387,7 @@ impl pallet_session::Config for Runtime {
 	type SessionManager = pallet_shift_session_manager::Pallet<Runtime>;
 	type SessionHandler = <SessionKeys as OpaqueKeys>::KeyTypeIdProviders;
 	type Keys = SessionKeys;
-	// TODO: update me (https://github.com/paritytech/parity-bridges-common/issues/78)
+	// TODO: update me (https://github.com/axiatech/axia-bridges-common/issues/78)
 	type WeightInfo = ();
 }
 
@@ -516,21 +516,21 @@ construct_runtime!(
 		BridgeDispatch: pallet_bridge_dispatch::{Pallet, Event<T>},
 		BridgeMillauMessages: pallet_bridge_messages::{Pallet, Call, Storage, Event<T>, Config<T>},
 
-		// Parachain modules.
-		ParachainsOrigin: polkadot_runtime_parachains::origin::{Pallet, Origin},
-		Configuration: polkadot_runtime_parachains::configuration::{Pallet, Call, Storage, Config<T>},
-		Shared: polkadot_runtime_parachains::shared::{Pallet, Call, Storage},
-		Inclusion: polkadot_runtime_parachains::inclusion::{Pallet, Call, Storage, Event<T>},
-		ParasInherent: polkadot_runtime_parachains::paras_inherent::{Pallet, Call, Storage, Inherent},
-		Scheduler: polkadot_runtime_parachains::scheduler::{Pallet, Storage},
-		Paras: polkadot_runtime_parachains::paras::{Pallet, Call, Storage, Event, Config},
-		Initializer: polkadot_runtime_parachains::initializer::{Pallet, Call, Storage},
-		Dmp: polkadot_runtime_parachains::dmp::{Pallet, Call, Storage},
-		Ump: polkadot_runtime_parachains::ump::{Pallet, Call, Storage, Event},
-		Hrmp: polkadot_runtime_parachains::hrmp::{Pallet, Call, Storage, Event<T>, Config},
-		SessionInfo: polkadot_runtime_parachains::session_info::{Pallet, Storage},
+		// Allychain modules.
+		AllychainsOrigin: polkadot_runtime_allychains::origin::{Pallet, Origin},
+		Configuration: polkadot_runtime_allychains::configuration::{Pallet, Call, Storage, Config<T>},
+		Shared: polkadot_runtime_allychains::shared::{Pallet, Call, Storage},
+		Inclusion: polkadot_runtime_allychains::inclusion::{Pallet, Call, Storage, Event<T>},
+		ParasInherent: polkadot_runtime_allychains::paras_inherent::{Pallet, Call, Storage, Inherent},
+		Scheduler: polkadot_runtime_allychains::scheduler::{Pallet, Storage},
+		Paras: polkadot_runtime_allychains::paras::{Pallet, Call, Storage, Event, Config},
+		Initializer: polkadot_runtime_allychains::initializer::{Pallet, Call, Storage},
+		Dmp: polkadot_runtime_allychains::dmp::{Pallet, Call, Storage},
+		Ump: polkadot_runtime_allychains::ump::{Pallet, Call, Storage, Event},
+		Hrmp: polkadot_runtime_allychains::hrmp::{Pallet, Call, Storage, Event<T>, Config},
+		SessionInfo: polkadot_runtime_allychains::session_info::{Pallet, Storage},
 
-		// Parachain Onboarding Pallets
+		// Allychain Onboarding Pallets
 		Registrar: polkadot_runtime_common::paras_registrar::{Pallet, Call, Storage, Event<T>},
 		Slots: polkadot_runtime_common::slots::{Pallet, Call, Storage, Event<T>},
 		ParasSudoWrapper: polkadot_runtime_common::paras_sudo_wrapper::{Pallet, Call},
@@ -749,20 +749,20 @@ impl_runtime_apis! {
 		}
 	}
 
-	impl polkadot_primitives::v1::ParachainHost<Block, Hash, BlockNumber> for Runtime {
+	impl polkadot_primitives::v1::AllychainHost<Block, Hash, BlockNumber> for Runtime {
 		fn validators() -> Vec<polkadot_primitives::v1::ValidatorId> {
-			polkadot_runtime_parachains::runtime_api_impl::v1::validators::<Runtime>()
+			polkadot_runtime_allychains::runtime_api_impl::v1::validators::<Runtime>()
 		}
 
 		fn validator_groups() -> (
 			Vec<Vec<polkadot_primitives::v1::ValidatorIndex>>,
 			polkadot_primitives::v1::GroupRotationInfo<BlockNumber>,
 		) {
-			polkadot_runtime_parachains::runtime_api_impl::v1::validator_groups::<Runtime>()
+			polkadot_runtime_allychains::runtime_api_impl::v1::validator_groups::<Runtime>()
 		}
 
 		fn availability_cores() -> Vec<polkadot_primitives::v1::CoreState<Hash, BlockNumber>> {
-			polkadot_runtime_parachains::runtime_api_impl::v1::availability_cores::<Runtime>()
+			polkadot_runtime_allychains::runtime_api_impl::v1::availability_cores::<Runtime>()
 		}
 
 		fn persisted_validation_data(
@@ -770,25 +770,25 @@ impl_runtime_apis! {
 			assumption: polkadot_primitives::v1::OccupiedCoreAssumption,
 		)
 			-> Option<polkadot_primitives::v1::PersistedValidationData<Hash, BlockNumber>> {
-			polkadot_runtime_parachains::runtime_api_impl::v1::persisted_validation_data::<Runtime>(para_id, assumption)
+			polkadot_runtime_allychains::runtime_api_impl::v1::persisted_validation_data::<Runtime>(para_id, assumption)
 		}
 
 		fn assumed_validation_data(
 			para_id: polkadot_primitives::v1::Id,
 			expected_persisted_validation_data_hash: Hash,
 		) -> Option<(polkadot_primitives::v1::PersistedValidationData<Hash, BlockNumber>, polkadot_primitives::v1::ValidationCodeHash)> {
-			polkadot_runtime_parachains::runtime_api_impl::v1::assumed_validation_data::<Runtime>(para_id, expected_persisted_validation_data_hash)
+			polkadot_runtime_allychains::runtime_api_impl::v1::assumed_validation_data::<Runtime>(para_id, expected_persisted_validation_data_hash)
 		}
 
 		fn check_validation_outputs(
 			para_id: polkadot_primitives::v1::Id,
 			outputs: polkadot_primitives::v1::CandidateCommitments,
 		) -> bool {
-			polkadot_runtime_parachains::runtime_api_impl::v1::check_validation_outputs::<Runtime>(para_id, outputs)
+			polkadot_runtime_allychains::runtime_api_impl::v1::check_validation_outputs::<Runtime>(para_id, outputs)
 		}
 
 		fn session_index_for_child() -> polkadot_primitives::v1::SessionIndex {
-			polkadot_runtime_parachains::runtime_api_impl::v1::session_index_for_child::<Runtime>()
+			polkadot_runtime_allychains::runtime_api_impl::v1::session_index_for_child::<Runtime>()
 		}
 
 		fn validation_code(
@@ -796,17 +796,17 @@ impl_runtime_apis! {
 			assumption: polkadot_primitives::v1::OccupiedCoreAssumption,
 		)
 			-> Option<polkadot_primitives::v1::ValidationCode> {
-			polkadot_runtime_parachains::runtime_api_impl::v1::validation_code::<Runtime>(para_id, assumption)
+			polkadot_runtime_allychains::runtime_api_impl::v1::validation_code::<Runtime>(para_id, assumption)
 		}
 
 		fn candidate_pending_availability(
 			para_id: polkadot_primitives::v1::Id,
 		) -> Option<polkadot_primitives::v1::CommittedCandidateReceipt<Hash>> {
-			polkadot_runtime_parachains::runtime_api_impl::v1::candidate_pending_availability::<Runtime>(para_id)
+			polkadot_runtime_allychains::runtime_api_impl::v1::candidate_pending_availability::<Runtime>(para_id)
 		}
 
 		fn candidate_events() -> Vec<polkadot_primitives::v1::CandidateEvent<Hash>> {
-			polkadot_runtime_parachains::runtime_api_impl::v1::candidate_events::<Runtime, _>(|ev| {
+			polkadot_runtime_allychains::runtime_api_impl::v1::candidate_events::<Runtime, _>(|ev| {
 				match ev {
 					Event::Inclusion(ev) => {
 						Some(ev)
@@ -817,35 +817,35 @@ impl_runtime_apis! {
 		}
 
 		fn session_info(index: polkadot_primitives::v1::SessionIndex) -> Option<polkadot_primitives::v1::SessionInfo> {
-			polkadot_runtime_parachains::runtime_api_impl::v1::session_info::<Runtime>(index)
+			polkadot_runtime_allychains::runtime_api_impl::v1::session_info::<Runtime>(index)
 		}
 
 		fn dmq_contents(
 			recipient: polkadot_primitives::v1::Id,
 		) -> Vec<polkadot_primitives::v1::InboundDownwardMessage<BlockNumber>> {
-			polkadot_runtime_parachains::runtime_api_impl::v1::dmq_contents::<Runtime>(recipient)
+			polkadot_runtime_allychains::runtime_api_impl::v1::dmq_contents::<Runtime>(recipient)
 		}
 
 		fn inbound_hrmp_channels_contents(
 			recipient: polkadot_primitives::v1::Id
 		) -> BTreeMap<polkadot_primitives::v1::Id, Vec<polkadot_primitives::v1::InboundHrmpMessage<BlockNumber>>> {
-			polkadot_runtime_parachains::runtime_api_impl::v1::inbound_hrmp_channels_contents::<Runtime>(recipient)
+			polkadot_runtime_allychains::runtime_api_impl::v1::inbound_hrmp_channels_contents::<Runtime>(recipient)
 		}
 
 		fn validation_code_by_hash(
 			hash: polkadot_primitives::v1::ValidationCodeHash,
 		) -> Option<polkadot_primitives::v1::ValidationCode> {
-			polkadot_runtime_parachains::runtime_api_impl::v1::validation_code_by_hash::<Runtime>(hash)
+			polkadot_runtime_allychains::runtime_api_impl::v1::validation_code_by_hash::<Runtime>(hash)
 		}
 
 		fn on_chain_votes() -> Option<polkadot_primitives::v1::ScrapedOnChainVotes<Hash>> {
-			polkadot_runtime_parachains::runtime_api_impl::v1::on_chain_votes::<Runtime>()
+			polkadot_runtime_allychains::runtime_api_impl::v1::on_chain_votes::<Runtime>()
 		}
 	}
 
 	impl sp_authority_discovery::AuthorityDiscoveryApi<Block> for Runtime {
 		fn authorities() -> Vec<AuthorityDiscoveryId> {
-			polkadot_runtime_parachains::runtime_api_impl::v1::relevant_authority_ids::<Runtime>()
+			polkadot_runtime_allychains::runtime_api_impl::v1::relevant_authority_ids::<Runtime>()
 		}
 	}
 
@@ -1242,9 +1242,9 @@ mod tests {
 
 	#[test]
 	fn call_size() {
-		const DOT_MAX_CALL_SZ: usize = 230;
-		assert!(core::mem::size_of::<pallet_bridge_grandpa::Call<Runtime>>() <= DOT_MAX_CALL_SZ);
-		// FIXME: get this down to 230. https://github.com/paritytech/grandpa-bridge-gadget/issues/359
+		const AXC_MAX_CALL_SZ: usize = 230;
+		assert!(core::mem::size_of::<pallet_bridge_grandpa::Call<Runtime>>() <= AXC_MAX_CALL_SZ);
+		// FIXME: get this down to 230. https://github.com/axiatech/grandpa-bridge-gadget/issues/359
 		const BEEFY_MAX_CALL_SZ: usize = 232;
 		assert!(core::mem::size_of::<pallet_bridge_messages::Call<Runtime>>() <= BEEFY_MAX_CALL_SZ);
 	}

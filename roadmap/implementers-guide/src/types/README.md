@@ -8,7 +8,7 @@ Diagrams are rendered in high resolution; open them in a separate tab to see ful
 
 These data types are defined in `polkadot/primitives/src/v1.rs`:
 
-```dot process
+```axc process
 digraph {
     rankdir = LR;
     node [shape = plain]
@@ -31,7 +31,7 @@ digraph {
     CandidateDescriptor:collator -> CollatorId:w
     CandidateDescriptor:persisted_validation_data_hash -> PersistedValidationDataHash
 
-    Id [label="polkadot_parachain::primitives::Id"]
+    Id [label="polkadot_allychain::primitives::Id"]
     CollatorId [label="polkadot_primitives::v0::CollatorId"]
 
     PoVHash [label = "Hash", shape="doublecircle", fill="gray90"]
@@ -128,11 +128,11 @@ digraph {
         </table>
     >]
 
-    CandidateCommitments:upward_messages -> "polkadot_parachain::primitives::UpwardMessage":w
+    CandidateCommitments:upward_messages -> "polkadot_allychain::primitives::UpwardMessage":w
     CandidateCommitments:horizontal_messages -> "polkadot_core_primitives::v1::OutboundHrmpMessage":w
     CandidateCommitments:head_data -> HeadData:w
-    CandidateCommitments:horizontal_messages -> "polkadot_parachain::primitives::Id":w
-    CandidateCommitments:new_validation_code -> "polkadot_parachain::primitives::ValidationCode":w
+    CandidateCommitments:horizontal_messages -> "polkadot_allychain::primitives::Id":w
+    CandidateCommitments:new_validation_code -> "polkadot_allychain::primitives::ValidationCode":w
 
     PoV [label = <
         <table>
@@ -141,7 +141,7 @@ digraph {
         </table>
     >]
 
-    PoV:block_data -> "polkadot_parachain::primitives::BlockData":w
+    PoV:block_data -> "polkadot_allychain::primitives::BlockData":w
 
     BackedCandidate [label = <
         <table>
@@ -155,7 +155,7 @@ digraph {
     BackedCandidate:candidate -> CommittedCandidateReceipt:name
     BackedCandidate:validity_votes  -> "polkadot_primitives:v0:ValidityAttestation":w
 
-    HeadData [label = "polkadot_parachain::primitives::HeadData"]
+    HeadData [label = "polkadot_allychain::primitives::HeadData"]
 
     CoreIndex [label = <
         <table>
@@ -201,7 +201,7 @@ digraph {
         <table>
             <tr><td border="0" colspan="2" port="name"><i>enum</i> CoreOccupied</td></tr>
             <tr><td></td><td port="parathread">Parathread(ParathreadEntry)</td></tr>
-            <tr><td></td><td port="parachain">Parachain</td></tr>
+            <tr><td></td><td port="allychain">Allychain</td></tr>
         </table>
     >]
 
@@ -337,9 +337,9 @@ digraph {
 }
 ```
 
-These data types are defined in `polkadot/parachain/src/primitives.rs`:
+These data types are defined in `polkadot/allychain/src/primitives.rs`:
 
-```dot process
+```axc process
 digraph {
     rankdir = LR;
     node [shape = plain]

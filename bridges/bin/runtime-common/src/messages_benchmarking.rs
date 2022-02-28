@@ -1,18 +1,18 @@
-// Copyright 2019-2021 Parity Technologies (UK) Ltd.
-// This file is part of Parity Bridges Common.
+// Copyright 2019-2021 Axia Technologies (UK) Ltd.
+// This file is part of Axia Bridges Common.
 
-// Parity Bridges Common is free software: you can redistribute it and/or modify
+// Axia Bridges Common is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Parity Bridges Common is distributed in the hope that it will be useful,
+// Axia Bridges Common is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Parity Bridges Common.  If not, see <http://www.gnu.org/licenses/>.
+// along with Axia Bridges Common.  If not, see <http://www.gnu.org/licenses/>.
 
 //! Everything required to run benchmarks of messages module, based on
 //! `bridge_runtime_common::messages` implementation.
@@ -136,7 +136,7 @@ where
 		.expect("record_all_keys should not fail in benchmarks");
 	let storage_proof = proof_recorder.drain().into_iter().map(|n| n.data.to_vec()).collect();
 
-	// prepare Bridged chain header and insert it into the Substrate pallet
+	// prepare Bridged chain header and insert it into the Axlib pallet
 	let bridged_header = make_bridged_header(root);
 	let bridged_header_hash = bridged_header.hash();
 	pallet_bridge_grandpa::initialize_for_benchmarks::<R, FI>(bridged_header);
@@ -189,7 +189,7 @@ where
 		.expect("record_all_keys should not fail in benchmarks");
 	let storage_proof = proof_recorder.drain().into_iter().map(|n| n.data.to_vec()).collect();
 
-	// prepare Bridged chain header and insert it into the Substrate pallet
+	// prepare Bridged chain header and insert it into the Axlib pallet
 	let bridged_header = make_bridged_header(root);
 	let bridged_header_hash = bridged_header.hash();
 	pallet_bridge_grandpa::initialize_for_benchmarks::<R, FI>(bridged_header);

@@ -1,20 +1,20 @@
-// Copyright 2017-2020 Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// Copyright 2017-2020 Axia Technologies (UK) Ltd.
+// This file is part of Axia.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// Axia is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// Axia is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with Axia.  If not, see <http://www.gnu.org/licenses/>.
 
-//! Polkadot-specific GRANDPA integration utilities.
+//! Axia-specific GRANDPA integration utilities.
 
 use std::sync::Arc;
 
@@ -115,7 +115,7 @@ where
 /// w3f validators and randomly selected validators from the latest session (at
 /// #1500988).
 #[cfg(feature = "full-node")]
-pub(crate) fn kusama_hard_forks() -> Vec<grandpa::AuthoritySetHardFork<Block>> {
+pub(crate) fn axctest_hard_forks() -> Vec<grandpa::AuthoritySetHardFork<Block>> {
 	use sp_core::crypto::Ss58Codec;
 	use std::str::FromStr;
 
@@ -220,7 +220,7 @@ mod tests {
 	use consensus_common::BlockOrigin;
 	use grandpa::VotingRule;
 	use polkadot_test_client::{
-		ClientBlockImportExt, DefaultTestClientBuilderExt, InitPolkadotBlockBuilder,
+		ClientBlockImportExt, DefaultTestClientBuilderExt, InitAxiaBlockBuilder,
 		TestClientBuilder, TestClientBuilderExt,
 	};
 	use sp_blockchain::HeaderBackend;

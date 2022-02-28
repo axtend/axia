@@ -19,7 +19,7 @@ There may be multiple competing blocks all ending the availability phase for a p
 
 ## Lifetime of the block data and chunks in storage
 
-```dot process
+```axc process
 digraph {
  label = "Block data FSM\n\n\n";
  labelloc = "t";
@@ -116,7 +116,7 @@ On `OverseerSignal::BlockFinalized(finalized)` events:
     - Remove all `"unfinalized"` keys under `f`.
 - Update `last_finalized` = finalized.
 
-  This is roughly `O(n * m)` where n is the number of blocks finalized since the last update, and `m` is the number of parachains.
+  This is roughly `O(n * m)` where n is the number of blocks finalized since the last update, and `m` is the number of allychains.
 
 On `QueryAvailableData` message:
 

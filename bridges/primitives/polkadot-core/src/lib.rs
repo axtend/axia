@@ -1,18 +1,18 @@
-// Copyright 2019-2021 Parity Technologies (UK) Ltd.
-// This file is part of Parity Bridges Common.
+// Copyright 2019-2021 Axia Technologies (UK) Ltd.
+// This file is part of Axia Bridges Common.
 
-// Parity Bridges Common is free software: you can redistribute it and/or modify
+// Axia Bridges Common is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Parity Bridges Common is distributed in the hope that it will be useful,
+// Axia Bridges Common is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Parity Bridges Common.  If not, see <http://www.gnu.org/licenses/>.
+// along with Axia Bridges Common.  If not, see <http://www.gnu.org/licenses/>.
 
 #![cfg_attr(not(feature = "std"), no_std)]
 
@@ -29,7 +29,7 @@ use frame_support::{
 	Blake2_128Concat, RuntimeDebug, StorageHasher, Twox128,
 };
 use frame_system::limits;
-use parity_scale_codec::Compact;
+use axia_scale_codec::Compact;
 use scale_info::{StaticTypeInfo, TypeInfo};
 use sp_core::Hasher as HasherT;
 use sp_runtime::{
@@ -39,15 +39,15 @@ use sp_runtime::{
 };
 use sp_std::prelude::Vec;
 
-// Re-export's to avoid extra substrate dependencies in chain-specific crates.
+// Re-export's to avoid extra axlib dependencies in chain-specific crates.
 pub use frame_support::{weights::constants::ExtrinsicBaseWeight, Parameter};
 pub use sp_runtime::{traits::Convert, Perbill};
 
 /// Number of extra bytes (excluding size of storage value itself) of storage proof, built at
-/// Polkadot-like chain. This mostly depends on number of entries in the storage trie.
+/// Axia-like chain. This mostly depends on number of entries in the storage trie.
 /// Some reserve is reserved to account future chain growth.
 ///
-/// To compute this value, we've synced Kusama chain blocks [0; 6545733] to see if there were
+/// To compute this value, we've synced AxiaTest chain blocks [0; 6545733] to see if there were
 /// any significant changes of the storage proof size (NO):
 ///
 /// - at block 3072 the storage proof size overhead was 579 bytes;
@@ -68,34 +68,34 @@ pub const EXTRA_STORAGE_PROOF_SIZE: u32 = 1024;
 /// All polkadot-like chains are using same crypto.
 pub const MAXIMAL_ENCODED_ACCOUNT_ID_SIZE: u32 = 32;
 
-/// All Polkadot-like chains allow normal extrinsics to fill block up to 75 percent.
+/// All Axia-like chains allow normal extrinsics to fill block up to 75 percent.
 ///
-/// This is a copy-paste from the Polkadot repo's `polkadot-runtime-common` crate.
+/// This is a copy-paste from the Axia repo's `polkadot-runtime-common` crate.
 const NORMAL_DISPATCH_RATIO: Perbill = Perbill::from_percent(75);
 
-/// All Polkadot-like chains allow 2 seconds of compute with a 6-second average block time.
+/// All Axia-like chains allow 2 seconds of compute with a 6-second average block time.
 ///
-/// This is a copy-paste from the Polkadot repo's `polkadot-runtime-common` crate.
+/// This is a copy-paste from the Axia repo's `polkadot-runtime-common` crate.
 pub const MAXIMUM_BLOCK_WEIGHT: Weight = 2 * WEIGHT_PER_SECOND;
 
-/// All Polkadot-like chains assume that an on-initialize consumes 1 percent of the weight on
+/// All Axia-like chains assume that an on-initialize consumes 1 percent of the weight on
 /// average, hence a single extrinsic will not be allowed to consume more than
 /// `AvailableBlockRatio - 1 percent`.
 ///
-/// This is a copy-paste from the Polkadot repo's `polkadot-runtime-common` crate.
+/// This is a copy-paste from the Axia repo's `polkadot-runtime-common` crate.
 pub const AVERAGE_ON_INITIALIZE_RATIO: Perbill = Perbill::from_percent(1);
 
 parameter_types! {
-	/// All Polkadot-like chains have maximal block size set to 5MB.
+	/// All Axia-like chains have maximal block size set to 5MB.
 	///
-	/// This is a copy-paste from the Polkadot repo's `polkadot-runtime-common` crate.
+	/// This is a copy-paste from the Axia repo's `polkadot-runtime-common` crate.
 	pub BlockLength: limits::BlockLength = limits::BlockLength::max_with_normal_ratio(
 		5 * 1024 * 1024,
 		NORMAL_DISPATCH_RATIO,
 	);
-	/// All Polkadot-like chains have the same block weights.
+	/// All Axia-like chains have the same block weights.
 	///
-	/// This is a copy-paste from the Polkadot repo's `polkadot-runtime-common` crate.
+	/// This is a copy-paste from the Axia repo's `polkadot-runtime-common` crate.
 	pub BlockWeights: limits::BlockWeights = limits::BlockWeights::builder()
 		.base_block(BlockExecutionWeight::get())
 		.for_class(DispatchClass::all(), |weights| {
@@ -116,7 +116,7 @@ parameter_types! {
 		.build_or_panic();
 }
 
-/// Get the maximum weight (compute time) that a Normal extrinsic on the Polkadot-like chain can
+/// Get the maximum weight (compute time) that a Normal extrinsic on the Axia-like chain can
 /// use.
 pub fn max_extrinsic_weight() -> Weight {
 	BlockWeights::get()
@@ -125,12 +125,12 @@ pub fn max_extrinsic_weight() -> Weight {
 		.unwrap_or(Weight::MAX)
 }
 
-/// Get the maximum length in bytes that a Normal extrinsic on the Polkadot-like chain requires.
+/// Get the maximum length in bytes that a Normal extrinsic on the Axia-like chain requires.
 pub fn max_extrinsic_size() -> u32 {
 	*BlockLength::get().max.get(DispatchClass::Normal)
 }
 
-// TODO [#78] may need to be updated after https://github.com/paritytech/parity-bridges-common/issues/78
+// TODO [#78] may need to be updated after https://github.com/axiatech/axia-bridges-common/issues/78
 /// Maximal number of messages in single delivery transaction.
 pub const MAX_MESSAGES_IN_DELIVERY_TRANSACTION: MessageNonce = 128;
 
@@ -143,17 +143,17 @@ pub const MAX_UNREWARDED_RELAYER_ENTRIES_AT_INBOUND_LANE: MessageNonce = 128;
 pub const MAX_UNCONFIRMED_MESSAGES_AT_INBOUND_LANE: MessageNonce = 8192;
 
 // One important thing about weight-related constants here is that actually we may have
-// different weights on different Polkadot-like chains. But now all deployments are
+// different weights on different Axia-like chains. But now all deployments are
 // almost the same, so we're exporting constants from this crate.
 
-/// Maximal weight of single message delivery confirmation transaction on Polkadot-like chain.
+/// Maximal weight of single message delivery confirmation transaction on Axia-like chain.
 ///
 /// This value is a result of `pallet_bridge_messages::Pallet::receive_messages_delivery_proof`
 /// weight formula computation for the case when single message is confirmed. The result then must
 /// be rounded up to account possible future runtime upgrades.
 pub const MAX_SINGLE_MESSAGE_DELIVERY_CONFIRMATION_TX_WEIGHT: Weight = 2_000_000_000;
 
-/// Increase of delivery transaction weight on Polkadot-like chain with every additional message
+/// Increase of delivery transaction weight on Axia-like chain with every additional message
 /// byte.
 ///
 /// This value is a result of
@@ -161,13 +161,13 @@ pub const MAX_SINGLE_MESSAGE_DELIVERY_CONFIRMATION_TX_WEIGHT: Weight = 2_000_000
 /// must be rounded up to account possible future runtime upgrades.
 pub const ADDITIONAL_MESSAGE_BYTE_DELIVERY_WEIGHT: Weight = 25_000;
 
-/// Maximal number of bytes, included in the signed Polkadot-like transaction apart from the encoded
+/// Maximal number of bytes, included in the signed Axia-like transaction apart from the encoded
 /// call itself.
 ///
 /// Can be computed by subtracting encoded call size from raw transaction size.
 pub const TX_EXTRA_BYTES: u32 = 256;
 
-/// Weight of single regular message delivery transaction on Polkadot-like chain.
+/// Weight of single regular message delivery transaction on Axia-like chain.
 ///
 /// This value is a result of `pallet_bridge_messages::Pallet::receive_messages_proof_weight()` call
 /// for the case when single message of `pallet_bridge_messages::EXPECTED_DEFAULT_MESSAGE_LENGTH`
@@ -175,7 +175,7 @@ pub const TX_EXTRA_BYTES: u32 = 256;
 /// rounded up to account possible future runtime upgrades.
 pub const DEFAULT_MESSAGE_DELIVERY_TX_WEIGHT: Weight = 1_500_000_000;
 
-/// Weight of pay-dispatch-fee operation for inbound messages at Polkadot-like chain.
+/// Weight of pay-dispatch-fee operation for inbound messages at Axia-like chain.
 ///
 /// This value corresponds to the result of
 /// `pallet_bridge_messages::WeightInfoExt::pay_inbound_dispatch_fee_overhead()` call for your
@@ -199,10 +199,10 @@ pub mod time_units {
 	pub const DAYS: BlockNumber = HOURS * 24;
 }
 
-/// Block number type used in Polkadot-like chains.
+/// Block number type used in Axia-like chains.
 pub type BlockNumber = u32;
 
-/// Hash type used in Polkadot-like chains.
+/// Hash type used in Axia-like chains.
 pub type Hash = <BlakeTwo256 as HasherT>::Out;
 
 /// Account Index (a.k.a. nonce).
@@ -211,41 +211,41 @@ pub type Index = u32;
 /// Hashing type.
 pub type Hashing = BlakeTwo256;
 
-/// The type of object that can produce hashes on Polkadot-like chains.
+/// The type of object that can produce hashes on Axia-like chains.
 pub type Hasher = BlakeTwo256;
 
-/// The header type used by Polkadot-like chains.
+/// The header type used by Axia-like chains.
 pub type Header = generic::Header<BlockNumber, Hasher>;
 
-/// Signature type used by Polkadot-like chains.
+/// Signature type used by Axia-like chains.
 pub type Signature = MultiSignature;
 
-/// Public key of account on Polkadot-like chains.
+/// Public key of account on Axia-like chains.
 pub type AccountPublic = <Signature as Verify>::Signer;
 
-/// Id of account on Polkadot-like chains.
+/// Id of account on Axia-like chains.
 pub type AccountId = <AccountPublic as IdentifyAccount>::AccountId;
 
-/// Address of account on Polkadot-like chains.
+/// Address of account on Axia-like chains.
 pub type AccountAddress = MultiAddress<AccountId, ()>;
 
-/// Index of a transaction on the Polkadot-like chains.
+/// Index of a transaction on the Axia-like chains.
 pub type Nonce = u32;
 
-/// Block type of Polkadot-like chains.
+/// Block type of Axia-like chains.
 pub type Block = generic::Block<Header, OpaqueExtrinsic>;
 
-/// Polkadot-like block signed with a Justification.
+/// Axia-like block signed with a Justification.
 pub type SignedBlock = generic::SignedBlock<Block>;
 
-/// The balance of an account on Polkadot-like chain.
+/// The balance of an account on Axia-like chain.
 pub type Balance = u128;
 
 /// Unchecked Extrinsic type.
 pub type UncheckedExtrinsic<Call> =
 	generic::UncheckedExtrinsic<AccountAddress, Call, Signature, SignedExtensions<Call>>;
 
-/// Account address, used by the Polkadot-like chain.
+/// Account address, used by the Axia-like chain.
 pub type Address = MultiAddress<AccountId, ()>;
 
 /// A type of the data encoded as part of the transaction.
@@ -265,16 +265,16 @@ pub struct SignedExtensions<Call> {
 	_data: sp_std::marker::PhantomData<Call>,
 }
 
-impl<Call> parity_scale_codec::Encode for SignedExtensions<Call> {
+impl<Call> axia_scale_codec::Encode for SignedExtensions<Call> {
 	fn using_encoded<R, F: FnOnce(&[u8]) -> R>(&self, f: F) -> R {
 		self.encode_payload.using_encoded(f)
 	}
 }
 
-impl<Call> parity_scale_codec::Decode for SignedExtensions<Call> {
-	fn decode<I: parity_scale_codec::Input>(
+impl<Call> axia_scale_codec::Decode for SignedExtensions<Call> {
+	fn decode<I: axia_scale_codec::Input>(
 		_input: &mut I,
-	) -> Result<Self, parity_scale_codec::Error> {
+	) -> Result<Self, axia_scale_codec::Error> {
 		unimplemented!("SignedExtensions are never meant to be decoded, they are only used to create transaction");
 	}
 }
@@ -282,7 +282,7 @@ impl<Call> parity_scale_codec::Decode for SignedExtensions<Call> {
 impl<Call> SignedExtensions<Call> {
 	pub fn new(
 		version: sp_version::RuntimeVersion,
-		era: bp_runtime::TransactionEraOf<PolkadotLike>,
+		era: bp_runtime::TransactionEraOf<AxiaLike>,
 		genesis_hash: Hash,
 		nonce: Nonce,
 		tip: Balance,
@@ -327,7 +327,7 @@ impl<Call> SignedExtensions<Call> {
 
 impl<Call> sp_runtime::traits::SignedExtension for SignedExtensions<Call>
 where
-	Call: parity_scale_codec::Codec
+	Call: axia_scale_codec::Codec
 		+ sp_std::fmt::Debug
 		+ Sync
 		+ Send
@@ -359,11 +359,11 @@ where
 	}
 }
 
-/// Polkadot-like chain.
+/// Axia-like chain.
 #[derive(RuntimeDebug)]
-pub struct PolkadotLike;
+pub struct AxiaLike;
 
-impl Chain for PolkadotLike {
+impl Chain for AxiaLike {
 	type BlockNumber = BlockNumber;
 	type Hash = Hash;
 	type Hasher = Hasher;
@@ -386,14 +386,14 @@ impl Convert<sp_core::H256, AccountId> for AccountIdConverter {
 
 /// Return a storage key for account data.
 ///
-/// This is based on FRAME storage-generation code from Substrate:
-/// [link](https://github.com/paritytech/substrate/blob/c939ceba381b6313462d47334f775e128ea4e95d/frame/support/src/storage/generator/map.rs#L74)
+/// This is based on FRAME storage-generation code from Axlib:
+/// [link](https://github.com/axiatech/axlib/blob/c939ceba381b6313462d47334f775e128ea4e95d/frame/support/src/storage/generator/map.rs#L74)
 /// The equivalent command to invoke in case full `Runtime` is known is this:
 /// `let key = frame_system::Account::<Runtime>::storage_map_final_key(&account_id);`
 pub fn account_info_storage_key(id: &AccountId) -> Vec<u8> {
 	let module_prefix_hashed = Twox128::hash(b"System");
 	let storage_prefix_hashed = Twox128::hash(b"Account");
-	let key_hashed = parity_scale_codec::Encode::using_encoded(id, Blake2_128Concat::hash);
+	let key_hashed = axia_scale_codec::Encode::using_encoded(id, Blake2_128Concat::hash);
 
 	let mut final_key = Vec::with_capacity(
 		module_prefix_hashed.len() + storage_prefix_hashed.len() + key_hashed.len(),
@@ -409,7 +409,7 @@ pub fn account_info_storage_key(id: &AccountId) -> Vec<u8> {
 #[cfg(test)]
 mod tests {
 	use super::*;
-	use parity_scale_codec::Decode;
+	use axia_scale_codec::Decode;
 	use sp_runtime::{codec::Encode, traits::TrailingZeroInput};
 
 	#[test]
@@ -418,7 +418,7 @@ mod tests {
 			AccountId::decode(&mut TrailingZeroInput::new(&[])).unwrap().encode().len();
 		assert!(
 			actual_size <= MAXIMAL_ENCODED_ACCOUNT_ID_SIZE as usize,
-			"Actual size of encoded account id for Polkadot-like chains ({}) is larger than expected {}",
+			"Actual size of encoded account id for Axia-like chains ({}) is larger than expected {}",
 			actual_size,
 			MAXIMAL_ENCODED_ACCOUNT_ID_SIZE,
 		);

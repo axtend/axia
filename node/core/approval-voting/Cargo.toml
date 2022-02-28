@@ -1,13 +1,13 @@
 [package]
 name = "polkadot-node-core-approval-voting"
 version = "0.9.17"
-authors = ["Parity Technologies <admin@parity.io>"]
+authors = ["Axia Technologies <admin@axia.io>"]
 edition = "2018"
 
 [dependencies]
 futures = "0.3.21"
 futures-timer = "3.0.2"
-parity-scale-codec = { version = "2.3.1", default-features = false, features = ["bit-vec", "derive"] }
+axia-scale-codec = { version = "2.3.1", default-features = false, features = ["bit-vec", "derive"] }
 tracing = "0.1.29"
 bitvec = { version = "0.20.1", default-features = false, features = ["alloc"] }
 lru = "0.7"

@@ -1,22 +1,22 @@
-// Copyright 2019-2021 Parity Technologies (UK) Ltd.
-// This file is part of Parity Bridges Common.
+// Copyright 2019-2021 Axia Technologies (UK) Ltd.
+// This file is part of Axia Bridges Common.
 
-// Parity Bridges Common is free software: you can redistribute it and/or modify
+// Axia Bridges Common is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Parity Bridges Common is distributed in the hope that it will be useful,
+// Axia Bridges Common is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Parity Bridges Common.  If not, see <http://www.gnu.org/licenses/>.
+// along with Axia Bridges Common.  If not, see <http://www.gnu.org/licenses/>.
 
 //! Rialto chain node service.
 //!
-//! The code is mostly copy of `service/src/lib.rs` file from Polkadot repository
+//! The code is mostly copy of `service/src/lib.rs` file from Axia repository
 //! without optional functions, and with BEEFY added on top.
 
 use crate::overseer::{OverseerGen, OverseerGenArgs};
@@ -40,10 +40,10 @@ use sp_api::{ConstructRuntimeApi, HeaderT};
 use sp_consensus::SelectChain;
 use sp_runtime::traits::Block as BlockT;
 use std::{sync::Arc, time::Duration};
-use substrate_prometheus_endpoint::Registry;
+use axlib_prometheus_endpoint::Registry;
 
 pub use polkadot_overseer::Handle;
-pub use polkadot_primitives::v1::ParachainHost;
+pub use polkadot_primitives::v1::AllychainHost;
 pub use sc_client_api::AuxStore;
 pub use sp_authority_discovery::AuthorityDiscoveryApi;
 pub use sp_blockchain::HeaderBackend;
@@ -90,7 +90,7 @@ pub enum Error {
 	Overseer(#[from] polkadot_overseer::SubsystemError),
 
 	#[error(transparent)]
-	Prometheus(#[from] substrate_prometheus_endpoint::PrometheusError),
+	Prometheus(#[from] axlib_prometheus_endpoint::PrometheusError),
 
 	#[error("Authorities require the real overseer implementation")]
 	AuthoritiesRequireRealOverseer,
@@ -257,7 +257,7 @@ where
 		      -> Result<jsonrpc_core::IoHandler<sc_service::RpcMetadata>, sc_service::Error> {
 			use pallet_transaction_payment_rpc::{TransactionPayment, TransactionPaymentApi};
 			use sc_finality_grandpa_rpc::{GrandpaApi, GrandpaRpcHandler};
-			use substrate_frame_rpc_system::{FullSystem, SystemApi};
+			use axlib_frame_rpc_system::{FullSystem, SystemApi};
 
 			let backend = backend.clone();
 			let client = client.clone();
@@ -406,9 +406,9 @@ where
 	let shared_voter_state = rpc_setup;
 	let auth_disc_publish_non_global_ips = config.network.allow_non_globals_in_dht;
 
-	// Note: GrandPa is pushed before the Polkadot-specific protocols. This doesn't change
+	// Note: GrandPa is pushed before the Axia-specific protocols. This doesn't change
 	// anything in terms of behaviour, but makes the logs more consistent with the other
-	// Substrate nodes.
+	// Axlib nodes.
 	config.network.extra_sets.push(sc_finality_grandpa::grandpa_peers_set_config());
 
 	config.network.extra_sets.push(beefy_gadget::beefy_peers_set_config());
@@ -458,18 +458,18 @@ where
 		);
 	}
 
-	let parachains_db = crate::parachains_db::open_creating(
+	let allychains_db = crate::allychains_db::open_creating(
 		config.database.path().ok_or(Error::DatabasePathRequired)?.into(),
-		crate::parachains_db::CacheSizes::default(),
+		crate::allychains_db::CacheSizes::default(),
 	)?;
 
 	let availability_config = AvailabilityConfig {
-		col_data: crate::parachains_db::REAL_COLUMNS.col_availability_data,
-		col_meta: crate::parachains_db::REAL_COLUMNS.col_availability_meta,
+		col_data: crate::allychains_db::REAL_COLUMNS.col_availability_data,
+		col_meta: crate::allychains_db::REAL_COLUMNS.col_availability_meta,
 	};
 
 	let approval_voting_config = ApprovalVotingConfig {
-		col_data: crate::parachains_db::REAL_COLUMNS.col_approval_data,
+		col_data: crate::allychains_db::REAL_COLUMNS.col_approval_data,
 		slot_duration_millis: slot_duration.as_millis() as u64,
 	};
 
@@ -487,12 +487,12 @@ where
 	};
 
 	let chain_selection_config = ChainSelectionConfig {
-		col_data: crate::parachains_db::REAL_COLUMNS.col_chain_selection_data,
+		col_data: crate::allychains_db::REAL_COLUMNS.col_chain_selection_data,
 		stagnant_check_interval: polkadot_node_core_chain_selection::StagnantCheckInterval::never(),
 	};
 
 	let dispute_coordinator_config = DisputeCoordinatorConfig {
-		col_data: crate::parachains_db::REAL_COLUMNS.col_dispute_coordinator_data,
+		col_data: crate::allychains_db::REAL_COLUMNS.col_dispute_coordinator_data,
 	};
 
 	let rpc_handlers = sc_service::spawn_tasks(sc_service::SpawnTasksParams {
@@ -566,7 +566,7 @@ where
 					leaves: active_leaves,
 					keystore,
 					runtime_client: overseer_client.clone(),
-					parachains_db,
+					allychains_db,
 					availability_config,
 					approval_voting_config,
 					network_service: network.clone(),
@@ -645,7 +645,7 @@ where
 				let client_clone = client_clone.clone();
 				let overseer_handle = overseer_handle.clone();
 				async move {
-					let parachain = polkadot_node_core_parachains_inherent::ParachainsInherentDataProvider::create(
+					let allychain = polkadot_node_core_allychains_inherent::AllychainsInherentDataProvider::create(
 						&*client_clone,
 						overseer_handle,
 						parent,
@@ -665,7 +665,7 @@ where
 						slot_duration,
 					);
 
-					Ok((timestamp, slot, uncles, parachain))
+					Ok((timestamp, slot, uncles, allychain))
 				}
 			},
 			force_authoring,
@@ -704,7 +704,7 @@ where
 	);
 
 	let config = sc_finality_grandpa::Config {
-		// FIXME substrate#1578 make this available through chainspec
+		// FIXME axlib#1578 make this available through chainspec
 		gossip_duration: Duration::from_millis(1000),
 		justification_period: 512,
 		name: Some(name),
@@ -717,7 +717,7 @@ where
 	let enable_grandpa = !disable_grandpa;
 	if enable_grandpa {
 		// start the full GRANDPA voter
-		// NOTE: unlike in substrate we are currently running the full
+		// NOTE: unlike in axlib we are currently running the full
 		// GRANDPA voter protocol for all full nodes (regardless of whether
 		// they're validators or not). at this point the full voter should
 		// provide better guarantees of block and vote data availability than

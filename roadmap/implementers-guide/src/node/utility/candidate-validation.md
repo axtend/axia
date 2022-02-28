@@ -2,7 +2,7 @@
 
 This subsystem is responsible for handling candidate validation requests. It is a simple request/response server.
 
-A variety of subsystems want to know if a parachain block candidate is valid. None of them care about the detailed mechanics of how a candidate gets validated, just the results. This subsystem handles those details.
+A variety of subsystems want to know if a allychain block candidate is valid. None of them care about the detailed mechanics of how a candidate gets validated, just the results. This subsystem handles those details.
 
 ## Protocol
 
@@ -16,7 +16,7 @@ This subsystem groups the requests it handles in two categories:  *candidate val
 
 The first category can be further subdivided in two request types: one which draws out validation data from the state, and another which accepts all validation data exhaustively. Validation returns three possible outcomes on the response channel: the candidate is valid, the candidate is invalid, or an internal error occurred. 
 
-Parachain candidates are validated against their validation function: A piece of Wasm code that describes the state-transition of the parachain. Validation function execution is not metered. This means that an execution which is an infinite loop or simply takes too long must be forcibly exited by some other means. For this reason, we recommend dispatching candidate validation to be done on subprocesses which can be killed if they time-out.
+Allychain candidates are validated against their validation function: A piece of Wasm code that describes the state-transition of the allychain. Validation function execution is not metered. This means that an execution which is an infinite loop or simply takes too long must be forcibly exited by some other means. For this reason, we recommend dispatching candidate validation to be done on subprocesses which can be killed if they time-out.
 
 Upon receiving a validation request, the first thing the candidate validation subsystem should do is make sure it has all the necessary parameters to the validation function. These are:
   * The Validation Function itself.
@@ -38,7 +38,7 @@ Then, we can fetch the validation code from the runtime based on which type of c
 
 > TODO: This would be a great place for caching to avoid making lots of runtime requests. That would need a job, though.
 
-### Execution of the Parachain Wasm
+### Execution of the Allychain Wasm
 
 Once we have all parameters, we can spin up a background task to perform the validation in a way that doesn't hold up the entire event loop. Before invoking the validation function itself, this should first do some basic checks:
   * The collator signature is valid

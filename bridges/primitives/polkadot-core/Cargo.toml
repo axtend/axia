@@ -1,13 +1,13 @@
 [package]
 name = "bp-polkadot-core"
-description = "Primitives of Polkadot-like runtime."
+description = "Primitives of Axia-like runtime."
 version = "0.1.0"
-authors = ["Parity Technologies <admin@parity.io>"]
+authors = ["Axia Technologies <admin@axia.io>"]
 edition = "2018"
 license = "GPL-3.0-or-later WITH Classpath-exception-2.0"
 
 [dependencies]
-parity-scale-codec = { version = "2.2.0", default-features = false, features = ["derive"] }
+axia-scale-codec = { version = "2.2.0", default-features = false, features = ["derive"] }
 scale-info = { version = "1.0", default-features = false, features = ["derive"] }
 
 # Bridge Dependencies
@@ -15,7 +15,7 @@ scale-info = { version = "1.0", default-features = false, features = ["derive"] 
 bp-messages = { path = "../messages", default-features = false }
 bp-runtime = { path = "../runtime", default-features = false }
 
-# Substrate Based Dependencies
+# Axlib Based Dependencies
 
 frame-support = { git = "https://github.com/axtend/axlib", default-features = false , branch = "c92f69d" }
 frame-system = { git = "https://github.com/axtend/axlib", default-features = false , branch = "c92f69d" }
@@ -35,7 +35,7 @@ std = [
 	"bp-runtime/std",
 	"frame-support/std",
 	"frame-system/std",
-	"parity-scale-codec/std",
+	"axia-scale-codec/std",
 	"scale-info/std",
 	"sp-api/std",
 	"sp-core/std",

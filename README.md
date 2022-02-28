@@ -1,26 +1,26 @@
-# Polkadot
+# Axia
 
-Implementation of a <https://polkadot.network> node in Rust based on the Substrate framework.
+Implementation of a <https://polkadot.network> node in Rust based on the Axlib framework.
 
-> **NOTE:** In 2018, we split our implementation of "Polkadot" from its development framework
-> "Substrate". See the [Substrate][substrate-repo] repo for git history prior to 2018.
+> **NOTE:** In 2018, we split our implementation of "Axia" from its development framework
+> "Axlib". See the [Axlib][axlib-repo] repo for git history prior to 2018.
 
-[substrate-repo]: https://github.com/paritytech/substrate
+[axlib-repo]: https://github.com/axiatech/axlib
 
-This repo contains runtimes for the Polkadot, Kusama, and Westend networks. The README provides
+This repo contains runtimes for the Axia, AxiaTest, and Alphanet networks. The README provides
 information about installing the `polkadot` binary and developing on the codebase. For more
 specific guides, like how to be a validator, see the
-[Polkadot Wiki](https://wiki.polkadot.network/docs/getting-started).
+[Axia Wiki](https://wiki.polkadot.network/docs/getting-started).
 
 ## Installation
 
-If you just wish to run a Polkadot node without compiling it yourself, you may
+If you just wish to run a Axia node without compiling it yourself, you may
 either run the latest binary from our
-[releases](https://github.com/paritytech/polkadot/releases) page, or install
-Polkadot from one of our package repositories.
+[releases](https://github.com/axiatech/polkadot/releases) page, or install
+Axia from one of our package repositories.
 
 Installation from the Debian or rpm repositories will create a `systemd`
-service that can be used to run a Polkadot node. This is disabled by default,
+service that can be used to run a Axia node. This is disabled by default,
 and can be started by running `systemctl start polkadot` on demand (use
 `systemctl enable polkadot` to make it auto-start after reboot). By default, it
 will run as the `polkadot` user.  Command-line flags passed to the binary can
@@ -34,15 +34,15 @@ Currently supports Debian 10 (Buster) and Ubuntu 20.04 (Focal), and
 derivatives. Run the following commands as the `root` user.
 
 ```bash
-# Import the security@parity.io GPG key
+# Import the security@axia.io GPG key
 gpg --recv-keys --keyserver hkps://keys.mailvelope.com 9D4B2B6EB8F97156D19669A9FF0812D491B96798
-gpg --export 9D4B2B6EB8F97156D19669A9FF0812D491B96798 > /usr/share/keyrings/parity.gpg
-# Add the Parity repository and update the package index
-echo 'deb [signed-by=/usr/share/keyrings/parity.gpg] https://releases.parity.io/deb release main' > /etc/apt/sources.list.d/parity.list
+gpg --export 9D4B2B6EB8F97156D19669A9FF0812D491B96798 > /usr/share/keyrings/axia.gpg
+# Add the Axia repository and update the package index
+echo 'deb [signed-by=/usr/share/keyrings/axia.gpg] https://releases.axia.io/deb release main' > /etc/apt/sources.list.d/axia.list
 apt update
-# Install the `parity-keyring` package - This will ensure the GPG key
+# Install the `axia-keyring` package - This will ensure the GPG key
 # used by APT remains up-to-date
-apt install parity-keyring
+apt install axia-keyring
 # Install polkadot
 apt install polkadot
 
@@ -56,7 +56,7 @@ Currently supports Fedora 32 and CentOS 8, and derivatives.
 # Install dnf-plugins-core (This might already be installed)
 dnf install dnf-plugins-core
 # Add the repository and enable it
-dnf config-manager --add-repo https://releases.parity.io/rpm/polkadot.repo
+dnf config-manager --add-repo https://releases.axia.io/rpm/polkadot.repo
 dnf config-manager --set-enabled polkadot
 # Install polkadot (You may have to confirm the import of the GPG key, which
 # should have the following fingerprint: 9D4B2B6EB8F97156D19669A9FF0812D491B96798)
@@ -70,10 +70,10 @@ dnf install polkadot
 Make sure you have the support software installed from the **Build from Source** section
 below this section.
 
-If you want to install Polkadot in your PATH, you can do so with with:
+If you want to install Axia in your PATH, you can do so with with:
 
 ```bash
-cargo install --git https://github.com/paritytech/polkadot --tag <version> polkadot --locked
+cargo install --git https://github.com/axiatech/polkadot --tag <version> polkadot --locked
 ```
 
 ### Build from Source
@@ -111,26 +111,26 @@ Note that compilation is a memory intensive process. We recommend having 4 GiB o
 #### Build from Source with Docker
 
 You can also build from source using 
-[Parity CI docker image](https://github.com/paritytech/scripts/tree/master/dockerfiles/ci-linux):
+[Axia CI docker image](https://github.com/axiatech/scripts/tree/master/dockerfiles/ci-linux):
 
 ```bash
 git checkout <latest tagged release>
 docker run --rm -it -w /shellhere/polkadot \
                     -v $(pwd):/shellhere/polkadot \
-                    paritytech/ci-linux:production cargo build --release
+                    axiatech/ci-linux:production cargo build --release
 sudo chown -R $(id -u):$(id -g) target/
 ```
 
 If you want to reproduce other steps of CI process you can use the following 
-[guide](https://github.com/paritytech/scripts#gitlab-ci-for-building-docker-images).
+[guide](https://github.com/axiatech/scripts#gitlab-ci-for-building-docker-images).
 
 ## Networks
 
-This repo supports runtimes for Polkadot, Kusama, and Westend.
+This repo supports runtimes for Axia, AxiaTest, and Alphanet.
 
-### Connect to Polkadot Mainnet
+### Connect to Axia Mainnet
 
-Connect to the global Polkadot Mainnet network by running:
+Connect to the global Axia Mainnet network by running:
 
 ```bash
 ./target/release/polkadot --chain=polkadot
@@ -138,54 +138,54 @@ Connect to the global Polkadot Mainnet network by running:
 
 You can see your node on [telemetry] (set a custom name with `--name "my custom name"`).
 
-[telemetry]: https://telemetry.polkadot.io/#list/Polkadot
+[telemetry]: https://telemetry.polkadot.io/#list/Axia
 
-### Connect to the "Kusama" Canary Network
+### Connect to the "AxiaTest" Canary Network
 
-Connect to the global Kusama canary network by running:
+Connect to the global AxiaTest canary network by running:
 
 ```bash
-./target/release/polkadot --chain=kusama
+./target/release/polkadot --chain=axctest
 ```
 
 You can see your node on [telemetry] (set a custom name with `--name "my custom name"`).
 
-[telemetry]: https://telemetry.polkadot.io/#list/Kusama
+[telemetry]: https://telemetry.polkadot.io/#list/AxiaTest
 
-### Connect to the Westend Testnet
+### Connect to the Alphanet Testnet
 
-Connect to the global Westend testnet by running:
+Connect to the global Alphanet testnet by running:
 
 ```bash
-./target/release/polkadot --chain=westend
+./target/release/polkadot --chain=alphanet
 ```
 
 You can see your node on [telemetry] (set a custom name with `--name "my custom name"`).
 
-[telemetry]: https://telemetry.polkadot.io/#list/Westend
+[telemetry]: https://telemetry.polkadot.io/#list/Alphanet
 
-### Obtaining DOTs
+### Obtaining AXCs
 
-If you want to do anything on Polkadot, Kusama, or Westend, then you'll need to get an account and
-some DOT, KSM, or WND tokens, respectively. See the
-[claims instructions](https://claims.polkadot.network/) for Polkadot if you have DOTs to claim. For
-Westend's WND tokens, see the faucet
-[instructions](https://wiki.polkadot.network/docs/learn-DOT#getting-westies) on the Wiki.
+If you want to do anything on Axia, AxiaTest, or Alphanet, then you'll need to get an account and
+some AXC, KSM, or WND tokens, respectively. See the
+[claims instructions](https://claims.polkadot.network/) for Axia if you have AXCs to claim. For
+Alphanet's WND tokens, see the faucet
+[instructions](https://wiki.polkadot.network/docs/learn-AXC#getting-westies) on the Wiki.
 
-## Hacking on Polkadot
+## Hacking on Axia
 
-If you'd actually like to hack on Polkadot, you can grab the source code and build it. Ensure you have
+If you'd actually like to hack on Axia, you can grab the source code and build it. Ensure you have
 Rust and the support software installed. This script will install or update Rust and install the
 required dependencies (this may take up to 30 minutes on Mac machines):
 
 ```bash
-curl https://getsubstrate.io -sSf | bash -s -- --fast
+curl https://getaxlib.io -sSf | bash -s -- --fast
 ```
 
-Then, grab the Polkadot source code:
+Then, grab the Axia source code:
 
 ```bash
-git clone https://github.com/paritytech/polkadot.git
+git clone https://github.com/axiatech/polkadot.git
 cd polkadot
 ```
 
@@ -247,7 +247,7 @@ Ensure you replace `ALICE_BOOTNODE_ID_HERE` with the node ID from the output of 
 
 [Setup Prometheus and Grafana](https://wiki.polkadot.network/docs/maintain-guides-how-to-monitor-your-node).
 
-Once you set this up you can take a look at the [Polkadot Grafana dashboards](grafana/README.md) that we currently maintain. 
+Once you set this up you can take a look at the [Axia Grafana dashboards](grafana/README.md) that we currently maintain. 
 
 ### Using Docker
 
@@ -269,4 +269,4 @@ Once you set this up you can take a look at the [Polkadot Grafana dashboards](gr
 
 ## License
 
-Polkadot is [GPL 3.0 licensed](LICENSE).
+Axia is [GPL 3.0 licensed](LICENSE).

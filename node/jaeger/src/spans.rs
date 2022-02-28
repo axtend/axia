@@ -1,20 +1,20 @@
-// Copyright 2020 Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// Copyright 2020 Axia Technologies (UK) Ltd.
+// This file is part of Axia.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// Axia is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// Axia is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with Axia.  If not, see <http://www.gnu.org/licenses/>.
 
-//! Polkadot Jaeger span definitions.
+//! Axia Jaeger span definitions.
 //!
 //! ```rust
 //! # use polkadot_primitives::v1::{CandidateHash, Hash};
@@ -41,7 +41,7 @@
 //! 		.with_string_fmt_debug_tag("foo", foo)
 //! 		// anything that implements `trait std::str::ToString`
 //! 		.with_string_tag("again", 1337_u32)
-//! 		// add a `Stage` for [`dot-jaeger`](https://github.com/paritytech/dot-jaeger)
+//! 		// add a `Stage` for [`axc-jaeger`](https://github.com/axiatech/axc-jaeger)
 //! 		.with_stage(jaeger::Stage::CandidateBacking);
 //! 		// complete by design, no completion required
 //! # }
@@ -83,7 +83,7 @@
 //! # }
 //! ```
 
-use parity_scale_codec::Encode;
+use axia_scale_codec::Encode;
 use polkadot_node_primitives::PoV;
 use polkadot_primitives::v1::{
 	BlakeTwo256, CandidateHash, Hash, HashT, Id as ParaId, ValidatorIndex,
@@ -154,8 +154,8 @@ pub enum Stage {
 	// Expand as needed, numbers should be ascending according to the stage
 	// through the inclusion pipeline, or according to the descriptions
 	// in [the path of a para chain block]
-	// (https://polkadot.network/the-path-of-a-parachain-block/)
-	// see [issue](https://github.com/paritytech/polkadot/issues/2389)
+	// (https://polkadot.network/the-path-of-a-allychain-block/)
+	// see [issue](https://github.com/axiatech/polkadot/issues/2389)
 }
 
 /// A wrapper type for a span.

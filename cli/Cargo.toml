@@ -1,8 +1,8 @@
 [package]
 name = "polkadot-cli"
 version = "0.9.17"
-authors = ["Parity Technologies <admin@parity.io>"]
-description = "Polkadot Relay-chain Client Node"
+authors = ["Axia Technologies <admin@axia.io>"]
+description = "Axia Relay-chain Client Node"
 edition = "2018"
 
 [package.metadata.wasm-pack.profile.release]
@@ -32,11 +32,11 @@ polkadot-node-metrics = { path = "../node/metrics" }
 sc-tracing = { git = "https://github.com/axtend/axlib", optional = true , branch = "c92f69d" }
 
 # this crate is used only to enable `trie-memory-tracker` feature
-# see https://github.com/paritytech/substrate/pull/6745
+# see https://github.com/axiatech/axlib/pull/6745
 sp-trie = { git = "https://github.com/axtend/axlib", default-features = false , branch = "c92f69d" }
 
 [build-dependencies]
-substrate-build-script-utils = { git = "https://github.com/axtend/axlib", branch = "c92f69d" }
+axlib-build-script-utils = { git = "https://github.com/axtend/axlib", branch = "c92f69d" }
 
 [features]
 default = ["wasmtime", "db", "cli", "full-node", "trie-memory-tracker", "polkadot-native"]
@@ -58,13 +58,13 @@ full-node = ["service/full-node"]
 try-runtime = ["service/try-runtime"]
 fast-runtime = ["service/fast-runtime"]
 
-# Configure the native runtimes to use. Polkadot is enabled by default.
+# Configure the native runtimes to use. Axia is enabled by default.
 #
 # Validators require the native runtime currently
 polkadot-native = ["service/polkadot-native"]
-kusama-native = ["service/kusama-native"]
-westend-native = ["service/westend-native"]
-rococo-native = ["service/rococo-native"]
+axctest-native = ["service/axctest-native"]
+alphanet-native = ["service/alphanet-native"]
+betanet-native = ["service/betanet-native"]
 
 malus = ["full-node", "service/malus"]
 runtime-metrics = ["service/runtime-metrics", "polkadot-node-metrics/runtime-metrics"]
