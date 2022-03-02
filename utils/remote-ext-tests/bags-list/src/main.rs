@@ -82,12 +82,12 @@ async fn main() {
 		(Runtime::AxiaTest, Command::CheckMigration) => {
 			use axctest_runtime::{Block, Runtime};
 			use axctest_runtime_constants::currency::UNITS;
-			migration::execute::<Runtime, Block>(UNITS as u64, "KSM", options.uri.clone()).await;
+			migration::execute::<Runtime, Block>(UNITS as u64, "AXCT", options.uri.clone()).await;
 		},
 		(Runtime::AxiaTest, Command::SanityCheck) => {
 			use axctest_runtime::{Block, Runtime};
 			use axctest_runtime_constants::currency::UNITS;
-			sanity_check::execute::<Runtime, Block>(UNITS as u64, "KSM", options.uri.clone()).await;
+			sanity_check::execute::<Runtime, Block>(UNITS as u64, "AXCT", options.uri.clone()).await;
 		},
 		(Runtime::AxiaTest, Command::Snapshot) => {
 			use axctest_runtime::{Block, Runtime};

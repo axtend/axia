@@ -60,7 +60,7 @@ pub struct ResubmitTransactions {
 #[strum(serialize_all = "kebab_case")]
 pub enum RelayChain {
 	Millau,
-	Kusama,
+	AxiaTest,
 	Axia,
 }
 
@@ -93,9 +93,9 @@ macro_rules! select_bridge {
 
 				$generic
 			},
-			RelayChain::Kusama => {
-				type Target = relay_kusama_client::Kusama;
-				type TargetSign = relay_kusama_client::Kusama;
+			RelayChain::AxiaTest => {
+				type Target = relay_axctest_client::AxiaTest;
+				type TargetSign = relay_axctest_client::AxiaTest;
 
 				$generic
 			},

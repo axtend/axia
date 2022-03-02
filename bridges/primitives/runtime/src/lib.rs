@@ -52,7 +52,7 @@ pub const MILLAU_CHAIN_ID: ChainId = *b"mlau";
 pub const AXIA_CHAIN_ID: ChainId = *b"pdot";
 
 /// Bridge-with-AxiaTest instance id.
-pub const AXIATEST_CHAIN_ID: ChainId = *b"ksma";
+pub const AXIATEST_CHAIN_ID: ChainId = *b"axcta";
 
 /// Bridge-with-Betanet instance id.
 pub const BETANET_CHAIN_ID: ChainId = *b"roco";

@@ -1,5 +1,0 @@
-
-= Axia Parachain
-
-placeholder
-//TODO Write content :) (https://github.com/paritytech/axia/issues/159)

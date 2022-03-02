@@ -1,6 +1,6 @@
 # Testing Scenarios
 
-In the scenarios, for simplicity, we call the chains AxiaTest (KSM token) and Axia (AXC token),
+In the scenarios, for simplicity, we call the chains AxiaTest (AXCT token) and Axia (AXC token),
 but they should be applicable to any other chains. The first scenario has detailed description about
 the entire process (also see the [sequence diagram](./scenario1.html)). Other scenarios only contain
 a simplified interaction focusing on things that are unique for that particular scenario.
@@ -211,7 +211,7 @@ Potentially interesting scenarios
 Scenario 7: Axia's Bob spending his AXCs by using AxiaTest chain
 ---------------------------
 
-We can assume he holds KSM. Problem: he can pay fees, but can't really send (sign) a transaction?
+We can assume he holds AXCT. Problem: he can pay fees, but can't really send (sign) a transaction?
 Shall we support some kind of dispatcher?
 
 Scenario 8: AxiaTest Governance taking over AxiaTest's Alice AXC holdings

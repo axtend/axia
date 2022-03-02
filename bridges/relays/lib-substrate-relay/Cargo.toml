@@ -41,8 +41,8 @@ sp-runtime = { git = "https://github.com/axtend/axlib", branch = "c92f69d" }
 
 [dev-dependencies]
 bp-millau = { path = "../../primitives/chain-millau" }
-bp-rococo = { path = "../../primitives/chain-rococo" }
+bp-betanet = { path = "../../primitives/chain-betanet" }
 bp-wococo = { path = "../../primitives/chain-wococo" }
-relay-rococo-client = { path = "../client-rococo" }
+relay-betanet-client = { path = "../client-betanet" }
 relay-wococo-client = { path = "../client-wococo" }
 rialto-runtime = { path = "../../bin/rialto/runtime" }

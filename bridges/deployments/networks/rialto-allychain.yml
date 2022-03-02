@@ -5,7 +5,7 @@
 version: '3.5'
 services:
   rialto-allychain-collator-alice: &rialto-allychain-collator
-    image: axiatech/rialto-allychain-collator
+    image: paritytech/rialto-allychain-collator
     entrypoint: >
       /home/user/rialto-allychain-collator
       --alice
@@ -77,7 +77,7 @@ services:
       - "20644:9944"
 
   rialto-allychain-registrar:
-    image: axiatech/parity-relay
+    image: paritytech/parity-relay
     entrypoint: /entrypoints/rialto-allychain-registrar-entrypoint.sh
     volumes:
       - ./networks/entrypoints:/entrypoints

@@ -561,9 +561,9 @@ async fn main() {
 		},
 		"axctest" | "axctest-dev" => {
 			sp_core::crypto::set_default_ss58_version(
-				sp_core::crypto::Ss58AddressFormatRegistry::KusamaAccount.into(),
+				sp_core::crypto::Ss58AddressFormatRegistry::AxiaTestAccount.into(),
 			);
-			sub_tokens::dynamic::set_name("KSM");
+			sub_tokens::dynamic::set_name("AXCT");
 			sub_tokens::dynamic::set_decimal_points(1_000_000_000_000);
 			// safety: this program will always be single threaded, thus accessing global static is
 			// safe.

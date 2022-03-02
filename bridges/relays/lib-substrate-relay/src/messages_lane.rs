@@ -419,7 +419,7 @@ mod tests {
 	#[async_std::test]
 	async fn target_to_source_conversion_rate_works() {
 		assert_eq!(
-			StandaloneMessagesMetrics::<relay_rococo_client::Rococo, relay_wococo_client::Wococo>::compute_target_to_source_conversion_rate(Some(183.15), Some(12.32)),
+			StandaloneMessagesMetrics::<relay_betanet_client::Betanet, relay_wococo_client::Wococo>::compute_target_to_source_conversion_rate(Some(183.15), Some(12.32)),
 			Some(12.32 / 183.15),
 		);
 	}

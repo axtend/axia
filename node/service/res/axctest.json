@@ -8,9 +8,9 @@
     "/dns/p2p.3.axctest.network/tcp/30333/p2p/12D3KooWRp4qgusMiUobJ9Uw1XAwtsokqx9YwgHDv5wQXjxqETji",
     "/dns/p2p.4.axctest.network/tcp/30333/p2p/12D3KooWMVXPbqWR1erNKRSWDVPjcAQ9XtxqLTVzV4ccox9Y8KNL",
     "/dns/p2p.5.axctest.network/tcp/30333/p2p/12D3KooWBsJKGJFuv83ixryzMsUS53A8JzEVeTA8PGi4U6T2dnif",
-    "/dns/axctest-bootnode-0.axiatech.net/tcp/30333/p2p/12D3KooWSueCPH3puP2PcvqPJdNaDNF3jMZjtJtDiSy35pWrbt5h",
-    "/dns/axctest-bootnode-0.axiatech.net/tcp/30334/ws/p2p/12D3KooWSueCPH3puP2PcvqPJdNaDNF3jMZjtJtDiSy35pWrbt5h",
-    "/dns/axctest-bootnode-1.axiatech.net/tcp/30333/p2p/12D3KooWQKqane1SqWJNWMQkbia9qiMWXkcHtAdfW5eVF8hbwEDw"
+    "/dns/axctest-bootnode-0.paritytech.net/tcp/30333/p2p/12D3KooWSueCPH3puP2PcvqPJdNaDNF3jMZjtJtDiSy35pWrbt5h",
+    "/dns/axctest-bootnode-0.paritytech.net/tcp/30334/ws/p2p/12D3KooWSueCPH3puP2PcvqPJdNaDNF3jMZjtJtDiSy35pWrbt5h",
+    "/dns/axctest-bootnode-1.paritytech.net/tcp/30333/p2p/12D3KooWQKqane1SqWJNWMQkbia9qiMWXkcHtAdfW5eVF8hbwEDw"
   ],
   "telemetryEndpoints": [
     [
@@ -22,7 +22,7 @@
   "properties": {
     "ss58Format": 2,
     "tokenDecimals": 12,
-    "tokenSymbol": "KSM"
+    "tokenSymbol": "AXCT"
   },
   "consensusEngine": null,
   "forkBlocks": null,

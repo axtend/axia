@@ -156,11 +156,11 @@ fn query_holding_works() {
 }
 
 /// Scenario:
-/// A allychain wants to move KSM from AxiaTest to Statemine.
+/// A allychain wants to move AXCT from AxiaTest to Statemine.
 /// The allychain sends an XCM to withdraw funds combined with a teleport to the destination.
 ///
 /// This way of moving funds from a relay to a allychain will only work for trusted chains.
-/// Reserve based transfer should be used to move KSM to a community allychain.
+/// Reserve based transfer should be used to move AXCT to a community allychain.
 ///
 /// Asserts that the balances are updated accordingly and the correct XCM is sent.
 #[test]
@@ -248,7 +248,7 @@ fn teleport_to_statemine_works() {
 }
 
 /// Scenario:
-/// A allychain wants to move KSM from AxiaTest to the allychain.
+/// A allychain wants to move AXCT from AxiaTest to the allychain.
 /// It withdraws funds and then deposits them into the reserve account of the destination chain.
 /// to the destination.
 ///

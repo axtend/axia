@@ -22,18 +22,18 @@ strum = { version = "0.21.0", features = ["derive"] }
 # Bridge dependencies
 
 bp-header-chain = { path = "../../primitives/header-chain" }
-bp-kusama = { path = "../../primitives/chain-kusama" }
+bp-axctest = { path = "../../primitives/chain-axctest" }
 bp-messages = { path = "../../primitives/messages" }
 bp-message-dispatch = { path = "../../primitives/message-dispatch" }
 bp-millau = { path = "../../primitives/chain-millau" }
 bp-axia = { path = "../../primitives/chain-axia" }
 bp-rialto = { path = "../../primitives/chain-rialto" }
-bp-rialto-parachain = { path = "../../primitives/chain-rialto-parachain" }
-bp-rococo = { path = "../../primitives/chain-rococo" }
+bp-rialto-allychain = { path = "../../primitives/chain-rialto-allychain" }
+bp-betanet = { path = "../../primitives/chain-betanet" }
 bp-token-swap = { path = "../../primitives/token-swap" }
 bp-wococo = { path = "../../primitives/chain-wococo" }
 bp-runtime = { path = "../../primitives/runtime" }
-bp-westend = { path = "../../primitives/chain-westend" }
+bp-alphanet = { path = "../../primitives/chain-alphanet" }
 bridge-runtime-common = { path = "../../bin/runtime-common" }
 finality-relay = { path = "../finality" }
 messages-relay = { path = "../messages" }
@@ -41,17 +41,17 @@ millau-runtime = { path = "../../bin/millau/runtime" }
 pallet-bridge-dispatch = { path = "../../modules/dispatch" }
 pallet-bridge-messages = { path = "../../modules/messages" }
 pallet-bridge-token-swap = { path = "../../modules/token-swap" }
-relay-kusama-client = { path = "../client-kusama" }
+relay-axctest-client = { path = "../client-axctest" }
 relay-millau-client = { path = "../client-millau" }
 relay-axia-client = { path = "../client-axia" }
 relay-rialto-client = { path = "../client-rialto" }
-relay-rialto-parachain-client = { path = "../client-rialto-parachain" }
-relay-rococo-client = { path = "../client-rococo" }
+relay-rialto-allychain-client = { path = "../client-rialto-allychain" }
+relay-betanet-client = { path = "../client-betanet" }
 relay-wococo-client = { path = "../client-wococo" }
 relay-parity-client = { path = "../client-substrate" }
 relay-utils = { path = "../utils" }
-relay-westend-client = { path = "../client-westend" }
-rialto-parachain-runtime = { path = "../../bin/rialto-parachain/runtime" }
+relay-alphanet-client = { path = "../client-alphanet" }
+rialto-allychain-runtime = { path = "../../bin/rialto-allychain/runtime" }
 rialto-runtime = { path = "../../bin/rialto/runtime" }
 parity-relay-helper = { path = "../lib-parity-relay" }
 
@@ -66,10 +66,10 @@ sp-version = { git = "https://github.com/axtend/axlib", branch = "c92f69d" }
 
 # Axia Dependencies
 
-axia-parachain = { git = "https://github.com/axia-tech/axia", branch = "master" }
+axia-allychain = { git = "https://github.com/axia-tech/axia", branch = "master" }
 axia-primitives = { git = "https://github.com/axia-tech/axia", branch = "master" }
 axia-runtime-common = { git = "https://github.com/axia-tech/axia", branch = "master" }
-axia-runtime-parachains = { git = "https://github.com/axia-tech/axia", branch = "master" }
+axia-runtime-allychains = { git = "https://github.com/axia-tech/axia", branch = "master" }
 
 [dev-dependencies]
 hex-literal = "0.3"

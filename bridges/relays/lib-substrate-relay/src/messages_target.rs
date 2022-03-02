@@ -437,7 +437,7 @@ fn compute_prepaid_messages_refund<P: SubstrateMessageLane>(
 #[cfg(test)]
 mod tests {
 	use super::*;
-	use relay_rococo_client::{Rococo, SigningParams as RococoSigningParams};
+	use relay_betanet_client::{Betanet, SigningParams as BetanetSigningParams};
 	use relay_wococo_client::{SigningParams as WococoSigningParams, Wococo};
 
 	#[derive(Clone)]
@@ -445,8 +445,8 @@ mod tests {
 
 	impl SubstrateMessageLane for TestSubstrateMessageLane {
 		type MessageLane = crate::messages_lane::SubstrateMessageLaneToSubstrate<
-			Rococo,
-			RococoSigningParams,
+			Betanet,
+			BetanetSigningParams,
 			Wococo,
 			WococoSigningParams,
 		>;
@@ -467,17 +467,17 @@ mod tests {
 
 		const PAY_INBOUND_DISPATCH_FEE_WEIGHT_AT_TARGET_CHAIN: Weight = 100_000;
 
-		type SourceChain = Rococo;
+		type SourceChain = Betanet;
 		type TargetChain = Wococo;
 
-		fn source_transactions_author(&self) -> bp_rococo::AccountId {
+		fn source_transactions_author(&self) -> bp_betanet::AccountId {
 			unreachable!()
 		}
 
 		fn make_messages_receiving_proof_transaction(
 			&self,
 			_best_block_id: SourceHeaderIdOf<Self::MessageLane>,
-			_transaction_nonce: IndexOf<Rococo>,
+			_transaction_nonce: IndexOf<Betanet>,
 			_generated_at_block: TargetHeaderIdOf<Self::MessageLane>,
 			_proof: <Self::MessageLane as MessageLane>::MessagesReceivingProof,
 		) -> Bytes {
@@ -504,7 +504,7 @@ mod tests {
 	fn prepare_dummy_messages_proof_works() {
 		const DISPATCH_WEIGHT: Weight = 1_000_000;
 		const SIZE: u32 = 1_000;
-		let dummy_proof = prepare_dummy_messages_proof::<Rococo>(1..=10, DISPATCH_WEIGHT, SIZE);
+		let dummy_proof = prepare_dummy_messages_proof::<Betanet>(1..=10, DISPATCH_WEIGHT, SIZE);
 		assert_eq!(dummy_proof.0, DISPATCH_WEIGHT);
 		assert!(
 			dummy_proof.1.encode().len() as u32 > SIZE,
@@ -517,15 +517,15 @@ mod tests {
 	#[test]
 	fn convert_target_tokens_to_source_tokens_works() {
 		assert_eq!(
-			convert_target_tokens_to_source_tokens::<Rococo, Wococo>((150, 100).into(), 1_000),
+			convert_target_tokens_to_source_tokens::<Betanet, Wococo>((150, 100).into(), 1_000),
 			1_500
 		);
 		assert_eq!(
-			convert_target_tokens_to_source_tokens::<Rococo, Wococo>((50, 100).into(), 1_000),
+			convert_target_tokens_to_source_tokens::<Betanet, Wococo>((50, 100).into(), 1_000),
 			500
 		);
 		assert_eq!(
-			convert_target_tokens_to_source_tokens::<Rococo, Wococo>((100, 100).into(), 1_000),
+			convert_target_tokens_to_source_tokens::<Betanet, Wococo>((100, 100).into(), 1_000),
 			1_000
 		);
 	}
@@ -536,14 +536,14 @@ mod tests {
 
 		let smaller_weight = 1_000_000;
 		let smaller_adjusted_weight_fee =
-			multiplier.saturating_mul_int(WeightToFeeOf::<Rococo>::calc(&smaller_weight));
+			multiplier.saturating_mul_int(WeightToFeeOf::<Betanet>::calc(&smaller_weight));
 
 		let larger_weight = smaller_weight + 200_000;
 		let larger_adjusted_weight_fee =
-			multiplier.saturating_mul_int(WeightToFeeOf::<Rococo>::calc(&larger_weight));
+			multiplier.saturating_mul_int(WeightToFeeOf::<Betanet>::calc(&larger_weight));
 
 		assert_eq!(
-			compute_fee_multiplier::<Rococo>(
+			compute_fee_multiplier::<Betanet>(
 				smaller_adjusted_weight_fee,
 				smaller_weight,
 				larger_adjusted_weight_fee,

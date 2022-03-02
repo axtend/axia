@@ -16,7 +16,7 @@
 
 use codec::Decode;
 use frame_support::weights::{DispatchClass, DispatchInfo, Pays, Weight};
-use relay_axctest_client::Kusama;
+use relay_axctest_client::AxiaTest;
 use sp_core::storage::StorageKey;
 use sp_runtime::{FixedPointNumber, FixedU128};
 use sp_version::RuntimeVersion;
@@ -27,16 +27,16 @@ use crate::cli::{
 	encode_message, CliChain,
 };
 
-/// Weight of the `system::remark` call at Kusama.
+/// Weight of the `system::remark` call at AxiaTest.
 ///
-/// This weight is larger (x2) than actual weight at current Kusama runtime to avoid unsuccessful
+/// This weight is larger (x2) than actual weight at current AxiaTest runtime to avoid unsuccessful
 /// calls in the future. But since it is used only in tests (and on test chains), this is ok.
 pub(crate) const SYSTEM_REMARK_CALL_WEIGHT: Weight = 2 * 1_345_000;
 
-/// Id of Kusama token that is used to fetch token price.
+/// Id of AxiaTest token that is used to fetch token price.
 pub(crate) const TOKEN_ID: &str = "axctest";
 
-impl CliEncodeCall for Kusama {
+impl CliEncodeCall for AxiaTest {
 	fn max_extrinsic_size() -> u32 {
 		bp_axctest::max_extrinsic_size()
 	}
@@ -50,7 +50,7 @@ impl CliEncodeCall for Kusama {
 			),
 			Call::BridgeSendMessage { lane, payload, fee, bridge_instance_index } =>
 				match *bridge_instance_index {
-					bridge::KUSAMA_TO_AXIA_INDEX => {
+					bridge::AXIATEST_TO_AXIA_INDEX => {
 						let payload = Decode::decode(&mut &*payload.0)?;
 						relay_axctest_client::runtime::Call::BridgeAxiaMessages(
 							relay_axctest_client::runtime::BridgeAxiaMessagesCall::send_message(
@@ -63,7 +63,7 @@ impl CliEncodeCall for Kusama {
 						bridge_instance_index
 					),
 				},
-			_ => anyhow::bail!("Unsupported Kusama call: {:?}", call),
+			_ => anyhow::bail!("Unsupported AxiaTest call: {:?}", call),
 		})
 	}
 
@@ -78,12 +78,12 @@ impl CliEncodeCall for Kusama {
 				class: DispatchClass::Normal,
 				pays_fee: Pays::Yes,
 			}),
-			_ => anyhow::bail!("Unsupported Kusama call: {:?}", call),
+			_ => anyhow::bail!("Unsupported AxiaTest call: {:?}", call),
 		}
 	}
 }
 
-impl CliChain for Kusama {
+impl CliChain for AxiaTest {
 	const RUNTIME_VERSION: RuntimeVersion = bp_axctest::VERSION;
 
 	type KeyPair = sp_core::sr25519::Pair;
@@ -100,15 +100,15 @@ impl CliChain for Kusama {
 	fn encode_message(
 		_message: encode_message::MessagePayload,
 	) -> anyhow::Result<Self::MessagePayload> {
-		anyhow::bail!("Sending messages from Kusama is not yet supported.")
+		anyhow::bail!("Sending messages from AxiaTest is not yet supported.")
 	}
 }
 
-/// Storage key and initial value of Axia -> Kusama conversion rate.
+/// Storage key and initial value of Axia -> AxiaTest conversion rate.
 pub(crate) fn axia_to_axctest_conversion_rate_params() -> (StorageKey, FixedU128) {
 	(
 		bp_runtime::storage_parameter_key(
-			bp_axctest::AXIA_TO_KUSAMA_CONVERSION_RATE_PARAMETER_NAME,
+			bp_axctest::AXIA_TO_AXIATEST_CONVERSION_RATE_PARAMETER_NAME,
 		),
 		// starting relay before this parameter will be set to some value may cause troubles
 		FixedU128::from_inner(FixedU128::DIV),

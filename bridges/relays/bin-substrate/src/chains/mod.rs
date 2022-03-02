@@ -16,37 +16,37 @@
 
 //! Chain-specific relayer configuration.
 
-pub mod kusama_headers_to_axia;
-pub mod kusama_messages_to_axia;
+pub mod axctest_headers_to_axia;
+pub mod axctest_messages_to_axia;
 pub mod millau_headers_to_rialto;
 pub mod millau_messages_to_rialto;
-pub mod axia_headers_to_kusama;
-pub mod axia_messages_to_kusama;
+pub mod axia_headers_to_axctest;
+pub mod axia_messages_to_axctest;
 pub mod rialto_headers_to_millau;
 pub mod rialto_messages_to_millau;
-pub mod rococo_headers_to_wococo;
-pub mod rococo_messages_to_wococo;
-pub mod westend_headers_to_millau;
-pub mod wococo_headers_to_rococo;
-pub mod wococo_messages_to_rococo;
+pub mod betanet_headers_to_wococo;
+pub mod betanet_messages_to_wococo;
+pub mod alphanet_headers_to_millau;
+pub mod wococo_headers_to_betanet;
+pub mod wococo_messages_to_betanet;
 
-mod kusama;
+mod axctest;
 mod millau;
 mod axia;
 mod rialto;
-mod rialto_parachain;
-mod rococo;
-mod westend;
+mod rialto_allychain;
+mod betanet;
+mod alphanet;
 mod wococo;
 
 use relay_utils::metrics::{MetricsParams, StandaloneMetric};
 
-pub(crate) fn add_axia_kusama_price_metrics<T: finality_relay::FinalitySyncPipeline>(
+pub(crate) fn add_axia_axctest_price_metrics<T: finality_relay::FinalitySyncPipeline>(
 	params: MetricsParams,
 ) -> anyhow::Result<MetricsParams> {
 	axlib_relay_helper::helpers::token_price_metric(axia::TOKEN_ID)?
 		.register_and_spawn(&params.registry)?;
-	axlib_relay_helper::helpers::token_price_metric(kusama::TOKEN_ID)?
+	axlib_relay_helper::helpers::token_price_metric(axctest::TOKEN_ID)?
 		.register_and_spawn(&params.registry)?;
 	Ok(params)
 }
@@ -251,7 +251,7 @@ mod tests {
 }
 
 #[cfg(test)]
-mod rococo_tests {
+mod betanet_tests {
 	use bp_header_chain::justification::GrandpaJustification;
 	use codec::Encode;
 
@@ -276,7 +276,7 @@ mod rococo_tests {
 			votes_ancestries: vec![],
 		};
 
-		let actual = relay_rococo_client::runtime::BridgeGrandpaWococoCall::submit_finality_proof(
+		let actual = relay_betanet_client::runtime::BridgeGrandpaWococoCall::submit_finality_proof(
 			Box::new(header.clone()),
 			justification.clone(),
 		);
@@ -300,7 +300,7 @@ mod rococo_tests {
 }
 
 #[cfg(test)]
-mod westend_tests {
+mod alphanet_tests {
 	use bp_header_chain::justification::GrandpaJustification;
 	use codec::Encode;
 
@@ -325,7 +325,7 @@ mod westend_tests {
 			votes_ancestries: vec![],
 		};
 
-		let actual = relay_kusama_client::runtime::BridgeAxiaGrandpaCall::submit_finality_proof(
+		let actual = relay_axctest_client::runtime::BridgeAxiaGrandpaCall::submit_finality_proof(
 			Box::new(header.clone()),
 			justification.clone(),
 		);

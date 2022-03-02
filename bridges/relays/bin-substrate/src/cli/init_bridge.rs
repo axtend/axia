@@ -43,11 +43,11 @@ pub struct InitBridge {
 pub enum InitBridgeName {
 	MillauToRialto,
 	RialtoToMillau,
-	WestendToMillau,
-	RococoToWococo,
-	WococoToRococo,
-	KusamaToAxia,
-	AxiaToKusama,
+	AlphanetToMillau,
+	BetanetToWococo,
+	WococoToBetanet,
+	AxiaTestToAxia,
+	AxiaToAxiaTest,
 }
 
 macro_rules! select_bridge {
@@ -89,20 +89,20 @@ macro_rules! select_bridge {
 
 				$generic
 			},
-			InitBridgeName::WestendToMillau => {
-				type Source = relay_westend_client::Westend;
+			InitBridgeName::AlphanetToMillau => {
+				type Source = relay_alphanet_client::Alphanet;
 				type Target = relay_millau_client::Millau;
 
 				fn encode_init_bridge(
 					init_data: InitializationData<<Source as ChainBase>::Header>,
 				) -> <Target as Chain>::Call {
-					// at Westend -> Millau initialization we're not using sudo, because otherwise
+					// at Alphanet -> Millau initialization we're not using sudo, because otherwise
 					// our deployments may fail, because we need to initialize both Rialto -> Millau
-					// and Westend -> Millau bridge. => since there's single possible sudo account,
+					// and Alphanet -> Millau bridge. => since there's single possible sudo account,
 					// one of transaction may fail with duplicate nonce error
 					millau_runtime::BridgeGrandpaCall::<
 						millau_runtime::Runtime,
-						millau_runtime::WestendGrandpaInstance,
+						millau_runtime::AlphanetGrandpaInstance,
 					>::initialize {
 						init_data,
 					}
@@ -111,15 +111,15 @@ macro_rules! select_bridge {
 
 				$generic
 			},
-			InitBridgeName::RococoToWococo => {
-				type Source = relay_rococo_client::Rococo;
+			InitBridgeName::BetanetToWococo => {
+				type Source = relay_betanet_client::Betanet;
 				type Target = relay_wococo_client::Wococo;
 
 				fn encode_init_bridge(
 					init_data: InitializationData<<Source as ChainBase>::Header>,
 				) -> <Target as Chain>::Call {
-					relay_wococo_client::runtime::Call::BridgeGrandpaRococo(
-						relay_wococo_client::runtime::BridgeGrandpaRococoCall::initialize(
+					relay_wococo_client::runtime::Call::BridgeGrandpaBetanet(
+						relay_wococo_client::runtime::BridgeGrandpaBetanetCall::initialize(
 							init_data,
 						),
 					)
@@ -127,15 +127,15 @@ macro_rules! select_bridge {
 
 				$generic
 			},
-			InitBridgeName::WococoToRococo => {
+			InitBridgeName::WococoToBetanet => {
 				type Source = relay_wococo_client::Wococo;
-				type Target = relay_rococo_client::Rococo;
+				type Target = relay_betanet_client::Betanet;
 
 				fn encode_init_bridge(
 					init_data: InitializationData<<Source as ChainBase>::Header>,
 				) -> <Target as Chain>::Call {
-					relay_rococo_client::runtime::Call::BridgeGrandpaWococo(
-						relay_rococo_client::runtime::BridgeGrandpaWococoCall::initialize(
+					relay_betanet_client::runtime::Call::BridgeGrandpaWococo(
+						relay_betanet_client::runtime::BridgeGrandpaWococoCall::initialize(
 							init_data,
 						),
 					)
@@ -143,15 +143,15 @@ macro_rules! select_bridge {
 
 				$generic
 			},
-			InitBridgeName::KusamaToAxia => {
-				type Source = relay_kusama_client::Kusama;
+			InitBridgeName::AxiaTestToAxia => {
+				type Source = relay_axctest_client::AxiaTest;
 				type Target = relay_axia_client::Axia;
 
 				fn encode_init_bridge(
 					init_data: InitializationData<<Source as ChainBase>::Header>,
 				) -> <Target as Chain>::Call {
-					relay_axia_client::runtime::Call::BridgeKusamaGrandpa(
-						relay_axia_client::runtime::BridgeKusamaGrandpaCall::initialize(
+					relay_axia_client::runtime::Call::BridgeAxiaTestGrandpa(
+						relay_axia_client::runtime::BridgeAxiaTestGrandpaCall::initialize(
 							init_data,
 						),
 					)
@@ -159,15 +159,15 @@ macro_rules! select_bridge {
 
 				$generic
 			},
-			InitBridgeName::AxiaToKusama => {
+			InitBridgeName::AxiaToAxiaTest => {
 				type Source = relay_axia_client::Axia;
-				type Target = relay_kusama_client::Kusama;
+				type Target = relay_axctest_client::AxiaTest;
 
 				fn encode_init_bridge(
 					init_data: InitializationData<<Source as ChainBase>::Header>,
 				) -> <Target as Chain>::Call {
-					relay_kusama_client::runtime::Call::BridgeAxiaGrandpa(
-						relay_kusama_client::runtime::BridgeAxiaGrandpaCall::initialize(
+					relay_axctest_client::runtime::Call::BridgeAxiaGrandpa(
+						relay_axctest_client::runtime::BridgeAxiaGrandpaCall::initialize(
 							init_data,
 						),
 					)

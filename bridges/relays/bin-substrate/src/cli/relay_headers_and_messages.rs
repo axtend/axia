@@ -54,8 +54,8 @@ const CONVERSION_RATE_ALLOWED_DIFFERENCE_RATIO: f64 = 0.05;
 #[derive(StructOpt)]
 pub enum RelayHeadersAndMessages {
 	MillauRialto(MillauRialtoHeadersAndMessages),
-	RococoWococo(RococoWococoHeadersAndMessages),
-	KusamaAxia(KusamaAxiaHeadersAndMessages),
+	BetanetWococo(BetanetWococoHeadersAndMessages),
+	AxiaTestAxia(AxiaTestAxiaHeadersAndMessages),
 }
 
 /// Parameters that have the same names across all bridges.
@@ -166,31 +166,31 @@ macro_rules! select_bridge {
 
 				$generic
 			},
-			RelayHeadersAndMessages::RococoWococo(_) => {
-				type Params = RococoWococoHeadersAndMessages;
+			RelayHeadersAndMessages::BetanetWococo(_) => {
+				type Params = BetanetWococoHeadersAndMessages;
 
-				type Left = relay_rococo_client::Rococo;
+				type Left = relay_betanet_client::Betanet;
 				type Right = relay_wococo_client::Wococo;
 
 				type LeftToRightFinality =
-					crate::chains::rococo_headers_to_wococo::RococoFinalityToWococo;
+					crate::chains::betanet_headers_to_wococo::BetanetFinalityToWococo;
 				type RightToLeftFinality =
-					crate::chains::wococo_headers_to_rococo::WococoFinalityToRococo;
+					crate::chains::wococo_headers_to_betanet::WococoFinalityToBetanet;
 
-				type LeftAccountIdConverter = bp_rococo::AccountIdConverter;
+				type LeftAccountIdConverter = bp_betanet::AccountIdConverter;
 				type RightAccountIdConverter = bp_wococo::AccountIdConverter;
 
-				const MAX_MISSING_LEFT_HEADERS_AT_RIGHT: bp_rococo::BlockNumber =
-					bp_rococo::SESSION_LENGTH;
+				const MAX_MISSING_LEFT_HEADERS_AT_RIGHT: bp_betanet::BlockNumber =
+					bp_betanet::SESSION_LENGTH;
 				const MAX_MISSING_RIGHT_HEADERS_AT_LEFT: bp_wococo::BlockNumber =
 					bp_wococo::SESSION_LENGTH;
 
 				use crate::chains::{
-					rococo_messages_to_wococo::{
+					betanet_messages_to_wococo::{
 						standalone_metrics as left_to_right_standalone_metrics,
 						run as left_to_right_messages,
 					},
-					wococo_messages_to_rococo::{
+					wococo_messages_to_betanet::{
 						run as right_to_left_messages,
 					},
 				};
@@ -229,34 +229,34 @@ macro_rules! select_bridge {
 
 				$generic
 			},
-			RelayHeadersAndMessages::KusamaAxia(_) => {
-				type Params = KusamaAxiaHeadersAndMessages;
+			RelayHeadersAndMessages::AxiaTestAxia(_) => {
+				type Params = AxiaTestAxiaHeadersAndMessages;
 
-				type Left = relay_kusama_client::Kusama;
+				type Left = relay_axctest_client::AxiaTest;
 				type Right = relay_axia_client::Axia;
 
 				type LeftToRightFinality =
-					crate::chains::kusama_headers_to_axia::KusamaFinalityToAxia;
+					crate::chains::axctest_headers_to_axia::AxiaTestFinalityToAxia;
 				type RightToLeftFinality =
-					crate::chains::axia_headers_to_kusama::AxiaFinalityToKusama;
+					crate::chains::axia_headers_to_axctest::AxiaFinalityToAxiaTest;
 
-				type LeftAccountIdConverter = bp_kusama::AccountIdConverter;
+				type LeftAccountIdConverter = bp_axctest::AccountIdConverter;
 				type RightAccountIdConverter = bp_axia::AccountIdConverter;
 
-				const MAX_MISSING_LEFT_HEADERS_AT_RIGHT: bp_kusama::BlockNumber =
-					bp_kusama::SESSION_LENGTH;
+				const MAX_MISSING_LEFT_HEADERS_AT_RIGHT: bp_axctest::BlockNumber =
+					bp_axctest::SESSION_LENGTH;
 				const MAX_MISSING_RIGHT_HEADERS_AT_LEFT: bp_axia::BlockNumber =
 					bp_axia::SESSION_LENGTH;
 
 				use crate::chains::{
-					kusama_messages_to_axia::{
+					axctest_messages_to_axia::{
 						standalone_metrics as left_to_right_standalone_metrics,
 						run as left_to_right_messages,
-						update_axia_to_kusama_conversion_rate as update_right_to_left_conversion_rate,
+						update_axia_to_axctest_conversion_rate as update_right_to_left_conversion_rate,
 					},
-					axia_messages_to_kusama::{
+					axia_messages_to_axctest::{
 						run as right_to_left_messages,
-						update_kusama_to_axia_conversion_rate as update_left_to_right_conversion_rate,
+						update_axctest_to_axia_conversion_rate as update_left_to_right_conversion_rate,
 					},
 				};
 
@@ -273,10 +273,10 @@ macro_rules! select_bridge {
 								Bytes(
 									Left::sign_transaction(left_genesis_hash, &left_sign, relay_axlib_client::TransactionEra::immortal(),
 										UnsignedTransaction::new(
-											relay_kusama_client::runtime::Call::Balances(
-												relay_kusama_client::runtime::BalancesCall::transfer(
-													bp_kusama::AccountAddress::Id(account_id),
-													bp_kusama::EXISTENTIAL_DEPOSIT.into(),
+											relay_axctest_client::runtime::Call::Balances(
+												relay_axctest_client::runtime::BalancesCall::transfer(
+													bp_axctest::AccountAddress::Id(account_id),
+													bp_axctest::EXISTENTIAL_DEPOSIT.into(),
 												),
 											),
 											transaction_nonce,
@@ -329,14 +329,14 @@ macro_rules! select_bridge {
 // All supported chains.
 declare_chain_options!(Millau, millau);
 declare_chain_options!(Rialto, rialto);
-declare_chain_options!(Rococo, rococo);
+declare_chain_options!(Betanet, betanet);
 declare_chain_options!(Wococo, wococo);
-declare_chain_options!(Kusama, kusama);
+declare_chain_options!(AxiaTest, axctest);
 declare_chain_options!(Axia, axia);
 // All supported bridges.
 declare_bridge_options!(Millau, Rialto);
-declare_bridge_options!(Rococo, Wococo);
-declare_bridge_options!(Kusama, Axia);
+declare_bridge_options!(Betanet, Wococo);
+declare_bridge_options!(AxiaTest, Axia);
 
 impl RelayHeadersAndMessages {
 	/// Run the command.

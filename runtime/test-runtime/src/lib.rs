@@ -434,7 +434,7 @@ parameter_types! {
 }
 
 parameter_types! {
-	pub Prefix: &'static [u8] = b"Pay KSMs to the AxiaTest account:";
+	pub Prefix: &'static [u8] = b"Pay AXCTs to the AxiaTest account:";
 }
 
 impl claims::Config for Runtime {

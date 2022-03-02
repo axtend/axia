@@ -21,7 +21,7 @@ use grandpa::AuthorityId as GrandpaId;
 #[cfg(feature = "axctest-native")]
 use axctest_runtime as axctest;
 #[cfg(feature = "axctest-native")]
-use axctest_runtime_constants::currency::UNITS as KSM;
+use axctest_runtime_constants::currency::UNITS as AXCT;
 use pallet_im_online::sr25519::AuthorityId as ImOnlineId;
 use pallet_staking::Forcing;
 use axia_primitives::v1::{AccountId, AccountPublic, AssignmentId, ValidatorId};
@@ -699,8 +699,8 @@ fn axctest_staging_testnet_config_genesis(wasm_binary: &[u8]) -> axctest::Genesi
 		),
 	];
 
-	const ENDOWMENT: u128 = 1_000_000 * KSM;
-	const STASH: u128 = 100 * KSM;
+	const ENDOWMENT: u128 = 1_000_000 * AXCT;
+	const STASH: u128 = 100 * AXCT;
 
 	axctest::GenesisConfig {
 		system: axctest::SystemConfig { code: wasm_binary.to_vec() },
@@ -1360,8 +1360,8 @@ pub fn axctest_testnet_genesis(
 ) -> axctest::GenesisConfig {
 	let endowed_accounts: Vec<AccountId> = endowed_accounts.unwrap_or_else(testnet_accounts);
 
-	const ENDOWMENT: u128 = 1_000_000 * KSM;
-	const STASH: u128 = 100 * KSM;
+	const ENDOWMENT: u128 = 1_000_000 * AXCT;
+	const STASH: u128 = 100 * AXCT;
 
 	axctest::GenesisConfig {
 		system: axctest::SystemConfig { code: wasm_binary.to_vec() },
