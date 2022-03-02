@@ -17,7 +17,7 @@
 //! # XCM Version 1
 //! Version 1 of the Cross-Consensus Message format data structures. The comprehensive list of
 //! changes can be found in
-//! [this PR description](https://github.com/axiatech/polkadot/pull/2815#issue-608567900).
+//! [this PR description](https://github.com/axiatech/axia/pull/2815#issue-608567900).
 //!
 //! ## Changes to be aware of
 //! Most changes should automatically be resolved via the conversion traits (i.e. `TryFrom` and

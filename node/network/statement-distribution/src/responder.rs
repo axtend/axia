@@ -20,7 +20,7 @@ use futures::{
 	SinkExt, StreamExt,
 };
 
-use polkadot_node_network_protocol::{
+use axia_node_network_protocol::{
 	request_response::{
 		incoming::{self, OutgoingResponse},
 		v1::{StatementFetchingRequest, StatementFetchingResponse},
@@ -28,7 +28,7 @@ use polkadot_node_network_protocol::{
 	},
 	PeerId, UnifiedReputationChange as Rep,
 };
-use polkadot_primitives::v1::{CandidateHash, CommittedCandidateReceipt, Hash};
+use axia_primitives::v1::{CandidateHash, CommittedCandidateReceipt, Hash};
 
 use crate::LOG_TARGET;
 

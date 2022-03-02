@@ -37,7 +37,7 @@ gcloud container clusters get-credentials "parity-zombienet" --zone "europe-west
 # launching the actual test
 cd zombienet
 npm run build
-node dist/cli.js test <path to polkadot repo>/node/malus/integrationtests/0001-dispute-valid-block.feature
+node dist/cli.js test <path to axia repo>/node/malus/integrationtests/0001-dispute-valid-block.feature
 
 # Access  logs (in google cloud storage)
 gsutil ls gs://zombienet-logs/zombie-<namespace uniqueId>/logs/
@@ -48,7 +48,7 @@ This will also teardown the namespace after completion.
 ## Container Image Building Note
 
 In order to build the container image you need to have the latest changes from
-polkadot and axlib master branches.
+axia and axlib master branches.
 
 ```sh
 pwd # run this from the current dir

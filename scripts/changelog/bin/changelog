@@ -16,42 +16,42 @@ logger.level = Logger::DEBUG
 logger.debug('Starting')
 
 owner = 'axiatech'
-repo = 'polkadot'
+repo = 'axia'
 
-gh_polkadot = SubRef.new(format('%<owner>s/%<repo>s', { owner: owner, repo: repo }))
-last_release_ref = gh_polkadot.get_last_ref()
+gh_axia = SubRef.new(format('%<owner>s/%<repo>s', { owner: owner, repo: repo }))
+last_release_ref = gh_axia.get_last_ref()
 
-polkadot_ref1 = ARGV[0] || last_release_ref
-polkadot_ref2 = ARGV[1] || 'HEAD'
+axia_ref1 = ARGV[0] || last_release_ref
+axia_ref2 = ARGV[1] || 'HEAD'
 output = ARGV[2] || 'release-notes.md'
 
-ENV['REF1'] = polkadot_ref1
-ENV['REF2'] = polkadot_ref2
+ENV['REF1'] = axia_ref1
+ENV['REF2'] = axia_ref2
 
-axlib_ref1 = gh_polkadot.get_dependency_reference(polkadot_ref1, 'sp-io')
-axlib_ref2 = gh_polkadot.get_dependency_reference(polkadot_ref2, 'sp-io')
+axlib_ref1 = gh_axia.get_dependency_reference(axia_ref1, 'sp-io')
+axlib_ref2 = gh_axia.get_dependency_reference(axia_ref2, 'sp-io')
 
-logger.debug("Axia from:   #{polkadot_ref1}")
-logger.debug("Axia to:     #{polkadot_ref2}")
+logger.debug("Axia from:   #{axia_ref1}")
+logger.debug("Axia to:     #{axia_ref2}")
 
 logger.debug("Axlib from:  #{axlib_ref1}")
 logger.debug("Axlib to:    #{axlib_ref2}")
 
 axlib_data = 'axlib.json'
-polkadot_data = 'polkadot.json'
+axia_data = 'axia.json'
 
 logger.debug("Using AXLIB: #{axlib_data}")
-logger.debug("Using AXIA:  #{polkadot_data}")
+logger.debug("Using AXIA:  #{axia_data}")
 
 logger.warn('NO_CACHE set') if ENV['NO_CACHE']
 
-if ENV['NO_CACHE'] || !File.file?(polkadot_data)
-  logger.debug(format('Fetching data for Axia into %s', polkadot_data))
+if ENV['NO_CACHE'] || !File.file?(axia_data)
+  logger.debug(format('Fetching data for Axia into %s', axia_data))
   cmd = format('changelogerator %<owner>s/%<repo>s -f %<from>s -t %<to>s > %<output>s',
-               { owner: owner, repo: 'polkadot', from: polkadot_ref1, to: polkadot_ref2, output: polkadot_data })
+               { owner: owner, repo: 'axia', from: axia_ref1, to: axia_ref2, output: axia_data })
   system(cmd)
 else
-  logger.debug("Re-using:#{polkadot_data}")
+  logger.debug("Re-using:#{axia_data}")
 end
 
 if ENV['NO_CACHE'] || !File.file?(axlib_data)
@@ -65,24 +65,24 @@ end
 
 AXIATEST_DIGEST = ENV['AXIATEST_DIGEST'] || 'digests/axctest_srtool_output.json'
 ALPHANET_DIGEST = ENV['ALPHANET_DIGEST'] || 'digests/alphanet_srtool_output.json'
-AXIA_DIGEST = ENV['AXIA_DIGEST'] || 'digests/polkadot_srtool_output.json'
+AXIA_DIGEST = ENV['AXIA_DIGEST'] || 'digests/axia_srtool_output.json'
 
 # Here we compose all the pieces together into one
 # single big json file.
 cmd = format('jq \
     --slurpfile axlib %s \
-    --slurpfile polkadot %s \
+    --slurpfile axia %s \
     --slurpfile srtool_axctest %s \
     --slurpfile srtool_alphanet %s \
-    --slurpfile srtool_polkadot %s \
+    --slurpfile srtool_axia %s \
     -n \'{
             axlib: $axlib[0],
-            polkadot: $polkadot[0],
+            axia: $axia[0],
         srtool: [
         { name: "axctest", data: $srtool_axctest[0] },
         { name: "alphanet", data: $srtool_alphanet[0] },
-        { name: "polkadot", data: $srtool_polkadot[0] }
-    ] }\' > context.json', axlib_data, polkadot_data,
+        { name: "axia", data: $srtool_axia[0] }
+    ] }\' > context.json', axlib_data, axia_data,
              AXIATEST_DIGEST,
              ALPHANET_DIGEST,
              AXIA_DIGEST)

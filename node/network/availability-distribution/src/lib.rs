@@ -18,8 +18,8 @@ use futures::{future::Either, FutureExt, StreamExt, TryFutureExt};
 
 use sp_keystore::SyncCryptoStorePtr;
 
-use polkadot_node_network_protocol::request_response::{v1, IncomingRequestReceiver};
-use polkadot_subsystem::{
+use axia_node_network_protocol::request_response::{v1, IncomingRequestReceiver};
+use axia_subsystem::{
 	messages::AvailabilityDistributionMessage, overseer, FromOverseer, OverseerSignal,
 	SpawnedSubsystem, SubsystemContext, SubsystemError,
 };
@@ -28,7 +28,7 @@ use polkadot_subsystem::{
 mod error;
 use error::{log_error, Fatal, Result};
 
-use polkadot_node_subsystem_util::runtime::RuntimeInfo;
+use axia_node_subsystem_util::runtime::RuntimeInfo;
 
 /// `Requester` taking care of requesting chunks for candidates pending availability.
 mod requester;

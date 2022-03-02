@@ -100,8 +100,8 @@ macro_rules! select_bridge {
 				$generic
 			},
 			RelayChain::Axia => {
-				type Target = relay_polkadot_client::Axia;
-				type TargetSign = relay_polkadot_client::Axia;
+				type Target = relay_axia_client::Axia;
+				type TargetSign = relay_axia_client::Axia;
 
 				$generic
 			},

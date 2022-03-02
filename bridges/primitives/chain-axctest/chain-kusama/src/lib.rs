@@ -27,7 +27,7 @@ use frame_support::weights::{
 use sp_std::prelude::*;
 use sp_version::RuntimeVersion;
 
-pub use bp_polkadot_core::*;
+pub use bp_axia_core::*;
 
 /// AxiaTest Chain
 pub type AxiaTest = AxiaLike;
@@ -63,7 +63,7 @@ impl WeightToFeePolynomial for WeightToFee {
 
 // We use this to get the account on AxiaTest (target) which is derived from Axia's (source)
 // account.
-pub fn derive_account_from_polkadot_id(id: bp_runtime::SourceAccount<AccountId>) -> AccountId {
+pub fn derive_account_from_axia_id(id: bp_runtime::SourceAccount<AccountId>) -> AccountId {
 	let encoded_id = bp_runtime::derive_account_id(bp_runtime::AXIA_CHAIN_ID, id);
 	AccountIdConverter::convert(encoded_id)
 }

@@ -60,10 +60,10 @@ frame-system = { git = "https://github.com/axtend/axlib", default-features = fal
 frame-system-rpc-runtime-api = { git = "https://github.com/axtend/axlib", default-features = false , branch = "c92f69d" }
 rococo-runtime-constants = { package = "rococo-runtime-constants", path = "./constants", default-features = false }
 
-runtime-common = { package = "polkadot-runtime-common", path = "../common", default-features = false }
-primitives = { package = "polkadot-primitives", path = "../../primitives", default-features = false }
-polkadot-parachain = { path = "../../parachain", default-features = false }
-runtime-parachains = { package = "polkadot-runtime-parachains", path = "../parachains", default-features = false }
+runtime-common = { package = "axia-runtime-common", path = "../common", default-features = false }
+primitives = { package = "axia-primitives", path = "../../primitives", default-features = false }
+axia-parachain = { path = "../../parachain", default-features = false }
+runtime-parachains = { package = "axia-runtime-parachains", path = "../parachains", default-features = false }
 
 xcm = { package = "xcm", path = "../../xcm", default-features = false }
 xcm-executor = { package = "xcm-executor", path = "../../xcm/xcm-executor", default-features = false }
@@ -128,7 +128,7 @@ std = [
 	"pallet-transaction-payment-rpc-runtime-api/std",
 	"inherents/std",
 	"frame-support/std",
-	"polkadot-parachain/std",
+	"axia-parachain/std",
 	"primitives/std",
 	"runtime-common/std",
 	"runtime-parachains/std",

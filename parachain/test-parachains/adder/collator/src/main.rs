@@ -1,25 +1,25 @@
 // Copyright 2020 Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// This file is part of Axia.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// Axia is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// Axia is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with Axia.  If not, see <http://www.gnu.org/licenses/>.
 
 //! Collator for the adder test parachain.
 
-use polkadot_cli::{Error, Result};
-use polkadot_node_primitives::CollationGenerationConfig;
-use polkadot_node_subsystem::messages::{CollationGenerationMessage, CollatorProtocolMessage};
-use polkadot_primitives::v1::Id as ParaId;
+use axia_cli::{Error, Result};
+use axia_node_primitives::CollationGenerationConfig;
+use axia_node_subsystem::messages::{CollationGenerationMessage, CollatorProtocolMessage};
+use axia_primitives::v1::Id as ParaId;
 use sc_cli::{Error as SubstrateCliError, Role, SubstrateCli};
 use sp_core::hexdisplay::HexDisplay;
 use test_parachain_adder_collator::Collator;
@@ -61,15 +61,15 @@ fn main() -> Result<()> {
 					_ => {
 						let collator = Collator::new();
 
-						let full_node = polkadot_service::build_full(
+						let full_node = axia_service::build_full(
 							config,
-							polkadot_service::IsCollator::Yes(collator.collator_key()),
+							axia_service::IsCollator::Yes(collator.collator_key()),
 							None,
 							true,
 							None,
 							None,
 							false,
-							polkadot_service::RealOverseerGen,
+							axia_service::RealOverseerGen,
 						)
 						.map_err(|e| e.to_string())?;
 						let mut overseer_handle = full_node

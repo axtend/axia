@@ -1,5 +1,5 @@
 [package]
-name = "polkadot-node-core-pvf-checker"
+name = "axia-node-core-pvf-checker"
 version = "0.9.17"
 authors = ["Axia Technologies <admin@axia.io>"]
 edition = "2018"
@@ -9,11 +9,11 @@ futures = "0.3.21"
 thiserror = "1.0.30"
 tracing = "0.1.29"
 
-polkadot-node-primitives = { path = "../../primitives" }
-polkadot-node-subsystem = { path = "../../subsystem" }
-polkadot-primitives = { path = "../../../primitives" }
-polkadot-node-subsystem-util = { path = "../../subsystem-util" }
-polkadot-overseer = { path = "../../overseer" }
+axia-node-primitives = { path = "../../primitives" }
+axia-node-subsystem = { path = "../../subsystem" }
+axia-primitives = { path = "../../../primitives" }
+axia-node-subsystem-util = { path = "../../subsystem-util" }
+axia-overseer = { path = "../../overseer" }
 
 sp-keystore = { git = "https://github.com/axtend/axlib", branch = "c92f69d" }
 
@@ -22,7 +22,7 @@ sp-core = { git = "https://github.com/axtend/axlib", branch = "c92f69d" }
 sp-runtime = { git = "https://github.com/axtend/axlib", branch = "c92f69d" }
 sc-keystore = { git = "https://github.com/axtend/axlib", branch = "c92f69d" }
 sp-keyring = { git = "https://github.com/axtend/axlib", branch = "c92f69d" }
-polkadot-node-subsystem-test-helpers = { path = "../../subsystem-test-helpers"}
-test-helpers = { package = "polkadot-primitives-test-helpers", path = "../../../primitives/test-helpers" }
+axia-node-subsystem-test-helpers = { path = "../../subsystem-test-helpers"}
+test-helpers = { package = "axia-primitives-test-helpers", path = "../../../primitives/test-helpers" }
 sp-application-crypto = { git = "https://github.com/axtend/axlib", branch = "c92f69d" }
 futures-timer = "3.0.2"

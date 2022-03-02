@@ -16,7 +16,7 @@
 
 //! Runtime declaration of the allychain metrics.
 
-use polkadot_runtime_metrics::{Counter, CounterVec};
+use axia_runtime_metrics::{Counter, CounterVec};
 use primitives::v1::metric_definitions::{
 	ALLYCHAIN_CREATE_INHERENT_BITFIELDS_SIGNATURE_CHECKS,
 	ALLYCHAIN_INHERENT_DATA_BITFIELDS_PROCESSED, ALLYCHAIN_INHERENT_DATA_CANDIDATES_PROCESSED,

@@ -29,21 +29,21 @@ use lru::LruCache;
 
 use sc_keystore::LocalKeystore;
 
-use polkadot_node_primitives::{
+use axia_node_primitives::{
 	CandidateVotes, DisputeMessage, DisputeMessageCheckError, SignedDisputeStatement,
 	DISPUTE_WINDOW,
 };
-use polkadot_node_subsystem::{
+use axia_node_subsystem::{
 	messages::{
 		BlockDescription, DisputeCoordinatorMessage, DisputeDistributionMessage,
 		ImportStatementsResult, RuntimeApiMessage, RuntimeApiRequest,
 	},
 	overseer, ActivatedLeaf, ActiveLeavesUpdate, FromOverseer, OverseerSignal, SubsystemContext,
 };
-use polkadot_node_subsystem_util::rolling_session_window::{
+use axia_node_subsystem_util::rolling_session_window::{
 	RollingSessionWindow, SessionWindowUpdate, SessionsUnavailable,
 };
-use polkadot_primitives::{
+use axia_primitives::{
 	v1::{
 		byzantine_threshold, BlockNumber, CandidateHash, CandidateReceipt, CompactStatement,
 		DisputeStatement, DisputeStatementSet, Hash, ScrapedOnChainVotes, SessionIndex,
@@ -577,7 +577,7 @@ impl Initialized {
 					ctx,
 					overlay_db,
 					candidate_hash,
-					// TODO <https://github.com/axiatech/polkadot/issues/4011>
+					// TODO <https://github.com/axiatech/axia/issues/4011>
 					MaybeCandidateReceipt::AssumeBackingVotePresent,
 					session,
 					statements,
@@ -769,7 +769,7 @@ impl Initialized {
 		let n_validators = validators.len();
 
 		let supermajority_threshold =
-			polkadot_primitives::v1::supermajority_threshold(n_validators);
+			axia_primitives::v1::supermajority_threshold(n_validators);
 
 		// In case we are not provided with a candidate receipt
 		// we operate under the assumption, that a previous vote

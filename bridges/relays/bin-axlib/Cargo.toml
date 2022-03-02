@@ -26,7 +26,7 @@ bp-axctest = { path = "../../primitives/chain-axctest" }
 bp-messages = { path = "../../primitives/messages" }
 bp-message-dispatch = { path = "../../primitives/message-dispatch" }
 bp-millau = { path = "../../primitives/chain-millau" }
-bp-polkadot = { path = "../../primitives/chain-polkadot" }
+bp-axia = { path = "../../primitives/chain-axia" }
 bp-rialto = { path = "../../primitives/chain-rialto" }
 bp-rialto-allychain = { path = "../../primitives/chain-rialto-allychain" }
 bp-betanet = { path = "../../primitives/chain-betanet" }
@@ -43,7 +43,7 @@ pallet-bridge-messages = { path = "../../modules/messages" }
 pallet-bridge-token-swap = { path = "../../modules/token-swap" }
 relay-axctest-client = { path = "../client-axctest" }
 relay-millau-client = { path = "../client-millau" }
-relay-polkadot-client = { path = "../client-polkadot" }
+relay-axia-client = { path = "../client-axia" }
 relay-rialto-client = { path = "../client-rialto" }
 relay-rialto-allychain-client = { path = "../client-rialto-allychain" }
 relay-betanet-client = { path = "../client-betanet" }
@@ -66,10 +66,10 @@ sp-version = { git = "https://github.com/axtend/axlib", branch = "c92f69d" }
 
 # Axia Dependencies
 
-polkadot-allychain = { git = "https://github.com/axiatech/polkadot", branch = "master" }
-polkadot-primitives = { git = "https://github.com/axiatech/polkadot", branch = "master" }
-polkadot-runtime-common = { git = "https://github.com/axiatech/polkadot", branch = "master" }
-polkadot-runtime-allychains = { git = "https://github.com/axiatech/polkadot", branch = "master" }
+axia-allychain = { git = "https://github.com/axia-tech/axia", branch = "master" }
+axia-primitives = { git = "https://github.com/axia-tech/axia", branch = "master" }
+axia-runtime-common = { git = "https://github.com/axia-tech/axia", branch = "master" }
+axia-runtime-allychains = { git = "https://github.com/axia-tech/axia", branch = "master" }
 
 [dev-dependencies]
 hex-literal = "0.3"

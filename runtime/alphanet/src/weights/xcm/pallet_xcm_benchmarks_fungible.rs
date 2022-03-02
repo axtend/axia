@@ -21,7 +21,7 @@
 //! EXECUTION: Some(Wasm), WASM-EXECUTION: Compiled, CHAIN: Some("alphanet-dev"), DB CACHE: 128
 
 // Executed Command:
-// target/release/polkadot
+// target/release/axia
 // benchmark
 // --chain=alphanet-dev
 // --steps=50

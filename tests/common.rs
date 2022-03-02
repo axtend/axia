@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Axlib.  If not, see <http://www.gnu.org/licenses/>.
 
-use polkadot_core_primitives::Block;
+use axia_core_primitives::Block;
 use remote_externalities::rpc_api::get_finalized_head;
 use std::{
 	process::{Child, ExitStatus},

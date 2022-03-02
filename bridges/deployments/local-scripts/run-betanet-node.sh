@@ -9,6 +9,6 @@
 BETANET_PORT="${BETANET_PORT:-9955}"
 
 RUST_LOG=runtime=trace,runtime::bridge=trace \
-./target/debug/polkadot --chain=betanet-dev --alice --tmp \
+./target/debug/axia --chain=betanet-dev --alice --tmp \
     --rpc-cors=all --unsafe-rpc-external --unsafe-ws-external \
     --port 33044 --rpc-port 9934 --ws-port $BETANET_PORT \

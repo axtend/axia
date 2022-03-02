@@ -28,38 +28,38 @@ use std::time::Duration;
 pub mod runtime;
 
 /// Axia header id.
-pub type HeaderId = relay_utils::HeaderId<bp_polkadot::Hash, bp_polkadot::BlockNumber>;
+pub type HeaderId = relay_utils::HeaderId<bp_axia::Hash, bp_axia::BlockNumber>;
 
 /// Axia chain definition
 #[derive(Debug, Clone, Copy)]
 pub struct Axia;
 
 impl ChainBase for Axia {
-	type BlockNumber = bp_polkadot::BlockNumber;
-	type Hash = bp_polkadot::Hash;
-	type Hasher = bp_polkadot::Hasher;
-	type Header = bp_polkadot::Header;
+	type BlockNumber = bp_axia::BlockNumber;
+	type Hash = bp_axia::Hash;
+	type Hasher = bp_axia::Hasher;
+	type Header = bp_axia::Header;
 
-	type AccountId = bp_polkadot::AccountId;
-	type Balance = bp_polkadot::Balance;
-	type Index = bp_polkadot::Nonce;
-	type Signature = bp_polkadot::Signature;
+	type AccountId = bp_axia::AccountId;
+	type Balance = bp_axia::Balance;
+	type Index = bp_axia::Nonce;
+	type Signature = bp_axia::Signature;
 }
 
 impl Chain for Axia {
 	const NAME: &'static str = "Axia";
 	const AVERAGE_BLOCK_INTERVAL: Duration = Duration::from_secs(6);
-	const STORAGE_PROOF_OVERHEAD: u32 = bp_polkadot::EXTRA_STORAGE_PROOF_SIZE;
-	const MAXIMAL_ENCODED_ACCOUNT_ID_SIZE: u32 = bp_polkadot::MAXIMAL_ENCODED_ACCOUNT_ID_SIZE;
+	const STORAGE_PROOF_OVERHEAD: u32 = bp_axia::EXTRA_STORAGE_PROOF_SIZE;
+	const MAXIMAL_ENCODED_ACCOUNT_ID_SIZE: u32 = bp_axia::MAXIMAL_ENCODED_ACCOUNT_ID_SIZE;
 
-	type SignedBlock = bp_polkadot::SignedBlock;
+	type SignedBlock = bp_axia::SignedBlock;
 	type Call = crate::runtime::Call;
-	type WeightToFee = bp_polkadot::WeightToFee;
+	type WeightToFee = bp_axia::WeightToFee;
 }
 
 impl ChainWithBalances for Axia {
 	fn account_info_storage_key(account_id: &Self::AccountId) -> StorageKey {
-		StorageKey(bp_polkadot::account_info_storage_key(account_id))
+		StorageKey(bp_axia::account_info_storage_key(account_id))
 	}
 }
 
@@ -76,8 +76,8 @@ impl TransactionSignScheme for Axia {
 	) -> Self::SignedTransaction {
 		let raw_payload = SignedPayload::new(
 			unsigned.call,
-			bp_polkadot::SignedExtensions::new(
-				bp_polkadot::VERSION,
+			bp_axia::SignedExtensions::new(
+				bp_axia::VERSION,
 				era,
 				genesis_hash,
 				unsigned.nonce,
@@ -90,7 +90,7 @@ impl TransactionSignScheme for Axia {
 		let signer: sp_runtime::MultiSigner = signer.public().into();
 		let (call, extra, _) = raw_payload.deconstruct();
 
-		bp_polkadot::UncheckedExtrinsic::new_signed(
+		bp_axia::UncheckedExtrinsic::new_signed(
 			call,
 			sp_runtime::MultiAddress::Id(signer.into_account()),
 			signature.into(),
@@ -106,7 +106,7 @@ impl TransactionSignScheme for Axia {
 		tx.signature
 			.as_ref()
 			.map(|(address, _, _)| {
-				*address == bp_polkadot::AccountId::from(*signer.public().as_array_ref()).into()
+				*address == bp_axia::AccountId::from(*signer.public().as_array_ref()).into()
 			})
 			.unwrap_or(false)
 	}
@@ -118,7 +118,7 @@ impl TransactionSignScheme for Axia {
 }
 
 /// Axia header type used in headers sync.
-pub type SyncHeader = relay_axlib_client::SyncHeader<bp_polkadot::Header>;
+pub type SyncHeader = relay_axlib_client::SyncHeader<bp_axia::Header>;
 
 /// Axia signing params.
 pub type SigningParams = sp_core::sr25519::Pair;

@@ -17,14 +17,14 @@
 //! Types that are specific to the Wococo runtime.
 
 use bp_messages::{LaneId, UnrewardedRelayersState};
-use bp_polkadot_core::AxiaLike;
+use bp_axia_core::AxiaLike;
 use bp_runtime::Chain;
 use codec::{Decode, Encode};
 use frame_support::weights::Weight;
 use scale_info::TypeInfo;
 
 /// Unchecked Wococo extrinsic.
-pub type UncheckedExtrinsic = bp_polkadot_core::UncheckedExtrinsic<Call>;
+pub type UncheckedExtrinsic = bp_axia_core::UncheckedExtrinsic<Call>;
 
 /// Betanet account ownership digest from Wococo.
 ///
@@ -59,7 +59,7 @@ where
 /// All entries here (like pretty much in the entire file) must be kept in sync with Betanet
 /// `construct_runtime`, so that we maintain SCALE-compatibility.
 ///
-/// See: [link](https://github.com/axiatech/polkadot/blob/master/runtime/betanet/src/lib.rs)
+/// See: [link](https://github.com/axiatech/axia/blob/master/runtime/betanet/src/lib.rs)
 #[allow(clippy::large_enum_variant)]
 #[derive(Encode, Decode, Debug, PartialEq, Eq, Clone, TypeInfo)]
 pub enum Call {

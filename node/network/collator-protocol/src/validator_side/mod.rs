@@ -32,7 +32,7 @@ use std::{
 
 use sp_keystore::SyncCryptoStorePtr;
 
-use polkadot_node_network_protocol::{
+use axia_node_network_protocol::{
 	peer_set::PeerSet,
 	request_response as req_res,
 	request_response::{
@@ -42,10 +42,10 @@ use polkadot_node_network_protocol::{
 	},
 	v1 as protocol_v1, OurView, PeerId, UnifiedReputationChange as Rep, View,
 };
-use polkadot_node_primitives::{PoV, SignedFullStatement};
-use polkadot_node_subsystem_util::metrics::{self, prometheus};
-use polkadot_primitives::v1::{CandidateReceipt, CollatorId, Hash, Id as ParaId};
-use polkadot_subsystem::{
+use axia_node_primitives::{PoV, SignedFullStatement};
+use axia_node_subsystem_util::metrics::{self, prometheus};
+use axia_primitives::v1::{CandidateReceipt, CollatorId, Hash, Id as ParaId};
+use axia_subsystem::{
 	jaeger,
 	messages::{
 		CandidateBackingMessage, CollatorProtocolMessage, IfDisconnected, NetworkBridgeEvent,
@@ -95,7 +95,7 @@ const ACTIVITY_POLL: Duration = Duration::from_millis(10);
 
 // How often to poll collation responses.
 // This is a hack that should be removed in a refactoring.
-// See https://github.com/axiatech/polkadot/issues/4182
+// See https://github.com/axiatech/axia/issues/4182
 const CHECK_COLLATIONS_POLL: Duration = Duration::from_millis(5);
 
 #[derive(Clone, Default)]
@@ -149,7 +149,7 @@ impl metrics::Metrics for Metrics {
 			collation_requests: prometheus::register(
 				prometheus::CounterVec::new(
 					prometheus::Opts::new(
-						"polkadot_allychain_collation_requests_total",
+						"axia_allychain_collation_requests_total",
 						"Number of collations requested from Collators.",
 					),
 					&["success"],
@@ -159,7 +159,7 @@ impl metrics::Metrics for Metrics {
 			process_msg: prometheus::register(
 				prometheus::Histogram::with_opts(
 					prometheus::HistogramOpts::new(
-						"polkadot_allychain_collator_protocol_validator_process_msg",
+						"axia_allychain_collator_protocol_validator_process_msg",
 						"Time spent within `collator_protocol_validator::process_msg`",
 					)
 				)?,
@@ -168,7 +168,7 @@ impl metrics::Metrics for Metrics {
 			handle_collation_request_result: prometheus::register(
 				prometheus::Histogram::with_opts(
 					prometheus::HistogramOpts::new(
-						"polkadot_allychain_collator_protocol_validator_handle_collation_request_result",
+						"axia_allychain_collator_protocol_validator_handle_collation_request_result",
 						"Time spent within `collator_protocol_validator::handle_collation_request_result`",
 					)
 				)?,
@@ -176,7 +176,7 @@ impl metrics::Metrics for Metrics {
 			)?,
 			collator_peer_count: prometheus::register(
 				prometheus::Gauge::new(
-					"polkadot_allychain_collator_peer_count",
+					"axia_allychain_collator_peer_count",
 					"Amount of collator peers connected",
 				)?,
 				registry,
@@ -347,21 +347,21 @@ impl ActiveParas {
 		new_relay_parents: impl IntoIterator<Item = Hash>,
 	) {
 		for relay_parent in new_relay_parents {
-			let mv = polkadot_node_subsystem_util::request_validators(relay_parent, sender)
+			let mv = axia_node_subsystem_util::request_validators(relay_parent, sender)
 				.await
 				.await
 				.ok()
 				.map(|x| x.ok())
 				.flatten();
 
-			let mg = polkadot_node_subsystem_util::request_validator_groups(relay_parent, sender)
+			let mg = axia_node_subsystem_util::request_validator_groups(relay_parent, sender)
 				.await
 				.await
 				.ok()
 				.map(|x| x.ok())
 				.flatten();
 
-			let mc = polkadot_node_subsystem_util::request_availability_cores(relay_parent, sender)
+			let mc = axia_node_subsystem_util::request_availability_cores(relay_parent, sender)
 				.await
 				.await
 				.ok()
@@ -382,10 +382,10 @@ impl ActiveParas {
 			};
 
 			let para_now =
-				match polkadot_node_subsystem_util::signing_key_and_index(&validators, keystore)
+				match axia_node_subsystem_util::signing_key_and_index(&validators, keystore)
 					.await
 					.and_then(|(_, index)| {
-						polkadot_node_subsystem_util::find_validator_group(&groups, index)
+						axia_node_subsystem_util::find_validator_group(&groups, index)
 					}) {
 					Some(group) => {
 						let core_now = rotation_info.core_for_group(group, cores.len());
@@ -1390,7 +1390,7 @@ async fn poll_collation_response(
 					"Request timed out"
 				);
 				// For now we don't want to change reputation on timeout, to mitigate issues like
-				// this: https://github.com/axiatech/polkadot/issues/4617
+				// this: https://github.com/axiatech/axia/issues/4617
 				CollationFetchResult::Error(None)
 			},
 			Err(RequestError::NetworkError(err)) => {

@@ -36,26 +36,26 @@ use futures::{
 use lru::LruCache;
 use rand::seq::SliceRandom;
 
-use polkadot_erasure_coding::{branch_hash, branches, obtain_chunks_v1, recovery_threshold};
+use axia_erasure_coding::{branch_hash, branches, obtain_chunks_v1, recovery_threshold};
 #[cfg(not(test))]
-use polkadot_node_network_protocol::request_response::CHUNK_REQUEST_TIMEOUT;
-use polkadot_node_network_protocol::{
+use axia_node_network_protocol::request_response::CHUNK_REQUEST_TIMEOUT;
+use axia_node_network_protocol::{
 	request_response::{
 		self as req_res, incoming, outgoing::RequestError, v1 as request_v1,
 		IncomingRequestReceiver, OutgoingRequest, Recipient, Requests,
 	},
 	IfDisconnected, UnifiedReputationChange as Rep,
 };
-use polkadot_node_primitives::{AvailableData, ErasureChunk};
-use polkadot_node_subsystem_util::request_session_info;
-use polkadot_primitives::{
+use axia_node_primitives::{AvailableData, ErasureChunk};
+use axia_node_subsystem_util::request_session_info;
+use axia_primitives::{
 	v1::{
 		AuthorityDiscoveryId, BlakeTwo256, BlockNumber, CandidateHash, CandidateReceipt,
 		GroupIndex, Hash, HashT, SessionIndex, ValidatorId, ValidatorIndex,
 	},
 	v2::SessionInfo,
 };
-use polkadot_subsystem::{
+use axia_subsystem::{
 	errors::RecoveryError,
 	jaeger,
 	messages::{AvailabilityRecoveryMessage, AvailabilityStoreMessage, NetworkBridgeMessage},
@@ -513,7 +513,7 @@ impl RequestChunksFromValidators {
 			// If that fails, or a re-encoding of it doesn't match the expected erasure root,
 			// return Err(RecoveryError::Invalid)
 			if self.received_chunks.len() >= params.threshold {
-				return match polkadot_erasure_coding::reconstruct_v1(
+				return match axia_erasure_coding::reconstruct_v1(
 					params.validators.len(),
 					self.received_chunks.values().map(|c| (&c.chunk[..], c.index.0 as usize)),
 				) {

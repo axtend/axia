@@ -23,7 +23,7 @@ use parity_scale_codec::Encode;
 use sp_core::testing::TaskExecutor;
 
 use ::test_helpers::{dummy_collator, dummy_collator_signature, dummy_hash};
-use polkadot_node_subsystem::{
+use axia_node_subsystem::{
 	jaeger,
 	messages::{
 		AllMessages, ChainApiMessage, DisputeCoordinatorMessage, RuntimeApiMessage,
@@ -31,11 +31,11 @@ use polkadot_node_subsystem::{
 	},
 	ActivatedLeaf, ActiveLeavesUpdate, LeafStatus,
 };
-use polkadot_node_subsystem_test_helpers::{
+use axia_node_subsystem_test_helpers::{
 	make_subsystem_context, TestSubsystemContext, TestSubsystemContextHandle, TestSubsystemSender,
 };
-use polkadot_node_subsystem_util::{reexports::SubsystemContext, TimeoutExt};
-use polkadot_primitives::v1::{
+use axia_node_subsystem_util::{reexports::SubsystemContext, TimeoutExt};
+use axia_primitives::v1::{
 	BlakeTwo256, BlockNumber, CandidateDescriptor, CandidateEvent, CandidateReceipt, CoreIndex,
 	GroupIndex, Hash, HashT, HeadData,
 };

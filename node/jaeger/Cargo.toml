@@ -1,5 +1,5 @@
 [package]
-name = "polkadot-node-jaeger"
+name = "axia-node-jaeger"
 version = "0.9.17"
 authors = ["Axia Technologies <admin@axia.io>"]
 edition = "2018"
@@ -10,8 +10,8 @@ async-std = "1.8.0"
 mick-jaeger = "0.1.7"
 lazy_static = "1.4"
 parking_lot = "0.11.1"
-polkadot-primitives = { path = "../../primitives" }
-polkadot-node-primitives = { path = "../primitives" }
+axia-primitives = { path = "../../primitives" }
+axia-node-primitives = { path = "../primitives" }
 sc-network = { git = "https://github.com/axtend/axlib", branch = "c92f69d" }
 sp-core = { git = "https://github.com/axtend/axlib", branch = "c92f69d" }
 thiserror = "1.0.30"

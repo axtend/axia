@@ -15,7 +15,7 @@
 // along with Axia.  If not, see <http://www.gnu.org/licenses/>.
 
 use futures::{future, pin_mut, select, FutureExt};
-use polkadot_test_service::*;
+use axia_test_service::*;
 use sp_keyring::Sr25519Keyring;
 
 #[axlib_test_utils::test]

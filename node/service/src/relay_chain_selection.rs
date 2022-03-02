@@ -38,12 +38,12 @@
 use super::{HeaderProvider, HeaderProviderProvider};
 use consensus_common::{Error as ConsensusError, SelectChain};
 use futures::channel::oneshot;
-use polkadot_node_subsystem_util::metrics::{self, prometheus};
-use polkadot_overseer::{AllMessages, Handle};
-use polkadot_primitives::v1::{
+use axia_node_subsystem_util::metrics::{self, prometheus};
+use axia_overseer::{AllMessages, Handle};
+use axia_primitives::v1::{
 	Block as AxiaBlock, BlockNumber, Hash, Header as AxiaHeader,
 };
-use polkadot_subsystem::messages::{
+use axia_subsystem::messages::{
 	ApprovalVotingMessage, ChainSelectionMessage, DisputeCoordinatorMessage,
 	HighestApprovedAncestorBlock,
 };
@@ -55,7 +55,7 @@ use std::sync::Arc;
 /// This is a safety net that should be removed at some point in the future.
 // Until it's not, make sure to also update `MAX_HEADS_LOOK_BACK` in `approval-voting`
 // and `MAX_BATCH_SCRAPE_ANCESTORS` in `dispute-coordinator` when changing its value.
-const MAX_FINALITY_LAG: polkadot_primitives::v1::BlockNumber = 500;
+const MAX_FINALITY_LAG: axia_primitives::v1::BlockNumber = 500;
 
 const LOG_TARGET: &str = "allychain::chain-selection";
 
@@ -75,7 +75,7 @@ impl metrics::Metrics for Metrics {
 			approval_checking_finality_lag: prometheus::register(
 				prometheus::Gauge::with_opts(
 					prometheus::Opts::new(
-						"polkadot_allychain_approval_checking_finality_lag",
+						"axia_allychain_approval_checking_finality_lag",
 						"How far behind the head of the chain the Approval Checking protocol wants to vote",
 					)
 				)?,
@@ -84,7 +84,7 @@ impl metrics::Metrics for Metrics {
 			disputes_finality_lag: prometheus::register(
 				prometheus::Gauge::with_opts(
 					prometheus::Opts::new(
-						"polkadot_allychain_disputes_finality_lag",
+						"axia_allychain_disputes_finality_lag",
 						"How far behind the head of the chain the Disputes protocol wants to vote",
 					)
 				)?,

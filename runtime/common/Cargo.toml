@@ -1,5 +1,5 @@
 [package]
-name = "polkadot-runtime-common"
+name = "axia-runtime-common"
 version = "0.9.17"
 authors = ["Axia Technologies <admin@axia.io>"]
 edition = "2018"
@@ -44,9 +44,9 @@ pallet-bags-list = { git = "https://github.com/axtend/axlib", default-features =
 frame-benchmarking = { git = "https://github.com/axtend/axlib", default-features = false, optional = true , branch = "c92f69d" }
 pallet-babe = { git = "https://github.com/axtend/axlib", default-features = false, optional = true , branch = "c92f69d" }
 
-primitives = { package = "polkadot-primitives", path = "../../primitives", default-features = false }
+primitives = { package = "axia-primitives", path = "../../primitives", default-features = false }
 libsecp256k1 = { version = "0.7.0", default-features = false }
-runtime-allychains = { package = "polkadot-runtime-allychains", path = "../allychains", default-features = false }
+runtime-allychains = { package = "axia-runtime-allychains", path = "../allychains", default-features = false }
 
 slot-range-helper = { path = "slot_range_helper", default-features = false }
 xcm = { path = "../../xcm", default-features = false }
@@ -60,7 +60,7 @@ sp-keystore = { git = "https://github.com/axtend/axlib", branch = "c92f69d" }
 trie-db = "0.23.1"
 serde_json = "1.0.78"
 libsecp256k1 = "0.7.0"
-test-helpers = { package = "polkadot-primitives-test-helpers", path = "../../primitives/test-helpers" }
+test-helpers = { package = "axia-primitives-test-helpers", path = "../../primitives/test-helpers" }
 
 [features]
 default = ["std"]

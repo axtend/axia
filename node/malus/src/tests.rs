@@ -16,9 +16,9 @@
 
 use super::*;
 
-use polkadot_node_subsystem_test_helpers::*;
+use axia_node_subsystem_test_helpers::*;
 
-use polkadot_node_subsystem::{
+use axia_node_subsystem::{
 	messages::{AllMessages, AvailabilityStoreMessage},
 	overseer::{dummy::DummySubsystem, gen::TimeoutExt, Subsystem},
 	SubsystemError,

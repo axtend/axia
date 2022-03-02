@@ -1,18 +1,18 @@
 // Copyright 2020 Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// This file is part of Axia.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// Axia is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// Axia is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with Axia.  If not, see <http://www.gnu.org/licenses/>.
 
 //! Primitive types which are strictly necessary from a parachain-execution point
 //! of view.
@@ -34,10 +34,10 @@ use sp_core::bytes;
 #[cfg(feature = "std")]
 use parity_util_mem::MallocSizeOf;
 
-use polkadot_core_primitives::{Hash, OutboundHrmpMessage};
+use axia_core_primitives::{Hash, OutboundHrmpMessage};
 
 /// Block number type used by the relay chain.
-pub use polkadot_core_primitives::BlockNumber as RelayChainBlockNumber;
+pub use axia_core_primitives::BlockNumber as RelayChainBlockNumber;
 
 /// Parachain head data included in the chain.
 #[derive(
@@ -408,7 +408,7 @@ impl XcmpMessageHandler for () {
 }
 
 /// Validation parameters for evaluating the parachain validity function.
-// TODO: balance downloads (https://github.com/paritytech/polkadot/issues/220)
+// TODO: balance downloads (https://github.com/paritytech/axia/issues/220)
 #[derive(PartialEq, Eq, Decode, Clone)]
 #[cfg_attr(feature = "std", derive(Debug, Encode))]
 pub struct ValidationParams {
@@ -423,7 +423,7 @@ pub struct ValidationParams {
 }
 
 /// The result of parachain validation.
-// TODO: balance uploads (https://github.com/paritytech/polkadot/issues/220)
+// TODO: balance uploads (https://github.com/paritytech/axia/issues/220)
 #[derive(PartialEq, Eq, Clone, Encode)]
 #[cfg_attr(feature = "std", derive(Debug, Decode))]
 pub struct ValidationResult {

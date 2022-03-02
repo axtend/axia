@@ -28,22 +28,22 @@
 //!
 //! We maintain a rolling window of session indices. This starts as empty
 
-use polkadot_node_jaeger as jaeger;
-use polkadot_node_primitives::approval::{
+use axia_node_jaeger as jaeger;
+use axia_node_primitives::approval::{
 	self as approval_types, BlockApprovalMeta, RelayVRFStory,
 };
-use polkadot_node_subsystem::{
+use axia_node_subsystem::{
 	messages::{
 		ApprovalDistributionMessage, ChainApiMessage, ChainSelectionMessage, RuntimeApiMessage,
 		RuntimeApiRequest,
 	},
 	overseer, SubsystemContext, SubsystemError, SubsystemResult,
 };
-use polkadot_node_subsystem_util::{
+use axia_node_subsystem_util::{
 	determine_new_blocks,
 	rolling_session_window::{RollingSessionWindow, SessionWindowUpdate},
 };
-use polkadot_primitives::v1::{
+use axia_primitives::v1::{
 	BlockNumber, CandidateEvent, CandidateHash, CandidateReceipt, ConsensusLog, CoreIndex,
 	GroupIndex, Hash, Header, SessionIndex,
 };
@@ -454,7 +454,7 @@ pub(crate) async fn handle_new_head(
 		let validator_group_lens: Vec<usize> =
 			session_info.validator_groups.iter().map(|v| v.len()).collect();
 		// insta-approve candidates on low-node testnets:
-		// cf. https://github.com/axiatech/polkadot/issues/2411
+		// cf. https://github.com/axiatech/axia/issues/2411
 		let num_candidates = included_candidates.len();
 		let approved_bitfield = {
 			if needed_approvals == 0 {
@@ -581,10 +581,10 @@ pub(crate) mod tests {
 	use assert_matches::assert_matches;
 	use kvdb::KeyValueDB;
 	use merlin::Transcript;
-	use polkadot_node_primitives::approval::{VRFOutput, VRFProof};
-	use polkadot_node_subsystem::messages::AllMessages;
-	use polkadot_node_subsystem_test_helpers::make_subsystem_context;
-	use polkadot_primitives::{v1::ValidatorIndex, v2::SessionInfo};
+	use axia_node_primitives::approval::{VRFOutput, VRFProof};
+	use axia_node_subsystem::messages::AllMessages;
+	use axia_node_subsystem_test_helpers::make_subsystem_context;
+	use axia_primitives::{v1::ValidatorIndex, v2::SessionInfo};
 	pub(crate) use sp_consensus_babe::{
 		digests::{CompatibleDigestItem, PreDigest, SecondaryVRFPreDigest},
 		AllowedSlots, BabeEpochConfiguration, Epoch as BabeEpoch,
@@ -642,26 +642,26 @@ pub(crate) mod tests {
 		fn compute_assignments(
 			&self,
 			_keystore: &LocalKeystore,
-			_relay_vrf_story: polkadot_node_primitives::approval::RelayVRFStory,
+			_relay_vrf_story: axia_node_primitives::approval::RelayVRFStory,
 			_config: &criteria::Config,
 			_leaving_cores: Vec<(
 				CandidateHash,
-				polkadot_primitives::v1::CoreIndex,
-				polkadot_primitives::v1::GroupIndex,
+				axia_primitives::v1::CoreIndex,
+				axia_primitives::v1::GroupIndex,
 			)>,
-		) -> HashMap<polkadot_primitives::v1::CoreIndex, criteria::OurAssignment> {
+		) -> HashMap<axia_primitives::v1::CoreIndex, criteria::OurAssignment> {
 			HashMap::new()
 		}
 
 		fn check_assignment_cert(
 			&self,
-			_claimed_core_index: polkadot_primitives::v1::CoreIndex,
-			_validator_index: polkadot_primitives::v1::ValidatorIndex,
+			_claimed_core_index: axia_primitives::v1::CoreIndex,
+			_validator_index: axia_primitives::v1::ValidatorIndex,
 			_config: &criteria::Config,
-			_relay_vrf_story: polkadot_node_primitives::approval::RelayVRFStory,
-			_assignment: &polkadot_node_primitives::approval::AssignmentCert,
-			_backing_group: polkadot_primitives::v1::GroupIndex,
-		) -> Result<polkadot_node_primitives::approval::DelayTranche, criteria::InvalidAssignment> {
+			_relay_vrf_story: axia_node_primitives::approval::RelayVRFStory,
+			_assignment: &axia_node_primitives::approval::AssignmentCert,
+			_backing_group: axia_primitives::v1::GroupIndex,
+		) -> Result<axia_node_primitives::approval::DelayTranche, criteria::InvalidAssignment> {
 			Ok(0)
 		}
 	}

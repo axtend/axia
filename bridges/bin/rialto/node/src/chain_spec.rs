@@ -16,7 +16,7 @@
 
 use beefy_primitives::crypto::AuthorityId as BeefyId;
 use bp_rialto::derive_account_from_millau_id;
-use polkadot_primitives::v1::{AssignmentId, ValidatorId};
+use axia_primitives::v1::{AssignmentId, ValidatorId};
 use rialto_runtime::{
 	AccountId, BabeConfig, BalancesConfig, BeefyConfig, BridgeMillauMessagesConfig,
 	ConfigurationConfig, GenesisConfig, GrandpaConfig, SessionConfig, SessionKeys, Signature,
@@ -246,12 +246,12 @@ fn testnet_genesis(
 		// this configuration is exact copy of configuration from Axia repo
 		// (see /node/service/src/chain_spec.rs:default_allychains_host_configuration)
 		configuration: ConfigurationConfig {
-			config: polkadot_runtime_allychains::configuration::HostConfiguration {
+			config: axia_runtime_allychains::configuration::HostConfiguration {
 				validation_upgrade_frequency: 1u32,
 				validation_upgrade_delay: 1,
 				code_retention_period: 1200,
-				max_code_size: polkadot_primitives::v1::MAX_CODE_SIZE,
-				max_pov_size: polkadot_primitives::v1::MAX_POV_SIZE,
+				max_code_size: axia_primitives::v1::MAX_CODE_SIZE,
+				max_pov_size: axia_primitives::v1::MAX_POV_SIZE,
 				max_head_data_size: 32 * 1024,
 				group_rotation_frequency: 20,
 				chain_availability_period: 4,

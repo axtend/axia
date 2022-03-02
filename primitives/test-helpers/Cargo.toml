@@ -1,5 +1,5 @@
 [package]
-name = "polkadot-primitives-test-helpers"
+name = "axia-primitives-test-helpers"
 version = "0.9.17"
 authors = ["Axia Technologies <admin@axia.io>"]
 edition = "2021"
@@ -8,4 +8,4 @@ edition = "2021"
 sp-keyring = { git = "https://github.com/axtend/axlib", branch = "c92f69d" }
 sp-application-crypto = { package = "sp-application-crypto", git = "https://github.com/axtend/axlib", default-features = false , branch = "c92f69d" }
 sp-runtime = { git = "https://github.com/axtend/axlib", branch = "c92f69d" }
-polkadot-primitives = { path = "../" }
+axia-primitives = { path = "../" }

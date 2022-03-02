@@ -233,30 +233,30 @@ macro_rules! select_bridge {
 				type Params = AxiaTestAxiaHeadersAndMessages;
 
 				type Left = relay_axctest_client::AxiaTest;
-				type Right = relay_polkadot_client::Axia;
+				type Right = relay_axia_client::Axia;
 
 				type LeftToRightFinality =
-					crate::chains::axctest_headers_to_polkadot::AxiaTestFinalityToAxia;
+					crate::chains::axctest_headers_to_axia::AxiaTestFinalityToAxia;
 				type RightToLeftFinality =
-					crate::chains::polkadot_headers_to_axctest::AxiaFinalityToAxiaTest;
+					crate::chains::axia_headers_to_axctest::AxiaFinalityToAxiaTest;
 
 				type LeftAccountIdConverter = bp_axctest::AccountIdConverter;
-				type RightAccountIdConverter = bp_polkadot::AccountIdConverter;
+				type RightAccountIdConverter = bp_axia::AccountIdConverter;
 
 				const MAX_MISSING_LEFT_HEADERS_AT_RIGHT: bp_axctest::BlockNumber =
 					bp_axctest::SESSION_LENGTH;
-				const MAX_MISSING_RIGHT_HEADERS_AT_LEFT: bp_polkadot::BlockNumber =
-					bp_polkadot::SESSION_LENGTH;
+				const MAX_MISSING_RIGHT_HEADERS_AT_LEFT: bp_axia::BlockNumber =
+					bp_axia::SESSION_LENGTH;
 
 				use crate::chains::{
-					axctest_messages_to_polkadot::{
+					axctest_messages_to_axia::{
 						standalone_metrics as left_to_right_standalone_metrics,
 						run as left_to_right_messages,
-						update_polkadot_to_axctest_conversion_rate as update_right_to_left_conversion_rate,
+						update_axia_to_axctest_conversion_rate as update_right_to_left_conversion_rate,
 					},
-					polkadot_messages_to_axctest::{
+					axia_messages_to_axctest::{
 						run as right_to_left_messages,
-						update_axctest_to_polkadot_conversion_rate as update_left_to_right_conversion_rate,
+						update_axctest_to_axia_conversion_rate as update_left_to_right_conversion_rate,
 					},
 				};
 
@@ -303,10 +303,10 @@ macro_rules! select_bridge {
 								Bytes(
 									Right::sign_transaction(right_genesis_hash, &right_sign, relay_axlib_client::TransactionEra::immortal(),
 										UnsignedTransaction::new(
-											relay_polkadot_client::runtime::Call::Balances(
-												relay_polkadot_client::runtime::BalancesCall::transfer(
-													bp_polkadot::AccountAddress::Id(account_id),
-													bp_polkadot::EXISTENTIAL_DEPOSIT.into(),
+											relay_axia_client::runtime::Call::Balances(
+												relay_axia_client::runtime::BalancesCall::transfer(
+													bp_axia::AccountAddress::Id(account_id),
+													bp_axia::EXISTENTIAL_DEPOSIT.into(),
 												),
 											),
 											transaction_nonce,
@@ -332,7 +332,7 @@ declare_chain_options!(Rialto, rialto);
 declare_chain_options!(Betanet, betanet);
 declare_chain_options!(Wococo, wococo);
 declare_chain_options!(AxiaTest, axctest);
-declare_chain_options!(Axia, polkadot);
+declare_chain_options!(Axia, axia);
 // All supported bridges.
 declare_bridge_options!(Millau, Rialto);
 declare_bridge_options!(Betanet, Wococo);

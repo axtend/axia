@@ -17,10 +17,10 @@
 //!
 //! THIS FILE WAS AUTO-GENERATED USING THE AXLIB BENCHMARK CLI VERSION 4.0.0-dev
 //! DATE: 2021-12-11, STEPS: `50`, REPEAT: 20, LOW RANGE: `[]`, HIGH RANGE: `[]`
-//! EXECUTION: Some(Wasm), WASM-EXECUTION: Compiled, CHAIN: Some("polkadot-dev"), DB CACHE: 128
+//! EXECUTION: Some(Wasm), WASM-EXECUTION: Compiled, CHAIN: Some("axia-dev"), DB CACHE: 128
 
 // Executed Command:
-// target/release/polkadot
+// target/release/axia
 // benchmark
 // --chain=axctest-dev
 // --steps=50
@@ -31,7 +31,7 @@
 // --wasm-execution=compiled
 // --heap-pages=4096
 // --header=./file_header.txt
-// --output=./runtime/polkadot/src/weights/
+// --output=./runtime/axia/src/weights/
 
 #![cfg_attr(rustfmt, rustfmt_skip)]
 #![allow(unused_parens)]

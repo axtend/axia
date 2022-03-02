@@ -16,12 +16,12 @@
 
 //! Chain-specific relayer configuration.
 
-pub mod axctest_headers_to_polkadot;
-pub mod axctest_messages_to_polkadot;
+pub mod axctest_headers_to_axia;
+pub mod axctest_messages_to_axia;
 pub mod millau_headers_to_rialto;
 pub mod millau_messages_to_rialto;
-pub mod polkadot_headers_to_axctest;
-pub mod polkadot_messages_to_axctest;
+pub mod axia_headers_to_axctest;
+pub mod axia_messages_to_axctest;
 pub mod rialto_headers_to_millau;
 pub mod rialto_messages_to_millau;
 pub mod betanet_headers_to_wococo;
@@ -32,7 +32,7 @@ pub mod wococo_messages_to_betanet;
 
 mod axctest;
 mod millau;
-mod polkadot;
+mod axia;
 mod rialto;
 mod rialto_allychain;
 mod betanet;
@@ -41,10 +41,10 @@ mod wococo;
 
 use relay_utils::metrics::{MetricsParams, StandaloneMetric};
 
-pub(crate) fn add_polkadot_axctest_price_metrics<T: finality_relay::FinalitySyncPipeline>(
+pub(crate) fn add_axia_axctest_price_metrics<T: finality_relay::FinalitySyncPipeline>(
 	params: MetricsParams,
 ) -> anyhow::Result<MetricsParams> {
-	axlib_relay_helper::helpers::token_price_metric(polkadot::TOKEN_ID)?
+	axlib_relay_helper::helpers::token_price_metric(axia::TOKEN_ID)?
 		.register_and_spawn(&params.registry)?;
 	axlib_relay_helper::helpers::token_price_metric(axctest::TOKEN_ID)?
 		.register_and_spawn(&params.registry)?;

@@ -41,7 +41,7 @@ mod real;
 
 use kvdb::KeyValueDB;
 use metrics::Metrics;
-use polkadot_node_subsystem::{
+use axia_node_subsystem::{
 	messages::DisputeCoordinatorMessage, overseer, SpawnedSubsystem, SubsystemContext,
 	SubsystemError,
 };

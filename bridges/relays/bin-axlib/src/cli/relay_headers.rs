@@ -97,15 +97,15 @@ macro_rules! select_bridge {
 			},
 			RelayHeadersBridge::AxiaTestToAxia => {
 				type Source = relay_axctest_client::AxiaTest;
-				type Target = relay_polkadot_client::Axia;
-				type Finality = crate::chains::axctest_headers_to_polkadot::AxiaTestFinalityToAxia;
+				type Target = relay_axia_client::Axia;
+				type Finality = crate::chains::axctest_headers_to_axia::AxiaTestFinalityToAxia;
 
 				$generic
 			},
 			RelayHeadersBridge::AxiaToAxiaTest => {
-				type Source = relay_polkadot_client::Axia;
+				type Source = relay_axia_client::Axia;
 				type Target = relay_axctest_client::AxiaTest;
-				type Finality = crate::chains::polkadot_headers_to_axctest::AxiaFinalityToAxiaTest;
+				type Finality = crate::chains::axia_headers_to_axctest::AxiaFinalityToAxiaTest;
 
 				$generic
 			},

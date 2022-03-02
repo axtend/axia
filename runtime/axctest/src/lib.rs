@@ -2895,7 +2895,7 @@ impl RefundNickPalletDeposit {
 impl OnRuntimeUpgrade for RefundNickPalletDeposit {
 	fn on_runtime_upgrade() -> frame_support::weights::Weight {
 		if VERSION.spec_version == 9150 {
-			log::info!(target: "runtime::axctest", "executing the refund migration of https://github.com/axiatech/polkadot/pull/4656");
+			log::info!(target: "runtime::axctest", "executing the refund migration of https://github.com/axiatech/axia/pull/4656");
 			Self::execute(false)
 		} else {
 			log::warn!(target: "runtime::axctest", "RefundNickPalletDeposit should be removed");
@@ -3234,7 +3234,7 @@ sp_api::impl_runtime_apis! {
 			// probability of a slot being empty), is done in accordance to the
 			// slot duration and expected target block time, for safely
 			// resisting network delays of maximum two seconds.
-			// <https://research.web3.foundation/en/latest/polkadot/BABE/Babe/#6-practical-results>
+			// <https://research.web3.foundation/en/latest/axia/BABE/Babe/#6-practical-results>
 			babe_primitives::BabeGenesisConfiguration {
 				slot_duration: Babe::slot_duration(),
 				epoch_length: EpochDuration::get(),

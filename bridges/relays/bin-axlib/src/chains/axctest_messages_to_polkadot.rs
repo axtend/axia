@@ -28,7 +28,7 @@ use messages_relay::{message_lane::MessageLane, relay_strategy::MixStrategy};
 use relay_axctest_client::{
 	HeaderId as AxiaTestHeaderId, AxiaTest, SigningParams as AxiaTestSigningParams,
 };
-use relay_polkadot_client::{
+use relay_axia_client::{
 	HeaderId as AxiaHeaderId, Axia, SigningParams as AxiaSigningParams,
 };
 use relay_axlib_client::{Chain, Client, TransactionSignScheme, UnsignedTransaction};
@@ -55,11 +55,11 @@ impl AxlibMessageLane for AxiaTestMessagesToAxia {
 	type MessageLane = MessageLaneAxiaTestMessagesToAxia;
 
 	const OUTBOUND_LANE_MESSAGE_DETAILS_METHOD: &'static str =
-		bp_polkadot::TO_AXIA_MESSAGE_DETAILS_METHOD;
+		bp_axia::TO_AXIA_MESSAGE_DETAILS_METHOD;
 	const OUTBOUND_LANE_LATEST_GENERATED_NONCE_METHOD: &'static str =
-		bp_polkadot::TO_AXIA_LATEST_GENERATED_NONCE_METHOD;
+		bp_axia::TO_AXIA_LATEST_GENERATED_NONCE_METHOD;
 	const OUTBOUND_LANE_LATEST_RECEIVED_NONCE_METHOD: &'static str =
-		bp_polkadot::TO_AXIA_LATEST_RECEIVED_NONCE_METHOD;
+		bp_axia::TO_AXIA_LATEST_RECEIVED_NONCE_METHOD;
 
 	const INBOUND_LANE_LATEST_RECEIVED_NONCE_METHOD: &'static str =
 		bp_axctest::FROM_AXIATEST_LATEST_RECEIVED_NONCE_METHOD;
@@ -71,15 +71,15 @@ impl AxlibMessageLane for AxiaTestMessagesToAxia {
 	const BEST_FINALIZED_SOURCE_HEADER_ID_AT_TARGET: &'static str =
 		bp_axctest::BEST_FINALIZED_AXIATEST_HEADER_METHOD;
 	const BEST_FINALIZED_TARGET_HEADER_ID_AT_SOURCE: &'static str =
-		bp_polkadot::BEST_FINALIZED_AXIA_HEADER_METHOD;
+		bp_axia::BEST_FINALIZED_AXIA_HEADER_METHOD;
 
 	const MESSAGE_PALLET_NAME_AT_SOURCE: &'static str =
 		bp_axctest::WITH_AXIA_MESSAGES_PALLET_NAME;
 	const MESSAGE_PALLET_NAME_AT_TARGET: &'static str =
-		bp_polkadot::WITH_AXIATEST_MESSAGES_PALLET_NAME;
+		bp_axia::WITH_AXIATEST_MESSAGES_PALLET_NAME;
 
 	const PAY_INBOUND_DISPATCH_FEE_WEIGHT_AT_TARGET_CHAIN: Weight =
-		bp_polkadot::PAY_INBOUND_DISPATCH_FEE_WEIGHT;
+		bp_axia::PAY_INBOUND_DISPATCH_FEE_WEIGHT;
 
 	type SourceChain = AxiaTest;
 	type TargetChain = Axia;
@@ -122,7 +122,7 @@ impl AxlibMessageLane for AxiaTestMessagesToAxia {
 		Bytes(transaction.encode())
 	}
 
-	fn target_transactions_author(&self) -> bp_polkadot::AccountId {
+	fn target_transactions_author(&self) -> bp_axia::AccountId {
 		(*self.message_lane.target_sign.public().as_array_ref()).into()
 	}
 
@@ -138,8 +138,8 @@ impl AxlibMessageLane for AxiaTestMessagesToAxia {
 		let FromBridgedChainMessagesProof { ref nonces_start, ref nonces_end, .. } = proof;
 		let messages_count = nonces_end - nonces_start + 1;
 
-		let call = relay_polkadot_client::runtime::Call::BridgeAxiaTestMessages(
-			relay_polkadot_client::runtime::BridgeAxiaTestMessagesCall::receive_messages_proof(
+		let call = relay_axia_client::runtime::Call::BridgeAxiaTestMessages(
+			relay_axia_client::runtime::BridgeAxiaTestMessagesCall::receive_messages_proof(
 				self.message_lane.relayer_id_at_source.clone(),
 				proof,
 				messages_count as _,
@@ -159,9 +159,9 @@ impl AxlibMessageLane for AxiaTestMessagesToAxia {
 		log::trace!(
 			target: "bridge",
 			"Prepared AxiaTest -> Axia delivery transaction. Weight: <unknown>/{}, size: {}/{}",
-			bp_polkadot::max_extrinsic_weight(),
+			bp_axia::max_extrinsic_weight(),
 			transaction.encode().len(),
-			bp_polkadot::max_extrinsic_size(),
+			bp_axia::max_extrinsic_size(),
 		);
 		Bytes(transaction.encode())
 	}
@@ -208,15 +208,15 @@ pub async fn run(
 	};
 
 	// 2/3 is reserved for proofs and tx overhead
-	let max_messages_size_in_single_batch = bp_polkadot::max_extrinsic_size() / 3;
+	let max_messages_size_in_single_batch = bp_axia::max_extrinsic_size() / 3;
 	// we don't know exact weights of the Axia runtime. So to guess weights we'll be using
 	// weights from Rialto and then simply dividing it by x2.
 	let (max_messages_in_single_batch, max_messages_weight_in_single_batch) =
 		select_delivery_transaction_limits::<
 			pallet_bridge_messages::weights::RialtoWeight<rialto_runtime::Runtime>,
 		>(
-			bp_polkadot::max_extrinsic_weight(),
-			bp_polkadot::MAX_UNREWARDED_RELAYER_ENTRIES_AT_INBOUND_LANE,
+			bp_axia::max_extrinsic_weight(),
+			bp_axia::MAX_UNREWARDED_RELAYER_ENTRIES_AT_INBOUND_LANE,
 		);
 	let (max_messages_in_single_batch, max_messages_weight_in_single_batch) =
 		(max_messages_in_single_batch / 2, max_messages_weight_in_single_batch / 2);
@@ -252,9 +252,9 @@ pub async fn run(
 			stall_timeout,
 			delivery_params: messages_relay::message_lane_loop::MessageDeliveryParams {
 				max_unrewarded_relayer_entries_at_target:
-					bp_polkadot::MAX_UNREWARDED_RELAYER_ENTRIES_AT_INBOUND_LANE,
+					bp_axia::MAX_UNREWARDED_RELAYER_ENTRIES_AT_INBOUND_LANE,
 				max_unconfirmed_nonces_at_target:
-					bp_polkadot::MAX_UNCONFIRMED_MESSAGES_AT_INBOUND_LANE,
+					bp_axia::MAX_UNCONFIRMED_MESSAGES_AT_INBOUND_LANE,
 				max_messages_in_single_batch,
 				max_messages_weight_in_single_batch,
 				max_messages_size_in_single_batch,
@@ -290,14 +290,14 @@ pub(crate) fn standalone_metrics(
 		source_client,
 		target_client,
 		Some(crate::chains::axctest::TOKEN_ID),
-		Some(crate::chains::polkadot::TOKEN_ID),
-		Some(crate::chains::polkadot::axctest_to_polkadot_conversion_rate_params()),
-		Some(crate::chains::axctest::polkadot_to_axctest_conversion_rate_params()),
+		Some(crate::chains::axia::TOKEN_ID),
+		Some(crate::chains::axia::axctest_to_axia_conversion_rate_params()),
+		Some(crate::chains::axctest::axia_to_axctest_conversion_rate_params()),
 	)
 }
 
 /// Update Axia -> AxiaTest conversion rate, stored in AxiaTest runtime storage.
-pub(crate) async fn update_polkadot_to_axctest_conversion_rate(
+pub(crate) async fn update_axia_to_axctest_conversion_rate(
 	client: Client<AxiaTest>,
 	signer: <AxiaTest as TransactionSignScheme>::AccountKeyPair,
 	updated_rate: f64,

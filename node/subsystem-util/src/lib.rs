@@ -24,7 +24,7 @@
 
 #![warn(missing_docs)]
 
-use polkadot_node_subsystem::{
+use axia_node_subsystem::{
 	errors::{RuntimeApiError, SubsystemError},
 	messages::{
 		AllMessages, BoundToRelayParent, RuntimeApiMessage, RuntimeApiRequest, RuntimeApiSender,
@@ -38,7 +38,7 @@ pub use overseer::{
 	Subsystem, TimeoutExt,
 };
 
-pub use polkadot_node_metrics::{metrics, Metronome};
+pub use axia_node_metrics::{metrics, Metronome};
 
 use futures::{
 	channel::{mpsc, oneshot},
@@ -49,7 +49,7 @@ use futures::{
 use parity_scale_codec::Encode;
 use pin_project::pin_project;
 
-use polkadot_primitives::{
+use axia_primitives::{
 	v1::{
 		AuthorityDiscoveryId, CandidateEvent, CommittedCandidateReceipt, CoreState, EncodeAs,
 		GroupIndex, GroupRotationInfo, Hash, Id as ParaId, OccupiedCoreAssumption,
@@ -73,13 +73,13 @@ use std::{
 use thiserror::Error;
 
 pub use metered_channel as metered;
-pub use polkadot_node_network_protocol::MIN_GOSSIP_PEERS;
+pub use axia_node_network_protocol::MIN_GOSSIP_PEERS;
 
 pub use determine_new_blocks::determine_new_blocks;
 
 /// These reexports are required so that external crates can use the `delegated_subsystem` macro properly.
 pub mod reexports {
-	pub use polkadot_overseer::gen::{SpawnNamed, SpawnedSubsystem, Subsystem, SubsystemContext};
+	pub use axia_overseer::gen::{SpawnNamed, SpawnedSubsystem, Subsystem, SubsystemContext};
 }
 
 /// A rolling session window cache.
@@ -694,7 +694,7 @@ impl<Job: JobTrait, Spawner> JobSubsystem<Job, Spawner> {
 		Job: 'static + JobTrait + Send,
 		<Job as JobTrait>::RunArgs: Clone + Sync,
 		<Job as JobTrait>::ToJob:
-			Sync + From<<Context as polkadot_overseer::SubsystemContext>::Message>,
+			Sync + From<<Context as axia_overseer::SubsystemContext>::Message>,
 		<Job as JobTrait>::Metrics: Sync,
 	{
 		let JobSubsystem { params: JobSubsystemParams { spawner, run_args, metrics }, .. } = self;
@@ -769,7 +769,7 @@ where
 	Job: 'static + JobTrait + Send,
 	Job::RunArgs: Clone + Sync,
 	<Job as JobTrait>::ToJob:
-		Sync + From<<Context as polkadot_overseer::SubsystemContext>::Message>,
+		Sync + From<<Context as axia_overseer::SubsystemContext>::Message>,
 	Job::Metrics: Sync,
 {
 	fn start(self, ctx: Context) -> SpawnedSubsystem {

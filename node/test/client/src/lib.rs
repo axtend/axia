@@ -20,14 +20,14 @@
 
 mod block_builder;
 
-use polkadot_primitives::v1::Block;
+use axia_primitives::v1::Block;
 use sc_service::client;
 use sp_core::storage::Storage;
 use sp_runtime::BuildStorage;
 
 pub use block_builder::*;
-pub use polkadot_test_runtime as runtime;
-pub use polkadot_test_service::{
+pub use axia_test_runtime as runtime;
+pub use axia_test_service::{
 	construct_extrinsic, construct_transfer_extrinsic, Client, FullBackend,
 	AxiaTestExecutorDispatch,
 };
@@ -53,7 +53,7 @@ pub struct GenesisParameters;
 
 impl axlib_test_client::GenesisInit for GenesisParameters {
 	fn genesis_storage(&self) -> Storage {
-		polkadot_test_service::chain_spec::polkadot_local_testnet_genesis()
+		axia_test_service::chain_spec::axia_local_testnet_genesis()
 			.build_storage()
 			.expect("Builds test runtime genesis storage")
 	}
@@ -97,7 +97,7 @@ mod tests {
 	fn ensure_test_client_can_build_and_import_block() {
 		let mut client = TestClientBuilder::new().build();
 
-		let block_builder = client.init_polkadot_block_builder();
+		let block_builder = client.init_axia_block_builder();
 		let block = block_builder.build().expect("Finalizes the block").block;
 
 		futures::executor::block_on(client.import(BlockOrigin::Own, block))
@@ -114,8 +114,8 @@ mod tests {
 			sp_keyring::Sr25519Keyring::Bob,
 			1000,
 		);
-		let mut block_builder = client.init_polkadot_block_builder();
-		block_builder.push_polkadot_extrinsic(transfer).expect("Pushes extrinsic");
+		let mut block_builder = client.init_axia_block_builder();
+		block_builder.push_axia_extrinsic(transfer).expect("Pushes extrinsic");
 
 		let block = block_builder.build().expect("Finalizes the block").block;
 

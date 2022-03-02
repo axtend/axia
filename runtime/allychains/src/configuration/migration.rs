@@ -23,8 +23,8 @@ use sp_std::prelude::*;
 
 /// The current storage version.
 ///
-/// v0-v1: https://github.com/axiatech/polkadot/pull/3575
-/// v1-v2: https://github.com/axiatech/polkadot/pull/4420
+/// v0-v1: https://github.com/axiatech/axia/pull/3575
+/// v1-v2: https://github.com/axiatech/axia/pull/4420
 pub const STORAGE_VERSION: StorageVersion = StorageVersion::new(2);
 
 /// Migrates the pallet storage to the most recent version, checking and setting the `StorageVersion`.

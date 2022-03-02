@@ -23,7 +23,7 @@ use sp_runtime::traits::{Block as BlockT, Header as _, NumberFor};
 use crate::HeaderProvider;
 
 #[cfg(feature = "full-node")]
-use polkadot_primitives::v1::{Block, Hash};
+use axia_primitives::v1::{Block, Hash};
 
 /// Returns the block hash of the block at the given `target_number` by walking
 /// backwards from the given `current_header`.
@@ -219,7 +219,7 @@ pub(crate) fn axctest_hard_forks() -> Vec<grandpa::AuthoritySetHardFork<Block>> 
 mod tests {
 	use consensus_common::BlockOrigin;
 	use grandpa::VotingRule;
-	use polkadot_test_client::{
+	use axia_test_client::{
 		ClientBlockImportExt, DefaultTestClientBuilderExt, InitAxiaBlockBuilder,
 		TestClientBuilder, TestClientBuilderExt,
 	};
@@ -238,7 +238,7 @@ mod tests {
 
 			move |n| {
 				for _ in 0..n {
-					let block = client.init_polkadot_block_builder().build().unwrap().block;
+					let block = client.init_axia_block_builder().build().unwrap().block;
 					futures::executor::block_on(client.import(BlockOrigin::Own, block)).unwrap();
 				}
 			}

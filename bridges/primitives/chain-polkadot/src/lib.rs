@@ -27,15 +27,15 @@ use frame_support::weights::{
 use sp_std::prelude::*;
 use sp_version::RuntimeVersion;
 
-pub use bp_polkadot_core::*;
+pub use bp_axia_core::*;
 
 /// Axia Chain
 pub type Axia = AxiaLike;
 
 // NOTE: This needs to be kept up to date with the Axia runtime found in the Axia repo.
 pub const VERSION: RuntimeVersion = RuntimeVersion {
-	spec_name: sp_version::create_runtime_str!("polkadot"),
-	impl_name: sp_version::create_runtime_str!("parity-polkadot"),
+	spec_name: sp_version::create_runtime_str!("axia"),
+	impl_name: sp_version::create_runtime_str!("parity-axia"),
 	authoring_version: 0,
 	spec_version: 9100,
 	impl_version: 0,

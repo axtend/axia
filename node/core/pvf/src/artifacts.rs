@@ -18,7 +18,7 @@ use crate::{error::PrepareError, host::PrepareResultSender};
 use always_assert::always;
 use async_std::path::{Path, PathBuf};
 use parity_scale_codec::{Decode, Encode};
-use polkadot_allychain::primitives::ValidationCodeHash;
+use axia_allychain::primitives::ValidationCodeHash;
 use std::{
 	collections::HashMap,
 	time::{Duration, SystemTime},
@@ -58,7 +58,7 @@ impl ArtifactId {
 	/// Tries to recover the artifact id from the given file name.
 	#[cfg(test)]
 	pub fn from_file_name(file_name: &str) -> Option<Self> {
-		use polkadot_core_primitives::Hash;
+		use axia_core_primitives::Hash;
 		use std::str::FromStr as _;
 
 		let file_name = file_name.strip_prefix(Self::PREFIX)?;

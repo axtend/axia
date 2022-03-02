@@ -18,7 +18,7 @@ mod allychain;
 mod relay_chain;
 
 use codec::DecodeLimit;
-use polkadot_allychain::primitives::Id as ParaId;
+use axia_allychain::primitives::Id as ParaId;
 use sp_runtime::traits::AccountIdConversion;
 use xcm_simulator::{decl_test_network, decl_test_allychain, decl_test_relay_chain, TestExt};
 

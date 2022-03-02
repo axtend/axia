@@ -25,10 +25,10 @@
 #![deny(unused_crate_dependencies, unused_results)]
 
 use futures::{select, FutureExt};
-use polkadot_node_subsystem::{
+use axia_node_subsystem::{
 	errors::SubsystemError, messages::ProvisionerMessage, overseer::Handle,
 };
-use polkadot_primitives::v1::{Block, Hash, InherentData as AllychainsInherentData};
+use axia_primitives::v1::{Block, Hash, InherentData as AllychainsInherentData};
 use sp_blockchain::HeaderBackend;
 use sp_runtime::generic::BlockId;
 use std::time;
@@ -112,7 +112,7 @@ impl sp_inherents::InherentDataProvider for AllychainsInherentDataProvider {
 		dst_inherent_data: &mut sp_inherents::InherentData,
 	) -> Result<(), sp_inherents::Error> {
 		dst_inherent_data
-			.put_data(polkadot_primitives::v1::ALLYCHAINS_INHERENT_IDENTIFIER, &self.inherent_data)
+			.put_data(axia_primitives::v1::ALLYCHAINS_INHERENT_IDENTIFIER, &self.inherent_data)
 	}
 
 	async fn try_handle_error(

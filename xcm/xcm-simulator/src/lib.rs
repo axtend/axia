@@ -23,12 +23,12 @@ pub use frame_support::{traits::Get, weights::Weight};
 pub use sp_io::TestExternalities;
 pub use sp_std::{cell::RefCell, collections::vec_deque::VecDeque, marker::PhantomData};
 
-pub use polkadot_core_primitives::BlockNumber as RelayBlockNumber;
-pub use polkadot_allychain::primitives::{
+pub use axia_core_primitives::BlockNumber as RelayBlockNumber;
+pub use axia_allychain::primitives::{
 	DmpMessageHandler as DmpMessageHandlerT, Id as ParaId, XcmpMessageFormat,
 	XcmpMessageHandler as XcmpMessageHandlerT,
 };
-pub use polkadot_runtime_allychains::{
+pub use axia_runtime_allychains::{
 	dmp,
 	ump::{self, MessageId, UmpSink, XcmSink},
 };

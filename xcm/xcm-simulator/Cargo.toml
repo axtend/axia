@@ -15,6 +15,6 @@ sp-std = { git = "https://github.com/axtend/axlib", branch = "c92f69d" }
 
 xcm = { path = "../" }
 xcm-executor = { path = "../xcm-executor" }
-polkadot-core-primitives = { path = "../../core-primitives"}
-polkadot-allychain = { path = "../../allychain" }
-polkadot-runtime-allychains = { path = "../../runtime/allychains" }
+axia-core-primitives = { path = "../../core-primitives"}
+axia-allychain = { path = "../../allychain" }
+axia-runtime-allychains = { path = "../../runtime/allychains" }

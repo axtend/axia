@@ -25,21 +25,21 @@ use std::{
 use async_trait::async_trait;
 use lazy_static::lazy_static;
 
-use polkadot_node_network_protocol::{authority_discovery::AuthorityDiscovery, PeerId};
+use axia_node_network_protocol::{authority_discovery::AuthorityDiscovery, PeerId};
 use sc_keystore::LocalKeystore;
 use sp_application_crypto::AppKey;
 use sp_keyring::Sr25519Keyring;
 use sp_keystore::{SyncCryptoStore, SyncCryptoStorePtr};
 
-use polkadot_node_primitives::{DisputeMessage, SignedDisputeStatement};
-use polkadot_primitives::{
+use axia_node_primitives::{DisputeMessage, SignedDisputeStatement};
+use axia_primitives::{
 	v1::{
 		AuthorityDiscoveryId, CandidateHash, CandidateReceipt, Hash, SessionIndex, ValidatorId,
 		ValidatorIndex,
 	},
 	v2::SessionInfo,
 };
-use polkadot_primitives_test_helpers::dummy_candidate_descriptor;
+use axia_primitives_test_helpers::dummy_candidate_descriptor;
 
 pub const MOCK_SESSION_INDEX: SessionIndex = 1;
 pub const MOCK_NEXT_SESSION_INDEX: SessionIndex = 2;
@@ -198,15 +198,15 @@ impl MockAuthorityDiscovery {
 impl AuthorityDiscovery for MockAuthorityDiscovery {
 	async fn get_addresses_by_authority_id(
 		&mut self,
-		_authority: polkadot_primitives::v1::AuthorityDiscoveryId,
+		_authority: axia_primitives::v1::AuthorityDiscoveryId,
 	) -> Option<HashSet<sc_network::Multiaddr>> {
 		panic!("Not implemented");
 	}
 
 	async fn get_authority_ids_by_peer_id(
 		&mut self,
-		peer_id: polkadot_node_network_protocol::PeerId,
-	) -> Option<HashSet<polkadot_primitives::v1::AuthorityDiscoveryId>> {
+		peer_id: axia_node_network_protocol::PeerId,
+	) -> Option<HashSet<axia_primitives::v1::AuthorityDiscoveryId>> {
 		for (a, p) in self.peer_ids.iter() {
 			if p == &peer_id {
 				return Some(HashSet::from([MOCK_VALIDATORS_DISCOVERY_KEYS

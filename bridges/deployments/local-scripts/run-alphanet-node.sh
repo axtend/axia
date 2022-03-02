@@ -9,6 +9,6 @@
 ALPHANET_PORT="${ALPHANET_PORT:-9944}"
 
 RUST_LOG=runtime=trace,runtime::bridge=trace \
-./target/debug/polkadot --chain=alphanet-dev --alice --tmp \
+./target/debug/axia --chain=alphanet-dev --alice --tmp \
     --rpc-cors=all --unsafe-rpc-external --unsafe-ws-external \
     --port 33033 --rpc-port 9933 --ws-port $ALPHANET_PORT \

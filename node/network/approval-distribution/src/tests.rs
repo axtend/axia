@@ -17,18 +17,18 @@
 use super::*;
 use assert_matches::assert_matches;
 use futures::{executor, future, Future};
-use polkadot_node_network_protocol::{view, ObservedRole};
-use polkadot_node_primitives::approval::{
+use axia_node_network_protocol::{view, ObservedRole};
+use axia_node_primitives::approval::{
 	AssignmentCertKind, VRFOutput, VRFProof, RELAY_VRF_MODULO_CONTEXT,
 };
-use polkadot_node_subsystem::messages::{AllMessages, ApprovalCheckError};
-use polkadot_node_subsystem_test_helpers as test_helpers;
-use polkadot_node_subsystem_util::TimeoutExt as _;
+use axia_node_subsystem::messages::{AllMessages, ApprovalCheckError};
+use axia_node_subsystem_test_helpers as test_helpers;
+use axia_node_subsystem_util::TimeoutExt as _;
 use std::time::Duration;
 
 type VirtualOverseer = test_helpers::TestSubsystemContextHandle<ApprovalDistributionMessage>;
 
-fn dummy_signature() -> polkadot_primitives::v1::ValidatorSignature {
+fn dummy_signature() -> axia_primitives::v1::ValidatorSignature {
 	sp_core::crypto::UncheckedFrom::unchecked_from([1u8; 64])
 }
 
@@ -258,7 +258,7 @@ fn try_import_the_same_assignment() {
 	});
 }
 
-/// <https://github.com/axiatech/polkadot/pull/2160#discussion_r547594835>
+/// <https://github.com/axiatech/axia/pull/2160#discussion_r547594835>
 ///
 /// 1. Send a view update that removes block B from their view.
 /// 2. Send a message from B that they incur `COST_UNEXPECTED_MESSAGE` for,
@@ -346,7 +346,7 @@ fn spam_attack_results_in_negative_reputation_change() {
 /// Upon receiving them, they both will try to send the message each other.
 /// This test makes sure they will not punish each other for such duplicate messages.
 ///
-/// See <https://github.com/axiatech/polkadot/issues/2499>.
+/// See <https://github.com/axiatech/axia/issues/2499>.
 #[test]
 fn peer_sending_us_the_same_we_just_sent_them_is_ok() {
 	let parent_hash = Hash::repeat_byte(0xFF);

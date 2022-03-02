@@ -1,18 +1,18 @@
 // Copyright 2020 Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// This file is part of Axia.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// Axia is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// Axia is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with Axia.  If not, see <http://www.gnu.org/licenses/>.
 
 //! Provides glue code over the scheduler and inclusion modules, and accepting
 //! one inherent per block that can include new para candidates and bitfields.
@@ -212,7 +212,7 @@ pub mod pallet {
 			let inherent_data = Self::create_inherent_inner(data)?;
 			// Sanity check: session changes can invalidate an inherent,
 			// and we _really_ don't want that to happen.
-			// See <https://github.com/paritytech/polkadot/issues/1327>
+			// See <https://github.com/paritytech/axia/issues/1327>
 
 			// Calling `Self::enter` here is a safe-guard, to avoid any discrepancy between on-chain checks
 			// (`enter`) and the off-chain checks by the block author (this function). Once we are confident

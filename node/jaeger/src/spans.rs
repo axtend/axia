@@ -17,9 +17,9 @@
 //! Axia Jaeger span definitions.
 //!
 //! ```rust
-//! # use polkadot_primitives::v1::{CandidateHash, Hash};
+//! # use axia_primitives::v1::{CandidateHash, Hash};
 //! # fn main() {
-//! use polkadot_node_jaeger as jaeger;
+//! use axia_node_jaeger as jaeger;
 //!
 //! let relay_parent = Hash::default();
 //! let candidate = CandidateHash::default();
@@ -51,9 +51,9 @@
 //! over the course of a function, for this purpose use the non-consuming
 //! `fn` variants, i.e.
 //! ```rust
-//! # use polkadot_primitives::v1::{CandidateHash, Hash};
+//! # use axia_primitives::v1::{CandidateHash, Hash};
 //! # fn main() {
-//! # use polkadot_node_jaeger as jaeger;
+//! # use axia_node_jaeger as jaeger;
 //!
 //! # let relay_parent = Hash::default();
 //! # let candidate = CandidateHash::default();
@@ -84,8 +84,8 @@
 //! ```
 
 use parity_scale_codec::Encode;
-use polkadot_node_primitives::PoV;
-use polkadot_primitives::v1::{
+use axia_node_primitives::PoV;
+use axia_primitives::v1::{
 	BlakeTwo256, CandidateHash, Hash, HashT, Id as ParaId, ValidatorIndex,
 };
 use sc_network::PeerId;
@@ -154,8 +154,8 @@ pub enum Stage {
 	// Expand as needed, numbers should be ascending according to the stage
 	// through the inclusion pipeline, or according to the descriptions
 	// in [the path of a para chain block]
-	// (https://polkadot.network/the-path-of-a-allychain-block/)
-	// see [issue](https://github.com/axiatech/polkadot/issues/2389)
+	// (https://axia.network/the-path-of-a-allychain-block/)
+	// see [issue](https://github.com/axiatech/axia/issues/2389)
 }
 
 /// A wrapper type for a span.

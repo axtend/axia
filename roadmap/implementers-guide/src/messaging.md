@@ -95,8 +95,8 @@ messages are supplied (i.e. preimages), rest are provided as hashes.
 
 Further details can be found at the official repository for the
 [Cross-Consensus Message Format (XCM)](https://github.com/axiatech/xcm-format/blob/master/README.md), as well as
-at the [W3F research website](https://research.web3.foundation/en/latest/polkadot/XCMP.html) and
-[this blogpost](https://medium.com/web3foundation/polkadots-messaging-scheme-b1ec560908b7).
+at the [W3F research website](https://research.web3.foundation/en/latest/axia/XCMP.html) and
+[this blogpost](https://medium.com/web3foundation/axias-messaging-scheme-b1ec560908b7).
 
 HRMP (Horizontally Relay-routed Message Passing) is a stop gap that predates XCMP. Semantically, it mimics XCMP's interface.
 The crucial difference from XCMP though is that all the messages are stored in the relay-chain storage. That makes

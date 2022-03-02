@@ -15,7 +15,7 @@ smallvec = "1.7"
 
 bp-header-chain = { path = "../header-chain", default-features = false }
 bp-messages = { path = "../messages", default-features = false }
-bp-polkadot-core = { path = "../polkadot-core", default-features = false }
+bp-axia-core = { path = "../axia-core", default-features = false }
 bp-runtime = { path = "../runtime", default-features = false }
 
 # Axlib Based Dependencies
@@ -31,7 +31,7 @@ default = ["std"]
 std = [
 	"bp-header-chain/std",
 	"bp-messages/std",
-	"bp-polkadot-core/std",
+	"bp-axia-core/std",
 	"bp-runtime/std",
 	"frame-support/std",
 	"parity-scale-codec/std",

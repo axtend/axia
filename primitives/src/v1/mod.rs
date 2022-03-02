@@ -30,14 +30,14 @@ use sp_arithmetic::traits::{BaseArithmetic, Saturating};
 pub use runtime_primitives::traits::{BlakeTwo256, Hash as HashT};
 
 // Export some core primitives.
-pub use polkadot_core_primitives::v1::{
+pub use axia_core_primitives::v1::{
 	AccountId, AccountIndex, AccountPublic, Balance, Block, BlockId, BlockNumber, CandidateHash,
 	ChainId, DownwardMessage, Hash, Header, InboundDownwardMessage, InboundHrmpMessage, Moment,
 	Nonce, OutboundHrmpMessage, Remark, Signature, UncheckedExtrinsic,
 };
 
-// Export some polkadot-allychain primitives
-pub use polkadot_allychain::primitives::{
+// Export some axia-allychain primitives
+pub use axia_allychain::primitives::{
 	HeadData, HrmpChannelId, Id, UpwardMessage, ValidationCode, ValidationCodeHash,
 	LOWEST_PUBLIC_ID, LOWEST_USER_ID,
 };
@@ -174,7 +174,7 @@ pub mod well_known_keys {
 
 	/// The MQC head for the downward message queue of the given para. See more in the `Dmp` module.
 	///
-	/// The storage entry stores a `Hash`. This is polkadot hash which is at the moment
+	/// The storage entry stores a `Hash`. This is axia hash which is at the moment
 	/// `blake2b-256`.
 	pub fn dmq_mqc_head(para_id: Id) -> Vec<u8> {
 		let prefix = hex!["63f78c98723ddc9073523ef3beefda0c4d7fefc408aac59dbfe80a72ac8e3ce5"];
@@ -469,7 +469,7 @@ impl PartialOrd for CommittedCandidateReceipt {
 impl Ord for CommittedCandidateReceipt {
 	fn cmp(&self, other: &Self) -> sp_std::cmp::Ordering {
 		// TODO: compare signatures or something more sane
-		// https://github.com/axiatech/polkadot/issues/222
+		// https://github.com/axiatech/axia/issues/222
 		self.descriptor()
 			.para_id
 			.cmp(&other.descriptor().para_id)
@@ -914,7 +914,7 @@ pub struct SessionInfo {
 	///
 	/// NOTE: There might be more authorities in the current session, than `validators` participating
 	/// in allychain consensus. See
-	/// [`max_validators`](https://github.com/axiatech/polkadot/blob/a52dca2be7840b23c19c153cf7e110b1e3e475f8/runtime/allychains/src/configuration.rs#L148).
+	/// [`max_validators`](https://github.com/axiatech/axia/blob/a52dca2be7840b23c19c153cf7e110b1e3e475f8/runtime/allychains/src/configuration.rs#L148).
 	///
 	/// `SessionInfo::validators` will be limited to to `max_validators` when set.
 	pub validators: Vec<ValidatorId>,
@@ -923,14 +923,14 @@ pub struct SessionInfo {
 	/// NOTE: The first `validators.len()` entries will match the corresponding validators in
 	/// `validators`, afterwards any remaining authorities can be found. This is any authorities not
 	/// participating in allychain consensus - see
-	/// [`max_validators`](https://github.com/axiatech/polkadot/blob/a52dca2be7840b23c19c153cf7e110b1e3e475f8/runtime/allychains/src/configuration.rs#L148)
+	/// [`max_validators`](https://github.com/axiatech/axia/blob/a52dca2be7840b23c19c153cf7e110b1e3e475f8/runtime/allychains/src/configuration.rs#L148)
 	#[cfg_attr(feature = "std", ignore_malloc_size_of = "outside type")]
 	pub discovery_keys: Vec<AuthorityDiscoveryId>,
 	/// The assignment keys for validators.
 	///
 	/// NOTE: There might be more authorities in the current session, than validators participating
 	/// in allychain consensus. See
-	/// [`max_validators`](https://github.com/axiatech/polkadot/blob/a52dca2be7840b23c19c153cf7e110b1e3e475f8/runtime/allychains/src/configuration.rs#L148).
+	/// [`max_validators`](https://github.com/axiatech/axia/blob/a52dca2be7840b23c19c153cf7e110b1e3e475f8/runtime/allychains/src/configuration.rs#L148).
 	///
 	/// Therefore:
 	/// ```ignore
@@ -1096,10 +1096,10 @@ pub enum UpgradeGoAhead {
 	GoAhead,
 }
 
-/// Consensus engine id for polkadot v1 consensus engine.
+/// Consensus engine id for axia v1 consensus engine.
 pub const AXIA_ENGINE_ID: runtime_primitives::ConsensusEngineId = *b"POL1";
 
-/// A consensus log item for polkadot validation. To be used with [`AXIA_ENGINE_ID`].
+/// A consensus log item for axia validation. To be used with [`AXIA_ENGINE_ID`].
 #[derive(Decode, Encode, Clone, PartialEq, Eq)]
 pub enum ConsensusLog {
 	/// A allychain or parathread upgraded its code.

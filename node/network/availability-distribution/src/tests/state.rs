@@ -20,8 +20,8 @@ use std::{
 	time::Duration,
 };
 
-use polkadot_node_subsystem_util::TimeoutExt;
-use polkadot_subsystem_testhelpers::TestSubsystemContextHandle;
+use axia_node_subsystem_util::TimeoutExt;
+use axia_subsystem_testhelpers::TestSubsystemContextHandle;
 
 use futures::{
 	channel::{mpsc, oneshot},
@@ -34,23 +34,23 @@ use sc_network::{config as netconfig, config::RequestResponseConfig, IfDisconnec
 use sp_core::{testing::TaskExecutor, traits::SpawnNamed};
 use sp_keystore::SyncCryptoStorePtr;
 
-use polkadot_node_network_protocol::{
+use axia_node_network_protocol::{
 	jaeger,
 	request_response::{v1, IncomingRequest, OutgoingRequest, Requests},
 };
-use polkadot_node_primitives::ErasureChunk;
-use polkadot_primitives::{
+use axia_node_primitives::ErasureChunk;
+use axia_primitives::{
 	v1::{CandidateHash, CoreState, GroupIndex, Hash, Id as ParaId, ScheduledCore, ValidatorIndex},
 	v2::SessionInfo,
 };
-use polkadot_subsystem::{
+use axia_subsystem::{
 	messages::{
 		AllMessages, AvailabilityDistributionMessage, AvailabilityStoreMessage,
 		NetworkBridgeMessage, RuntimeApiMessage, RuntimeApiRequest,
 	},
 	ActivatedLeaf, ActiveLeavesUpdate, FromOverseer, LeafStatus, OverseerSignal,
 };
-use polkadot_subsystem_testhelpers as test_helpers;
+use axia_subsystem_testhelpers as test_helpers;
 use test_helpers::{mock::make_ferdie_keystore, SingleItemSink};
 
 use super::mock::{make_session_info, OccupiedCoreBuilder};

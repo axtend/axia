@@ -21,11 +21,11 @@ futures-timer = "3.0.2"
 log = "0.4.13"
 
 test-parachain-adder = { path = ".." }
-polkadot-primitives = { path = "../../../../primitives" }
-polkadot-cli = { path = "../../../../cli" }
-polkadot-service = { path = "../../../../node/service", features = ["rococo-native"] }
-polkadot-node-primitives = { path = "../../../../node/primitives" }
-polkadot-node-subsystem = { path = "../../../../node/subsystem" }
+axia-primitives = { path = "../../../../primitives" }
+axia-cli = { path = "../../../../cli" }
+axia-service = { path = "../../../../node/service", features = ["rococo-native"] }
+axia-node-primitives = { path = "../../../../node/primitives" }
+axia-node-subsystem = { path = "../../../../node/subsystem" }
 
 sc-cli = { git = "https://github.com/axtend/axlib", branch = "c92f69d" }
 sp-core = { git = "https://github.com/axtend/axlib", branch = "c92f69d" }
@@ -34,11 +34,11 @@ sc-service = { git = "https://github.com/axtend/axlib", branch = "c92f69d" }
 # This one is tricky. Even though it is not used directly by the collator, we still need it for the
 # `puppet_worker` binary, which is required for the integration test. However, this shouldn't be
 # a big problem since it is used transitively anyway.
-polkadot-node-core-pvf = { path = "../../../../node/core/pvf" }
+axia-node-core-pvf = { path = "../../../../node/core/pvf" }
 
 [dev-dependencies]
-polkadot-parachain = { path = "../../.." }
-polkadot-test-service = { path = "../../../../node/test/service" }
+axia-parachain = { path = "../../.." }
+axia-test-service = { path = "../../../../node/test/service" }
 
 axlib-test-utils = { git = "https://github.com/axtend/axlib", branch = "c92f69d" }
 sc-service = { git = "https://github.com/axtend/axlib", branch = "c92f69d" }

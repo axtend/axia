@@ -17,7 +17,7 @@
 //! Types that are specific to the AxiaTest runtime.
 
 use bp_messages::{LaneId, UnrewardedRelayersState};
-use bp_polkadot_core::{AccountAddress, Balance, AxiaLike};
+use bp_axia_core::{AccountAddress, Balance, AxiaLike};
 use bp_runtime::Chain;
 use codec::{Compact, Decode, Encode};
 use frame_support::weights::Weight;
@@ -25,17 +25,17 @@ use scale_info::TypeInfo;
 use sp_runtime::FixedU128;
 
 /// Unchecked AxiaTest extrinsic.
-pub type UncheckedExtrinsic = bp_polkadot_core::UncheckedExtrinsic<Call>;
+pub type UncheckedExtrinsic = bp_axia_core::UncheckedExtrinsic<Call>;
 
 /// Axia account ownership digest from AxiaTest.
 ///
 /// The byte vector returned by this function should be signed with a Axia account private key.
 /// This way, the owner of `axctest_account_id` on AxiaTest proves that the Axia account private
 /// key is also under his control.
-pub fn axctest_to_polkadot_account_ownership_digest<Call, AccountId, SpecVersion>(
-	polkadot_call: &Call,
+pub fn axctest_to_axia_account_ownership_digest<Call, AccountId, SpecVersion>(
+	axia_call: &Call,
 	axctest_account_id: AccountId,
-	polkadot_spec_version: SpecVersion,
+	axia_spec_version: SpecVersion,
 ) -> Vec<u8>
 where
 	Call: codec::Encode,
@@ -43,9 +43,9 @@ where
 	SpecVersion: codec::Encode,
 {
 	pallet_bridge_dispatch::account_ownership_digest(
-		polkadot_call,
+		axia_call,
 		axctest_account_id,
-		polkadot_spec_version,
+		axia_spec_version,
 		bp_runtime::AXIATEST_CHAIN_ID,
 		bp_runtime::AXIA_CHAIN_ID,
 	)
@@ -60,7 +60,7 @@ where
 /// All entries here (like pretty much in the entire file) must be kept in sync with AxiaTest
 /// `construct_runtime`, so that we maintain SCALE-compatibility.
 ///
-/// See: [link](https://github.com/axiatech/polkadot/blob/master/runtime/axctest/src/lib.rs)
+/// See: [link](https://github.com/axiatech/axia/blob/master/runtime/axctest/src/lib.rs)
 #[allow(clippy::large_enum_variant)]
 #[derive(Encode, Decode, Debug, PartialEq, Eq, Clone, TypeInfo)]
 pub enum Call {
@@ -114,23 +114,23 @@ pub enum BridgeAxiaMessagesCall {
 		LaneId,
 		bp_message_dispatch::MessagePayload<
 			bp_axctest::AccountId,
-			bp_polkadot::AccountId,
-			bp_polkadot::AccountPublic,
+			bp_axia::AccountId,
+			bp_axia::AccountPublic,
 			Vec<u8>,
 		>,
 		bp_axctest::Balance,
 	),
 	#[codec(index = 5)]
 	receive_messages_proof(
-		bp_polkadot::AccountId,
-		bridge_runtime_common::messages::target::FromBridgedChainMessagesProof<bp_polkadot::Hash>,
+		bp_axia::AccountId,
+		bridge_runtime_common::messages::target::FromBridgedChainMessagesProof<bp_axia::Hash>,
 		u32,
 		Weight,
 	),
 	#[codec(index = 6)]
 	receive_messages_delivery_proof(
 		bridge_runtime_common::messages::source::FromBridgedChainMessagesDeliveryProof<
-			bp_polkadot::Hash,
+			bp_axia::Hash,
 		>,
 		UnrewardedRelayersState,
 	),

@@ -25,7 +25,7 @@ use futures::{
 };
 use sp_core::Pair;
 
-use polkadot_node_network_protocol::{
+use axia_node_network_protocol::{
 	peer_set::PeerSet,
 	request_response::{
 		incoming::{self, OutgoingResponse},
@@ -34,17 +34,17 @@ use polkadot_node_network_protocol::{
 	},
 	v1 as protocol_v1, OurView, PeerId, UnifiedReputationChange as Rep, View,
 };
-use polkadot_node_primitives::{CollationSecondedSignal, PoV, Statement};
-use polkadot_node_subsystem_util::{
+use axia_node_primitives::{CollationSecondedSignal, PoV, Statement};
+use axia_node_subsystem_util::{
 	metrics::{self, prometheus},
 	runtime::{get_availability_cores, get_group_rotation_info, RuntimeInfo},
 	TimeoutExt,
 };
-use polkadot_primitives::v1::{
+use axia_primitives::v1::{
 	AuthorityDiscoveryId, CandidateHash, CandidateReceipt, CollatorPair, CoreIndex, CoreState,
 	Hash, Id as ParaId,
 };
-use polkadot_subsystem::{
+use axia_subsystem::{
 	jaeger,
 	messages::{CollatorProtocolMessage, NetworkBridgeEvent, NetworkBridgeMessage},
 	overseer, FromOverseer, OverseerSignal, PerLeafSpan, SubsystemContext,
@@ -66,7 +66,7 @@ const COST_APPARENT_FLOOD: Rep =
 ///
 /// This is to protect from a single slow validator preventing collations from happening.
 ///
-/// For considerations on this value, see: https://github.com/axiatech/polkadot/issues/4386
+/// For considerations on this value, see: https://github.com/axiatech/axia/issues/4386
 const MAX_UNSHARED_UPLOAD_TIME: Duration = Duration::from_millis(150);
 
 #[derive(Clone, Default)]
@@ -112,28 +112,28 @@ impl metrics::Metrics for Metrics {
 		let metrics = MetricsInner {
 			advertisements_made: prometheus::register(
 				prometheus::Counter::new(
-					"polkadot_allychain_collation_advertisements_made_total",
+					"axia_allychain_collation_advertisements_made_total",
 					"A number of collation advertisements sent to validators.",
 				)?,
 				registry,
 			)?,
 			collations_send_requested: prometheus::register(
 				prometheus::Counter::new(
-					"polkadot_allychain_collations_sent_requested_total",
+					"axia_allychain_collations_sent_requested_total",
 					"A number of collations requested to be sent to validators.",
 				)?,
 				registry,
 			)?,
 			collations_sent: prometheus::register(
 				prometheus::Counter::new(
-					"polkadot_allychain_collations_sent_total",
+					"axia_allychain_collations_sent_total",
 					"A number of collations sent to validators.",
 				)?,
 				registry,
 			)?,
 			process_msg: prometheus::register(
 				prometheus::Histogram::with_opts(prometheus::HistogramOpts::new(
-					"polkadot_allychain_collator_protocol_collator_process_msg",
+					"axia_allychain_collator_protocol_collator_process_msg",
 					"Time spent within `collator_protocol_collator::process_msg`",
 				))?,
 				registry,

@@ -26,13 +26,13 @@ use futures::{FutureExt, TryFutureExt};
 
 use sp_keystore::SyncCryptoStorePtr;
 
-use polkadot_node_network_protocol::{
+use axia_node_network_protocol::{
 	request_response::{v1 as request_v1, IncomingRequestReceiver},
 	PeerId, UnifiedReputationChange as Rep,
 };
-use polkadot_primitives::v1::CollatorPair;
+use axia_primitives::v1::CollatorPair;
 
-use polkadot_subsystem::{
+use axia_subsystem::{
 	errors::SubsystemError,
 	messages::{CollatorProtocolMessage, NetworkBridgeMessage},
 	overseer, SpawnedSubsystem, SubsystemContext, SubsystemSender,

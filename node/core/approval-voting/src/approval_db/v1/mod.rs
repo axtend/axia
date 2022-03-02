@@ -18,9 +18,9 @@
 
 use kvdb::{DBTransaction, KeyValueDB};
 use parity_scale_codec::{Decode, Encode};
-use polkadot_node_primitives::approval::{AssignmentCert, DelayTranche};
-use polkadot_node_subsystem::{SubsystemError, SubsystemResult};
-use polkadot_primitives::v1::{
+use axia_node_primitives::approval::{AssignmentCert, DelayTranche};
+use axia_node_subsystem::{SubsystemError, SubsystemResult};
+use axia_primitives::v1::{
 	BlockNumber, CandidateHash, CandidateReceipt, CoreIndex, GroupIndex, Hash, SessionIndex,
 	ValidatorIndex, ValidatorSignature,
 };

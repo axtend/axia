@@ -14,24 +14,24 @@
 // You should have received a copy of the GNU General Public License
 // along with Axia.  If not, see <http://www.gnu.org/licenses/>.
 
-//! The collation generation subsystem is the interface between polkadot and the collators.
+//! The collation generation subsystem is the interface between axia and the collators.
 
 #![deny(missing_docs)]
 
 use futures::{channel::mpsc, future::FutureExt, join, select, sink::SinkExt, stream::StreamExt};
 use parity_scale_codec::Encode;
-use polkadot_node_primitives::{AvailableData, CollationGenerationConfig, PoV};
-use polkadot_node_subsystem::{
+use axia_node_primitives::{AvailableData, CollationGenerationConfig, PoV};
+use axia_node_subsystem::{
 	messages::{AllMessages, CollationGenerationMessage, CollatorProtocolMessage},
 	overseer, ActiveLeavesUpdate, FromOverseer, OverseerSignal, SpawnedSubsystem, SubsystemContext,
 	SubsystemError, SubsystemResult, SubsystemSender,
 };
-use polkadot_node_subsystem_util::{
+use axia_node_subsystem_util::{
 	metrics::{self, prometheus},
 	request_availability_cores, request_persisted_validation_data, request_validation_code,
 	request_validation_code_hash, request_validators,
 };
-use polkadot_primitives::v1::{
+use axia_primitives::v1::{
 	collator_signature_payload, CandidateCommitments, CandidateDescriptor, CandidateReceipt,
 	CoreState, Hash, Id as ParaId, OccupiedCoreAssumption, PersistedValidationData,
 	ValidationCodeHash,
@@ -206,7 +206,7 @@ async fn handle_new_activations<Context: SubsystemContext>(
 				CoreState::Scheduled(scheduled_core) =>
 					(scheduled_core, OccupiedCoreAssumption::Free),
 				CoreState::Occupied(_occupied_core) => {
-					// TODO: https://github.com/axiatech/polkadot/issues/1573
+					// TODO: https://github.com/axiatech/axia/issues/1573
 					tracing::trace!(
 						target: LOG_TARGET,
 						core_idx = %core_idx,
@@ -417,7 +417,7 @@ async fn obtain_current_validation_code_hash(
 	assumption: OccupiedCoreAssumption,
 	sender: &mut impl SubsystemSender,
 ) -> Result<Option<ValidationCodeHash>, crate::error::Error> {
-	use polkadot_node_subsystem::RuntimeApiError;
+	use axia_node_subsystem::RuntimeApiError;
 
 	match request_validation_code_hash(relay_parent, para_id, assumption, sender)
 		.await
@@ -448,8 +448,8 @@ fn erasure_root(
 	let available_data =
 		AvailableData { validation_data: persisted_validation, pov: Arc::new(pov) };
 
-	let chunks = polkadot_erasure_coding::obtain_chunks_v1(n_validators, &available_data)?;
-	Ok(polkadot_erasure_coding::branches(&chunks).root())
+	let chunks = axia_erasure_coding::obtain_chunks_v1(n_validators, &available_data)?;
+	Ok(axia_erasure_coding::branches(&chunks).root())
 }
 
 #[derive(Clone)]
@@ -500,7 +500,7 @@ impl metrics::Metrics for Metrics {
 		let metrics = MetricsInner {
 			collations_generated_total: prometheus::register(
 				prometheus::Counter::new(
-					"polkadot_allychain_collations_generated_total",
+					"axia_allychain_collations_generated_total",
 					"Number of collations generated."
 				)?,
 				registry,
@@ -508,7 +508,7 @@ impl metrics::Metrics for Metrics {
 			new_activations_overall: prometheus::register(
 				prometheus::Histogram::with_opts(
 					prometheus::HistogramOpts::new(
-						"polkadot_allychain_collation_generation_new_activations",
+						"axia_allychain_collation_generation_new_activations",
 						"Time spent within fn handle_new_activations",
 					)
 				)?,
@@ -517,7 +517,7 @@ impl metrics::Metrics for Metrics {
 			new_activations_per_relay_parent: prometheus::register(
 				prometheus::Histogram::with_opts(
 					prometheus::HistogramOpts::new(
-						"polkadot_allychain_collation_generation_per_relay_parent",
+						"axia_allychain_collation_generation_per_relay_parent",
 						"Time spent handling a particular relay parent within fn handle_new_activations"
 					)
 				)?,
@@ -526,7 +526,7 @@ impl metrics::Metrics for Metrics {
 			new_activations_per_availability_core: prometheus::register(
 				prometheus::Histogram::with_opts(
 					prometheus::HistogramOpts::new(
-						"polkadot_allychain_collation_generation_per_availability_core",
+						"axia_allychain_collation_generation_per_availability_core",
 						"Time spent handling a particular availability core for a relay parent in fn handle_new_activations",
 					)
 				)?,

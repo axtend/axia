@@ -20,8 +20,8 @@
 //! multiple subsystems and intercept or replace incoming and outgoing
 //! messages on the overseer level.
 
-use polkadot_node_subsystem::*;
-pub use polkadot_node_subsystem::{messages::AllMessages, overseer, FromOverseer};
+use axia_node_subsystem::*;
+pub use axia_node_subsystem::{messages::AllMessages, overseer, FromOverseer};
 use std::{future::Future, pin::Pin};
 
 /// Filter incoming and outgoing messages.

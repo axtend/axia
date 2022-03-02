@@ -34,7 +34,7 @@ pub type Hash = core_primitives::Hash;
 pub use sp_runtime::traits::{Block as BlockT, Header as HeaderT};
 
 /// Default URI to connect to.
-pub const DEFAULT_URI: &str = "wss://rpc.polkadot.io";
+pub const DEFAULT_URI: &str = "wss://rpc.axia.io";
 /// The logging target.
 pub const LOG_TARGET: &str = "staking-miner";
 

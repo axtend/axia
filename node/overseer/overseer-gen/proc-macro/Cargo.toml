@@ -1,5 +1,5 @@
 [package]
-name = "polkadot-overseer-gen-proc-macro"
+name = "axia-overseer-gen-proc-macro"
 version = "0.9.17"
 authors = ["Axia Technologies <admin@axia.io>"]
 edition = "2018"

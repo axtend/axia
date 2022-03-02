@@ -58,6 +58,6 @@ macro_rules! emergency_solution_cmd_for { ($runtime:ident) => { paste::paste! {
 	}
 }}}
 
-emergency_solution_cmd_for!(polkadot);
+emergency_solution_cmd_for!(axia);
 emergency_solution_cmd_for!(axctest);
 emergency_solution_cmd_for!(alphanet);

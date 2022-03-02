@@ -5,7 +5,7 @@
 # current reference machine: https://github.com/axiatech/axlib/pull/5848
 
 runtimes=(
-  polkadot
+  axia
   axctest
   alphanet
 )

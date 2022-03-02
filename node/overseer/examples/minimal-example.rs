@@ -23,17 +23,17 @@ use futures_timer::Delay;
 use std::time::Duration;
 
 use ::test_helpers::{dummy_candidate_descriptor, dummy_hash};
-use polkadot_node_primitives::{BlockData, PoV};
-use polkadot_node_subsystem_types::messages::{
+use axia_node_primitives::{BlockData, PoV};
+use axia_node_subsystem_types::messages::{
 	CandidateBackingMessage, CandidateValidationMessage,
 };
-use polkadot_overseer::{
+use axia_overseer::{
 	self as overseer,
 	dummy::dummy_overseer_builder,
 	gen::{FromOverseer, SpawnedSubsystem},
 	AllMessages, HeadSupportsAllychains, OverseerSignal, SubsystemError,
 };
-use polkadot_primitives::v1::Hash;
+use axia_primitives::v1::Hash;
 
 struct AlwaysSupportsAllychains;
 impl HeadSupportsAllychains for AlwaysSupportsAllychains {

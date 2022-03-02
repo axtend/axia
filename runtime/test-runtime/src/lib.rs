@@ -24,7 +24,7 @@ use pallet_transaction_payment::CurrencyAdapter;
 use parity_scale_codec::Encode;
 use sp_std::{collections::btree_map::BTreeMap, prelude::*};
 
-use polkadot_runtime_allychains::{
+use axia_runtime_allychains::{
 	configuration as allychains_configuration, disputes as allychains_disputes,
 	dmp as allychains_dmp, hrmp as allychains_hrmp, inclusion as allychains_inclusion,
 	initializer as allychains_initializer, origin as allychains_origin, paras as allychains_paras,
@@ -43,7 +43,7 @@ use pallet_grandpa::{fg_primitives, AuthorityId as GrandpaId};
 use pallet_mmr_primitives as mmr;
 use pallet_session::historical as session_historical;
 use pallet_transaction_payment::{FeeDetails, RuntimeDispatchInfo};
-use polkadot_runtime_allychains::reward_points::RewardValidatorsWithEraPoints;
+use axia_runtime_allychains::reward_points::RewardValidatorsWithEraPoints;
 use primitives::{
 	v1::{
 		AccountId, AccountIndex, Balance, BlockNumber, CandidateEvent, CommittedCandidateReceipt,
@@ -93,8 +93,8 @@ include!(concat!(env!("OUT_DIR"), "/wasm_binary.rs"));
 
 /// Runtime version (Test).
 pub const VERSION: RuntimeVersion = RuntimeVersion {
-	spec_name: create_runtime_str!("polkadot-test-runtime"),
-	impl_name: create_runtime_str!("parity-polkadot-test-runtime"),
+	spec_name: create_runtime_str!("axia-test-runtime"),
+	impl_name: create_runtime_str!("parity-axia-test-runtime"),
 	authoring_version: 2,
 	spec_version: 1056,
 	impl_version: 0,
@@ -962,7 +962,7 @@ sp_api::impl_runtime_apis! {
 			// probability of a slot being empty), is done in accordance to the
 			// slot duration and expected target block time, for safely
 			// resisting network delays of maximum two seconds.
-			// <https://research.web3.foundation/en/latest/polkadot/BABE/Babe/#6-practical-results>
+			// <https://research.web3.foundation/en/latest/axia/BABE/Babe/#6-practical-results>
 			babe_primitives::BabeGenesisConfiguration {
 				slot_duration: Babe::slot_duration(),
 				epoch_length: EpochDuration::get(),

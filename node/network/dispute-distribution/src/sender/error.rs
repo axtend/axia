@@ -19,9 +19,9 @@
 
 use thiserror::Error;
 
-use polkadot_node_primitives::disputes::DisputeMessageCheckError;
-use polkadot_node_subsystem_util::runtime;
-use polkadot_subsystem::SubsystemError;
+use axia_node_primitives::disputes::DisputeMessageCheckError;
+use axia_node_subsystem_util::runtime;
+use axia_subsystem::SubsystemError;
 
 #[derive(Debug, Error, derive_more::From)]
 #[error(transparent)]

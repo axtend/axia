@@ -30,7 +30,7 @@ Some connections are long-lived, some are just for a single request.
 
 #### Custom libp2p sub-protocols
 
-Polkadot parachains involve many distinct networking protocols. Ideally, we'd be able to spawn each of these as a separate futures task which communicates via channel with other protocols or node code as necessary. This requires changes in Substrate and libp2p.
+Axia parachains involve many distinct networking protocols. Ideally, we'd be able to spawn each of these as a separate futures task which communicates via channel with other protocols or node code as necessary. This requires changes in Substrate and libp2p.
 
 ---
 ### Assignment
@@ -39,7 +39,7 @@ Polkadot parachains involve many distinct networking protocols. Ideally, we'd be
 
 Category: Runtime
 
-Auctioning and registration of parachains. This is already implemented and follows the [Parachain Allocation — Research at W3F](https://research.web3.foundation/en/latest/polkadot/Parachain-Allocation.html) document.
+Auctioning and registration of parachains. This is already implemented and follows the [Parachain Allocation — Research at W3F](https://research.web3.foundation/en/latest/axia/Parachain-Allocation.html) document.
 
 #### *Parathread Auctions*
 
@@ -96,7 +96,7 @@ The main event loop of a collator node:
 ### Cross-chain Messaging
 
 https://hackmd.io/ILoQltEISP697oMYe4HbrA?view
-https://github.com/paritytech/polkadot/issues/597
+https://github.com/paritytech/axia/issues/597
 
 The biggest sub-project of the parachains roadmap - how messages are sent between parachains. This involves the state-machine ordering of incoming messages, protocols for fetching those messages, and node logic for persisting the messages.
 
@@ -155,9 +155,9 @@ Runtime logic for paras to open and close channels by putting down a deposit. Th
 
 Category: Runtime
 
-In Polkadot, a bad parachain group can force inclusion of an invalid or unavailable parachain block. It is the job of fishermen to detect those blocks and report them to the runtime. This item is about the report handler
+In Axia, a bad parachain group can force inclusion of an invalid or unavailable parachain block. It is the job of fishermen to detect those blocks and report them to the runtime. This item is about the report handler
 
-The W3F-research writeup on availability/validity provides a high-level view of the dispute resolution process: [Availability and Validity — Research at W3F](https://research.web3.foundation/en/latest/polkadot/Availability_and_Validity.html)
+The W3F-research writeup on availability/validity provides a high-level view of the dispute resolution process: [Availability and Validity — Research at W3F](https://research.web3.foundation/en/latest/axia/Availability_and_Validity.html)
 
 One of the main behaviors that is unimplemented and needs to be is the _rollback_ that occurs when the dispute resolution process concludes that an error has been made. When we mark a parachain block as having been invalid or unavailable, we need to roll back all parachains to a point from just before this state.  We would also need to roll back relay chain state, because there may have been messages from a parachain to a relay chain that now need to be rolled back. The easiest thing to do would be to side-step that by putting a delay on upwards messages, but this would impact the UX of parachain participation in slot auctions, council votes, etc. considerably. Assuming we can't side-step this, we will have to find a way to roll back selected state of the relay chain.
 
@@ -173,7 +173,7 @@ Runtime handlers that take two conflicting votes as arguments and slash the offe
 
 Category: Node
 
-This code-path is also taken by validators who self-select based on VRF [Availability and Validity — Research at W3F](https://research.web3.foundation/en/latest/polkadot/Availability_and_Validity.html). Validators and fishermen will select parachain blocks to re-validate. In these steps:
+This code-path is also taken by validators who self-select based on VRF [Availability and Validity — Research at W3F](https://research.web3.foundation/en/latest/axia/Availability_and_Validity.html). Validators and fishermen will select parachain blocks to re-validate. In these steps:
 * Attempt to recover the PoV block, falling back on the erasure-coding. If not available, issue report.
 * Attempt to validate the PoV block. If invalid, issue report.
 

@@ -59,7 +59,7 @@ impl AxlibFinalitySyncPipeline for BetanetFinalityToWococo {
 	type TargetChain = Wococo;
 
 	fn customize_metrics(params: MetricsParams) -> anyhow::Result<MetricsParams> {
-		crate::chains::add_polkadot_axctest_price_metrics::<Self::FinalitySyncPipeline>(params)
+		crate::chains::add_axia_axctest_price_metrics::<Self::FinalitySyncPipeline>(params)
 	}
 
 	fn start_relay_guards(&self) {

@@ -5,10 +5,10 @@ authors = ["Axia Technologies <admin@axia.io>"]
 edition = "2018"
 
 [dependencies]
-polkadot-runtime = { version = "0.9.17", path = "../../../runtime/polkadot" }
+axia-runtime = { version = "0.9.17", path = "../../../runtime/axia" }
 axctest-runtime = { version = "0.9.17", path = "../../../runtime/axctest" }
 alphanet-runtime = { version = "0.9.17", path = "../../../runtime/alphanet" }
-polkadot-runtime-constants = { version = "0.9.17", path = "../../../runtime/polkadot/constants" }
+axia-runtime-constants = { version = "0.9.17", path = "../../../runtime/axia/constants" }
 axctest-runtime-constants = { version = "0.9.17", path = "../../../runtime/axctest/constants" }
 alphanet-runtime-constants = { version = "0.9.17", path = "../../../runtime/alphanet/constants" }
 

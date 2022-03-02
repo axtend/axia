@@ -13,7 +13,7 @@ Next start the collator that will collate for the adder allychain:
 cargo run --release -p test-allychain-adder-collator -- --tmp --chain betanet-local --port 50553
 ```
 
-The last step is to register the allychain using polkadot-js. The allychain id is
+The last step is to register the allychain using axia-js. The allychain id is
 100. The genesis state and the validation code are printed at startup by the collator.
 
 To do this automatically, run `scripts/adder-collator.sh`.

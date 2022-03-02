@@ -23,14 +23,14 @@ use futures::{channel::oneshot, executor, future, Future};
 
 use ::test_helpers::TestCandidateBuilder;
 use parking_lot::Mutex;
-use polkadot_node_primitives::{AvailableData, BlockData, PoV, Proof};
-use polkadot_node_subsystem_test_helpers as test_helpers;
-use polkadot_node_subsystem_util::TimeoutExt;
-use polkadot_primitives::v1::{
+use axia_node_primitives::{AvailableData, BlockData, PoV, Proof};
+use axia_node_subsystem_test_helpers as test_helpers;
+use axia_node_subsystem_util::TimeoutExt;
+use axia_primitives::v1::{
 	CandidateHash, CandidateReceipt, CoreIndex, GroupIndex, HeadData, Header,
 	PersistedValidationData, ValidatorId,
 };
-use polkadot_subsystem::{
+use axia_subsystem::{
 	errors::RuntimeApiError,
 	jaeger,
 	messages::{AllMessages, RuntimeApiMessage, RuntimeApiRequest},
@@ -112,7 +112,7 @@ fn test_harness<T: Future<Output = VirtualOverseer>>(
 ) {
 	let _ = env_logger::builder()
 		.is_test(true)
-		.filter(Some("polkadot_node_core_av_store"), log::LevelFilter::Trace)
+		.filter(Some("axia_node_core_av_store"), log::LevelFilter::Trace)
 		.filter(Some(LOG_TARGET), log::LevelFilter::Trace)
 		.try_init();
 

@@ -31,8 +31,8 @@ use sp_runtime::{
 use sp_std::{convert::TryFrom, prelude::*};
 
 use pallet_xcm::XcmPassthrough;
-use polkadot_core_primitives::BlockNumber as RelayBlockNumber;
-use polkadot_allychain::primitives::{
+use axia_core_primitives::BlockNumber as RelayBlockNumber;
+use axia_allychain::primitives::{
 	DmpMessageHandler, Id as ParaId, Sibling, XcmpMessageFormat, XcmpMessageHandler,
 };
 use xcm::{latest::prelude::*, VersionedXcm};

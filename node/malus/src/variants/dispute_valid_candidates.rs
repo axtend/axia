@@ -21,7 +21,7 @@
 
 #![allow(missing_docs)]
 
-use polkadot_cli::{
+use axia_cli::{
 	prepared_overseer_builder,
 	service::{
 		AuthorityDiscoveryApi, AuxStore, BabeApi, Block, Error, HeaderBackend, Overseer,
@@ -35,8 +35,8 @@ use crate::interceptor::*;
 
 // Import extra types relevant to the particular
 // subsystem.
-use polkadot_node_core_backing::CandidateBackingSubsystem;
-use polkadot_node_subsystem::messages::{
+use axia_node_core_backing::CandidateBackingSubsystem;
+use axia_node_subsystem::messages::{
 	ApprovalDistributionMessage, CandidateBackingMessage, DisputeCoordinatorMessage,
 };
 use sp_keystore::SyncCryptoStorePtr;

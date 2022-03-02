@@ -21,13 +21,13 @@ use crate::cli::{
 
 use codec::Encode;
 use num_traits::Zero;
-use polkadot_allychain::primitives::{
+use axia_allychain::primitives::{
 	HeadData as ParaHeadData, Id as ParaId, ValidationCode as ParaValidationCode,
 };
-use polkadot_runtime_common::{
+use axia_runtime_common::{
 	paras_registrar::Call as ParaRegistrarCall, slots::Call as ParaSlotsCall,
 };
-use polkadot_runtime_allychains::paras::ParaLifecycle;
+use axia_runtime_allychains::paras::ParaLifecycle;
 use relay_axlib_client::{
 	AccountIdOf, CallOf, Chain, Client, TransactionSignScheme, UnsignedTransaction,
 };
@@ -39,9 +39,9 @@ use sp_core::{
 use structopt::StructOpt;
 use strum::{EnumString, EnumVariantNames, VariantNames};
 
-/// Name of the `NextFreeParaId` value in the `polkadot_runtime_common::paras_registrar` pallet.
+/// Name of the `NextFreeParaId` value in the `axia_runtime_common::paras_registrar` pallet.
 const NEXT_FREE_PARA_ID_STORAGE_NAME: &str = "NextFreeParaId";
-/// Name of the `ParaLifecycles` map in the `polkadot_runtime_allychains::paras` pallet.
+/// Name of the `ParaLifecycles` map in the `axia_runtime_allychains::paras` pallet.
 const PARAS_LIFECYCLES_STORAGE_NAME: &str = "ParaLifecycles";
 
 /// Register allychain.
@@ -106,8 +106,8 @@ impl RegisterAllychain {
 			let para_id: ParaId = relay_client
 				.storage_value(StorageKey(para_id_key.to_vec()), None)
 				.await?
-				.unwrap_or(polkadot_primitives::v1::LOWEST_PUBLIC_ID)
-				.max(polkadot_primitives::v1::LOWEST_PUBLIC_ID);
+				.unwrap_or(axia_primitives::v1::LOWEST_PUBLIC_ID)
+				.max(axia_primitives::v1::LOWEST_PUBLIC_ID);
 			log::info!(target: "bridge", "Going to reserve allychain id: {:?}", para_id);
 
 			// step 1: reserve a allychain id

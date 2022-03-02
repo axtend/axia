@@ -21,7 +21,7 @@ use sp_core::{Bytes, Pair};
 
 use bp_header_chain::justification::GrandpaJustification;
 use relay_axctest_client::{AxiaTest, SyncHeader as AxiaTestSyncHeader};
-use relay_polkadot_client::{Axia, SigningParams as AxiaSigningParams};
+use relay_axia_client::{Axia, SigningParams as AxiaSigningParams};
 use relay_axlib_client::{Client, TransactionSignScheme, UnsignedTransaction};
 use relay_utils::metrics::MetricsParams;
 use axlib_relay_helper::finality_pipeline::{
@@ -33,7 +33,7 @@ use axlib_relay_helper::finality_pipeline::{
 ///
 /// Actual value, returned by `maximal_balance_decrease_per_day_is_sane` test is approximately 21
 /// AXC, but let's round up to 30 AXC here.
-pub(crate) const MAXIMAL_BALANCE_DECREASE_PER_DAY: bp_polkadot::Balance = 30_000_000_000;
+pub(crate) const MAXIMAL_BALANCE_DECREASE_PER_DAY: bp_axia::Balance = 30_000_000_000;
 
 /// AxiaTest-to-Axia finality sync pipeline.
 pub(crate) type FinalityPipelineAxiaTestFinalityToAxia =
@@ -64,13 +64,13 @@ impl AxlibFinalitySyncPipeline for AxiaTestFinalityToAxia {
 	type TargetChain = Axia;
 
 	fn customize_metrics(params: MetricsParams) -> anyhow::Result<MetricsParams> {
-		crate::chains::add_polkadot_axctest_price_metrics::<Self::FinalitySyncPipeline>(params)
+		crate::chains::add_axia_axctest_price_metrics::<Self::FinalitySyncPipeline>(params)
 	}
 
 	fn start_relay_guards(&self) {
 		relay_axlib_client::guard::abort_on_spec_version_change(
 			self.finality_pipeline.target_client.clone(),
-			bp_polkadot::VERSION.spec_version,
+			bp_axia::VERSION.spec_version,
 		);
 		relay_axlib_client::guard::abort_when_account_balance_decreased(
 			self.finality_pipeline.target_client.clone(),
@@ -79,7 +79,7 @@ impl AxlibFinalitySyncPipeline for AxiaTestFinalityToAxia {
 		);
 	}
 
-	fn transactions_author(&self) -> bp_polkadot::AccountId {
+	fn transactions_author(&self) -> bp_axia::AccountId {
 		(*self.finality_pipeline.target_sign.public().as_array_ref()).into()
 	}
 
@@ -90,8 +90,8 @@ impl AxlibFinalitySyncPipeline for AxiaTestFinalityToAxia {
 		header: AxiaTestSyncHeader,
 		proof: GrandpaJustification<bp_axctest::Header>,
 	) -> Bytes {
-		let call = relay_polkadot_client::runtime::Call::BridgeAxiaTestGrandpa(
-			relay_polkadot_client::runtime::BridgeAxiaTestGrandpaCall::submit_finality_proof(
+		let call = relay_axia_client::runtime::Call::BridgeAxiaTestGrandpa(
+			relay_axia_client::runtime::BridgeAxiaTestGrandpaCall::submit_finality_proof(
 				Box::new(header.into_inner()),
 				proof,
 			),
@@ -155,8 +155,8 @@ pub(crate) mod tests {
 		// we expect AxiaTest -> Axia relay to be running in mandatory-headers-only mode
 		// => we expect single header for every AxiaTest session
 		let maximal_balance_decrease = compute_maximal_balance_decrease_per_day::<
-			bp_polkadot::Balance,
-			bp_polkadot::WeightToFee,
+			bp_axia::Balance,
+			bp_axia::WeightToFee,
 		>(bp_axctest::DAYS / bp_axctest::SESSION_LENGTH + 1);
 		assert!(
 			MAXIMAL_BALANCE_DECREASE_PER_DAY >= maximal_balance_decrease,

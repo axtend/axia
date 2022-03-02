@@ -149,44 +149,44 @@ macro_rules! select_full_bridge {
 			FullBridge::AxiaTestToAxia => {
 				type Source = relay_axctest_client::AxiaTest;
 				#[allow(dead_code)]
-				type Target = relay_polkadot_client::Axia;
+				type Target = relay_axia_client::Axia;
 
 				// Derive-account
 				#[allow(unused_imports)]
-				use bp_polkadot::derive_account_from_axctest_id as derive_account;
+				use bp_axia::derive_account_from_axctest_id as derive_account;
 
 				// Relay-messages
 				#[allow(unused_imports)]
-				use crate::chains::axctest_messages_to_polkadot::run as relay_messages;
+				use crate::chains::axctest_messages_to_axia::run as relay_messages;
 
 				// Send-message / Estimate-fee
 				#[allow(unused_imports)]
-				use bp_polkadot::TO_AXIA_ESTIMATE_MESSAGE_FEE_METHOD as ESTIMATE_MESSAGE_FEE_METHOD;
+				use bp_axia::TO_AXIA_ESTIMATE_MESSAGE_FEE_METHOD as ESTIMATE_MESSAGE_FEE_METHOD;
 				// Send-message
 				#[allow(unused_imports)]
-				use relay_axctest_client::runtime::axctest_to_polkadot_account_ownership_digest as account_ownership_digest;
+				use relay_axctest_client::runtime::axctest_to_axia_account_ownership_digest as account_ownership_digest;
 
 				$generic
 			}
 			FullBridge::AxiaToAxiaTest => {
-				type Source = relay_polkadot_client::Axia;
+				type Source = relay_axia_client::Axia;
 				#[allow(dead_code)]
 				type Target = relay_axctest_client::AxiaTest;
 
 				// Derive-account
 				#[allow(unused_imports)]
-				use bp_axctest::derive_account_from_polkadot_id as derive_account;
+				use bp_axctest::derive_account_from_axia_id as derive_account;
 
 				// Relay-messages
 				#[allow(unused_imports)]
-				use crate::chains::polkadot_messages_to_axctest::run as relay_messages;
+				use crate::chains::axia_messages_to_axctest::run as relay_messages;
 
 				// Send-message / Estimate-fee
 				#[allow(unused_imports)]
 				use bp_axctest::TO_AXIATEST_ESTIMATE_MESSAGE_FEE_METHOD as ESTIMATE_MESSAGE_FEE_METHOD;
 				// Send-message
 				#[allow(unused_imports)]
-				use relay_polkadot_client::runtime::polkadot_to_axctest_account_ownership_digest as account_ownership_digest;
+				use relay_axia_client::runtime::axia_to_axctest_account_ownership_digest as account_ownership_digest;
 
 				$generic
 			}

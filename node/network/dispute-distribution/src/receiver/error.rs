@@ -19,8 +19,8 @@
 
 use thiserror::Error;
 
-use polkadot_node_network_protocol::{request_response::incoming, PeerId};
-use polkadot_node_subsystem_util::runtime;
+use axia_node_network_protocol::{request_response::incoming, PeerId};
+use axia_node_subsystem_util::runtime;
 
 use crate::LOG_TARGET;
 

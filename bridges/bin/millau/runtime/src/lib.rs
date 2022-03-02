@@ -325,7 +325,7 @@ parameter_types! {
 	pub const TransactionBaseFee: Balance = 0;
 	pub const TransactionByteFee: Balance = 1;
 	pub const OperationalFeeMultiplier: u8 = 5;
-	// values for following parameters are copied from polkadot repo, but it is fine
+	// values for following parameters are copied from axia repo, but it is fine
 	// not to sync them - we're not going to make Rialto a full copy of one of Axia-like chains
 	pub const TargetBlockFullness: Perquintill = Perquintill::from_percent(25);
 	pub AdjustmentVariable: Multiplier = Multiplier::saturating_from_rational(3, 100_000);
@@ -940,7 +940,7 @@ mod tests {
 
 	#[test]
 	fn call_size() {
-		const MAX_CALL_SIZE: usize = 230; // value from polkadot-runtime tests
+		const MAX_CALL_SIZE: usize = 230; // value from axia-runtime tests
 		assert!(core::mem::size_of::<Call>() <= MAX_CALL_SIZE);
 	}
 }

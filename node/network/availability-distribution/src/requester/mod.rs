@@ -32,9 +32,9 @@ use futures::{
 	Stream,
 };
 
-use polkadot_node_subsystem_util::runtime::{get_occupied_cores, RuntimeInfo};
-use polkadot_primitives::v1::{CandidateHash, Hash, OccupiedCore};
-use polkadot_subsystem::{
+use axia_node_subsystem_util::runtime::{get_occupied_cores, RuntimeInfo};
+use axia_primitives::v1::{CandidateHash, Hash, OccupiedCore};
+use axia_subsystem::{
 	messages::{AllMessages, ChainApiMessage},
 	ActivatedLeaf, ActiveLeavesUpdate, LeafStatus, SubsystemContext,
 };

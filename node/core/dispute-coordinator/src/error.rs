@@ -17,11 +17,11 @@
 use futures::channel::oneshot;
 use thiserror::Error;
 
-use polkadot_node_subsystem::{
+use axia_node_subsystem::{
 	errors::{ChainApiError, RuntimeApiError},
 	SubsystemError,
 };
-use polkadot_node_subsystem_util::{rolling_session_window::SessionsUnavailable, runtime};
+use axia_node_subsystem_util::{rolling_session_window::SessionsUnavailable, runtime};
 
 use crate::LOG_TARGET;
 use parity_scale_codec::Error as CodecError;

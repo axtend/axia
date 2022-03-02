@@ -18,11 +18,11 @@ use std::collections::{hash_map::Entry, HashMap, HashSet};
 
 use futures::channel::{mpsc, oneshot};
 
-use polkadot_node_network_protocol::request_response::v1::DisputeRequest;
-use polkadot_node_primitives::{CandidateVotes, DisputeMessage, SignedDisputeStatement};
-use polkadot_node_subsystem_util::runtime::RuntimeInfo;
-use polkadot_primitives::v1::{CandidateHash, DisputeStatement, Hash, SessionIndex};
-use polkadot_subsystem::{
+use axia_node_network_protocol::request_response::v1::DisputeRequest;
+use axia_node_primitives::{CandidateVotes, DisputeMessage, SignedDisputeStatement};
+use axia_node_subsystem_util::runtime::RuntimeInfo;
+use axia_primitives::v1::{CandidateHash, DisputeStatement, Hash, SessionIndex};
+use axia_subsystem::{
 	messages::{AllMessages, DisputeCoordinatorMessage},
 	ActiveLeavesUpdate, SubsystemContext,
 };
@@ -194,7 +194,7 @@ impl DisputeSender {
 		// storage. We will iterate `active_sessions` to find a suitable head. We assume that there is at
 		// least one active head which, by `session_index`, is at least as recent as the `dispute` passed in.
 		// We need to avoid picking an older one from a session that might not yet exist in storage.
-		// Related to <https://github.com/axiatech/polkadot/issues/4730> .
+		// Related to <https://github.com/axiatech/axia/issues/4730> .
 		let ref_head = self
 			.active_sessions
 			.iter()

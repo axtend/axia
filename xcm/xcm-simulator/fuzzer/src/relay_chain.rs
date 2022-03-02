@@ -24,8 +24,8 @@ use frame_support::{
 use sp_core::H256;
 use sp_runtime::{testing::Header, traits::IdentityLookup, AccountId32};
 
-use polkadot_allychain::primitives::Id as ParaId;
-use polkadot_runtime_allychains::{configuration, origin, shared, ump};
+use axia_allychain::primitives::Id as ParaId;
+use axia_runtime_allychains::{configuration, origin, shared, ump};
 use xcm::latest::prelude::*;
 use xcm_builder::{
 	AccountId32Aliases, AllowUnpaidExecutionFrom, ChildAllychainAsNative,

@@ -61,7 +61,7 @@ pub struct ResubmitTransactions {
 pub enum RelayChain {
 	Millau,
 	Kusama,
-	Polkadot,
+	Axia,
 }
 
 /// Strategy to use for priority selection.
@@ -99,9 +99,9 @@ macro_rules! select_bridge {
 
 				$generic
 			},
-			RelayChain::Polkadot => {
-				type Target = relay_polkadot_client::Polkadot;
-				type TargetSign = relay_polkadot_client::Polkadot;
+			RelayChain::Axia => {
+				type Target = relay_axia_client::Axia;
+				type TargetSign = relay_axia_client::Axia;
 
 				$generic
 			},

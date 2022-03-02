@@ -27,8 +27,8 @@
 use std::convert::TryFrom;
 
 use parity_scale_codec::{Decode, Encode};
-use polkadot_node_primitives::{AvailableData, Proof};
-use polkadot_primitives::v0::{self, BlakeTwo256, Hash as H256, HashT};
+use axia_node_primitives::{AvailableData, Proof};
+use axia_primitives::v0::{self, BlakeTwo256, Hash as H256, HashT};
 use sp_core::Blake2Hasher;
 use thiserror::Error;
 use trie::{
@@ -370,7 +370,7 @@ impl<'a, I: Iterator<Item = &'a [u8]>> parity_scale_codec::Input for ShardInput<
 #[cfg(test)]
 mod tests {
 	use super::*;
-	use polkadot_primitives::v0::{AvailableData, BlockData, OmittedValidationData, PoVBlock};
+	use axia_primitives::v0::{AvailableData, BlockData, OmittedValidationData, PoVBlock};
 
 	// In order to adequately compute the number of entries in the Merkle
 	// trie, we must account for the fixed 16-ary trie structure.

@@ -72,18 +72,18 @@ sp-timestamp = { git = "https://github.com/axtend/axlib", branch = "c92f69d" }
 sp-transaction-pool = { git = "https://github.com/axtend/axlib", branch = "c92f69d" }
 
 # Cumulus dependencies
-cumulus-client-consensus-aura = { git = "https://github.com/axiatech/cumulus", branch = "master" }
-cumulus-client-consensus-common = { git = "https://github.com/axiatech/cumulus", branch = "master" }
-cumulus-client-collator = { git = "https://github.com/axiatech/cumulus", branch = "master" }
-cumulus-client-cli = { git = "https://github.com/axiatech/cumulus", branch = "master" }
-cumulus-client-network = { git = "https://github.com/axiatech/cumulus", branch = "master" }
-cumulus-client-service = { git = "https://github.com/axiatech/cumulus", branch = "master" }
-cumulus-primitives-core = { git = "https://github.com/axiatech/cumulus", branch = "master" }
-cumulus-primitives-allychain-inherent = { git = "https://github.com/axiatech/cumulus", branch = "master" }
+cumulus-client-consensus-aura = { git = "https://github.com/axia-tech/cumulus", branch = "master" }
+cumulus-client-consensus-common = { git = "https://github.com/axia-tech/cumulus", branch = "master" }
+cumulus-client-collator = { git = "https://github.com/axia-tech/cumulus", branch = "master" }
+cumulus-client-cli = { git = "https://github.com/axia-tech/cumulus", branch = "master" }
+cumulus-client-network = { git = "https://github.com/axia-tech/cumulus", branch = "master" }
+cumulus-client-service = { git = "https://github.com/axia-tech/cumulus", branch = "master" }
+cumulus-primitives-core = { git = "https://github.com/axia-tech/cumulus", branch = "master" }
+cumulus-primitives-allychain-inherent = { git = "https://github.com/axia-tech/cumulus", branch = "master" }
 
 # Axia dependencies
-polkadot-cli = { git = "https://github.com/axiatech/polkadot", branch = "master" }
-polkadot-allychain = { git = "https://github.com/axiatech/polkadot", branch = "master" }
-polkadot-primitives = { git = "https://github.com/axiatech/polkadot", branch = "master" }
-polkadot-service = { git = "https://github.com/axiatech/polkadot", branch = "master" }
-polkadot-test-service = { git = "https://github.com/axiatech/polkadot", branch = "master" }
+axia-cli = { git = "https://github.com/axia-tech/axia", branch = "master" }
+axia-allychain = { git = "https://github.com/axia-tech/axia", branch = "master" }
+axia-primitives = { git = "https://github.com/axia-tech/axia", branch = "master" }
+axia-service = { git = "https://github.com/axia-tech/axia", branch = "master" }
+axia-test-service = { git = "https://github.com/axia-tech/axia", branch = "master" }

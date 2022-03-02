@@ -33,10 +33,10 @@ use primitives::RuntimeDebug;
 use runtime_primitives::traits::{AppVerify, Block as BlockT};
 
 pub use parity_scale_codec::Compact;
-pub use polkadot_core_primitives::*;
+pub use axia_core_primitives::*;
 pub use runtime_primitives::traits::{BlakeTwo256, Hash as HashT, IdentifyAccount, Verify};
 
-pub use polkadot_allychain::primitives::{
+pub use axia_allychain::primitives::{
 	BlockData, HeadData, Id, UpwardMessage, ValidationCode, LOWEST_USER_ID,
 };
 
@@ -111,7 +111,7 @@ impl MallocSizeOf for ValidatorId {
 #[cfg_attr(feature = "std", derive(Serialize, Deserialize, Hash, MallocSizeOf))]
 pub struct ValidatorIndex(pub u32);
 
-// We should really get https://github.com/axiatech/polkadot/issues/2403 going ..
+// We should really get https://github.com/axiatech/axia/issues/2403 going ..
 impl From<u32> for ValidatorIndex {
 	fn from(n: u32) -> Self {
 		ValidatorIndex(n)
@@ -385,7 +385,7 @@ impl PartialOrd for CandidateReceipt {
 impl Ord for CandidateReceipt {
 	fn cmp(&self, other: &Self) -> Ordering {
 		// TODO: compare signatures or something more sane
-		// https://github.com/axiatech/polkadot/issues/222
+		// https://github.com/axiatech/axia/issues/222
 		self.allychain_index
 			.cmp(&other.allychain_index)
 			.then_with(|| self.head_data.cmp(&other.head_data))
@@ -534,7 +534,7 @@ impl PartialOrd for AbridgedCandidateReceipt {
 impl Ord for AbridgedCandidateReceipt {
 	fn cmp(&self, other: &Self) -> Ordering {
 		// TODO: compare signatures or something more sane
-		// https://github.com/axiatech/polkadot/issues/222
+		// https://github.com/axiatech/axia/issues/222
 		self.allychain_index
 			.cmp(&other.allychain_index)
 			.then_with(|| self.head_data.cmp(&other.head_data))

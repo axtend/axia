@@ -1,5 +1,5 @@
 [package]
-name = "polkadot-node-metrics"
+name = "axia-node-metrics"
 version = "0.9.17"
 authors = ["Axia Technologies <admin@axia.io>"]
 edition = "2018"
@@ -19,7 +19,7 @@ sc-cli = { git = "https://github.com/axtend/axlib", branch = "c92f69d" }
 axlib-prometheus-endpoint = { git = "https://github.com/axtend/axlib", branch = "c92f69d" }
 sc-tracing = { git = "https://github.com/axtend/axlib", branch = "c92f69d" }
 codec = { package = "parity-scale-codec", version = "2.2.0" }
-primitives = { package = "polkadot-primitives", path = "../../primitives/" }
+primitives = { package = "axia-primitives", path = "../../primitives/" }
 bs58 = { version = "0.4.0", features = ["alloc"] }
 log = "0.4.13"
 
@@ -29,7 +29,7 @@ nix = "0.23.1"
 tempfile = "3.2.0"
 hyper = { version = "0.14.17", default-features = false, features = ["http1", "tcp"] }
 tokio = "1.13"
-polkadot-test-service = { path = "../test/service", features=["runtime-metrics"]}
+axia-test-service = { path = "../test/service", features=["runtime-metrics"]}
 axlib-test-utils = { git = "https://github.com/axtend/axlib", branch = "c92f69d" }
 sc-service = { git = "https://github.com/axtend/axlib", branch = "c92f69d" }
 sp-keyring = { git = "https://github.com/axtend/axlib", branch = "c92f69d" }

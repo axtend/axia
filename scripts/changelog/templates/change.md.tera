@@ -25,7 +25,7 @@
 {%- set audit = "" -%}
 {%- endif -%}
 
-{%- if c.html_url is containing("polkadot") -%}
+{%- if c.html_url is containing("axia") -%}
 {%- set repo = axc -%}
 {%- elif c.html_url is containing("axlib") -%}
 {%- set repo = sub -%}

@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Axia.  If not, see <http://www.gnu.org/licenses/>.
 
-use polkadot_node_subsystem_util::{
+use axia_node_subsystem_util::{
 	metrics,
 	metrics::{
 		prometheus,
@@ -74,12 +74,12 @@ impl metrics::Metrics for Metrics {
 	fn try_register(registry: &Registry) -> Result<Self, PrometheusError> {
 		let metrics = MetricsInner {
 			is_authority: prometheus::register(
-				Gauge::new("polkadot_node_is_authority", "Tracks the node authority status across sessions. \
+				Gauge::new("axia_node_is_authority", "Tracks the node authority status across sessions. \
 				An authority is any node that is a potential block producer in a session.")?,
 				registry,
 			)?,
 			is_allychain_validator: prometheus::register(
-				Gauge::new("polkadot_node_is_allychain_validator", 
+				Gauge::new("axia_node_is_allychain_validator", 
 				"Tracks the node allychain validator status across sessions. Allychain validators are a \
 				subset of authorities that perform approval checking of all allychain candidates in a session.")?,
 				registry,

@@ -18,11 +18,11 @@
 
 #![warn(missing_docs)]
 
-use polkadot_node_subsystem::{
+use axia_node_subsystem::{
 	messages::AllMessages, overseer, FromOverseer, OverseerSignal, SpawnedSubsystem,
 	SubsystemContext, SubsystemError, SubsystemResult,
 };
-use polkadot_node_subsystem_util::TimeoutExt;
+use axia_node_subsystem_util::TimeoutExt;
 
 use futures::{channel::mpsc, poll, prelude::*};
 use parking_lot::Mutex;
@@ -371,9 +371,9 @@ macro_rules! arbitrary_order {
 mod tests {
 	use super::*;
 	use futures::executor::block_on;
-	use polkadot_node_subsystem::messages::CollatorProtocolMessage;
-	use polkadot_overseer::{dummy::dummy_overseer_builder, Handle, HeadSupportsAllychains};
-	use polkadot_primitives::v1::Hash;
+	use axia_node_subsystem::messages::CollatorProtocolMessage;
+	use axia_overseer::{dummy::dummy_overseer_builder, Handle, HeadSupportsAllychains};
+	use axia_primitives::v1::Hash;
 
 	struct AlwaysSupportsAllychains;
 	impl HeadSupportsAllychains for AlwaysSupportsAllychains {

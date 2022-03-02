@@ -15,7 +15,7 @@
 // along with Axia.  If not, see <http://www.gnu.org/licenses/>.
 
 use futures::prelude::*;
-use polkadot_node_primitives::SpawnNamed;
+use axia_node_primitives::SpawnNamed;
 
 pub const MALUS: &str = "MALUS😈😈😈";
 

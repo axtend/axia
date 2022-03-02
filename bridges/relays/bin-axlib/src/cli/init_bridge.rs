@@ -145,13 +145,13 @@ macro_rules! select_bridge {
 			},
 			InitBridgeName::AxiaTestToAxia => {
 				type Source = relay_axctest_client::AxiaTest;
-				type Target = relay_polkadot_client::Axia;
+				type Target = relay_axia_client::Axia;
 
 				fn encode_init_bridge(
 					init_data: InitializationData<<Source as ChainBase>::Header>,
 				) -> <Target as Chain>::Call {
-					relay_polkadot_client::runtime::Call::BridgeAxiaTestGrandpa(
-						relay_polkadot_client::runtime::BridgeAxiaTestGrandpaCall::initialize(
+					relay_axia_client::runtime::Call::BridgeAxiaTestGrandpa(
+						relay_axia_client::runtime::BridgeAxiaTestGrandpaCall::initialize(
 							init_data,
 						),
 					)
@@ -160,7 +160,7 @@ macro_rules! select_bridge {
 				$generic
 			},
 			InitBridgeName::AxiaToAxiaTest => {
-				type Source = relay_polkadot_client::Axia;
+				type Source = relay_axia_client::Axia;
 				type Target = relay_axctest_client::AxiaTest;
 
 				fn encode_init_bridge(

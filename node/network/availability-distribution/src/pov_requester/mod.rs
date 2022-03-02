@@ -18,15 +18,15 @@
 
 use futures::{channel::oneshot, future::BoxFuture, FutureExt};
 
-use polkadot_node_network_protocol::request_response::{
+use axia_node_network_protocol::request_response::{
 	outgoing::{RequestError, Requests},
 	v1::{PoVFetchingRequest, PoVFetchingResponse},
 	OutgoingRequest, Recipient,
 };
-use polkadot_node_primitives::PoV;
-use polkadot_node_subsystem_util::runtime::RuntimeInfo;
-use polkadot_primitives::v1::{AuthorityDiscoveryId, CandidateHash, Hash, ValidatorIndex};
-use polkadot_subsystem::{
+use axia_node_primitives::PoV;
+use axia_node_subsystem_util::runtime::RuntimeInfo;
+use axia_primitives::v1::{AuthorityDiscoveryId, CandidateHash, Hash, ValidatorIndex};
+use axia_subsystem::{
 	jaeger,
 	messages::{IfDisconnected, NetworkBridgeMessage},
 	SubsystemContext,
@@ -132,12 +132,12 @@ mod tests {
 	use parity_scale_codec::Encode;
 	use sp_core::testing::TaskExecutor;
 
-	use polkadot_node_primitives::BlockData;
-	use polkadot_primitives::v1::{CandidateHash, Hash, ValidatorIndex};
-	use polkadot_subsystem::messages::{
+	use axia_node_primitives::BlockData;
+	use axia_primitives::v1::{CandidateHash, Hash, ValidatorIndex};
+	use axia_subsystem::messages::{
 		AllMessages, AvailabilityDistributionMessage, RuntimeApiMessage, RuntimeApiRequest,
 	};
-	use polkadot_subsystem_testhelpers as test_helpers;
+	use axia_subsystem_testhelpers as test_helpers;
 	use test_helpers::mock::make_ferdie_keystore;
 
 	use super::*;
@@ -164,7 +164,7 @@ mod tests {
 			TaskExecutor,
 		>(pool.clone());
 		let keystore = make_ferdie_keystore();
-		let mut runtime = polkadot_node_subsystem_util::runtime::RuntimeInfo::new(Some(keystore));
+		let mut runtime = axia_node_subsystem_util::runtime::RuntimeInfo::new(Some(keystore));
 
 		let (tx, rx) = oneshot::channel();
 		let testee = async {

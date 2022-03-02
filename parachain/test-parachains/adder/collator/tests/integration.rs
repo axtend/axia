@@ -1,18 +1,18 @@
 // Copyright 2020 Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// This file is part of Axia.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// Axia is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// Axia is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with Axia.  If not, see <http://www.gnu.org/licenses/>.
 
 //! Integration test that ensures that we can build and include parachain
 //! blocks of the adder parachain.
@@ -22,7 +22,7 @@ const PUPPET_EXE: &str = env!("CARGO_BIN_EXE_adder_collator_puppet_worker");
 // If this test is failing, make sure to run all tests with the `real-overseer` feature being enabled.
 #[axlib_test_utils::test]
 async fn collating_using_adder_collator() {
-	use polkadot_primitives::v1::Id as ParaId;
+	use axia_primitives::v1::Id as ParaId;
 	use sp_keyring::AccountKeyring::*;
 
 	let mut builder = sc_cli::LoggerBuilder::new("");
@@ -31,7 +31,7 @@ async fn collating_using_adder_collator() {
 
 	let para_id = ParaId::from(100);
 
-	let alice_config = polkadot_test_service::node_config(
+	let alice_config = axia_test_service::node_config(
 		|| {},
 		tokio::runtime::Handle::current(),
 		Alice,
@@ -40,9 +40,9 @@ async fn collating_using_adder_collator() {
 	);
 
 	// start alice
-	let alice = polkadot_test_service::run_validator_node(alice_config, Some(PUPPET_EXE.into()));
+	let alice = axia_test_service::run_validator_node(alice_config, Some(PUPPET_EXE.into()));
 
-	let bob_config = polkadot_test_service::node_config(
+	let bob_config = axia_test_service::node_config(
 		|| {},
 		tokio::runtime::Handle::current(),
 		Bob,
@@ -51,7 +51,7 @@ async fn collating_using_adder_collator() {
 	);
 
 	// start bob
-	let bob = polkadot_test_service::run_validator_node(bob_config, Some(PUPPET_EXE.into()));
+	let bob = axia_test_service::run_validator_node(bob_config, Some(PUPPET_EXE.into()));
 
 	let collator = test_parachain_adder_collator::Collator::new();
 
@@ -62,7 +62,7 @@ async fn collating_using_adder_collator() {
 		.unwrap();
 
 	// run the collator node
-	let mut charlie = polkadot_test_service::run_collator_node(
+	let mut charlie = axia_test_service::run_collator_node(
 		tokio::runtime::Handle::current(),
 		Charlie,
 		|| {},

@@ -64,5 +64,5 @@ docker run --rm -it \
 
 1. Modify `EPOCH_DURATION_IN_SLOTS` and `SessionsPerEra` to force an election
    more often than once per day.
-2. $ polkadot --chain polkadot-dev --tmp --alice --execution Native -lruntime=debug --offchain-worker=Always --ws-port 9999
+2. $ axia --chain axia-dev --tmp --alice --execution Native -lruntime=debug --offchain-worker=Always --ws-port 9999
 3. $ staking-miner --uri ws://localhost:9999 --seed //Alice monitor phrag-mms

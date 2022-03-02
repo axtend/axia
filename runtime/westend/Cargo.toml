@@ -81,10 +81,10 @@ pallet-offences-benchmarking = { git = "https://github.com/axtend/axlib", defaul
 pallet-session-benchmarking = { git = "https://github.com/axtend/axlib", default-features = false, optional = true , branch = "c92f69d" }
 hex-literal = { version = "0.3.4", optional = true }
 
-runtime-common = { package = "polkadot-runtime-common", path = "../common", default-features = false }
-primitives = { package = "polkadot-primitives", path = "../../primitives", default-features = false }
-polkadot-parachain = { path = "../../parachain", default-features = false }
-runtime-parachains = { package = "polkadot-runtime-parachains", path = "../parachains", default-features = false }
+runtime-common = { package = "axia-runtime-common", path = "../common", default-features = false }
+primitives = { package = "axia-primitives", path = "../../primitives", default-features = false }
+axia-parachain = { path = "../../parachain", default-features = false }
+runtime-parachains = { package = "axia-runtime-parachains", path = "../parachains", default-features = false }
 
 xcm = { package = "xcm", path = "../../xcm", default-features = false }
 xcm-executor = { package = "xcm-executor", path = "../../xcm/xcm-executor", default-features = false }
@@ -113,7 +113,7 @@ std = [
 	"scale-info/std",
 	"inherents/std",
 	"sp-core/std",
-	"polkadot-parachain/std",
+	"axia-parachain/std",
 	"sp-api/std",
 	"tx-pool-api/std",
 	"block-builder-api/std",

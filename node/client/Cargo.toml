@@ -1,5 +1,5 @@
 [package]
-name = "polkadot-client"
+name = "axia-client"
 version = "0.9.17"
 authors = ["Axia Technologies <admin@axia.io>"]
 edition = "2018"
@@ -32,16 +32,16 @@ pallet-mmr-primitives = { git = "https://github.com/axtend/axlib", branch = "c92
 beefy-primitives = { git = "https://github.com/axtend/axlib", branch = "c92f69d" }
 
 # Axia Runtimes
-polkadot-runtime = { path = "../../runtime/polkadot", optional = true }
+axia-runtime = { path = "../../runtime/axia", optional = true }
 axctest-runtime = { path = "../../runtime/axctest", optional = true }
 alphanet-runtime = { path = "../../runtime/alphanet", optional = true }
 betanet-runtime = { path = "../../runtime/betanet", optional = true }
 
-polkadot-primitives = { path = "../../primitives" }
+axia-primitives = { path = "../../primitives" }
 
 [features]
-default = ["polkadot"]
-polkadot = ["polkadot-runtime"]
+default = ["axia"]
+axia = ["axia-runtime"]
 axctest = ["axctest-runtime"]
 betanet = ["betanet-runtime"]
 alphanet = ["alphanet-runtime"]
@@ -49,5 +49,5 @@ runtime-metrics = [
     "betanet-runtime/runtime-metrics",
     "axctest-runtime/runtime-metrics",
     "alphanet-runtime/runtime-metrics",
-    "polkadot-runtime/runtime-metrics",
+    "axia-runtime/runtime-metrics",
 ]

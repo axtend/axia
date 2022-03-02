@@ -14,14 +14,14 @@
 // You should have received a copy of the GNU General Public License
 // along with Parity Bridges Common.  If not, see <http://www.gnu.org/licenses/>.
 
-//! Kusama-to-Polkadot headers sync entrypoint.
+//! Kusama-to-Axia headers sync entrypoint.
 
 use codec::Encode;
 use sp_core::{Bytes, Pair};
 
 use bp_header_chain::justification::GrandpaJustification;
 use relay_axctest_client::{Kusama, SyncHeader as KusamaSyncHeader};
-use relay_polkadot_client::{Polkadot, SigningParams as PolkadotSigningParams};
+use relay_axia_client::{Axia, SigningParams as AxiaSigningParams};
 use relay_axlib_client::{Client, TransactionSignScheme, UnsignedTransaction};
 use relay_utils::metrics::MetricsParams;
 use axlib_relay_helper::finality_pipeline::{
@@ -33,21 +33,21 @@ use axlib_relay_helper::finality_pipeline::{
 ///
 /// Actual value, returned by `maximal_balance_decrease_per_day_is_sane` test is approximately 21
 /// DOT, but let's round up to 30 DOT here.
-pub(crate) const MAXIMAL_BALANCE_DECREASE_PER_DAY: bp_polkadot::Balance = 30_000_000_000;
+pub(crate) const MAXIMAL_BALANCE_DECREASE_PER_DAY: bp_axia::Balance = 30_000_000_000;
 
-/// Kusama-to-Polkadot finality sync pipeline.
-pub(crate) type FinalityPipelineKusamaFinalityToPolkadot =
-	SubstrateFinalityToSubstrate<Kusama, Polkadot, PolkadotSigningParams>;
+/// Kusama-to-Axia finality sync pipeline.
+pub(crate) type FinalityPipelineKusamaFinalityToAxia =
+	SubstrateFinalityToSubstrate<Kusama, Axia, AxiaSigningParams>;
 
 #[derive(Clone, Debug)]
-pub(crate) struct KusamaFinalityToPolkadot {
-	finality_pipeline: FinalityPipelineKusamaFinalityToPolkadot,
+pub(crate) struct KusamaFinalityToAxia {
+	finality_pipeline: FinalityPipelineKusamaFinalityToAxia,
 }
 
-impl KusamaFinalityToPolkadot {
-	pub fn new(target_client: Client<Polkadot>, target_sign: PolkadotSigningParams) -> Self {
+impl KusamaFinalityToAxia {
+	pub fn new(target_client: Client<Axia>, target_sign: AxiaSigningParams) -> Self {
 		Self {
-			finality_pipeline: FinalityPipelineKusamaFinalityToPolkadot::new(
+			finality_pipeline: FinalityPipelineKusamaFinalityToAxia::new(
 				target_client,
 				target_sign,
 			),
@@ -55,22 +55,22 @@ impl KusamaFinalityToPolkadot {
 	}
 }
 
-impl SubstrateFinalitySyncPipeline for KusamaFinalityToPolkadot {
-	type FinalitySyncPipeline = FinalityPipelineKusamaFinalityToPolkadot;
+impl SubstrateFinalitySyncPipeline for KusamaFinalityToAxia {
+	type FinalitySyncPipeline = FinalityPipelineKusamaFinalityToAxia;
 
 	const BEST_FINALIZED_SOURCE_HEADER_ID_AT_TARGET: &'static str =
 		bp_axctest::BEST_FINALIZED_KUSAMA_HEADER_METHOD;
 
-	type TargetChain = Polkadot;
+	type TargetChain = Axia;
 
 	fn customize_metrics(params: MetricsParams) -> anyhow::Result<MetricsParams> {
-		crate::chains::add_polkadot_axctest_price_metrics::<Self::FinalitySyncPipeline>(params)
+		crate::chains::add_axia_axctest_price_metrics::<Self::FinalitySyncPipeline>(params)
 	}
 
 	fn start_relay_guards(&self) {
 		relay_axlib_client::guard::abort_on_spec_version_change(
 			self.finality_pipeline.target_client.clone(),
-			bp_polkadot::VERSION.spec_version,
+			bp_axia::VERSION.spec_version,
 		);
 		relay_axlib_client::guard::abort_when_account_balance_decreased(
 			self.finality_pipeline.target_client.clone(),
@@ -79,25 +79,25 @@ impl SubstrateFinalitySyncPipeline for KusamaFinalityToPolkadot {
 		);
 	}
 
-	fn transactions_author(&self) -> bp_polkadot::AccountId {
+	fn transactions_author(&self) -> bp_axia::AccountId {
 		(*self.finality_pipeline.target_sign.public().as_array_ref()).into()
 	}
 
 	fn make_submit_finality_proof_transaction(
 		&self,
-		era: bp_runtime::TransactionEraOf<Polkadot>,
-		transaction_nonce: bp_runtime::IndexOf<Polkadot>,
+		era: bp_runtime::TransactionEraOf<Axia>,
+		transaction_nonce: bp_runtime::IndexOf<Axia>,
 		header: KusamaSyncHeader,
 		proof: GrandpaJustification<bp_axctest::Header>,
 	) -> Bytes {
-		let call = relay_polkadot_client::runtime::Call::BridgeKusamaGrandpa(
-			relay_polkadot_client::runtime::BridgeKusamaGrandpaCall::submit_finality_proof(
+		let call = relay_axia_client::runtime::Call::BridgeKusamaGrandpa(
+			relay_axia_client::runtime::BridgeKusamaGrandpaCall::submit_finality_proof(
 				Box::new(header.into_inner()),
 				proof,
 			),
 		);
 		let genesis_hash = *self.finality_pipeline.target_client.genesis_hash();
-		let transaction = Polkadot::sign_transaction(
+		let transaction = Axia::sign_transaction(
 			genesis_hash,
 			&self.finality_pipeline.target_sign,
 			era,
@@ -152,11 +152,11 @@ pub(crate) mod tests {
 
 	#[test]
 	fn maximal_balance_decrease_per_day_is_sane() {
-		// we expect Kusama -> Polkadot relay to be running in mandatory-headers-only mode
+		// we expect Kusama -> Axia relay to be running in mandatory-headers-only mode
 		// => we expect single header for every Kusama session
 		let maximal_balance_decrease = compute_maximal_balance_decrease_per_day::<
-			bp_polkadot::Balance,
-			bp_polkadot::WeightToFee,
+			bp_axia::Balance,
+			bp_axia::WeightToFee,
 		>(bp_axctest::DAYS / bp_axctest::SESSION_LENGTH + 1);
 		assert!(
 			MAXIMAL_BALANCE_DECREASE_PER_DAY >= maximal_balance_decrease,

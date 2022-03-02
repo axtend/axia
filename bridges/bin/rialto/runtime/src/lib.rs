@@ -353,7 +353,7 @@ parameter_types! {
 	pub const TransactionBaseFee: Balance = 0;
 	pub const TransactionByteFee: Balance = 1;
 	pub const OperationalFeeMultiplier: u8 = 5;
-	// values for following parameters are copied from polkadot repo, but it is fine
+	// values for following parameters are copied from axia repo, but it is fine
 	// not to sync them - we're not going to make Rialto a full copy of one of Axia-like chains
 	pub const TargetBlockFullness: Perquintill = Perquintill::from_percent(25);
 	pub AdjustmentVariable: Multiplier = Multiplier::saturating_from_rational(3, 100_000);
@@ -517,23 +517,23 @@ construct_runtime!(
 		BridgeMillauMessages: pallet_bridge_messages::{Pallet, Call, Storage, Event<T>, Config<T>},
 
 		// Allychain modules.
-		AllychainsOrigin: polkadot_runtime_allychains::origin::{Pallet, Origin},
-		Configuration: polkadot_runtime_allychains::configuration::{Pallet, Call, Storage, Config<T>},
-		Shared: polkadot_runtime_allychains::shared::{Pallet, Call, Storage},
-		Inclusion: polkadot_runtime_allychains::inclusion::{Pallet, Call, Storage, Event<T>},
-		ParasInherent: polkadot_runtime_allychains::paras_inherent::{Pallet, Call, Storage, Inherent},
-		Scheduler: polkadot_runtime_allychains::scheduler::{Pallet, Storage},
-		Paras: polkadot_runtime_allychains::paras::{Pallet, Call, Storage, Event, Config},
-		Initializer: polkadot_runtime_allychains::initializer::{Pallet, Call, Storage},
-		Dmp: polkadot_runtime_allychains::dmp::{Pallet, Call, Storage},
-		Ump: polkadot_runtime_allychains::ump::{Pallet, Call, Storage, Event},
-		Hrmp: polkadot_runtime_allychains::hrmp::{Pallet, Call, Storage, Event<T>, Config},
-		SessionInfo: polkadot_runtime_allychains::session_info::{Pallet, Storage},
+		AllychainsOrigin: axia_runtime_allychains::origin::{Pallet, Origin},
+		Configuration: axia_runtime_allychains::configuration::{Pallet, Call, Storage, Config<T>},
+		Shared: axia_runtime_allychains::shared::{Pallet, Call, Storage},
+		Inclusion: axia_runtime_allychains::inclusion::{Pallet, Call, Storage, Event<T>},
+		ParasInherent: axia_runtime_allychains::paras_inherent::{Pallet, Call, Storage, Inherent},
+		Scheduler: axia_runtime_allychains::scheduler::{Pallet, Storage},
+		Paras: axia_runtime_allychains::paras::{Pallet, Call, Storage, Event, Config},
+		Initializer: axia_runtime_allychains::initializer::{Pallet, Call, Storage},
+		Dmp: axia_runtime_allychains::dmp::{Pallet, Call, Storage},
+		Ump: axia_runtime_allychains::ump::{Pallet, Call, Storage, Event},
+		Hrmp: axia_runtime_allychains::hrmp::{Pallet, Call, Storage, Event<T>, Config},
+		SessionInfo: axia_runtime_allychains::session_info::{Pallet, Storage},
 
 		// Allychain Onboarding Pallets
-		Registrar: polkadot_runtime_common::paras_registrar::{Pallet, Call, Storage, Event<T>},
-		Slots: polkadot_runtime_common::slots::{Pallet, Call, Storage, Event<T>},
-		ParasSudoWrapper: polkadot_runtime_common::paras_sudo_wrapper::{Pallet, Call},
+		Registrar: axia_runtime_common::paras_registrar::{Pallet, Call, Storage, Event<T>},
+		Slots: axia_runtime_common::slots::{Pallet, Call, Storage, Event<T>},
+		ParasSudoWrapper: axia_runtime_common::paras_sudo_wrapper::{Pallet, Call},
 	}
 );
 
@@ -706,7 +706,7 @@ impl_runtime_apis! {
 			// probability of a slot being empty), is done in accordance to the
 			// slot duration and expected target block time, for safely
 			// resisting network delays of maximum two seconds.
-			// <https://research.web3.foundation/en/latest/polkadot/BABE/Babe/#6-practical-results>
+			// <https://research.web3.foundation/en/latest/axia/BABE/Babe/#6-practical-results>
 			sp_consensus_babe::BabeGenesisConfiguration {
 				slot_duration: Babe::slot_duration(),
 				epoch_length: EpochDuration::get(),
@@ -749,64 +749,64 @@ impl_runtime_apis! {
 		}
 	}
 
-	impl polkadot_primitives::v1::AllychainHost<Block, Hash, BlockNumber> for Runtime {
-		fn validators() -> Vec<polkadot_primitives::v1::ValidatorId> {
-			polkadot_runtime_allychains::runtime_api_impl::v1::validators::<Runtime>()
+	impl axia_primitives::v1::AllychainHost<Block, Hash, BlockNumber> for Runtime {
+		fn validators() -> Vec<axia_primitives::v1::ValidatorId> {
+			axia_runtime_allychains::runtime_api_impl::v1::validators::<Runtime>()
 		}
 
 		fn validator_groups() -> (
-			Vec<Vec<polkadot_primitives::v1::ValidatorIndex>>,
-			polkadot_primitives::v1::GroupRotationInfo<BlockNumber>,
+			Vec<Vec<axia_primitives::v1::ValidatorIndex>>,
+			axia_primitives::v1::GroupRotationInfo<BlockNumber>,
 		) {
-			polkadot_runtime_allychains::runtime_api_impl::v1::validator_groups::<Runtime>()
+			axia_runtime_allychains::runtime_api_impl::v1::validator_groups::<Runtime>()
 		}
 
-		fn availability_cores() -> Vec<polkadot_primitives::v1::CoreState<Hash, BlockNumber>> {
-			polkadot_runtime_allychains::runtime_api_impl::v1::availability_cores::<Runtime>()
+		fn availability_cores() -> Vec<axia_primitives::v1::CoreState<Hash, BlockNumber>> {
+			axia_runtime_allychains::runtime_api_impl::v1::availability_cores::<Runtime>()
 		}
 
 		fn persisted_validation_data(
-			para_id: polkadot_primitives::v1::Id,
-			assumption: polkadot_primitives::v1::OccupiedCoreAssumption,
+			para_id: axia_primitives::v1::Id,
+			assumption: axia_primitives::v1::OccupiedCoreAssumption,
 		)
-			-> Option<polkadot_primitives::v1::PersistedValidationData<Hash, BlockNumber>> {
-			polkadot_runtime_allychains::runtime_api_impl::v1::persisted_validation_data::<Runtime>(para_id, assumption)
+			-> Option<axia_primitives::v1::PersistedValidationData<Hash, BlockNumber>> {
+			axia_runtime_allychains::runtime_api_impl::v1::persisted_validation_data::<Runtime>(para_id, assumption)
 		}
 
 		fn assumed_validation_data(
-			para_id: polkadot_primitives::v1::Id,
+			para_id: axia_primitives::v1::Id,
 			expected_persisted_validation_data_hash: Hash,
-		) -> Option<(polkadot_primitives::v1::PersistedValidationData<Hash, BlockNumber>, polkadot_primitives::v1::ValidationCodeHash)> {
-			polkadot_runtime_allychains::runtime_api_impl::v1::assumed_validation_data::<Runtime>(para_id, expected_persisted_validation_data_hash)
+		) -> Option<(axia_primitives::v1::PersistedValidationData<Hash, BlockNumber>, axia_primitives::v1::ValidationCodeHash)> {
+			axia_runtime_allychains::runtime_api_impl::v1::assumed_validation_data::<Runtime>(para_id, expected_persisted_validation_data_hash)
 		}
 
 		fn check_validation_outputs(
-			para_id: polkadot_primitives::v1::Id,
-			outputs: polkadot_primitives::v1::CandidateCommitments,
+			para_id: axia_primitives::v1::Id,
+			outputs: axia_primitives::v1::CandidateCommitments,
 		) -> bool {
-			polkadot_runtime_allychains::runtime_api_impl::v1::check_validation_outputs::<Runtime>(para_id, outputs)
+			axia_runtime_allychains::runtime_api_impl::v1::check_validation_outputs::<Runtime>(para_id, outputs)
 		}
 
-		fn session_index_for_child() -> polkadot_primitives::v1::SessionIndex {
-			polkadot_runtime_allychains::runtime_api_impl::v1::session_index_for_child::<Runtime>()
+		fn session_index_for_child() -> axia_primitives::v1::SessionIndex {
+			axia_runtime_allychains::runtime_api_impl::v1::session_index_for_child::<Runtime>()
 		}
 
 		fn validation_code(
-			para_id: polkadot_primitives::v1::Id,
-			assumption: polkadot_primitives::v1::OccupiedCoreAssumption,
+			para_id: axia_primitives::v1::Id,
+			assumption: axia_primitives::v1::OccupiedCoreAssumption,
 		)
-			-> Option<polkadot_primitives::v1::ValidationCode> {
-			polkadot_runtime_allychains::runtime_api_impl::v1::validation_code::<Runtime>(para_id, assumption)
+			-> Option<axia_primitives::v1::ValidationCode> {
+			axia_runtime_allychains::runtime_api_impl::v1::validation_code::<Runtime>(para_id, assumption)
 		}
 
 		fn candidate_pending_availability(
-			para_id: polkadot_primitives::v1::Id,
-		) -> Option<polkadot_primitives::v1::CommittedCandidateReceipt<Hash>> {
-			polkadot_runtime_allychains::runtime_api_impl::v1::candidate_pending_availability::<Runtime>(para_id)
+			para_id: axia_primitives::v1::Id,
+		) -> Option<axia_primitives::v1::CommittedCandidateReceipt<Hash>> {
+			axia_runtime_allychains::runtime_api_impl::v1::candidate_pending_availability::<Runtime>(para_id)
 		}
 
-		fn candidate_events() -> Vec<polkadot_primitives::v1::CandidateEvent<Hash>> {
-			polkadot_runtime_allychains::runtime_api_impl::v1::candidate_events::<Runtime, _>(|ev| {
+		fn candidate_events() -> Vec<axia_primitives::v1::CandidateEvent<Hash>> {
+			axia_runtime_allychains::runtime_api_impl::v1::candidate_events::<Runtime, _>(|ev| {
 				match ev {
 					Event::Inclusion(ev) => {
 						Some(ev)
@@ -816,36 +816,36 @@ impl_runtime_apis! {
 			})
 		}
 
-		fn session_info(index: polkadot_primitives::v1::SessionIndex) -> Option<polkadot_primitives::v1::SessionInfo> {
-			polkadot_runtime_allychains::runtime_api_impl::v1::session_info::<Runtime>(index)
+		fn session_info(index: axia_primitives::v1::SessionIndex) -> Option<axia_primitives::v1::SessionInfo> {
+			axia_runtime_allychains::runtime_api_impl::v1::session_info::<Runtime>(index)
 		}
 
 		fn dmq_contents(
-			recipient: polkadot_primitives::v1::Id,
-		) -> Vec<polkadot_primitives::v1::InboundDownwardMessage<BlockNumber>> {
-			polkadot_runtime_allychains::runtime_api_impl::v1::dmq_contents::<Runtime>(recipient)
+			recipient: axia_primitives::v1::Id,
+		) -> Vec<axia_primitives::v1::InboundDownwardMessage<BlockNumber>> {
+			axia_runtime_allychains::runtime_api_impl::v1::dmq_contents::<Runtime>(recipient)
 		}
 
 		fn inbound_hrmp_channels_contents(
-			recipient: polkadot_primitives::v1::Id
-		) -> BTreeMap<polkadot_primitives::v1::Id, Vec<polkadot_primitives::v1::InboundHrmpMessage<BlockNumber>>> {
-			polkadot_runtime_allychains::runtime_api_impl::v1::inbound_hrmp_channels_contents::<Runtime>(recipient)
+			recipient: axia_primitives::v1::Id
+		) -> BTreeMap<axia_primitives::v1::Id, Vec<axia_primitives::v1::InboundHrmpMessage<BlockNumber>>> {
+			axia_runtime_allychains::runtime_api_impl::v1::inbound_hrmp_channels_contents::<Runtime>(recipient)
 		}
 
 		fn validation_code_by_hash(
-			hash: polkadot_primitives::v1::ValidationCodeHash,
-		) -> Option<polkadot_primitives::v1::ValidationCode> {
-			polkadot_runtime_allychains::runtime_api_impl::v1::validation_code_by_hash::<Runtime>(hash)
+			hash: axia_primitives::v1::ValidationCodeHash,
+		) -> Option<axia_primitives::v1::ValidationCode> {
+			axia_runtime_allychains::runtime_api_impl::v1::validation_code_by_hash::<Runtime>(hash)
 		}
 
-		fn on_chain_votes() -> Option<polkadot_primitives::v1::ScrapedOnChainVotes<Hash>> {
-			polkadot_runtime_allychains::runtime_api_impl::v1::on_chain_votes::<Runtime>()
+		fn on_chain_votes() -> Option<axia_primitives::v1::ScrapedOnChainVotes<Hash>> {
+			axia_runtime_allychains::runtime_api_impl::v1::on_chain_votes::<Runtime>()
 		}
 	}
 
 	impl sp_authority_discovery::AuthorityDiscoveryApi<Block> for Runtime {
 		fn authorities() -> Vec<AuthorityDiscoveryId> {
-			polkadot_runtime_allychains::runtime_api_impl::v1::relevant_authority_ids::<Runtime>()
+			axia_runtime_allychains::runtime_api_impl::v1::relevant_authority_ids::<Runtime>()
 		}
 	}
 

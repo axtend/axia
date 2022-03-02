@@ -29,7 +29,7 @@ pub enum Error {
 	AxlibTracing(#[from] sc_tracing::logging::Error),
 
 	#[error(transparent)]
-	PerfCheck(#[from] polkadot_performance_test::PerfCheckError),
+	PerfCheck(#[from] axia_performance_test::PerfCheckError),
 
 	#[error("Other: {0}")]
 	Other(String),

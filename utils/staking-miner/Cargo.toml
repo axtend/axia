@@ -34,10 +34,10 @@ pallet-staking = { git = "https://github.com/axtend/axlib", branch = "c92f69d" }
 pallet-balances = { git = "https://github.com/axtend/axlib", branch = "c92f69d" }
 pallet-transaction-payment = { git = "https://github.com/axtend/axlib", branch = "c92f69d" }
 
-core-primitives = { package = "polkadot-core-primitives", path = "../../core-primitives" }
+core-primitives = { package = "axia-core-primitives", path = "../../core-primitives" }
 
-runtime-common = { package = "polkadot-runtime-common", path = "../../runtime/common" }
-polkadot-runtime = { path = "../../runtime/polkadot" }
+runtime-common = { package = "axia-runtime-common", path = "../../runtime/common" }
+axia-runtime = { path = "../../runtime/axia" }
 axctest-runtime = { path = "../../runtime/axctest" }
 alphanet-runtime = { path = "../../runtime/alphanet" }
 

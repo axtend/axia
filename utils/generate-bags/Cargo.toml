@@ -1,5 +1,5 @@
 [package]
-name = "polkadot-voter-bags"
+name = "axia-voter-bags"
 version = "0.9.17"
 authors = ["Axia Technologies <admin@axia.io>"]
 edition = "2018"
@@ -12,4 +12,4 @@ sp-io = { git = "https://github.com/axtend/axlib", branch = "c92f69d" }
 
 alphanet-runtime = { path = "../../runtime/alphanet" }
 axctest-runtime = { path = "../../runtime/axctest" }
-polkadot-runtime = { path = "../../runtime/polkadot" }
+axia-runtime = { path = "../../runtime/axia" }

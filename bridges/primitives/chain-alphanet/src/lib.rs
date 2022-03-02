@@ -28,7 +28,7 @@ use scale_info::TypeInfo;
 use sp_std::prelude::*;
 use sp_version::RuntimeVersion;
 
-pub use bp_polkadot_core::*;
+pub use bp_axia_core::*;
 
 /// Alphanet Chain
 pub type Alphanet = AxiaLike;

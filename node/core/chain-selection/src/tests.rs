@@ -35,11 +35,11 @@ use parity_scale_codec::Encode;
 use parking_lot::Mutex;
 use sp_core::testing::TaskExecutor;
 
-use polkadot_node_subsystem::{
+use axia_node_subsystem::{
 	jaeger, messages::AllMessages, ActivatedLeaf, ActiveLeavesUpdate, LeafStatus,
 };
-use polkadot_node_subsystem_test_helpers as test_helpers;
-use polkadot_primitives::v1::{BlakeTwo256, ConsensusLog, HashT};
+use axia_node_subsystem_test_helpers as test_helpers;
+use axia_primitives::v1::{BlakeTwo256, ConsensusLog, HashT};
 
 #[derive(Default)]
 struct TestBackendInner {

@@ -10,10 +10,10 @@ LABEL io.axia.image.authors="devops-team@axia.io" \
 	io.axia.image.vendor="Axia Technologies" \
 	io.axia.image.title="${IMAGE_NAME}" \
 	io.axia.image.description="Injected adder-collator Docker image" \
-	io.axia.image.source="https://github.com/axiatech/polkadot/blob/${VCS_REF}/scripts/docker/collator_injected.Dockerfile" \
+	io.axia.image.source="https://github.com/axiatech/axia/blob/${VCS_REF}/scripts/docker/collator_injected.Dockerfile" \
 	io.axia.image.revision="${VCS_REF}" \
 	io.axia.image.created="${BUILD_DATE}" \
-	io.axia.image.documentation="https://github.com/axiatech/polkadot/"
+	io.axia.image.documentation="https://github.com/axiatech/axia/"
 
 # show backtraces
 ENV RUST_BACKTRACE 1
@@ -31,7 +31,7 @@ RUN apt-get update && \
 	useradd -m -u 1000 -U -s /bin/sh -d /adder-collator adder-collator && \
 	mkdir -p /data /adder-collator/.local/share && \
 	chown -R adder-collator:adder-collator /data && \
-	ln -s /data /adder-collator/.local/share/polkadot
+	ln -s /data /adder-collator/.local/share/axia
 
 # add adder-collator binary to docker image
 COPY ./adder-collator /usr/local/bin

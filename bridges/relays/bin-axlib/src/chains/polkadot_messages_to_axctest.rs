@@ -28,7 +28,7 @@ use messages_relay::{message_lane::MessageLane, relay_strategy::MixStrategy};
 use relay_axctest_client::{
 	HeaderId as AxiaTestHeaderId, AxiaTest, SigningParams as AxiaTestSigningParams,
 };
-use relay_polkadot_client::{
+use relay_axia_client::{
 	HeaderId as AxiaHeaderId, Axia, SigningParams as AxiaSigningParams,
 };
 use relay_axlib_client::{Chain, Client, TransactionSignScheme, UnsignedTransaction};
@@ -61,19 +61,19 @@ impl AxlibMessageLane for AxiaMessagesToAxiaTest {
 		bp_axctest::TO_AXIATEST_LATEST_RECEIVED_NONCE_METHOD;
 
 	const INBOUND_LANE_LATEST_RECEIVED_NONCE_METHOD: &'static str =
-		bp_polkadot::FROM_AXIA_LATEST_RECEIVED_NONCE_METHOD;
+		bp_axia::FROM_AXIA_LATEST_RECEIVED_NONCE_METHOD;
 	const INBOUND_LANE_LATEST_CONFIRMED_NONCE_METHOD: &'static str =
-		bp_polkadot::FROM_AXIA_LATEST_CONFIRMED_NONCE_METHOD;
+		bp_axia::FROM_AXIA_LATEST_CONFIRMED_NONCE_METHOD;
 	const INBOUND_LANE_UNREWARDED_RELAYERS_STATE: &'static str =
-		bp_polkadot::FROM_AXIA_UNREWARDED_RELAYERS_STATE;
+		bp_axia::FROM_AXIA_UNREWARDED_RELAYERS_STATE;
 
 	const BEST_FINALIZED_SOURCE_HEADER_ID_AT_TARGET: &'static str =
-		bp_polkadot::BEST_FINALIZED_AXIA_HEADER_METHOD;
+		bp_axia::BEST_FINALIZED_AXIA_HEADER_METHOD;
 	const BEST_FINALIZED_TARGET_HEADER_ID_AT_SOURCE: &'static str =
 		bp_axctest::BEST_FINALIZED_AXIATEST_HEADER_METHOD;
 
 	const MESSAGE_PALLET_NAME_AT_SOURCE: &'static str =
-		bp_polkadot::WITH_AXIATEST_MESSAGES_PALLET_NAME;
+		bp_axia::WITH_AXIATEST_MESSAGES_PALLET_NAME;
 	const MESSAGE_PALLET_NAME_AT_TARGET: &'static str =
 		bp_axctest::WITH_AXIA_MESSAGES_PALLET_NAME;
 
@@ -83,7 +83,7 @@ impl AxlibMessageLane for AxiaMessagesToAxiaTest {
 	type SourceChain = Axia;
 	type TargetChain = AxiaTest;
 
-	fn source_transactions_author(&self) -> bp_polkadot::AccountId {
+	fn source_transactions_author(&self) -> bp_axia::AccountId {
 		(*self.message_lane.source_sign.public().as_array_ref()).into()
 	}
 
@@ -95,8 +95,8 @@ impl AxlibMessageLane for AxiaMessagesToAxiaTest {
 		proof: <Self::MessageLane as MessageLane>::MessagesReceivingProof,
 	) -> Bytes {
 		let (relayers_state, proof) = proof;
-		let call = relay_polkadot_client::runtime::Call::BridgeAxiaTestMessages(
-			relay_polkadot_client::runtime::BridgeAxiaTestMessagesCall::receive_messages_delivery_proof(
+		let call = relay_axia_client::runtime::Call::BridgeAxiaTestMessages(
+			relay_axia_client::runtime::BridgeAxiaTestMessagesCall::receive_messages_delivery_proof(
 				proof,
 				relayers_state,
 			),
@@ -114,9 +114,9 @@ impl AxlibMessageLane for AxiaMessagesToAxiaTest {
 		log::trace!(
 			target: "bridge",
 			"Prepared AxiaTest -> Axia confirmation transaction. Weight: <unknown>/{}, size: {}/{}",
-			bp_polkadot::max_extrinsic_weight(),
+			bp_axia::max_extrinsic_weight(),
 			transaction.encode().len(),
-			bp_polkadot::max_extrinsic_size(),
+			bp_axia::max_extrinsic_size(),
 		);
 		Bytes(transaction.encode())
 	}
@@ -189,7 +189,7 @@ pub async fn run(
 		AxiaTest::AVERAGE_BLOCK_INTERVAL,
 		STALL_TIMEOUT,
 	);
-	let relayer_id_at_polkadot = (*params.source_sign.public().as_array_ref()).into();
+	let relayer_id_at_axia = (*params.source_sign.public().as_array_ref()).into();
 
 	let lane_id = params.lane_id;
 	let source_client = params.source_client;
@@ -202,7 +202,7 @@ pub async fn run(
 			target_client: target_client.clone(),
 			target_sign: params.target_sign,
 			target_transactions_mortality: params.target_transactions_mortality,
-			relayer_id_at_source: relayer_id_at_polkadot,
+			relayer_id_at_source: relayer_id_at_axia,
 		},
 	};
 
@@ -288,15 +288,15 @@ pub(crate) fn standalone_metrics(
 	axlib_relay_helper::messages_lane::standalone_metrics(
 		source_client,
 		target_client,
-		Some(crate::chains::polkadot::TOKEN_ID),
+		Some(crate::chains::axia::TOKEN_ID),
 		Some(crate::chains::axctest::TOKEN_ID),
-		Some(crate::chains::axctest::polkadot_to_axctest_conversion_rate_params()),
-		Some(crate::chains::polkadot::axctest_to_polkadot_conversion_rate_params()),
+		Some(crate::chains::axctest::axia_to_axctest_conversion_rate_params()),
+		Some(crate::chains::axia::axctest_to_axia_conversion_rate_params()),
 	)
 }
 
 /// Update AxiaTest -> Axia conversion rate, stored in Axia runtime storage.
-pub(crate) async fn update_axctest_to_polkadot_conversion_rate(
+pub(crate) async fn update_axctest_to_axia_conversion_rate(
 	client: Client<Axia>,
 	signer: <Axia as TransactionSignScheme>::AccountKeyPair,
 	updated_rate: f64,
@@ -311,9 +311,9 @@ pub(crate) async fn update_axctest_to_polkadot_conversion_rate(
 					&signer,
 					relay_axlib_client::TransactionEra::immortal(),
 					UnsignedTransaction::new(
-						relay_polkadot_client::runtime::Call::BridgeAxiaTestMessages(
-							relay_polkadot_client::runtime::BridgeAxiaTestMessagesCall::update_pallet_parameter(
-								relay_polkadot_client::runtime::BridgeAxiaTestMessagesParameter::AxiaTestToAxiaConversionRate(
+						relay_axia_client::runtime::Call::BridgeAxiaTestMessages(
+							relay_axia_client::runtime::BridgeAxiaTestMessagesCall::update_pallet_parameter(
+								relay_axia_client::runtime::BridgeAxiaTestMessagesParameter::AxiaTestToAxiaConversionRate(
 									sp_runtime::FixedU128::from_float(updated_rate),
 								)
 							)

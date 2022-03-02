@@ -37,7 +37,7 @@ enum Runtime {
 
 #[derive(Parser)]
 struct Cli {
-	#[clap(long, short, default_value = "wss://axctest-rpc.polkadot.io:443")]
+	#[clap(long, short, default_value = "wss://axctest-rpc.axia.io:443")]
 	uri: String,
 	#[clap(long, short, ignore_case = true, arg_enum, default_value = "axctest")]
 	runtime: Runtime,
@@ -62,7 +62,7 @@ async fn main() {
 	use pallet_bags_list_remote_tests::*;
 	match options.runtime {
 		Runtime::Axia => sp_core::crypto::set_default_ss58_version(
-			<polkadot_runtime::Runtime as frame_system::Config>::SS58Prefix::get()
+			<axia_runtime::Runtime as frame_system::Config>::SS58Prefix::get()
 				.try_into()
 				.unwrap(),
 		),
@@ -122,18 +122,18 @@ async fn main() {
 		},
 
 		(Runtime::Axia, Command::CheckMigration) => {
-			use polkadot_runtime::{Block, Runtime};
-			use polkadot_runtime_constants::currency::UNITS;
+			use axia_runtime::{Block, Runtime};
+			use axia_runtime_constants::currency::UNITS;
 			migration::execute::<Runtime, Block>(UNITS as u64, "AXC", options.uri.clone()).await;
 		},
 		(Runtime::Axia, Command::SanityCheck) => {
-			use polkadot_runtime::{Block, Runtime};
-			use polkadot_runtime_constants::currency::UNITS;
+			use axia_runtime::{Block, Runtime};
+			use axia_runtime_constants::currency::UNITS;
 			sanity_check::execute::<Runtime, Block>(UNITS as u64, "AXC", options.uri.clone()).await;
 		},
 		(Runtime::Axia, Command::Snapshot) => {
-			use polkadot_runtime::{Block, Runtime};
-			use polkadot_runtime_constants::currency::UNITS;
+			use axia_runtime::{Block, Runtime};
+			use axia_runtime_constants::currency::UNITS;
 			snapshot::execute::<Runtime, Block>(
 				options.snapshot_limit,
 				UNITS.try_into().unwrap(),

@@ -39,11 +39,11 @@ use sc_network::Multiaddr;
 use sp_application_crypto::{AppKey, ByteArray};
 use sp_keystore::{CryptoStore, SyncCryptoStorePtr};
 
-use polkadot_node_network_protocol::{
+use axia_node_network_protocol::{
 	authority_discovery::AuthorityDiscovery, peer_set::PeerSet, v1::GossipSuppportNetworkMessage,
 	PeerId,
 };
-use polkadot_node_subsystem::{
+use axia_node_subsystem::{
 	messages::{
 		GossipSupportMessage, NetworkBridgeEvent, NetworkBridgeMessage, RuntimeApiMessage,
 		RuntimeApiRequest,
@@ -51,8 +51,8 @@ use polkadot_node_subsystem::{
 	overseer, ActiveLeavesUpdate, FromOverseer, OverseerSignal, SpawnedSubsystem, SubsystemContext,
 	SubsystemError, SubsystemSender,
 };
-use polkadot_node_subsystem_util as util;
-use polkadot_primitives::v1::{AuthorityDiscoveryId, Hash, SessionIndex};
+use axia_node_subsystem_util as util;
+use axia_primitives::v1::{AuthorityDiscoveryId, Hash, SessionIndex};
 
 #[cfg(test)]
 mod tests;
@@ -281,7 +281,7 @@ where
 
 				// First `maxValidators` entries are the allychain validators. We'll check
 				// if our index is in this set to avoid searching for the keys.
-				// https://github.com/axiatech/polkadot/blob/a52dca2be7840b23c19c153cf7e110b1e3e475f8/runtime/allychains/src/configuration.rs#L148
+				// https://github.com/axiatech/axia/blob/a52dca2be7840b23c19c153cf7e110b1e3e475f8/runtime/allychains/src/configuration.rs#L148
 				if validator_index < allychain_validators_this_session.len() {
 					self.metrics.on_is_allychain_validator();
 				} else {
@@ -397,7 +397,7 @@ where
 			.filter(|(a, _)| !self.connected_authorities.contains_key(a));
 		// TODO: Make that warning once connectivity issues are fixed (no point in warning, if
 		// we already know it is broken.
-		// https://github.com/axiatech/polkadot/issues/3921
+		// https://github.com/axiatech/axia/issues/3921
 		if connected_ratio <= LOW_CONNECTIVITY_WARN_THRESHOLD {
 			tracing::debug!(
 				target: LOG_TARGET,
@@ -454,7 +454,7 @@ async fn ensure_i_am_an_authority(
 /// but formed randomly via BABE randomness from two epochs ago.
 /// This limits the amount of gossip peers to 2 * `sqrt(len)` and ensures the diameter of 2.
 ///
-/// [web3]: https://research.web3.foundation/en/latest/polkadot/networking/3-avail-valid.html#topology
+/// [web3]: https://research.web3.foundation/en/latest/axia/networking/3-avail-valid.html#topology
 async fn update_gossip_topology<Context>(
 	ctx: &mut Context,
 	our_index: usize,

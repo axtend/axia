@@ -24,14 +24,14 @@
 
 use std::{fmt, sync::Arc};
 
-pub use polkadot_primitives::v1::{BlockNumber, Hash};
+pub use axia_primitives::v1::{BlockNumber, Hash};
 use smallvec::SmallVec;
 
 pub mod errors;
 pub mod messages;
 
 pub use jaeger::*;
-pub use polkadot_node_jaeger as jaeger;
+pub use axia_node_jaeger as jaeger;
 
 /// How many slots are stack-reserved for active leaves updates
 ///

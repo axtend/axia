@@ -18,7 +18,7 @@
 
 use clap::{AppSettings, Parser};
 use color_eyre::eyre;
-use polkadot_cli::{Cli, RunCmd};
+use axia_cli::{Cli, RunCmd};
 
 pub(crate) mod interceptor;
 pub(crate) mod shared;
@@ -29,7 +29,7 @@ use variants::*;
 
 /// Define the different variants of behavior.
 #[derive(Debug, Parser)]
-#[clap(about = "Malus - the nemesis of polkadot.", version)]
+#[clap(about = "Malus - the nemesis of axia.", version)]
 #[clap(rename_all = "kebab-case")]
 enum NemesisVariant {
 	/// Suggest a candidate with an invalid proof of validity.
@@ -41,11 +41,11 @@ enum NemesisVariant {
 
 	#[allow(missing_docs)]
 	#[clap(name = "prepare-worker", setting = AppSettings::Hidden)]
-	PvfPrepareWorker(polkadot_cli::ValidationWorkerCommand),
+	PvfPrepareWorker(axia_cli::ValidationWorkerCommand),
 
 	#[allow(missing_docs)]
 	#[clap(name = "execute-worker", setting = AppSettings::Hidden)]
-	PvfExecuteWorker(polkadot_cli::ValidationWorkerCommand),
+	PvfExecuteWorker(axia_cli::ValidationWorkerCommand),
 }
 
 #[derive(Debug, Parser)]
@@ -64,11 +64,11 @@ impl MalusCli {
 	fn launch(self) -> eyre::Result<()> {
 		match self.variant {
 			NemesisVariant::BackGarbageCandidate(cmd) =>
-				polkadot_cli::run_node(run_cmd(cmd), BackGarbageCandidate)?,
+				axia_cli::run_node(run_cmd(cmd), BackGarbageCandidate)?,
 			NemesisVariant::SuggestGarbageCandidate(cmd) =>
-				polkadot_cli::run_node(run_cmd(cmd), SuggestGarbageCandidate)?,
+				axia_cli::run_node(run_cmd(cmd), SuggestGarbageCandidate)?,
 			NemesisVariant::DisputeAncestor(cmd) =>
-				polkadot_cli::run_node(run_cmd(cmd), DisputeValidCandidates)?,
+				axia_cli::run_node(run_cmd(cmd), DisputeValidCandidates)?,
 			NemesisVariant::PvfPrepareWorker(cmd) => {
 				#[cfg(target_os = "android")]
 				{
@@ -78,7 +78,7 @@ impl MalusCli {
 
 				#[cfg(not(target_os = "android"))]
 				{
-					polkadot_node_core_pvf::prepare_worker_entrypoint(&cmd.socket_path);
+					axia_node_core_pvf::prepare_worker_entrypoint(&cmd.socket_path);
 				}
 			},
 			NemesisVariant::PvfExecuteWorker(cmd) => {
@@ -89,7 +89,7 @@ impl MalusCli {
 
 				#[cfg(not(target_os = "android"))]
 				{
-					polkadot_node_core_pvf::execute_worker_entrypoint(&cmd.socket_path);
+					axia_node_core_pvf::execute_worker_entrypoint(&cmd.socket_path);
 				}
 			},
 		}

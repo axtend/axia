@@ -25,23 +25,23 @@
 use error::{log_error, FatalResult, NonFatalResult};
 use parity_scale_codec::Encode;
 
-use polkadot_node_network_protocol::{
+use axia_node_network_protocol::{
 	peer_set::{IsAuthority, PeerSet},
 	request_response::{v1 as request_v1, IncomingRequestReceiver},
 	v1::{self as protocol_v1, StatementMetadata},
 	IfDisconnected, PeerId, UnifiedReputationChange as Rep, View,
 };
-use polkadot_node_primitives::{SignedFullStatement, Statement, UncheckedSignedFullStatement};
-use polkadot_node_subsystem_util::{
+use axia_node_primitives::{SignedFullStatement, Statement, UncheckedSignedFullStatement};
+use axia_node_subsystem_util::{
 	self as util,
 	metrics::{self, prometheus},
 	MIN_GOSSIP_PEERS,
 };
-use polkadot_primitives::v1::{
+use axia_primitives::v1::{
 	AuthorityDiscoveryId, CandidateHash, CommittedCandidateReceipt, CompactStatement, Hash,
 	SigningContext, ValidatorId, ValidatorIndex, ValidatorSignature,
 };
-use polkadot_subsystem::{
+use axia_subsystem::{
 	jaeger,
 	messages::{
 		AllMessages, CandidateBackingMessage, NetworkBridgeEvent, NetworkBridgeMessage,
@@ -214,7 +214,7 @@ struct PeerRelayParentKnowledge {
 	/// How many large statements this peer already sent us.
 	///
 	/// Flood protection for large statements is rather hard and as soon as we get
-	/// `https://github.com/axiatech/polkadot/issues/2979` implemented also no longer necessary.
+	/// `https://github.com/axiatech/axia/issues/2979` implemented also no longer necessary.
 	/// Reason: We keep messages around until we fetched the payload, but if a node makes up
 	/// statements and never provides the data, we will keep it around for the slot duration. Not
 	/// even signature checking would help, as the sender, if a validator, can just sign arbitrary
@@ -1971,14 +1971,14 @@ impl metrics::Metrics for Metrics {
 		let metrics = MetricsInner {
 			statements_distributed: prometheus::register(
 				prometheus::Counter::new(
-					"polkadot_allychain_statements_distributed_total",
+					"axia_allychain_statements_distributed_total",
 					"Number of candidate validity statements distributed to other peers.",
 				)?,
 				registry,
 			)?,
 			sent_requests: prometheus::register(
 				prometheus::Counter::new(
-					"polkadot_allychain_statement_distribution_sent_requests_total",
+					"axia_allychain_statement_distribution_sent_requests_total",
 					"Number of large statement fetching requests sent.",
 				)?,
 				registry,
@@ -1986,7 +1986,7 @@ impl metrics::Metrics for Metrics {
 			received_responses: prometheus::register(
 				prometheus::CounterVec::new(
 					prometheus::Opts::new(
-						"polkadot_allychain_statement_distribution_received_responses_total",
+						"axia_allychain_statement_distribution_received_responses_total",
 						"Number of received responses for large statement data.",
 					),
 					&["success"],
@@ -1995,21 +1995,21 @@ impl metrics::Metrics for Metrics {
 			)?,
 			active_leaves_update: prometheus::register(
 				prometheus::Histogram::with_opts(prometheus::HistogramOpts::new(
-					"polkadot_allychain_statement_distribution_active_leaves_update",
+					"axia_allychain_statement_distribution_active_leaves_update",
 					"Time spent within `statement_distribution::active_leaves_update`",
 				))?,
 				registry,
 			)?,
 			share: prometheus::register(
 				prometheus::Histogram::with_opts(prometheus::HistogramOpts::new(
-					"polkadot_allychain_statement_distribution_share",
+					"axia_allychain_statement_distribution_share",
 					"Time spent within `statement_distribution::share`",
 				))?,
 				registry,
 			)?,
 			network_bridge_update_v1: prometheus::register(
 				prometheus::Histogram::with_opts(prometheus::HistogramOpts::new(
-					"polkadot_allychain_statement_distribution_network_bridge_update_v1",
+					"axia_allychain_statement_distribution_network_bridge_update_v1",
 					"Time spent within `statement_distribution::network_bridge_update_v1`",
 				))?,
 				registry,

@@ -1,17 +1,17 @@
 #![allow(dead_code)]
 
-use polkadot_overseer_gen::*;
+use axia_overseer_gen::*;
 
 #[derive(Default)]
 struct AwesomeSubSysA;
 
 
-impl ::polkadot_overseer_gen::Subsystem<OverseerSubsystemContext<MsgA>, OverseerError> for AwesomeSubSysA {
+impl ::axia_overseer_gen::Subsystem<OverseerSubsystemContext<MsgA>, OverseerError> for AwesomeSubSysA {
 	fn start(self, _ctx: OverseerSubsystemContext<MsgA>) -> SpawnedSubsystem<OverseerError> {
 		SpawnedSubsystem { name: "sub A", future: Box::pin(async move { Ok(()) }) }
 	}
 }
-impl ::polkadot_overseer_gen::Subsystem<OverseerSubsystemContext<MsgB>, OverseerError> for AwesomeSubSysB {
+impl ::axia_overseer_gen::Subsystem<OverseerSubsystemContext<MsgB>, OverseerError> for AwesomeSubSysB {
 	fn start(self, _ctx: OverseerSubsystemContext<MsgB>) -> SpawnedSubsystem<OverseerError> {
 		SpawnedSubsystem { name: "sub B", future: Box::pin(async move { Ok(()) }) }
 	}

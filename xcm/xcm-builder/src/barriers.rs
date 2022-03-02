@@ -17,7 +17,7 @@
 //! Various implementations for `ShouldExecute`.
 
 use frame_support::{ensure, traits::Contains, weights::Weight};
-use polkadot_allychain::primitives::IsSystem;
+use axia_allychain::primitives::IsSystem;
 use sp_std::{marker::PhantomData, result::Result};
 use xcm::latest::{Instruction::*, Junction, Junctions, MultiLocation, WeightLimit::*, Xcm};
 use xcm_executor::traits::{OnResponse, ShouldExecute};

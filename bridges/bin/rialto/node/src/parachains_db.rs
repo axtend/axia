@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Parity Bridges Common.  If not, see <http://www.gnu.org/licenses/>.
 
-//! This is almost 1:1 copy of `node/service/parachains_db/mod.rs` file from Polkadot repository.
+//! This is almost 1:1 copy of `node/service/parachains_db/mod.rs` file from Axia repository.
 //! The only exception is that we don't support db upgrades => no `upgrade.rs` module.
 
 use kvdb::KeyValueDB;

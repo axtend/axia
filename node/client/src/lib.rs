@@ -19,7 +19,7 @@
 //! Provides the [`AbstractClient`] trait that is a super trait that combines all the traits the client implements.
 //! There is also the [`Client`] enum that combines all the different clients into one common structure.
 
-use polkadot_primitives::{
+use axia_primitives::{
 	v1::{AccountId, Balance, Block, BlockNumber, Hash, Header, Nonce},
 	v2::AllychainHost,
 };
@@ -45,24 +45,24 @@ pub type FullClient<RuntimeApi, ExecutorDispatch> =
 	feature = "betanet",
 	feature = "axctest",
 	feature = "alphanet",
-	feature = "polkadot"
+	feature = "axia"
 )))]
 compile_error!("at least one runtime feature must be enabled");
 
 /// The native executor instance for Axia.
-#[cfg(feature = "polkadot")]
+#[cfg(feature = "axia")]
 pub struct AxiaExecutorDispatch;
 
-#[cfg(feature = "polkadot")]
+#[cfg(feature = "axia")]
 impl sc_executor::NativeExecutionDispatch for AxiaExecutorDispatch {
 	type ExtendHostFunctions = frame_benchmarking::benchmarking::HostFunctions;
 
 	fn dispatch(method: &str, data: &[u8]) -> Option<Vec<u8>> {
-		polkadot_runtime::api::dispatch(method, data)
+		axia_runtime::api::dispatch(method, data)
 	}
 
 	fn native_version() -> sc_executor::NativeVersion {
-		polkadot_runtime::native_version()
+		axia_runtime::native_version()
 	}
 }
 
@@ -117,7 +117,7 @@ impl sc_executor::NativeExecutionDispatch for BetanetExecutorDispatch {
 	}
 }
 
-/// A set of APIs that polkadot-like runtimes must implement.
+/// A set of APIs that axia-like runtimes must implement.
 pub trait RuntimeApiCollection:
 	sp_transaction_pool::runtime_api::TaggedTransactionQueue<Block>
 	+ sp_api::ApiExt<Block>
@@ -244,7 +244,7 @@ macro_rules! with_client {
 		}
 	} => {
 		match $self {
-			#[cfg(feature = "polkadot")]
+			#[cfg(feature = "axia")]
 			Self::Axia($client) => { $( $code )* },
 			#[cfg(feature = "alphanet")]
 			Self::Alphanet($client) => { $( $code )* },
@@ -261,8 +261,8 @@ macro_rules! with_client {
 /// See [`ExecuteWithClient`] for more information.
 #[derive(Clone)]
 pub enum Client {
-	#[cfg(feature = "polkadot")]
-	Axia(Arc<FullClient<polkadot_runtime::RuntimeApi, AxiaExecutorDispatch>>),
+	#[cfg(feature = "axia")]
+	Axia(Arc<FullClient<axia_runtime::RuntimeApi, AxiaExecutorDispatch>>),
 	#[cfg(feature = "alphanet")]
 	Alphanet(Arc<FullClient<alphanet_runtime::RuntimeApi, AlphanetExecutorDispatch>>),
 	#[cfg(feature = "axctest")]

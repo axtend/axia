@@ -117,7 +117,7 @@ pub struct Cli {
 #[derive(Debug)]
 pub struct RelayChainCli {
 	/// The actual relay chain cli object.
-	pub base: polkadot_cli::RunCmd,
+	pub base: axia_cli::RunCmd,
 
 	/// Optional chain id that should be passed to the relay chain.
 	pub chain_id: Option<String>,
@@ -135,6 +135,6 @@ impl RelayChainCli {
 		let extension = chain_spec::Extensions::try_get(&*para_config.chain_spec);
 		let chain_id = extension.map(|e| e.relay_chain.clone());
 		let base_path = para_config.base_path.as_ref().map(|x| x.path().join("rialto-bridge-node"));
-		Self { base_path, chain_id, base: polkadot_cli::RunCmd::from_iter(relay_chain_args) }
+		Self { base_path, chain_id, base: axia_cli::RunCmd::from_iter(relay_chain_args) }
 	}
 }

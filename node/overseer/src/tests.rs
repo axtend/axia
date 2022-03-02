@@ -18,17 +18,17 @@ use futures::{executor, pending, pin_mut, poll, select, stream, FutureExt};
 use std::{collections::HashMap, sync::atomic, task::Poll};
 
 use ::test_helpers::{dummy_candidate_descriptor, dummy_candidate_receipt, dummy_hash};
-use polkadot_node_network_protocol::{PeerId, UnifiedReputationChange};
-use polkadot_node_primitives::{
+use axia_node_network_protocol::{PeerId, UnifiedReputationChange};
+use axia_node_primitives::{
 	BlockData, CollationGenerationConfig, CollationResult, DisputeMessage, InvalidDisputeVote, PoV,
 	UncheckedDisputeMessage, ValidDisputeVote,
 };
-use polkadot_node_subsystem_types::{
+use axia_node_subsystem_types::{
 	jaeger,
 	messages::{NetworkBridgeEvent, RuntimeApiRequest},
 	ActivatedLeaf, LeafStatus,
 };
-use polkadot_primitives::v1::{
+use axia_primitives::v1::{
 	CandidateHash, CollatorPair, InvalidDisputeStatementKind, ValidDisputeStatementKind,
 	ValidatorIndex,
 };
@@ -280,9 +280,9 @@ fn extract_metrics(registry: &prometheus::Registry) -> HashMap<&'static str, u64
 			.get_value() as u64
 	};
 
-	let activated = extract("polkadot_allychain_activated_heads_total");
-	let deactivated = extract("polkadot_allychain_deactivated_heads_total");
-	let relayed = extract("polkadot_allychain_messages_relayed_total");
+	let activated = extract("axia_allychain_activated_heads_total");
+	let deactivated = extract("axia_allychain_deactivated_heads_total");
+	let relayed = extract("axia_allychain_messages_relayed_total");
 	let mut result = HashMap::new();
 	result.insert("activated", activated);
 	result.insert("deactivated", deactivated);

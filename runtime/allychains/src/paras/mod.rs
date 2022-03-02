@@ -1554,7 +1554,7 @@ impl<T: Config> Pallet<T> {
 		//
 		// This is only an intermediate solution and should be fixed in foreseable future.
 		//
-		// [soaking issue]: https://github.com/axiatech/polkadot/issues/3918
+		// [soaking issue]: https://github.com/axiatech/axia/issues/3918
 		let validation_code =
 			mem::replace(&mut genesis_data.validation_code, ValidationCode(Vec::new()));
 		UpcomingParasGenesis::<T>::insert(&id, genesis_data);

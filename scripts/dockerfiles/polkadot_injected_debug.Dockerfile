@@ -9,10 +9,10 @@ LABEL io.axia.image.authors="devops-team@axia.io" \
 	io.axia.image.vendor="Axia Technologies" \
 	io.axia.image.title="${IMAGE_NAME}" \
 	io.axia.image.description="Axia: a platform for web3" \
-	io.axia.image.source="https://github.com/axiatech/polkadot/blob/${VCS_REF}/scripts/docker/polkadot_injected_debug.Dockerfile" \
+	io.axia.image.source="https://github.com/axiatech/axia/blob/${VCS_REF}/scripts/docker/axia_injected_debug.Dockerfile" \
 	io.axia.image.revision="${VCS_REF}" \
 	io.axia.image.created="${BUILD_DATE}" \
-	io.axia.image.documentation="https://github.com/axiatech/polkadot/"
+	io.axia.image.documentation="https://github.com/axiatech/axia/"
 
 # show backtraces
 ENV RUST_BACKTRACE 1
@@ -26,21 +26,21 @@ RUN apt-get update && \
 	apt-get autoremove -y && \
 	apt-get clean && \
 	find /var/lib/apt/lists/ -type f -not -name lock -delete; \
-# add user and link ~/.local/share/polkadot to /data
-	useradd -m -u 1000 -U -s /bin/sh -d /polkadot polkadot && \
-	mkdir -p /data /polkadot/.local/share && \
-	chown -R polkadot:polkadot /data && \
-	ln -s /data /polkadot/.local/share/polkadot
+# add user and link ~/.local/share/axia to /data
+	useradd -m -u 1000 -U -s /bin/sh -d /axia axia && \
+	mkdir -p /data /axia/.local/share && \
+	chown -R axia:axia /data && \
+	ln -s /data /axia/.local/share/axia
 
-# add polkadot binary to docker image
-COPY ./polkadot /usr/local/bin
+# add axia binary to docker image
+COPY ./axia /usr/local/bin
 
-USER polkadot
+USER axia
 
 # check if executable works in this container
-RUN /usr/local/bin/polkadot --version
+RUN /usr/local/bin/axia --version
 
 EXPOSE 30333 9933 9944
-VOLUME ["/polkadot"]
+VOLUME ["/axia"]
 
-ENTRYPOINT ["/usr/local/bin/polkadot"]
+ENTRYPOINT ["/usr/local/bin/axia"]

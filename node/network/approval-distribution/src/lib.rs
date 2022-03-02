@@ -21,13 +21,13 @@
 #![warn(missing_docs)]
 
 use futures::{channel::oneshot, FutureExt as _};
-use polkadot_node_network_protocol::{
+use axia_node_network_protocol::{
 	v1 as protocol_v1, PeerId, UnifiedReputationChange as Rep, View,
 };
-use polkadot_node_primitives::approval::{
+use axia_node_primitives::approval::{
 	AssignmentCert, BlockApprovalMeta, IndirectAssignmentCert, IndirectSignedApprovalVote,
 };
-use polkadot_node_subsystem::{
+use axia_node_subsystem::{
 	messages::{
 		ApprovalCheckResult, ApprovalDistributionMessage, ApprovalVotingMessage,
 		AssignmentCheckResult, NetworkBridgeEvent, NetworkBridgeMessage,
@@ -35,12 +35,12 @@ use polkadot_node_subsystem::{
 	overseer, ActiveLeavesUpdate, FromOverseer, OverseerSignal, SpawnedSubsystem, SubsystemContext,
 	SubsystemError,
 };
-use polkadot_node_subsystem_util::{
+use axia_node_subsystem_util::{
 	self as util,
 	metrics::{self, prometheus},
 	MIN_GOSSIP_PEERS,
 };
-use polkadot_primitives::v1::{
+use axia_primitives::v1::{
 	BlockNumber, CandidateIndex, Hash, ValidatorIndex, ValidatorSignature,
 };
 use std::collections::{hash_map, BTreeMap, HashMap, HashSet};
@@ -613,7 +613,7 @@ impl State {
 				AssignmentCheckResult::AcceptedDuplicate => {
 					// "duplicate" assignments aren't necessarily equal.
 					// There is more than one way each validator can be assigned to each core.
-					// cf. https://github.com/axiatech/polkadot/pull/2160#discussion_r557628699
+					// cf. https://github.com/axiatech/axia/pull/2160#discussion_r557628699
 					if let Some(peer_knowledge) = entry.known_by.get_mut(&peer_id) {
 						peer_knowledge.received.insert(fingerprint);
 					}
@@ -1303,42 +1303,42 @@ impl metrics::Metrics for Metrics {
 		let metrics = MetricsInner {
 			assignments_imported_total: prometheus::register(
 				prometheus::Counter::new(
-					"polkadot_allychain_assignments_imported_total",
+					"axia_allychain_assignments_imported_total",
 					"Number of valid assignments imported locally or from other peers.",
 				)?,
 				registry,
 			)?,
 			approvals_imported_total: prometheus::register(
 				prometheus::Counter::new(
-					"polkadot_allychain_approvals_imported_total",
+					"axia_allychain_approvals_imported_total",
 					"Number of valid approvals imported locally or from other peers.",
 				)?,
 				registry,
 			)?,
 			unified_with_peer_total: prometheus::register(
 				prometheus::Counter::new(
-					"polkadot_allychain_unified_with_peer_total",
+					"axia_allychain_unified_with_peer_total",
 					"Number of times `unify_with_peer` is called.",
 				)?,
 				registry,
 			)?,
 			time_unify_with_peer: prometheus::register(
 				prometheus::Histogram::with_opts(prometheus::HistogramOpts::new(
-					"polkadot_allychain_time_unify_with_peer",
+					"axia_allychain_time_unify_with_peer",
 					"Time spent within fn `unify_with_peer`.",
 				))?,
 				registry,
 			)?,
 			time_import_pending_now_known: prometheus::register(
 				prometheus::Histogram::with_opts(prometheus::HistogramOpts::new(
-					"polkadot_allychain_time_import_pending_now_known",
+					"axia_allychain_time_import_pending_now_known",
 					"Time spent on importing pending assignments and approvals.",
 				))?,
 				registry,
 			)?,
 			time_awaiting_approval_voting: prometheus::register(
 				prometheus::Histogram::with_opts(prometheus::HistogramOpts::new(
-					"polkadot_allychain_time_awaiting_approval_voting",
+					"axia_allychain_time_awaiting_approval_voting",
 					"Time spent awaiting a reply from the Approval Voting Subsystem.",
 				))?,
 				registry,

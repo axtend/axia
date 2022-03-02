@@ -25,14 +25,14 @@ use parking_lot::Mutex;
 use sc_network::Event as NetworkEvent;
 use sp_consensus::SyncOracle;
 
-use polkadot_node_network_protocol::{
+use axia_node_network_protocol::{
 	peer_set::PeerSet, v1 as protocol_v1, ObservedRole, OurView, PeerId,
 	UnifiedReputationChange as Rep, View,
 };
-use polkadot_node_subsystem_util::metrics::{self, prometheus};
-use polkadot_overseer::gen::{OverseerError, Subsystem};
-use polkadot_primitives::v1::{BlockNumber, Hash};
-use polkadot_subsystem::{
+use axia_node_subsystem_util::metrics::{self, prometheus};
+use axia_overseer::gen::{OverseerError, Subsystem};
+use axia_primitives::v1::{BlockNumber, Hash};
+use axia_subsystem::{
 	errors::{SubsystemError, SubsystemResult},
 	messages::{AllMessages, CollatorProtocolMessage, NetworkBridgeEvent, NetworkBridgeMessage},
 	overseer, ActivatedLeaf, ActiveLeavesUpdate, FromOverseer, OverseerSignal, SpawnedSubsystem,
@@ -42,7 +42,7 @@ use polkadot_subsystem::{
 /// Peer set info for network initialization.
 ///
 /// To be added to [`NetworkConfiguration::extra_sets`].
-pub use polkadot_node_network_protocol::peer_set::{peer_sets_info, IsAuthority};
+pub use axia_node_network_protocol::peer_set::{peer_sets_info, IsAuthority};
 
 use std::{
 	collections::{hash_map, HashMap, HashSet},
@@ -167,7 +167,7 @@ impl metrics::Metrics for Metrics {
 			peer_count: prometheus::register(
 				prometheus::GaugeVec::new(
 					prometheus::Opts::new(
-						"polkadot_allychain_peer_count",
+						"axia_allychain_peer_count",
 						"The number of peers on a allychain-related peer-set",
 					),
 					&["protocol"]
@@ -177,7 +177,7 @@ impl metrics::Metrics for Metrics {
 			connected_events: prometheus::register(
 				prometheus::CounterVec::new(
 					prometheus::Opts::new(
-						"polkadot_allychain_peer_connect_events_total",
+						"axia_allychain_peer_connect_events_total",
 						"The number of peer connect events on a allychain notifications protocol",
 					),
 					&["protocol"]
@@ -187,7 +187,7 @@ impl metrics::Metrics for Metrics {
 			disconnected_events: prometheus::register(
 				prometheus::CounterVec::new(
 					prometheus::Opts::new(
-						"polkadot_allychain_peer_disconnect_events_total",
+						"axia_allychain_peer_disconnect_events_total",
 						"The number of peer disconnect events on a allychain notifications protocol",
 					),
 					&["protocol"]
@@ -197,7 +197,7 @@ impl metrics::Metrics for Metrics {
 			desired_peer_count: prometheus::register(
 				prometheus::GaugeVec::new(
 					prometheus::Opts::new(
-						"polkadot_allychain_desired_peer_count",
+						"axia_allychain_desired_peer_count",
 						"The number of peers that the local node is expected to connect to on a allychain-related peer-set (either including or not including unresolvable authorities, depending on whether `ConnectToValidators` or `ConnectToValidatorsResolved` was used.)",
 					),
 					&["protocol"]
@@ -207,7 +207,7 @@ impl metrics::Metrics for Metrics {
 			notifications_received: prometheus::register(
 				prometheus::CounterVec::new(
 					prometheus::Opts::new(
-						"polkadot_allychain_notifications_received_total",
+						"axia_allychain_notifications_received_total",
 						"The number of notifications received on a allychain protocol",
 					),
 					&["protocol"]
@@ -217,7 +217,7 @@ impl metrics::Metrics for Metrics {
 			notifications_sent: prometheus::register(
 				prometheus::CounterVec::new(
 					prometheus::Opts::new(
-						"polkadot_allychain_notifications_sent_total",
+						"axia_allychain_notifications_sent_total",
 						"The number of notifications sent on a allychain protocol",
 					),
 					&["protocol"]
@@ -227,7 +227,7 @@ impl metrics::Metrics for Metrics {
 			bytes_received: prometheus::register(
 				prometheus::CounterVec::new(
 					prometheus::Opts::new(
-						"polkadot_allychain_notification_bytes_received_total",
+						"axia_allychain_notification_bytes_received_total",
 						"The number of bytes received on a allychain notification protocol",
 					),
 					&["protocol"]
@@ -237,7 +237,7 @@ impl metrics::Metrics for Metrics {
 			bytes_sent: prometheus::register(
 				prometheus::CounterVec::new(
 					prometheus::Opts::new(
-						"polkadot_allychain_notification_bytes_sent_total",
+						"axia_allychain_notification_bytes_sent_total",
 						"The number of bytes sent on a allychain notification protocol",
 					),
 					&["protocol"]

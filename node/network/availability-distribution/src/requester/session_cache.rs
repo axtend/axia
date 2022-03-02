@@ -19,11 +19,11 @@ use std::collections::HashSet;
 use lru::LruCache;
 use rand::{seq::SliceRandom, thread_rng};
 
-use polkadot_node_subsystem_util::runtime::RuntimeInfo;
-use polkadot_primitives::v1::{
+use axia_node_subsystem_util::runtime::RuntimeInfo;
+use axia_primitives::v1::{
 	AuthorityDiscoveryId, GroupIndex, Hash, SessionIndex, ValidatorIndex,
 };
-use polkadot_subsystem::SubsystemContext;
+use axia_subsystem::SubsystemContext;
 
 use crate::{
 	error::{Error, NonFatal},

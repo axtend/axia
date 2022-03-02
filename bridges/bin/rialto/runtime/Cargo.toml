@@ -68,9 +68,9 @@ sp-version = { git = "https://github.com/axtend/axlib", default-features = false
 
 # Axia (allychain) Dependencies
 
-polkadot-primitives = { git = "https://github.com/axiatech/polkadot", branch = "master", default-features = false }
-polkadot-runtime-common = { git = "https://github.com/axiatech/polkadot", branch = "master", default-features = false }
-polkadot-runtime-allychains = { git = "https://github.com/axiatech/polkadot", branch = "master", default-features = false }
+axia-primitives = { git = "https://github.com/axia-tech/axia", branch = "master", default-features = false }
+axia-runtime-common = { git = "https://github.com/axia-tech/axia", branch = "master", default-features = false }
+axia-runtime-allychains = { git = "https://github.com/axia-tech/axia", branch = "master", default-features = false }
 
 [dev-dependencies]
 libsecp256k1 = { version = "0.7", features = ["hmac"] }
@@ -112,9 +112,9 @@ std = [
 	"pallet-timestamp/std",
 	"pallet-transaction-payment-rpc-runtime-api/std",
 	"pallet-transaction-payment/std",
-	"polkadot-primitives/std",
-	"polkadot-runtime-common/std",
-	"polkadot-runtime-allychains/std",
+	"axia-primitives/std",
+	"axia-runtime-common/std",
+	"axia-runtime-allychains/std",
 	"scale-info/std",
 	"serde",
 	"sp-api/std",

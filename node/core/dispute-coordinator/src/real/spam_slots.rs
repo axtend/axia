@@ -16,7 +16,7 @@
 
 use std::collections::{HashMap, HashSet};
 
-use polkadot_primitives::v1::{CandidateHash, SessionIndex, ValidatorIndex};
+use axia_primitives::v1::{CandidateHash, SessionIndex, ValidatorIndex};
 
 use crate::real::LOG_TARGET;
 

@@ -22,7 +22,7 @@
 
 #![allow(missing_docs)]
 
-use polkadot_cli::{
+use axia_cli::{
 	prepared_overseer_builder,
 	service::{
 		AuthorityDiscoveryApi, AuxStore, BabeApi, Block, Error, HeaderBackend, Overseer,
@@ -33,16 +33,16 @@ use polkadot_cli::{
 
 // Import extra types relevant to the particular
 // subsystem.
-use polkadot_node_core_backing::CandidateBackingSubsystem;
-use polkadot_node_primitives::Statement;
-use polkadot_node_subsystem::{
+use axia_node_core_backing::CandidateBackingSubsystem;
+use axia_node_primitives::Statement;
+use axia_node_subsystem::{
 	messages::{CandidateBackingMessage, StatementDistributionMessage},
 	overseer::{self, SubsystemSender},
 };
-use polkadot_node_subsystem_util as util;
+use axia_node_subsystem_util as util;
 // Filter wrapping related types.
 use crate::interceptor::*;
-use polkadot_primitives::v1::{
+use axia_primitives::v1::{
 	CandidateCommitments, CandidateReceipt, CommittedCandidateReceipt, CompactStatement, Hash,
 	Signed,
 };

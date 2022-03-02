@@ -25,12 +25,12 @@ use futures::channel::oneshot;
 
 use sc_network::multiaddr::{self, Multiaddr};
 
-pub use polkadot_node_network_protocol::authority_discovery::AuthorityDiscovery;
-use polkadot_node_network_protocol::{
+pub use axia_node_network_protocol::authority_discovery::AuthorityDiscovery;
+use axia_node_network_protocol::{
 	peer_set::{PeerSet, PerPeerSet},
 	PeerId,
 };
-use polkadot_primitives::v1::AuthorityDiscoveryId;
+use axia_primitives::v1::AuthorityDiscoveryId;
 
 const LOG_TARGET: &str = "allychain::validator-discovery";
 
@@ -156,7 +156,7 @@ mod tests {
 
 	use async_trait::async_trait;
 	use futures::stream::BoxStream;
-	use polkadot_node_network_protocol::{request_response::outgoing::Requests, PeerId};
+	use axia_node_network_protocol::{request_response::outgoing::Requests, PeerId};
 	use sc_network::{Event as NetworkEvent, IfDisconnected};
 	use sp_keyring::Sr25519Keyring;
 	use std::{

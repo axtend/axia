@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Axia.  If not, see <http://www.gnu.org/licenses/>.
 
-use polkadot_test_service::*;
+use axia_test_service::*;
 use sp_keyring::Sr25519Keyring::{Alice, Bob, Charlie};
 
 #[axlib_test_utils::test]
@@ -24,7 +24,7 @@ async fn call_function_actually_work() {
 
 	let alice = run_validator_node(alice_config, None);
 
-	let function = polkadot_test_runtime::Call::Balances(pallet_balances::Call::transfer {
+	let function = axia_test_runtime::Call::Balances(pallet_balances::Call::transfer {
 		dest: Charlie.to_account_id().into(),
 		value: 1,
 	});

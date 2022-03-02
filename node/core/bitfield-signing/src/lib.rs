@@ -27,7 +27,7 @@ use futures::{
 	prelude::*,
 	Future,
 };
-use polkadot_node_subsystem::{
+use axia_node_subsystem::{
 	errors::RuntimeApiError,
 	jaeger,
 	messages::{
@@ -36,12 +36,12 @@ use polkadot_node_subsystem::{
 	},
 	ActivatedLeaf, LeafStatus, PerLeafSpan, SubsystemSender,
 };
-use polkadot_node_subsystem_util::{
+use axia_node_subsystem_util::{
 	self as util,
 	metrics::{self, prometheus},
 	JobSender, JobSubsystem, JobTrait, Validator,
 };
-use polkadot_primitives::v1::{AvailabilityBitfield, CoreState, Hash, ValidatorIndex};
+use axia_primitives::v1::{AvailabilityBitfield, CoreState, Hash, ValidatorIndex};
 use sp_keystore::{Error as KeystoreError, SyncCryptoStorePtr};
 use std::{iter::FromIterator, pin::Pin, time::Duration};
 use wasm_timer::{Delay, Instant};
@@ -210,14 +210,14 @@ impl metrics::Metrics for Metrics {
 		let metrics = MetricsInner {
 			bitfields_signed_total: prometheus::register(
 				prometheus::Counter::new(
-					"polkadot_allychain_bitfields_signed_total",
+					"axia_allychain_bitfields_signed_total",
 					"Number of bitfields signed.",
 				)?,
 				registry,
 			)?,
 			run: prometheus::register(
 				prometheus::Histogram::with_opts(prometheus::HistogramOpts::new(
-					"polkadot_allychain_bitfield_signing_run",
+					"axia_allychain_bitfield_signing_run",
 					"Time spent within `bitfield_signing::run`",
 				))?,
 				registry,

@@ -19,7 +19,7 @@
 
 #![allow(missing_docs)]
 
-use polkadot_cli::{
+use axia_cli::{
 	prepared_overseer_builder,
 	service::{
 		AuthorityDiscoveryApi, AuxStore, BabeApi, Block, Error, HeaderBackend, Overseer,
@@ -30,17 +30,17 @@ use polkadot_cli::{
 
 // Import extra types relevant to the particular
 // subsystem.
-use polkadot_node_core_candidate_validation::CandidateValidationSubsystem;
-use polkadot_node_subsystem::messages::{
+use axia_node_core_candidate_validation::CandidateValidationSubsystem;
+use axia_node_subsystem::messages::{
 	AvailabilityRecoveryMessage, CandidateValidationMessage, ValidationFailed,
 };
-use polkadot_node_subsystem_util as util;
+use axia_node_subsystem_util as util;
 
 // Filter wrapping related types.
 use crate::{interceptor::*, shared::*};
-use polkadot_node_primitives::{PoV, ValidationResult};
+use axia_node_primitives::{PoV, ValidationResult};
 
-use polkadot_primitives::v1::{
+use axia_primitives::v1::{
 	CandidateCommitments, CandidateDescriptor, CandidateReceipt, PersistedValidationData,
 	ValidationCode,
 };

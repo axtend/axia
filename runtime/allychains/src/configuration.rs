@@ -110,7 +110,7 @@ pub struct HostConfiguration<BlockNumber> {
 	/// [`validation_upgrade_delay`] many blocks back and still find the new code in the storage by
 	/// hash.
 	///
-	/// [#4601]: https://github.com/axiatech/polkadot/issues/4601
+	/// [#4601]: https://github.com/axiatech/axia/issues/4601
 	pub validation_upgrade_delay: BlockNumber,
 
 	/**

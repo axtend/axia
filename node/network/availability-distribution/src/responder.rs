@@ -20,13 +20,13 @@ use std::sync::Arc;
 
 use futures::channel::oneshot;
 
-use polkadot_node_network_protocol::{
+use axia_node_network_protocol::{
 	request_response::{incoming, v1, IncomingRequest, IncomingRequestReceiver},
 	UnifiedReputationChange as Rep,
 };
-use polkadot_node_primitives::{AvailableData, ErasureChunk};
-use polkadot_primitives::v1::{CandidateHash, ValidatorIndex};
-use polkadot_subsystem::{jaeger, messages::AvailabilityStoreMessage, SubsystemSender};
+use axia_node_primitives::{AvailableData, ErasureChunk};
+use axia_primitives::v1::{CandidateHash, ValidatorIndex};
+use axia_subsystem::{jaeger, messages::AvailabilityStoreMessage, SubsystemSender};
 
 use crate::{
 	error::{NonFatal, NonFatalResult, Result},

@@ -42,4 +42,4 @@ exactly one downward message queue.
 
 Also of use is the [Axlib Glossary](https://axlib.dev/docs/en/knowledgebase/getting-started/glossary).
 
-[0]: https://wiki.polkadot.network/docs/learn-consensus
+[0]: https://wiki.axia.network/docs/learn-consensus

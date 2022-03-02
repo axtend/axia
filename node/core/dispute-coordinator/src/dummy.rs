@@ -16,11 +16,11 @@
 
 //! Implements the dispute coordinator subsystem (dummy implementation).
 
-use polkadot_node_subsystem::{
+use axia_node_subsystem::{
 	messages::DisputeCoordinatorMessage, overseer, FromOverseer, OverseerSignal, SpawnedSubsystem,
 	SubsystemContext, SubsystemError,
 };
-use polkadot_primitives::v1::BlockNumber;
+use axia_primitives::v1::BlockNumber;
 
 use futures::prelude::*;
 

@@ -11,7 +11,7 @@ parity-scale-codec = { version = "2.2.0", default-features = false, features = [
 
 # Bridge Dependencies
 bp-messages = { path = "../messages", default-features = false }
-bp-polkadot-core = { path = "../polkadot-core", default-features = false }
+bp-axia-core = { path = "../axia-core", default-features = false }
 bp-betanet = { path = "../chain-betanet", default-features = false }
 bp-runtime = { path = "../runtime", default-features = false }
 
@@ -24,7 +24,7 @@ sp-std = { git = "https://github.com/axtend/axlib", default-features = false , b
 default = ["std"]
 std = [
 	"bp-messages/std",
-	"bp-polkadot-core/std",
+	"bp-axia-core/std",
 	"bp-runtime/std",
 	"bp-betanet/std",
 	"parity-scale-codec/std",

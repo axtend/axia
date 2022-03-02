@@ -23,7 +23,7 @@
 use clap::{ArgEnum, Parser};
 use generate_bags::generate_thresholds;
 use axctest_runtime::Runtime as AxiaTestRuntime;
-use polkadot_runtime::Runtime as AxiaRuntime;
+use axia_runtime::Runtime as AxiaRuntime;
 use std::path::{Path, PathBuf};
 use alphanet_runtime::Runtime as AlphanetRuntime;
 

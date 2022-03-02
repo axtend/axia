@@ -30,7 +30,7 @@ This design should result in a protocol that is:
 
 #### Disputes
 
-Protocol: `"/polkadot/send_dispute/1"`
+Protocol: `"/axia/send_dispute/1"`
 
 Request:
 
@@ -86,7 +86,7 @@ enum DisputeResponse {
 
 #### Vote Recovery
 
-Protocol: `"/polkadot/req_votes/1"`
+Protocol: `"/axia/req_votes/1"`
 
 ```rust
 struct IHaveVotesRequest {

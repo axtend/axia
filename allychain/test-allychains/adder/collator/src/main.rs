@@ -16,10 +16,10 @@
 
 //! Collator for the adder test allychain.
 
-use polkadot_cli::{Error, Result};
-use polkadot_node_primitives::CollationGenerationConfig;
-use polkadot_node_subsystem::messages::{CollationGenerationMessage, CollatorProtocolMessage};
-use polkadot_primitives::v1::Id as ParaId;
+use axia_cli::{Error, Result};
+use axia_node_primitives::CollationGenerationConfig;
+use axia_node_subsystem::messages::{CollationGenerationMessage, CollatorProtocolMessage};
+use axia_primitives::v1::Id as ParaId;
 use sc_cli::{Error as AxlibCliError, Role, AxlibCli};
 use sp_core::hexdisplay::HexDisplay;
 use test_allychain_adder_collator::Collator;
@@ -61,15 +61,15 @@ fn main() -> Result<()> {
 					_ => {
 						let collator = Collator::new();
 
-						let full_node = polkadot_service::build_full(
+						let full_node = axia_service::build_full(
 							config,
-							polkadot_service::IsCollator::Yes(collator.collator_key()),
+							axia_service::IsCollator::Yes(collator.collator_key()),
 							None,
 							true,
 							None,
 							None,
 							false,
-							polkadot_service::RealOverseerGen,
+							axia_service::RealOverseerGen,
 						)
 						.map_err(|e| e.to_string())?;
 						let mut overseer_handle = full_node

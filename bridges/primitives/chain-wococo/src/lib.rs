@@ -23,7 +23,7 @@
 use bp_messages::{LaneId, MessageDetails, MessageNonce, UnrewardedRelayersState};
 use sp_std::prelude::*;
 
-pub use bp_polkadot_core::*;
+pub use bp_axia_core::*;
 // Betanet runtime = Wococo runtime
 pub use bp_betanet::{WeightToFee, PAY_INBOUND_DISPATCH_FEE_WEIGHT, SESSION_LENGTH, VERSION};
 

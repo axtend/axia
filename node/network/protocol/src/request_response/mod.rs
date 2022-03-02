@@ -35,7 +35,7 @@
 use std::{borrow::Cow, time::Duration, u64};
 
 use futures::channel::mpsc;
-use polkadot_primitives::v1::{MAX_CODE_SIZE, MAX_POV_SIZE};
+use axia_primitives::v1::{MAX_CODE_SIZE, MAX_POV_SIZE};
 use strum::EnumIter;
 
 pub use sc_network::{config as network, config::RequestResponseConfig};
@@ -245,12 +245,12 @@ impl Protocol {
 	/// Get the protocol name associated with each peer set as static str.
 	pub const fn get_protocol_name_static(self) -> &'static str {
 		match self {
-			Protocol::ChunkFetching => "/polkadot/req_chunk/1",
-			Protocol::CollationFetching => "/polkadot/req_collation/1",
-			Protocol::PoVFetching => "/polkadot/req_pov/1",
-			Protocol::AvailableDataFetching => "/polkadot/req_available_data/1",
-			Protocol::StatementFetching => "/polkadot/req_statement/1",
-			Protocol::DisputeSending => "/polkadot/send_dispute/1",
+			Protocol::ChunkFetching => "/axia/req_chunk/1",
+			Protocol::CollationFetching => "/axia/req_collation/1",
+			Protocol::PoVFetching => "/axia/req_pov/1",
+			Protocol::AvailableDataFetching => "/axia/req_available_data/1",
+			Protocol::StatementFetching => "/axia/req_statement/1",
+			Protocol::DisputeSending => "/axia/send_dispute/1",
 		}
 	}
 }

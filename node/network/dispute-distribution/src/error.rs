@@ -19,8 +19,8 @@
 
 use thiserror::Error;
 
-use polkadot_node_subsystem_util::runtime;
-use polkadot_subsystem::SubsystemError;
+use axia_node_subsystem_util::runtime;
+use axia_subsystem::SubsystemError;
 
 use crate::{sender, LOG_TARGET};
 

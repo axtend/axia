@@ -97,7 +97,7 @@
             "uid": "P5CA6DFE95AABF258"
           },
           "exemplar": false,
-          "expr": "sort_desc  (count by (version) (polkadot_build_info{chain=\"kusama\", instance=~\".*validator.*\"}))",
+          "expr": "sort_desc  (count by (version) (axia_build_info{chain=\"kusama\", instance=~\".*validator.*\"}))",
           "instant": true,
           "interval": "",
           "intervalFactor": 1,
@@ -312,7 +312,7 @@
             "uid": "P5CA6DFE95AABF258"
           },
           "exemplar": false,
-          "expr": "sort_desc  (count by (version) (polkadot_build_info{chain=\"kusama\", instance=~\".*validator.*\"}))",
+          "expr": "sort_desc  (count by (version) (axia_build_info{chain=\"kusama\", instance=~\".*validator.*\"}))",
           "instant": true,
           "interval": "",
           "intervalFactor": 1,
@@ -411,7 +411,7 @@
             "uid": "P5CA6DFE95AABF258"
           },
           "exemplar": false,
-          "expr": "polkadot_build_info{instance=~\".*validator.*\",chain=\"kusama\"}",
+          "expr": "axia_build_info{instance=~\".*validator.*\",chain=\"kusama\"}",
           "format": "table",
           "instant": false,
           "interval": "",
@@ -863,7 +863,7 @@
           "type": "prometheus",
           "uid": "P5CA6DFE95AABF258"
         },
-        "definition": "polkadot_build_info{chain=\"$chain\"}",
+        "definition": "axia_build_info{chain=\"$chain\"}",
         "description": "Version of the node",
         "hide": 0,
         "includeAll": true,
@@ -872,7 +872,7 @@
         "name": "version",
         "options": [],
         "query": {
-          "query": "polkadot_build_info{chain=\"$chain\"}",
+          "query": "axia_build_info{chain=\"$chain\"}",
           "refId": "StandardVariableQuery"
         },
         "refresh": 1,
@@ -895,7 +895,7 @@
           "type": "prometheus",
           "uid": "P5CA6DFE95AABF258"
         },
-        "definition": "polkadot_sync_peers{chain=\"$chain\"}",
+        "definition": "axia_sync_peers{chain=\"$chain\"}",
         "description": "Validator hosts",
         "hide": 0,
         "includeAll": true,
@@ -904,7 +904,7 @@
         "name": "instance",
         "options": [],
         "query": {
-          "query": "polkadot_sync_peers{chain=\"$chain\"}",
+          "query": "axia_sync_peers{chain=\"$chain\"}",
           "refId": "StandardVariableQuery"
         },
         "refresh": 1,

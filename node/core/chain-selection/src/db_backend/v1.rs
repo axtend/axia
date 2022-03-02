@@ -37,8 +37,8 @@ use crate::{
 	Error,
 };
 
-use polkadot_node_primitives::BlockWeight;
-use polkadot_primitives::v1::{BlockNumber, Hash};
+use axia_node_primitives::BlockWeight;
+use axia_primitives::v1::{BlockNumber, Hash};
 
 use kvdb::{DBTransaction, KeyValueDB};
 use parity_scale_codec::{Decode, Encode};

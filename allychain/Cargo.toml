@@ -1,5 +1,5 @@
 [package]
-name = "polkadot-allychain"
+name = "axia-allychain"
 version = "0.9.17"
 authors = ["Axia Technologies <admin@axia.io>"]
 description = "Types and utilities for creating and working with allychains"
@@ -16,7 +16,7 @@ sp-std = { git = "https://github.com/axtend/axlib", default-features = false , b
 sp-runtime = { git = "https://github.com/axtend/axlib", default-features = false , branch = "c92f69d" }
 sp-core = { git = "https://github.com/axtend/axlib", default-features = false , branch = "c92f69d" }
 frame-support = { git = "https://github.com/axtend/axlib", default-features = false , branch = "c92f69d" }
-polkadot-core-primitives = { path = "../core-primitives", default-features = false }
+axia-core-primitives = { path = "../core-primitives", default-features = false }
 derive_more = "0.99.11"
 
 # all optional crates.
@@ -33,7 +33,7 @@ std = [
 	"sp-runtime/std",
 	"sp-core/std",
 	"parity-util-mem",
-	"polkadot-core-primitives/std",
+	"axia-core-primitives/std",
 	"frame-support/std",
 ]
 runtime-benchmarks = []

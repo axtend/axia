@@ -1,5 +1,5 @@
 [package]
-name = "polkadot-overseer"
+name = "axia-overseer"
 version = "0.9.17"
 authors = ["Axia Technologies <admin@axia.io>"]
 edition = "2018"
@@ -10,12 +10,12 @@ sp-api = { git = "https://github.com/axtend/axlib", branch = "c92f69d" }
 futures = "0.3.21"
 futures-timer = "3.0.2"
 parking_lot = "0.11.1"
-polkadot-node-network-protocol = { path = "../network/protocol" }
-polkadot-node-primitives = { path = "../primitives" }
-polkadot-node-subsystem-types = { path = "../subsystem-types" }
-polkadot-node-metrics = { path = "../metrics" }
-polkadot-primitives = { path = "../../primitives" }
-polkadot-overseer-gen = { path = "./overseer-gen" }
+axia-node-network-protocol = { path = "../network/protocol" }
+axia-node-primitives = { path = "../primitives" }
+axia-node-subsystem-types = { path = "../subsystem-types" }
+axia-node-metrics = { path = "../metrics" }
+axia-primitives = { path = "../../primitives" }
+axia-overseer-gen = { path = "./overseer-gen" }
 tracing = "0.1.29"
 lru = "0.7"
 parity-util-mem = { version = ">= 0.10.1", default-features = false }
@@ -26,7 +26,7 @@ sp-core = { git = "https://github.com/axtend/axlib", branch = "c92f69d" }
 futures = { version = "0.3.21", features = ["thread-pool"] }
 femme = "2.1.1"
 assert_matches = "1.4.0"
-test-helpers = { package = "polkadot-primitives-test-helpers", path = "../../primitives/test-helpers" }
+test-helpers = { package = "axia-primitives-test-helpers", path = "../../primitives/test-helpers" }
 
 [features]
 default = []

@@ -30,29 +30,29 @@ use parity_scale_codec::{Decode, Encode};
 
 use sc_network::config::RequestResponseConfig;
 
-use polkadot_node_network_protocol::{
+use axia_node_network_protocol::{
 	request_response::{v1::DisputeRequest, IncomingRequest},
 	PeerId,
 };
 use sp_keyring::Sr25519Keyring;
 
-use polkadot_node_network_protocol::{
+use axia_node_network_protocol::{
 	request_response::{v1::DisputeResponse, Recipient, Requests},
 	IfDisconnected,
 };
-use polkadot_node_primitives::{CandidateVotes, UncheckedDisputeMessage};
-use polkadot_primitives::{
+use axia_node_primitives::{CandidateVotes, UncheckedDisputeMessage};
+use axia_primitives::{
 	v1::{AuthorityDiscoveryId, CandidateHash, Hash, SessionIndex},
 	v2::SessionInfo,
 };
-use polkadot_subsystem::{
+use axia_subsystem::{
 	messages::{
 		AllMessages, DisputeCoordinatorMessage, DisputeDistributionMessage, ImportStatementsResult,
 		NetworkBridgeMessage, RuntimeApiMessage, RuntimeApiRequest,
 	},
 	ActivatedLeaf, ActiveLeavesUpdate, FromOverseer, LeafStatus, OverseerSignal, Span,
 };
-use polkadot_subsystem_testhelpers::{
+use axia_subsystem_testhelpers::{
 	mock::make_ferdie_keystore, subsystem_test_harness, TestSubsystemContextHandle,
 };
 

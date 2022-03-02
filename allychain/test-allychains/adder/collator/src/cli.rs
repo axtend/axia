@@ -79,7 +79,7 @@ impl AxlibCli for Cli {
 	}
 
 	fn support_url() -> String {
-		"https://github.com/axiatech/polkadot/issues/new".into()
+		"https://github.com/axiatech/axia/issues/new".into()
 	}
 
 	fn copyright_start_year() -> i32 {
@@ -87,27 +87,27 @@ impl AxlibCli for Cli {
 	}
 
 	fn executable_name() -> String {
-		"polkadot".into()
+		"axia".into()
 	}
 
 	fn load_spec(&self, id: &str) -> std::result::Result<Box<dyn sc_service::ChainSpec>, String> {
 		let id = if id.is_empty() { "betanet" } else { id };
 		Ok(match id {
 			"betanet-staging" =>
-				Box::new(polkadot_service::chain_spec::betanet_staging_testnet_config()?),
+				Box::new(axia_service::chain_spec::betanet_staging_testnet_config()?),
 			"betanet-local" =>
-				Box::new(polkadot_service::chain_spec::betanet_local_testnet_config()?),
-			"betanet" => Box::new(polkadot_service::chain_spec::betanet_config()?),
+				Box::new(axia_service::chain_spec::betanet_local_testnet_config()?),
+			"betanet" => Box::new(axia_service::chain_spec::betanet_config()?),
 			path => {
 				let path = std::path::PathBuf::from(path);
-				Box::new(polkadot_service::BetanetChainSpec::from_json_file(path)?)
+				Box::new(axia_service::BetanetChainSpec::from_json_file(path)?)
 			},
 		})
 	}
 
 	fn native_runtime_version(
-		_spec: &Box<dyn polkadot_service::ChainSpec>,
+		_spec: &Box<dyn axia_service::ChainSpec>,
 	) -> &'static RuntimeVersion {
-		&polkadot_service::betanet_runtime::VERSION
+		&axia_service::betanet_runtime::VERSION
 	}
 }

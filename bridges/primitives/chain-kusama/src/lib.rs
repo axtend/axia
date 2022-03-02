@@ -27,12 +27,12 @@ use frame_support::weights::{
 use sp_std::prelude::*;
 use sp_version::RuntimeVersion;
 
-pub use bp_polkadot_core::*;
+pub use bp_axia_core::*;
 
 /// Kusama Chain
-pub type Kusama = PolkadotLike;
+pub type Kusama = AxiaLike;
 
-// NOTE: This needs to be kept up to date with the Kusama runtime found in the Polkadot repo.
+// NOTE: This needs to be kept up to date with the Kusama runtime found in the Axia repo.
 pub const VERSION: RuntimeVersion = RuntimeVersion {
 	spec_name: sp_version::create_runtime_str!("kusama"),
 	impl_name: sp_version::create_runtime_str!("parity-kusama"),
@@ -43,7 +43,7 @@ pub const VERSION: RuntimeVersion = RuntimeVersion {
 	transaction_version: 5,
 };
 
-// NOTE: This needs to be kept up to date with the Kusama runtime found in the Polkadot repo.
+// NOTE: This needs to be kept up to date with the Kusama runtime found in the Axia repo.
 pub struct WeightToFee;
 impl WeightToFeePolynomial for WeightToFee {
 	type Balance = Balance;
@@ -61,10 +61,10 @@ impl WeightToFeePolynomial for WeightToFee {
 	}
 }
 
-// We use this to get the account on Kusama (target) which is derived from Polkadot's (source)
+// We use this to get the account on Kusama (target) which is derived from Axia's (source)
 // account.
-pub fn derive_account_from_polkadot_id(id: bp_runtime::SourceAccount<AccountId>) -> AccountId {
-	let encoded_id = bp_runtime::derive_account_id(bp_runtime::POLKADOT_CHAIN_ID, id);
+pub fn derive_account_from_axia_id(id: bp_runtime::SourceAccount<AccountId>) -> AccountId {
+	let encoded_id = bp_runtime::derive_account_id(bp_runtime::AXIA_CHAIN_ID, id);
 	AccountIdConverter::convert(encoded_id)
 }
 
@@ -81,12 +81,12 @@ pub const EXISTENTIAL_DEPOSIT: Balance = 1_000_000_000_000 / 30_000;
 /// conditions.
 pub const SESSION_LENGTH: BlockNumber = time_units::HOURS;
 
-/// Name of the With-Polkadot messages pallet instance in the Kusama runtime.
-pub const WITH_POLKADOT_MESSAGES_PALLET_NAME: &str = "BridgePolkadotMessages";
+/// Name of the With-Axia messages pallet instance in the Kusama runtime.
+pub const WITH_AXIA_MESSAGES_PALLET_NAME: &str = "BridgeAxiaMessages";
 
 /// Name of the DOT->KSM conversion rate stored in the Kusama runtime.
-pub const POLKADOT_TO_KUSAMA_CONVERSION_RATE_PARAMETER_NAME: &str =
-	"PolkadotToKusamaConversionRate";
+pub const AXIA_TO_KUSAMA_CONVERSION_RATE_PARAMETER_NAME: &str =
+	"AxiaToKusamaConversionRate";
 
 /// Name of the `KusamaFinalityApi::best_finalized` runtime method.
 pub const BEST_FINALIZED_KUSAMA_HEADER_METHOD: &str = "KusamaFinalityApi_best_finalized";

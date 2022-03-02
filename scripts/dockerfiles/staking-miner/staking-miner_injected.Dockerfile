@@ -9,10 +9,10 @@ LABEL io.axia.image.authors="devops-team@axia.io" \
 	io.axia.image.vendor="Axia Technologies" \
 	io.axia.image.title="${IMAGE_NAME}" \
 	io.axia.image.description="${IMAGE_NAME} for axlib based chains" \
-	io.axia.image.source="https://github.com/axiatech/polkadot/blob/${VCS_REF}/scripts/docker/${IMAGE_NAME}/${IMAGE_NAME}_injected.Dockerfile" \
+	io.axia.image.source="https://github.com/axiatech/axia/blob/${VCS_REF}/scripts/docker/${IMAGE_NAME}/${IMAGE_NAME}_injected.Dockerfile" \
 	io.axia.image.revision="${VCS_REF}" \
 	io.axia.image.created="${BUILD_DATE}" \
-	io.axia.image.documentation="https://github.com/axiatech/polkadot/"
+	io.axia.image.documentation="https://github.com/axiatech/axia/"
 
 # show backtraces
 ENV RUST_BACKTRACE 1
@@ -34,7 +34,7 @@ COPY ./staking-miner /usr/local/bin
 USER miner
 
 ENV SEED=""
-ENV URI="wss://rpc.polkadot.io"
+ENV URI="wss://rpc.axia.io"
 ENV RUST_LOG="info"
 
 # check if the binary works in this container

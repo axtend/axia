@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Axia.  If not, see <http://www.gnu.org/licenses/>.
 
-use polkadot_node_subsystem_util::{
+use axia_node_subsystem_util::{
 	metrics,
 	metrics::{
 		prometheus,
@@ -104,7 +104,7 @@ impl metrics::Metrics for Metrics {
 		let metrics = MetricsInner {
 			chunk_requests_issued: prometheus::register(
 				Counter::new(
-					"polkadot_allychain_availability_recovery_chunk_requests_issued",
+					"axia_allychain_availability_recovery_chunk_requests_issued",
 					"Total number of issued chunk requests.",
 				)?,
 				registry,
@@ -112,7 +112,7 @@ impl metrics::Metrics for Metrics {
 			chunk_requests_finished: prometheus::register(
 				CounterVec::new(
 					Opts::new(
-						"polkadot_allychain_availability_recovery_chunk_requests_finished",
+						"axia_allychain_availability_recovery_chunk_requests_finished",
 						"Total number of chunk requests finished.",
 					),
 					&["result"],
@@ -121,7 +121,7 @@ impl metrics::Metrics for Metrics {
 			)?,
 			time_chunk_request: prometheus::register(
 				prometheus::Histogram::with_opts(prometheus::HistogramOpts::new(
-					"polkadot_allychain_availability_recovery_time_chunk_request",
+					"axia_allychain_availability_recovery_time_chunk_request",
 					"Time spent waiting for a response to a chunk request",
 				))?,
 				registry,

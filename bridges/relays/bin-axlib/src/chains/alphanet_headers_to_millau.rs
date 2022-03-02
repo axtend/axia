@@ -57,7 +57,7 @@ impl AxlibFinalitySyncPipeline for AlphanetFinalityToMillau {
 	type TargetChain = Millau;
 
 	fn customize_metrics(params: MetricsParams) -> anyhow::Result<MetricsParams> {
-		crate::chains::add_polkadot_axctest_price_metrics::<Self::FinalitySyncPipeline>(params)
+		crate::chains::add_axia_axctest_price_metrics::<Self::FinalitySyncPipeline>(params)
 	}
 
 	fn transactions_author(&self) -> bp_millau::AccountId {

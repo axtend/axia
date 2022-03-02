@@ -91,8 +91,8 @@ impl PeerSet {
 	/// Get the protocol name associated with each peer set as static str.
 	pub const fn get_protocol_name_static(self) -> &'static str {
 		match self {
-			PeerSet::Validation => "/polkadot/validation/1",
-			PeerSet::Collation => "/polkadot/collation/1",
+			PeerSet::Validation => "/axia/validation/1",
+			PeerSet::Collation => "/axia/collation/1",
 		}
 	}
 

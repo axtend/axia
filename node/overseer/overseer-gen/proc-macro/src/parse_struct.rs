@@ -191,7 +191,7 @@ pub(crate) struct BaggageField {
 
 #[derive(Clone, Debug)]
 pub(crate) struct OverseerInfo {
-	/// Where the support crate `::polkadot_overseer_gen` lives.
+	/// Where the support crate `::axia_overseer_gen` lives.
 	pub(crate) support_crate_name: TokenStream,
 
 	/// Fields annotated with `#[subsystem(..)]`.

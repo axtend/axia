@@ -31,7 +31,7 @@ use async_std::{
 use futures::FutureExt;
 use futures_timer::Delay;
 use parity_scale_codec::{Decode, Encode};
-use polkadot_allychain::primitives::ValidationResult;
+use axia_allychain::primitives::ValidationResult;
 use std::time::{Duration, Instant};
 
 /// Spawns a new worker with the given program path that acts as the worker and the spawn timeout.

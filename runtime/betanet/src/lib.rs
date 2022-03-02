@@ -79,7 +79,7 @@ use bridge_runtime_common::messages::{
 
 pub use pallet_balances::Call as BalancesCall;
 
-use polkadot_allychain::primitives::Id as ParaId;
+use axia_allychain::primitives::Id as ParaId;
 
 /// Constant values used within the runtime.
 use betanet_runtime_constants::{currency::*, fee::*, time::*};
@@ -1306,7 +1306,7 @@ sp_api::impl_runtime_apis! {
 			// probability of a slot being empty), is done in accordance to the
 			// slot duration and expected target block time, for safely
 			// resisting network delays of maximum two seconds.
-			// <https://research.web3.foundation/en/latest/polkadot/BABE/Babe/#6-practical-results>
+			// <https://research.web3.foundation/en/latest/axia/BABE/Babe/#6-practical-results>
 			babe_primitives::BabeGenesisConfiguration {
 				slot_duration: Babe::slot_duration(),
 				epoch_length: EpochDurationInBlocks::get().into(),

@@ -50,10 +50,10 @@ impl CliEncodeCall for Kusama {
 			),
 			Call::BridgeSendMessage { lane, payload, fee, bridge_instance_index } =>
 				match *bridge_instance_index {
-					bridge::KUSAMA_TO_POLKADOT_INDEX => {
+					bridge::KUSAMA_TO_AXIA_INDEX => {
 						let payload = Decode::decode(&mut &*payload.0)?;
-						relay_axctest_client::runtime::Call::BridgePolkadotMessages(
-							relay_axctest_client::runtime::BridgePolkadotMessagesCall::send_message(
+						relay_axctest_client::runtime::Call::BridgeAxiaMessages(
+							relay_axctest_client::runtime::BridgeAxiaMessagesCall::send_message(
 								lane.0, payload, fee.0,
 							),
 						)
@@ -104,11 +104,11 @@ impl CliChain for Kusama {
 	}
 }
 
-/// Storage key and initial value of Polkadot -> Kusama conversion rate.
-pub(crate) fn polkadot_to_axctest_conversion_rate_params() -> (StorageKey, FixedU128) {
+/// Storage key and initial value of Axia -> Kusama conversion rate.
+pub(crate) fn axia_to_axctest_conversion_rate_params() -> (StorageKey, FixedU128) {
 	(
 		bp_runtime::storage_parameter_key(
-			bp_axctest::POLKADOT_TO_KUSAMA_CONVERSION_RATE_PARAMETER_NAME,
+			bp_axctest::AXIA_TO_KUSAMA_CONVERSION_RATE_PARAMETER_NAME,
 		),
 		// starting relay before this parameter will be set to some value may cause troubles
 		FixedU128::from_inner(FixedU128::DIV),

@@ -25,8 +25,8 @@ use sp_application_crypto::AppKey;
 use sp_core::crypto::ByteArray;
 use sp_keystore::{CryptoStore, SyncCryptoStorePtr};
 
-use polkadot_node_subsystem::{SubsystemContext, SubsystemSender};
-use polkadot_primitives::{
+use axia_node_subsystem::{SubsystemContext, SubsystemSender};
+use axia_primitives::{
 	v1::{
 		CandidateEvent, CoreState, EncodeAs, GroupIndex, GroupRotationInfo, Hash, OccupiedCore,
 		SessionIndex, Signed, SigningContext, UncheckedSigned, ValidationCode, ValidationCodeHash,

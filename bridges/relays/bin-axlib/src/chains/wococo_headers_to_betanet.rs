@@ -64,7 +64,7 @@ impl AxlibFinalitySyncPipeline for WococoFinalityToBetanet {
 	type TargetChain = Betanet;
 
 	fn customize_metrics(params: MetricsParams) -> anyhow::Result<MetricsParams> {
-		crate::chains::add_polkadot_axctest_price_metrics::<Self::FinalitySyncPipeline>(params)
+		crate::chains::add_axia_axctest_price_metrics::<Self::FinalitySyncPipeline>(params)
 	}
 
 	fn start_relay_guards(&self) {
@@ -111,7 +111,7 @@ impl AxlibFinalitySyncPipeline for WococoFinalityToBetanet {
 #[cfg(test)]
 mod tests {
 	use super::*;
-	use crate::chains::axctest_headers_to_polkadot::tests::compute_maximal_balance_decrease_per_day;
+	use crate::chains::axctest_headers_to_axia::tests::compute_maximal_balance_decrease_per_day;
 
 	#[test]
 	fn maximal_balance_decrease_per_day_is_sane() {

@@ -1,5 +1,5 @@
 [package]
-name = "polkadot-node-core-pvf"
+name = "axia-node-core-pvf"
 version = "0.9.17"
 authors = ["Axia Technologies <admin@axia.io>"]
 edition = "2018"
@@ -20,9 +20,9 @@ tracing = "0.1.29"
 pin-project = "1.0.9"
 rand = "0.8.3"
 parity-scale-codec = { version = "2.3.1", default-features = false, features = ["derive"] }
-polkadot-allychain = { path = "../../../allychain" }
-polkadot-core-primitives = { path = "../../../core-primitives" }
-polkadot-node-subsystem-util = { path = "../../subsystem-util"}
+axia-allychain = { path = "../../../allychain" }
+axia-core-primitives = { path = "../../../core-primitives" }
+axia-node-subsystem-util = { path = "../../subsystem-util"}
 sc-executor = { git = "https://github.com/axtend/axlib", branch = "c92f69d" }
 sc-executor-wasmtime = { git = "https://github.com/axtend/axlib", branch = "c92f69d" }
 sc-executor-common = { git = "https://github.com/axtend/axlib", branch = "c92f69d" }

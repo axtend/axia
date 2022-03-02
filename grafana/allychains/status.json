@@ -102,7 +102,7 @@
             "uid": "P5CA6DFE95AABF258"
           },
           "exemplar": true,
-          "expr": "avg(polkadot_block_height{chain=\"$chain\",instance=~\".*validator.*\", status=\"best\"} - on(    instance) polkadot_block_height{chain=\"$chain\",instance=~\".*validator.*\", status=\"finalized\"})",
+          "expr": "avg(axia_block_height{chain=\"$chain\",instance=~\".*validator.*\", status=\"best\"} - on(    instance) axia_block_height{chain=\"$chain\",instance=~\".*validator.*\", status=\"finalized\"})",
           "interval": "",
           "legendFormat": "",
           "queryType": "randomWalk",
@@ -174,7 +174,7 @@
             "uid": "P5CA6DFE95AABF258"
           },
           "exemplar": true,
-          "expr": "avg(polkadot_allychain_approval_checking_finality_lag{chain=\"$chain\", instance=~\".*validator.*\"})",
+          "expr": "avg(axia_allychain_approval_checking_finality_lag{chain=\"$chain\", instance=~\".*validator.*\"})",
           "interval": "",
           "legendFormat": "",
           "queryType": "randomWalk",
@@ -246,7 +246,7 @@
             "uid": "P5CA6DFE95AABF258"
           },
           "exemplar": true,
-          "expr": "avg(polkadot_allychain_disputes_finality_lag{chain=\"$chain\"})",
+          "expr": "avg(axia_allychain_disputes_finality_lag{chain=\"$chain\"})",
           "format": "time_series",
           "hide": false,
           "interval": "",
@@ -337,7 +337,7 @@
             "uid": "P5CA6DFE95AABF258"
           },
           "exemplar": true,
-          "expr": "avg(polkadot_allychain_approval_checking_finality_lag{chain=\"$chain\", instance=~\".*validator.*\"})",
+          "expr": "avg(axia_allychain_approval_checking_finality_lag{chain=\"$chain\", instance=~\".*validator.*\"})",
           "interval": "",
           "legendFormat": "Approval checking finality lag",
           "queryType": "randomWalk",
@@ -349,7 +349,7 @@
             "uid": "P5CA6DFE95AABF258"
           },
           "exemplar": true,
-          "expr": "avg(polkadot_block_height{chain=\"$chain\",instance=~\".*validator.*\", status=\"best\"} - on(    instance) polkadot_block_height{chain=\"$chain\",instance=~\".*validator.*\", status=\"finalized\"})",
+          "expr": "avg(axia_block_height{chain=\"$chain\",instance=~\".*validator.*\", status=\"best\"} - on(    instance) axia_block_height{chain=\"$chain\",instance=~\".*validator.*\", status=\"finalized\"})",
           "hide": false,
           "interval": "",
           "legendFormat": "Relay chain finality lag",
@@ -362,7 +362,7 @@
             "uid": "P5CA6DFE95AABF258"
           },
           "exemplar": true,
-          "expr": "avg(polkadot_allychain_disputes_finality_lag{chain=\"$chain\", instance=~\".*validator.*\"})",
+          "expr": "avg(axia_allychain_disputes_finality_lag{chain=\"$chain\", instance=~\".*validator.*\"})",
           "hide": false,
           "interval": "",
           "legendFormat": "Disputes finality lag",
@@ -410,7 +410,7 @@
             "uid": "P5CA6DFE95AABF258"
           },
           "exemplar": true,
-          "expr": "polkadot_allychain_approval_checking_finality_lag{chain=\"$chain\", instance=~\".*validator.*\"}",
+          "expr": "axia_allychain_approval_checking_finality_lag{chain=\"$chain\", instance=~\".*validator.*\"}",
           "format": "time_series",
           "interval": "",
           "legendFormat": "",
@@ -475,7 +475,7 @@
             "uid": "P5CA6DFE95AABF258"
           },
           "exemplar": true,
-          "expr": "polkadot_allychain_disputes_finality_lag{chain=\"$chain\", instance=~\".*validator.*\"}",
+          "expr": "axia_allychain_disputes_finality_lag{chain=\"$chain\", instance=~\".*validator.*\"}",
           "format": "time_series",
           "interval": "",
           "legendFormat": "",
@@ -541,7 +541,7 @@
             "uid": "P5CA6DFE95AABF258"
           },
           "exemplar": false,
-          "expr": "sum(rate(polkadot_pvf_preparation_time_bucket{instance=~\".*validator.*\", chain=\"$chain\"}[$__rate_interval])) by (le)",
+          "expr": "sum(rate(axia_pvf_preparation_time_bucket{instance=~\".*validator.*\", chain=\"$chain\"}[$__rate_interval])) by (le)",
           "format": "heatmap",
           "instant": false,
           "interval": "",
@@ -605,7 +605,7 @@
             "uid": "P5CA6DFE95AABF258"
           },
           "exemplar": false,
-          "expr": "sum(increase(polkadot_pvf_execution_time_bucket{instance=~\".*validator.*\", chain=\"$chain\"}[$__rate_interval])) by (le)",
+          "expr": "sum(increase(axia_pvf_execution_time_bucket{instance=~\".*validator.*\", chain=\"$chain\"}[$__rate_interval])) by (le)",
           "format": "heatmap",
           "instant": false,
           "interval": "",
@@ -730,7 +730,7 @@
             "uid": "P5CA6DFE95AABF258"
           },
           "exemplar": true,
-          "expr": "sum(rate(polkadot_allychain_candidate_backing_candidates_seconded_total{chain=\"$chain\"}[$__rate_interval]))",
+          "expr": "sum(rate(axia_allychain_candidate_backing_candidates_seconded_total{chain=\"$chain\"}[$__rate_interval]))",
           "format": "time_series",
           "instant": false,
           "interval": "",
@@ -744,7 +744,7 @@
             "uid": "P5CA6DFE95AABF258"
           },
           "exemplar": true,
-          "expr": "sum(rate(polkadot_allychain_candidate_backing_signed_statements_total{chain=\"$chain\"}[$__rate_interval]))",
+          "expr": "sum(rate(axia_allychain_candidate_backing_signed_statements_total{chain=\"$chain\"}[$__rate_interval]))",
           "format": "time_series",
           "hide": false,
           "interval": "",
@@ -841,7 +841,7 @@
             "uid": "P5CA6DFE95AABF258"
           },
           "exemplar": true,
-          "expr": "sum(rate(polkadot_allychain_received_availability_chunks_total{chain=\"$chain\", instance=~\".*validator.*\"}[$__rate_interval]))",
+          "expr": "sum(rate(axia_allychain_received_availability_chunks_total{chain=\"$chain\", instance=~\".*validator.*\"}[$__rate_interval]))",
           "format": "time_series",
           "instant": false,
           "interval": "",
@@ -949,7 +949,7 @@
             "uid": "P5CA6DFE95AABF258"
           },
           "exemplar": false,
-          "expr": "sum(rate(polkadot_allychain_candidate_dispute_concluded{chain=\"$chain\"}[$__rate_interval])) by (validity)",
+          "expr": "sum(rate(axia_allychain_candidate_dispute_concluded{chain=\"$chain\"}[$__rate_interval])) by (validity)",
           "interval": "",
           "legendFormat": "Concluded {{validity}}",
           "queryType": "randomWalk",
@@ -961,7 +961,7 @@
             "uid": "${data_source}"
           },
           "exemplar": false,
-          "expr": "sum(rate(polkadot_allychain_candidate_disputes_total{chain=\"$chain\"}[$__rate_interval]))",
+          "expr": "sum(rate(axia_allychain_candidate_disputes_total{chain=\"$chain\"}[$__rate_interval]))",
           "hide": false,
           "interval": "",
           "legendFormat": "disputes raised",
@@ -973,7 +973,7 @@
             "uid": "${data_source}"
           },
           "exemplar": false,
-          "expr": "sum(rate(polkadot_allychain_candidate_dispute_votes{chain=\"$chain\"}[$__rate_interval])) by (validity)",
+          "expr": "sum(rate(axia_allychain_candidate_dispute_votes{chain=\"$chain\"}[$__rate_interval])) by (validity)",
           "hide": false,
           "interval": "",
           "legendFormat": "{{validity}} votes",
@@ -1064,7 +1064,7 @@
             "uid": "P5CA6DFE95AABF258"
           },
           "exemplar": false,
-          "expr": "sum(rate(polkadot_allychain_dispute_participations{chain=\"$chain\"}[$__rate_interval])) by (priority)",
+          "expr": "sum(rate(axia_allychain_dispute_participations{chain=\"$chain\"}[$__rate_interval])) by (priority)",
           "interval": "",
           "legendFormat": "{{priority}}",
           "queryType": "randomWalk",
@@ -1124,7 +1124,7 @@
             "uid": "P5CA6DFE95AABF258"
           },
           "exemplar": false,
-          "expr": "sum(increase(polkadot_allychain_candidate_validation_validate_from_chain_state_bucket{chain=\"$chain\"} [$__rate_interval])) by (le) +\nsum(increase(polkadot_allychain_candidate_validation_validate_from_exhaustive_bucket{chain=\"$chain\"} [$__rate_interval])) by (le) +\nsum(increase(polkadot_allychain_candidate_validation_validate_candidate_exhaustive_bucket{chain=\"$chain\"} [$__rate_interval])) by (le)\n",
+          "expr": "sum(increase(axia_allychain_candidate_validation_validate_from_chain_state_bucket{chain=\"$chain\"} [$__rate_interval])) by (le) +\nsum(increase(axia_allychain_candidate_validation_validate_from_exhaustive_bucket{chain=\"$chain\"} [$__rate_interval])) by (le) +\nsum(increase(axia_allychain_candidate_validation_validate_candidate_exhaustive_bucket{chain=\"$chain\"} [$__rate_interval])) by (le)\n",
           "format": "heatmap",
           "interval": "",
           "legendFormat": "{{le}}",
@@ -1264,7 +1264,7 @@
             "uid": "P5CA6DFE95AABF258"
           },
           "exemplar": true,
-          "expr": "sum(rate(polkadot_allychain_imported_candidates_total{chain=\"$chain\"}[$__rate_interval]))",
+          "expr": "sum(rate(axia_allychain_imported_candidates_total{chain=\"$chain\"}[$__rate_interval]))",
           "format": "time_series",
           "hide": false,
           "interval": "",
@@ -1278,7 +1278,7 @@
             "uid": "P5CA6DFE95AABF258"
           },
           "exemplar": true,
-          "expr": "sum(increase(polkadot_allychain_candidate_backing_candidates_seconded_total{chain=\"$chain\"}[$__rate_interval]))",
+          "expr": "sum(increase(axia_allychain_candidate_backing_candidates_seconded_total{chain=\"$chain\"}[$__rate_interval]))",
           "format": "time_series",
           "hide": false,
           "interval": "",
@@ -1368,7 +1368,7 @@
             "uid": "P5CA6DFE95AABF258"
           },
           "exemplar": true,
-          "expr": "sum(rate(polkadot_allychain_validation_requests_total{chain=\"$chain\"}[$__rate_interval])) by (validity)",
+          "expr": "sum(rate(axia_allychain_validation_requests_total{chain=\"$chain\"}[$__rate_interval])) by (validity)",
           "interval": "",
           "legendFormat": "{{validity}}",
           "queryType": "randomWalk",
@@ -1428,7 +1428,7 @@
             "uid": "P5CA6DFE95AABF258"
           },
           "exemplar": false,
-          "expr": "sum(increase(polkadot_allychain_assignments_produced_bucket{chain=\"$chain\"}[$__rate_interval])) by (le)",
+          "expr": "sum(increase(axia_allychain_assignments_produced_bucket{chain=\"$chain\"}[$__rate_interval])) by (le)",
           "format": "heatmap",
           "interval": "",
           "legendFormat": "{{le}}",
@@ -1511,7 +1511,7 @@
             "uid": "P5CA6DFE95AABF258"
           },
           "exemplar": true,
-          "expr": "sum(rate(polkadot_allychain_assignments_produced_count{chain=\"$chain\"}[$__rate_interval]))",
+          "expr": "sum(rate(axia_allychain_assignments_produced_count{chain=\"$chain\"}[$__rate_interval]))",
           "format": "time_series",
           "interval": "",
           "legendFormat": "Assignments",
@@ -1524,7 +1524,7 @@
             "uid": "P5CA6DFE95AABF258"
           },
           "exemplar": true,
-          "expr": "sum(rate(polkadot_allychain_approvals_produced_total{chain=\"$chain\"}[$__rate_interval])) by (status)",
+          "expr": "sum(rate(axia_allychain_approvals_produced_total{chain=\"$chain\"}[$__rate_interval])) by (status)",
           "interval": "",
           "legendFormat": "Approvals ({{status}})",
           "refId": "B"
@@ -1535,7 +1535,7 @@
             "uid": "P5CA6DFE95AABF258"
           },
           "exemplar": true,
-          "expr": "sum(rate(polkadot_allychain_approvals_no_shows_total{chain=\"$chain\"}[$__rate_interval]))",
+          "expr": "sum(rate(axia_allychain_approvals_no_shows_total{chain=\"$chain\"}[$__rate_interval]))",
           "hide": false,
           "interval": "",
           "legendFormat": "No shows",
@@ -1628,7 +1628,7 @@
             "uid": "P5CA6DFE95AABF258"
           },
           "exemplar": true,
-          "expr": "histogram_quantile(0.95, sum(rate(polkadot_allychain_time_recover_and_approve_bucket{chain=\"$chain\"}[$__rate_interval])) by (le))",
+          "expr": "histogram_quantile(0.95, sum(rate(axia_allychain_time_recover_and_approve_bucket{chain=\"$chain\"}[$__rate_interval])) by (le))",
           "interval": "",
           "legendFormat": "99th %",
           "queryType": "randomWalk",
@@ -1639,7 +1639,7 @@
             "type": "prometheus",
             "uid": "P5CA6DFE95AABF258"
           },
-          "expr": "histogram_quantile(0.5, sum(rate(polkadot_allychain_time_recover_and_approve_bucket{chain=\"$chain\"}[$__rate_interval])) by (le))",
+          "expr": "histogram_quantile(0.5, sum(rate(axia_allychain_time_recover_and_approve_bucket{chain=\"$chain\"}[$__rate_interval])) by (le))",
           "interval": "",
           "legendFormat": "50th %",
           "refId": "B"
@@ -1729,7 +1729,7 @@
             "uid": "P5CA6DFE95AABF258"
           },
           "exemplar": false,
-          "expr": "sum(rate(polkadot_allychain_assignments_produced_count{chain=\"$chain\"}[$__rate_interval]))",
+          "expr": "sum(rate(axia_allychain_assignments_produced_count{chain=\"$chain\"}[$__rate_interval]))",
           "format": "time_series",
           "interval": "",
           "legendFormat": "Assignments",
@@ -1742,7 +1742,7 @@
             "uid": "P5CA6DFE95AABF258"
           },
           "exemplar": false,
-          "expr": "sum(rate(polkadot_allychain_approvals_produced_total{chain=\"$chain\"}[$__rate_interval])) by (status)",
+          "expr": "sum(rate(axia_allychain_approvals_produced_total{chain=\"$chain\"}[$__rate_interval])) by (status)",
           "interval": "",
           "legendFormat": "Approvals ({{status}})",
           "refId": "B"
@@ -1802,11 +1802,11 @@
           },
           {
             "selected": false,
-            "text": "polkadot",
-            "value": "polkadot"
+            "text": "axia",
+            "value": "axia"
           }
         ],
-        "query": "axctest,polkadot",
+        "query": "axctest,axia",
         "queryValue": "",
         "skipUrlSync": false,
         "type": "custom"

@@ -17,7 +17,7 @@
 //! Types that are specific to the Axia runtime.
 
 use bp_messages::{LaneId, UnrewardedRelayersState};
-use bp_polkadot_core::{AccountAddress, Balance, AxiaLike};
+use bp_axia_core::{AccountAddress, Balance, AxiaLike};
 use bp_runtime::Chain;
 use codec::{Compact, Decode, Encode};
 use frame_support::weights::Weight;
@@ -25,14 +25,14 @@ use scale_info::TypeInfo;
 use sp_runtime::FixedU128;
 
 /// Unchecked Axia extrinsic.
-pub type UncheckedExtrinsic = bp_polkadot_core::UncheckedExtrinsic<Call>;
+pub type UncheckedExtrinsic = bp_axia_core::UncheckedExtrinsic<Call>;
 
 /// AxiaTest account ownership digest from Axia.
 ///
 /// The byte vector returned by this function should be signed with a AxiaTest account private key.
 /// This way, the owner of `kusam_account_id` on Axia proves that the AxiaTest account private key
 /// is also under his control.
-pub fn polkadot_to_axctest_account_ownership_digest<Call, AccountId, SpecVersion>(
+pub fn axia_to_axctest_account_ownership_digest<Call, AccountId, SpecVersion>(
 	axctest_call: &Call,
 	kusam_account_id: AccountId,
 	axctest_spec_version: SpecVersion,
@@ -113,12 +113,12 @@ pub enum BridgeAxiaTestMessagesCall {
 	send_message(
 		LaneId,
 		bp_message_dispatch::MessagePayload<
-			bp_polkadot::AccountId,
+			bp_axia::AccountId,
 			bp_axctest::AccountId,
 			bp_axctest::AccountPublic,
 			Vec<u8>,
 		>,
-		bp_polkadot::Balance,
+		bp_axia::Balance,
 	),
 	#[codec(index = 5)]
 	receive_messages_proof(

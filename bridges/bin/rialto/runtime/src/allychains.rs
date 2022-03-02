@@ -20,9 +20,9 @@ use crate::{AccountId, Balance, Balances, BlockNumber, Event, Origin, Registrar,
 
 use frame_support::{parameter_types, weights::Weight};
 use frame_system::EnsureRoot;
-use polkadot_primitives::v1::ValidatorIndex;
-use polkadot_runtime_common::{paras_registrar, paras_sudo_wrapper, slots};
-use polkadot_runtime_allychains::{
+use axia_primitives::v1::ValidatorIndex;
+use axia_runtime_common::{paras_registrar, paras_sudo_wrapper, slots};
+use axia_runtime_allychains::{
 	configuration as allychains_configuration, dmp as allychains_dmp, hrmp as allychains_hrmp,
 	inclusion as allychains_inclusion, initializer as allychains_initializer,
 	origin as allychains_origin, paras as allychains_paras,
@@ -32,12 +32,12 @@ use polkadot_runtime_allychains::{
 
 /// Special `RewardValidators` that does nothing ;)
 pub struct RewardValidators;
-impl polkadot_runtime_allychains::inclusion::RewardValidators for RewardValidators {
+impl axia_runtime_allychains::inclusion::RewardValidators for RewardValidators {
 	fn reward_backing(_: impl IntoIterator<Item = ValidatorIndex>) {}
 	fn reward_bitfields(_: impl IntoIterator<Item = ValidatorIndex>) {}
 }
 
-// all required allychain modules from `polkadot-runtime-allychains` crate
+// all required allychain modules from `axia-runtime-allychains` crate
 
 impl allychains_configuration::Config for Runtime {
 	type WeightInfo = allychains_configuration::TestWeightInfo;
@@ -126,7 +126,7 @@ impl paras_sudo_wrapper::Config for Runtime {}
 
 pub struct ZeroWeights;
 
-impl polkadot_runtime_common::paras_registrar::WeightInfo for ZeroWeights {
+impl axia_runtime_common::paras_registrar::WeightInfo for ZeroWeights {
 	fn reserve() -> Weight {
 		0
 	}
@@ -144,7 +144,7 @@ impl polkadot_runtime_common::paras_registrar::WeightInfo for ZeroWeights {
 	}
 }
 
-impl polkadot_runtime_common::slots::WeightInfo for ZeroWeights {
+impl axia_runtime_common::slots::WeightInfo for ZeroWeights {
 	fn force_lease() -> Weight {
 		0
 	}

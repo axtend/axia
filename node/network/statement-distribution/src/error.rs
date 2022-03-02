@@ -17,10 +17,10 @@
 
 //! Error handling related code and Error/Result definitions.
 
-use polkadot_node_network_protocol::PeerId;
-use polkadot_node_subsystem_util::runtime;
-use polkadot_primitives::v1::{CandidateHash, Hash};
-use polkadot_subsystem::SubsystemError;
+use axia_node_network_protocol::PeerId;
+use axia_node_subsystem_util::runtime;
+use axia_primitives::v1::{CandidateHash, Hash};
+use axia_subsystem::SubsystemError;
 
 use thiserror::Error;
 

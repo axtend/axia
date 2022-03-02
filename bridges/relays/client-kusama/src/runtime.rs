@@ -17,7 +17,7 @@
 //! Types that are specific to the Kusama runtime.
 
 use bp_messages::{LaneId, UnrewardedRelayersState};
-use bp_polkadot_core::{AccountAddress, Balance, PolkadotLike};
+use bp_axia_core::{AccountAddress, Balance, AxiaLike};
 use bp_runtime::Chain;
 use codec::{Compact, Decode, Encode};
 use frame_support::weights::Weight;
@@ -25,17 +25,17 @@ use scale_info::TypeInfo;
 use sp_runtime::FixedU128;
 
 /// Unchecked Kusama extrinsic.
-pub type UncheckedExtrinsic = bp_polkadot_core::UncheckedExtrinsic<Call>;
+pub type UncheckedExtrinsic = bp_axia_core::UncheckedExtrinsic<Call>;
 
-/// Polkadot account ownership digest from Kusama.
+/// Axia account ownership digest from Kusama.
 ///
-/// The byte vector returned by this function should be signed with a Polkadot account private key.
-/// This way, the owner of `kusama_account_id` on Kusama proves that the Polkadot account private
+/// The byte vector returned by this function should be signed with a Axia account private key.
+/// This way, the owner of `kusama_account_id` on Kusama proves that the Axia account private
 /// key is also under his control.
-pub fn kusama_to_polkadot_account_ownership_digest<Call, AccountId, SpecVersion>(
-	polkadot_call: &Call,
+pub fn kusama_to_axia_account_ownership_digest<Call, AccountId, SpecVersion>(
+	axia_call: &Call,
 	kusama_account_id: AccountId,
-	polkadot_spec_version: SpecVersion,
+	axia_spec_version: SpecVersion,
 ) -> Vec<u8>
 where
 	Call: codec::Encode,
@@ -43,11 +43,11 @@ where
 	SpecVersion: codec::Encode,
 {
 	pallet_bridge_dispatch::account_ownership_digest(
-		polkadot_call,
+		axia_call,
 		kusama_account_id,
-		polkadot_spec_version,
+		axia_spec_version,
 		bp_runtime::KUSAMA_CHAIN_ID,
-		bp_runtime::POLKADOT_CHAIN_ID,
+		bp_runtime::AXIA_CHAIN_ID,
 	)
 }
 
@@ -60,7 +60,7 @@ where
 /// All entries here (like pretty much in the entire file) must be kept in sync with Kusama
 /// `construct_runtime`, so that we maintain SCALE-compatibility.
 ///
-/// See: [link](https://github.com/paritytech/polkadot/blob/master/runtime/kusama/src/lib.rs)
+/// See: [link](https://github.com/paritytech/axia/blob/master/runtime/kusama/src/lib.rs)
 #[allow(clippy::large_enum_variant)]
 #[derive(Encode, Decode, Debug, PartialEq, Eq, Clone, TypeInfo)]
 pub enum Call {
@@ -70,12 +70,12 @@ pub enum Call {
 	/// Balances pallet.
 	#[codec(index = 4)]
 	Balances(BalancesCall),
-	/// Polkadot bridge pallet.
+	/// Axia bridge pallet.
 	#[codec(index = 110)]
-	BridgePolkadotGrandpa(BridgePolkadotGrandpaCall),
-	/// Polkadot messages pallet.
+	BridgeAxiaGrandpa(BridgeAxiaGrandpaCall),
+	/// Axia messages pallet.
 	#[codec(index = 111)]
-	BridgePolkadotMessages(BridgePolkadotMessagesCall),
+	BridgeAxiaMessages(BridgeAxiaMessagesCall),
 }
 
 #[derive(Encode, Decode, Debug, PartialEq, Eq, Clone, TypeInfo)]
@@ -94,52 +94,52 @@ pub enum BalancesCall {
 
 #[derive(Encode, Decode, Debug, PartialEq, Eq, Clone, TypeInfo)]
 #[allow(non_camel_case_types)]
-pub enum BridgePolkadotGrandpaCall {
+pub enum BridgeAxiaGrandpaCall {
 	#[codec(index = 0)]
 	submit_finality_proof(
-		Box<<PolkadotLike as Chain>::Header>,
-		bp_header_chain::justification::GrandpaJustification<<PolkadotLike as Chain>::Header>,
+		Box<<AxiaLike as Chain>::Header>,
+		bp_header_chain::justification::GrandpaJustification<<AxiaLike as Chain>::Header>,
 	),
 	#[codec(index = 1)]
-	initialize(bp_header_chain::InitializationData<<PolkadotLike as Chain>::Header>),
+	initialize(bp_header_chain::InitializationData<<AxiaLike as Chain>::Header>),
 }
 
 #[derive(Encode, Decode, Debug, PartialEq, Eq, Clone, TypeInfo)]
 #[allow(non_camel_case_types)]
-pub enum BridgePolkadotMessagesCall {
+pub enum BridgeAxiaMessagesCall {
 	#[codec(index = 2)]
-	update_pallet_parameter(BridgePolkadotMessagesParameter),
+	update_pallet_parameter(BridgeAxiaMessagesParameter),
 	#[codec(index = 3)]
 	send_message(
 		LaneId,
 		bp_message_dispatch::MessagePayload<
 			bp_kusama::AccountId,
-			bp_polkadot::AccountId,
-			bp_polkadot::AccountPublic,
+			bp_axia::AccountId,
+			bp_axia::AccountPublic,
 			Vec<u8>,
 		>,
 		bp_kusama::Balance,
 	),
 	#[codec(index = 5)]
 	receive_messages_proof(
-		bp_polkadot::AccountId,
-		bridge_runtime_common::messages::target::FromBridgedChainMessagesProof<bp_polkadot::Hash>,
+		bp_axia::AccountId,
+		bridge_runtime_common::messages::target::FromBridgedChainMessagesProof<bp_axia::Hash>,
 		u32,
 		Weight,
 	),
 	#[codec(index = 6)]
 	receive_messages_delivery_proof(
 		bridge_runtime_common::messages::source::FromBridgedChainMessagesDeliveryProof<
-			bp_polkadot::Hash,
+			bp_axia::Hash,
 		>,
 		UnrewardedRelayersState,
 	),
 }
 
 #[derive(Encode, Decode, Debug, PartialEq, Eq, Clone, TypeInfo)]
-pub enum BridgePolkadotMessagesParameter {
+pub enum BridgeAxiaMessagesParameter {
 	#[codec(index = 0)]
-	PolkadotToKusamaConversionRate(FixedU128),
+	AxiaToKusamaConversionRate(FixedU128),
 }
 
 impl sp_runtime::traits::Dispatchable for Call {

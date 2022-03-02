@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Parity Bridges Common.  If not, see <http://www.gnu.org/licenses/>.
 
-//! Kusama-to-Polkadot messages sync entrypoint.
+//! Kusama-to-Axia messages sync entrypoint.
 
 use std::ops::RangeInclusive;
 
@@ -28,8 +28,8 @@ use messages_relay::{message_lane::MessageLane, relay_strategy::MixStrategy};
 use relay_kusama_client::{
 	HeaderId as KusamaHeaderId, Kusama, SigningParams as KusamaSigningParams,
 };
-use relay_polkadot_client::{
-	HeaderId as PolkadotHeaderId, Polkadot, SigningParams as PolkadotSigningParams,
+use relay_axia_client::{
+	HeaderId as AxiaHeaderId, Axia, SigningParams as AxiaSigningParams,
 };
 use relay_axlib_client::{Chain, Client, TransactionSignScheme, UnsignedTransaction};
 use axlib_relay_helper::{
@@ -42,24 +42,24 @@ use axlib_relay_helper::{
 	STALL_TIMEOUT,
 };
 
-/// Kusama-to-Polkadot message lane.
-pub type MessageLaneKusamaMessagesToPolkadot =
-	SubstrateMessageLaneToSubstrate<Kusama, KusamaSigningParams, Polkadot, PolkadotSigningParams>;
+/// Kusama-to-Axia message lane.
+pub type MessageLaneKusamaMessagesToAxia =
+	SubstrateMessageLaneToSubstrate<Kusama, KusamaSigningParams, Axia, AxiaSigningParams>;
 
 #[derive(Clone)]
-pub struct KusamaMessagesToPolkadot {
-	message_lane: MessageLaneKusamaMessagesToPolkadot,
+pub struct KusamaMessagesToAxia {
+	message_lane: MessageLaneKusamaMessagesToAxia,
 }
 
-impl SubstrateMessageLane for KusamaMessagesToPolkadot {
-	type MessageLane = MessageLaneKusamaMessagesToPolkadot;
+impl SubstrateMessageLane for KusamaMessagesToAxia {
+	type MessageLane = MessageLaneKusamaMessagesToAxia;
 
 	const OUTBOUND_LANE_MESSAGE_DETAILS_METHOD: &'static str =
-		bp_polkadot::TO_POLKADOT_MESSAGE_DETAILS_METHOD;
+		bp_axia::TO_AXIA_MESSAGE_DETAILS_METHOD;
 	const OUTBOUND_LANE_LATEST_GENERATED_NONCE_METHOD: &'static str =
-		bp_polkadot::TO_POLKADOT_LATEST_GENERATED_NONCE_METHOD;
+		bp_axia::TO_AXIA_LATEST_GENERATED_NONCE_METHOD;
 	const OUTBOUND_LANE_LATEST_RECEIVED_NONCE_METHOD: &'static str =
-		bp_polkadot::TO_POLKADOT_LATEST_RECEIVED_NONCE_METHOD;
+		bp_axia::TO_AXIA_LATEST_RECEIVED_NONCE_METHOD;
 
 	const INBOUND_LANE_LATEST_RECEIVED_NONCE_METHOD: &'static str =
 		bp_kusama::FROM_KUSAMA_LATEST_RECEIVED_NONCE_METHOD;
@@ -71,18 +71,18 @@ impl SubstrateMessageLane for KusamaMessagesToPolkadot {
 	const BEST_FINALIZED_SOURCE_HEADER_ID_AT_TARGET: &'static str =
 		bp_kusama::BEST_FINALIZED_KUSAMA_HEADER_METHOD;
 	const BEST_FINALIZED_TARGET_HEADER_ID_AT_SOURCE: &'static str =
-		bp_polkadot::BEST_FINALIZED_POLKADOT_HEADER_METHOD;
+		bp_axia::BEST_FINALIZED_AXIA_HEADER_METHOD;
 
 	const MESSAGE_PALLET_NAME_AT_SOURCE: &'static str =
-		bp_kusama::WITH_POLKADOT_MESSAGES_PALLET_NAME;
+		bp_kusama::WITH_AXIA_MESSAGES_PALLET_NAME;
 	const MESSAGE_PALLET_NAME_AT_TARGET: &'static str =
-		bp_polkadot::WITH_KUSAMA_MESSAGES_PALLET_NAME;
+		bp_axia::WITH_KUSAMA_MESSAGES_PALLET_NAME;
 
 	const PAY_INBOUND_DISPATCH_FEE_WEIGHT_AT_TARGET_CHAIN: Weight =
-		bp_polkadot::PAY_INBOUND_DISPATCH_FEE_WEIGHT;
+		bp_axia::PAY_INBOUND_DISPATCH_FEE_WEIGHT;
 
 	type SourceChain = Kusama;
-	type TargetChain = Polkadot;
+	type TargetChain = Axia;
 
 	fn source_transactions_author(&self) -> bp_kusama::AccountId {
 		(*self.message_lane.source_sign.public().as_array_ref()).into()
@@ -92,12 +92,12 @@ impl SubstrateMessageLane for KusamaMessagesToPolkadot {
 		&self,
 		best_block_id: KusamaHeaderId,
 		transaction_nonce: bp_runtime::IndexOf<Kusama>,
-		_generated_at_block: PolkadotHeaderId,
+		_generated_at_block: AxiaHeaderId,
 		proof: <Self::MessageLane as MessageLane>::MessagesReceivingProof,
 	) -> Bytes {
 		let (relayers_state, proof) = proof;
-		let call = relay_kusama_client::runtime::Call::BridgePolkadotMessages(
-			relay_kusama_client::runtime::BridgePolkadotMessagesCall::receive_messages_delivery_proof(
+		let call = relay_kusama_client::runtime::Call::BridgeAxiaMessages(
+			relay_kusama_client::runtime::BridgeAxiaMessagesCall::receive_messages_delivery_proof(
 				proof,
 				relayers_state,
 			),
@@ -114,7 +114,7 @@ impl SubstrateMessageLane for KusamaMessagesToPolkadot {
 		);
 		log::trace!(
 			target: "bridge",
-			"Prepared Polkadot -> Kusama confirmation transaction. Weight: <unknown>/{}, size: {}/{}",
+			"Prepared Axia -> Kusama confirmation transaction. Weight: <unknown>/{}, size: {}/{}",
 			bp_kusama::max_extrinsic_weight(),
 			transaction.encode().len(),
 			bp_kusama::max_extrinsic_size(),
@@ -122,14 +122,14 @@ impl SubstrateMessageLane for KusamaMessagesToPolkadot {
 		Bytes(transaction.encode())
 	}
 
-	fn target_transactions_author(&self) -> bp_polkadot::AccountId {
+	fn target_transactions_author(&self) -> bp_axia::AccountId {
 		(*self.message_lane.target_sign.public().as_array_ref()).into()
 	}
 
 	fn make_messages_delivery_transaction(
 		&self,
-		best_block_id: PolkadotHeaderId,
-		transaction_nonce: bp_runtime::IndexOf<Polkadot>,
+		best_block_id: AxiaHeaderId,
+		transaction_nonce: bp_runtime::IndexOf<Axia>,
 		_generated_at_header: KusamaHeaderId,
 		_nonces: RangeInclusive<MessageNonce>,
 		proof: <Self::MessageLane as MessageLane>::MessagesProof,
@@ -138,8 +138,8 @@ impl SubstrateMessageLane for KusamaMessagesToPolkadot {
 		let FromBridgedChainMessagesProof { ref nonces_start, ref nonces_end, .. } = proof;
 		let messages_count = nonces_end - nonces_start + 1;
 
-		let call = relay_polkadot_client::runtime::Call::BridgeKusamaMessages(
-			relay_polkadot_client::runtime::BridgeKusamaMessagesCall::receive_messages_proof(
+		let call = relay_axia_client::runtime::Call::BridgeKusamaMessages(
+			relay_axia_client::runtime::BridgeKusamaMessagesCall::receive_messages_proof(
 				self.message_lane.relayer_id_at_source.clone(),
 				proof,
 				messages_count as _,
@@ -147,7 +147,7 @@ impl SubstrateMessageLane for KusamaMessagesToPolkadot {
 			),
 		);
 		let genesis_hash = *self.message_lane.target_client.genesis_hash();
-		let transaction = Polkadot::sign_transaction(
+		let transaction = Axia::sign_transaction(
 			genesis_hash,
 			&self.message_lane.target_sign,
 			relay_axlib_client::TransactionEra::new(
@@ -158,28 +158,28 @@ impl SubstrateMessageLane for KusamaMessagesToPolkadot {
 		);
 		log::trace!(
 			target: "bridge",
-			"Prepared Kusama -> Polkadot delivery transaction. Weight: <unknown>/{}, size: {}/{}",
-			bp_polkadot::max_extrinsic_weight(),
+			"Prepared Kusama -> Axia delivery transaction. Weight: <unknown>/{}, size: {}/{}",
+			bp_axia::max_extrinsic_weight(),
 			transaction.encode().len(),
-			bp_polkadot::max_extrinsic_size(),
+			bp_axia::max_extrinsic_size(),
 		);
 		Bytes(transaction.encode())
 	}
 }
 
 /// Kusama node as messages source.
-type KusamaSourceClient = SubstrateMessagesSource<KusamaMessagesToPolkadot>;
+type KusamaSourceClient = SubstrateMessagesSource<KusamaMessagesToAxia>;
 
-/// Polkadot node as messages target.
-type PolkadotTargetClient = SubstrateMessagesTarget<KusamaMessagesToPolkadot>;
+/// Axia node as messages target.
+type AxiaTargetClient = SubstrateMessagesTarget<KusamaMessagesToAxia>;
 
-/// Run Kusama-to-Polkadot messages sync.
+/// Run Kusama-to-Axia messages sync.
 pub async fn run(
 	params: MessagesRelayParams<
 		Kusama,
 		KusamaSigningParams,
-		Polkadot,
-		PolkadotSigningParams,
+		Axia,
+		AxiaSigningParams,
 		MixStrategy,
 	>,
 ) -> anyhow::Result<()> {
@@ -187,7 +187,7 @@ pub async fn run(
 		params.source_transactions_mortality,
 		params.target_transactions_mortality,
 		Kusama::AVERAGE_BLOCK_INTERVAL,
-		Polkadot::AVERAGE_BLOCK_INTERVAL,
+		Axia::AVERAGE_BLOCK_INTERVAL,
 		STALL_TIMEOUT,
 	);
 	let relayer_id_at_kusama = (*params.source_sign.public().as_array_ref()).into();
@@ -195,7 +195,7 @@ pub async fn run(
 	let lane_id = params.lane_id;
 	let source_client = params.source_client;
 	let target_client = params.target_client;
-	let lane = KusamaMessagesToPolkadot {
+	let lane = KusamaMessagesToAxia {
 		message_lane: SubstrateMessageLaneToSubstrate {
 			source_client: source_client.clone(),
 			source_sign: params.source_sign,
@@ -208,22 +208,22 @@ pub async fn run(
 	};
 
 	// 2/3 is reserved for proofs and tx overhead
-	let max_messages_size_in_single_batch = bp_polkadot::max_extrinsic_size() / 3;
-	// we don't know exact weights of the Polkadot runtime. So to guess weights we'll be using
+	let max_messages_size_in_single_batch = bp_axia::max_extrinsic_size() / 3;
+	// we don't know exact weights of the Axia runtime. So to guess weights we'll be using
 	// weights from Rialto and then simply dividing it by x2.
 	let (max_messages_in_single_batch, max_messages_weight_in_single_batch) =
 		select_delivery_transaction_limits::<
 			pallet_bridge_messages::weights::RialtoWeight<rialto_runtime::Runtime>,
 		>(
-			bp_polkadot::max_extrinsic_weight(),
-			bp_polkadot::MAX_UNREWARDED_RELAYER_ENTRIES_AT_INBOUND_LANE,
+			bp_axia::max_extrinsic_weight(),
+			bp_axia::MAX_UNREWARDED_RELAYER_ENTRIES_AT_INBOUND_LANE,
 		);
 	let (max_messages_in_single_batch, max_messages_weight_in_single_batch) =
 		(max_messages_in_single_batch / 2, max_messages_weight_in_single_batch / 2);
 
 	log::info!(
 		target: "bridge",
-		"Starting Kusama -> Polkadot messages relay.\n\t\
+		"Starting Kusama -> Axia messages relay.\n\t\
 			Kusama relayer account id: {:?}\n\t\
 			Max messages in single transaction: {}\n\t\
 			Max messages size in single transaction: {}\n\t\
@@ -247,14 +247,14 @@ pub async fn run(
 		messages_relay::message_lane_loop::Params {
 			lane: lane_id,
 			source_tick: Kusama::AVERAGE_BLOCK_INTERVAL,
-			target_tick: Polkadot::AVERAGE_BLOCK_INTERVAL,
+			target_tick: Axia::AVERAGE_BLOCK_INTERVAL,
 			reconnect_delay: relay_utils::relay_loop::RECONNECT_DELAY,
 			stall_timeout,
 			delivery_params: messages_relay::message_lane_loop::MessageDeliveryParams {
 				max_unrewarded_relayer_entries_at_target:
-					bp_polkadot::MAX_UNREWARDED_RELAYER_ENTRIES_AT_INBOUND_LANE,
+					bp_axia::MAX_UNREWARDED_RELAYER_ENTRIES_AT_INBOUND_LANE,
 				max_unconfirmed_nonces_at_target:
-					bp_polkadot::MAX_UNCONFIRMED_MESSAGES_AT_INBOUND_LANE,
+					bp_axia::MAX_UNCONFIRMED_MESSAGES_AT_INBOUND_LANE,
 				max_messages_in_single_batch,
 				max_messages_weight_in_single_batch,
 				max_messages_size_in_single_batch,
@@ -267,7 +267,7 @@ pub async fn run(
 			lane_id,
 			params.target_to_source_headers_relay,
 		),
-		PolkadotTargetClient::new(
+		AxiaTargetClient::new(
 			target_client,
 			lane,
 			lane_id,
@@ -281,23 +281,23 @@ pub async fn run(
 	.map_err(Into::into)
 }
 
-/// Create standalone metrics for the Kusama -> Polkadot messages loop.
+/// Create standalone metrics for the Kusama -> Axia messages loop.
 pub(crate) fn standalone_metrics(
 	source_client: Client<Kusama>,
-	target_client: Client<Polkadot>,
-) -> anyhow::Result<StandaloneMessagesMetrics<Kusama, Polkadot>> {
+	target_client: Client<Axia>,
+) -> anyhow::Result<StandaloneMessagesMetrics<Kusama, Axia>> {
 	axlib_relay_helper::messages_lane::standalone_metrics(
 		source_client,
 		target_client,
 		Some(crate::chains::kusama::TOKEN_ID),
-		Some(crate::chains::polkadot::TOKEN_ID),
-		Some(crate::chains::polkadot::kusama_to_polkadot_conversion_rate_params()),
-		Some(crate::chains::kusama::polkadot_to_kusama_conversion_rate_params()),
+		Some(crate::chains::axia::TOKEN_ID),
+		Some(crate::chains::axia::kusama_to_axia_conversion_rate_params()),
+		Some(crate::chains::kusama::axia_to_kusama_conversion_rate_params()),
 	)
 }
 
-/// Update Polkadot -> Kusama conversion rate, stored in Kusama runtime storage.
-pub(crate) async fn update_polkadot_to_kusama_conversion_rate(
+/// Update Axia -> Kusama conversion rate, stored in Kusama runtime storage.
+pub(crate) async fn update_axia_to_kusama_conversion_rate(
 	client: Client<Kusama>,
 	signer: <Kusama as TransactionSignScheme>::AccountKeyPair,
 	updated_rate: f64,
@@ -312,9 +312,9 @@ pub(crate) async fn update_polkadot_to_kusama_conversion_rate(
 					&signer,
 					relay_axlib_client::TransactionEra::immortal(),
 					UnsignedTransaction::new(
-						relay_kusama_client::runtime::Call::BridgePolkadotMessages(
-							relay_kusama_client::runtime::BridgePolkadotMessagesCall::update_pallet_parameter(
-								relay_kusama_client::runtime::BridgePolkadotMessagesParameter::PolkadotToKusamaConversionRate(
+						relay_kusama_client::runtime::Call::BridgeAxiaMessages(
+							relay_kusama_client::runtime::BridgeAxiaMessagesCall::update_pallet_parameter(
+								relay_kusama_client::runtime::BridgeAxiaMessagesParameter::AxiaToKusamaConversionRate(
 									sp_runtime::FixedU128::from_float(updated_rate),
 								)
 							)

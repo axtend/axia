@@ -36,15 +36,15 @@ mod tests;
 use {
 	beefy_gadget::notification::{BeefyBestBlockSender, BeefySignedCommitmentSender},
 	grandpa::{self, FinalityProofProvider as GrandpaFinalityProofProvider},
-	polkadot_node_core_approval_voting::Config as ApprovalVotingConfig,
-	polkadot_node_core_av_store::Config as AvailabilityConfig,
-	polkadot_node_core_av_store::Error as AvailabilityError,
-	polkadot_node_core_candidate_validation::Config as CandidateValidationConfig,
-	polkadot_node_core_chain_selection::{
+	axia_node_core_approval_voting::Config as ApprovalVotingConfig,
+	axia_node_core_av_store::Config as AvailabilityConfig,
+	axia_node_core_av_store::Error as AvailabilityError,
+	axia_node_core_candidate_validation::Config as CandidateValidationConfig,
+	axia_node_core_chain_selection::{
 		self as chain_selection_subsystem, Config as ChainSelectionConfig,
 	},
-	polkadot_node_core_dispute_coordinator::Config as DisputeCoordinatorConfig,
-	polkadot_overseer::BlockInfo,
+	axia_node_core_dispute_coordinator::Config as DisputeCoordinatorConfig,
+	axia_overseer::BlockInfo,
 	sc_client_api::{BlockBackend, ExecutorProvider},
 	sp_trie::PrefixedMemoryDB,
 	tracing::info,
@@ -53,8 +53,8 @@ use {
 pub use sp_core::traits::SpawnNamed;
 #[cfg(feature = "full-node")]
 pub use {
-	polkadot_overseer::{Handle, Overseer, OverseerConnector, OverseerHandle},
-	polkadot_primitives::v2::AllychainHost,
+	axia_overseer::{Handle, Overseer, OverseerConnector, OverseerHandle},
+	axia_primitives::v2::AllychainHost,
 	relay_chain_selection::SelectRelayChain,
 	sc_client_api::AuxStore,
 	sp_authority_discovery::AuthorityDiscoveryApi,
@@ -63,7 +63,7 @@ pub use {
 };
 
 #[cfg(feature = "full-node")]
-use polkadot_subsystem::jaeger;
+use axia_subsystem::jaeger;
 
 use std::{sync::Arc, time::Duration};
 
@@ -76,25 +76,25 @@ use telemetry::TelemetryWorker;
 use telemetry::{Telemetry, TelemetryWorkerHandle};
 
 #[cfg(feature = "betanet-native")]
-pub use polkadot_client::BetanetExecutorDispatch;
+pub use axia_client::BetanetExecutorDispatch;
 
 #[cfg(feature = "alphanet-native")]
-pub use polkadot_client::AlphanetExecutorDispatch;
+pub use axia_client::AlphanetExecutorDispatch;
 
 #[cfg(feature = "axctest-native")]
-pub use polkadot_client::AxiaTestExecutorDispatch;
+pub use axia_client::AxiaTestExecutorDispatch;
 
-#[cfg(feature = "polkadot-native")]
-pub use polkadot_client::AxiaExecutorDispatch;
+#[cfg(feature = "axia-native")]
+pub use axia_client::AxiaExecutorDispatch;
 
 pub use chain_spec::{AxiaTestChainSpec, AxiaChainSpec, BetanetChainSpec, AlphanetChainSpec};
 pub use consensus_common::{block_validation::Chain, Proposal, SelectChain};
 #[cfg(feature = "full-node")]
-pub use polkadot_client::{
+pub use axia_client::{
 	AbstractClient, Client, ClientHandle, ExecuteWithClient, FullBackend, FullClient,
 	RuntimeApiCollection,
 };
-pub use polkadot_primitives::v1::{Block, BlockId, CollatorPair, Hash, Id as ParaId};
+pub use axia_primitives::v1::{Block, BlockId, CollatorPair, Hash, Id as ParaId};
 pub use sc_client_api::{Backend, CallExecutor, ExecutionStrategy};
 pub use sc_consensus::{BlockImport, LongestChain};
 use sc_executor::NativeElseWasmExecutor;
@@ -114,8 +114,8 @@ pub use sp_runtime::{
 
 #[cfg(feature = "axctest-native")]
 pub use axctest_runtime;
-#[cfg(feature = "polkadot-native")]
-pub use polkadot_runtime;
+#[cfg(feature = "axia-native")]
+pub use axia_runtime;
 #[cfg(feature = "betanet-native")]
 pub use betanet_runtime;
 #[cfg(feature = "alphanet-native")]
@@ -210,7 +210,7 @@ pub enum Error {
 	Consensus(#[from] consensus_common::Error),
 
 	#[error("Failed to create an overseer")]
-	Overseer(#[from] polkadot_overseer::SubsystemError),
+	Overseer(#[from] axia_overseer::SubsystemError),
 
 	#[error(transparent)]
 	Prometheus(#[from] prometheus_endpoint::PrometheusError),
@@ -219,7 +219,7 @@ pub enum Error {
 	Telemetry(#[from] telemetry::Error),
 
 	#[error(transparent)]
-	Jaeger(#[from] polkadot_subsystem::jaeger::JaegerError),
+	Jaeger(#[from] axia_subsystem::jaeger::JaegerError),
 
 	#[cfg(feature = "full-node")]
 	#[error(transparent)]
@@ -233,7 +233,7 @@ pub enum Error {
 	DatabasePathRequired,
 
 	#[cfg(feature = "full-node")]
-	#[error("Expected at least one of polkadot, axctest, alphanet or betanet runtime feature")]
+	#[error("Expected at least one of axia, axctest, alphanet or betanet runtime feature")]
 	NoRuntime,
 }
 
@@ -514,34 +514,34 @@ where
 		let chain_spec = config.chain_spec.cloned_box();
 
 		move |deny_unsafe,
-		      subscription_executor: polkadot_rpc::SubscriptionTaskExecutor|
-		      -> Result<polkadot_rpc::RpcExtension, service::Error> {
-			let deps = polkadot_rpc::FullDeps {
+		      subscription_executor: axia_rpc::SubscriptionTaskExecutor|
+		      -> Result<axia_rpc::RpcExtension, service::Error> {
+			let deps = axia_rpc::FullDeps {
 				client: client.clone(),
 				pool: transaction_pool.clone(),
 				select_chain: select_chain.clone(),
 				chain_spec: chain_spec.cloned_box(),
 				deny_unsafe,
-				babe: polkadot_rpc::BabeDeps {
+				babe: axia_rpc::BabeDeps {
 					babe_config: babe_config.clone(),
 					shared_epoch_changes: shared_epoch_changes.clone(),
 					keystore: keystore.clone(),
 				},
-				grandpa: polkadot_rpc::GrandpaDeps {
+				grandpa: axia_rpc::GrandpaDeps {
 					shared_voter_state: shared_voter_state.clone(),
 					shared_authority_set: shared_authority_set.clone(),
 					justification_stream: justification_stream.clone(),
 					subscription_executor: subscription_executor.clone(),
 					finality_provider: finality_proof_provider.clone(),
 				},
-				beefy: polkadot_rpc::BeefyDeps {
+				beefy: axia_rpc::BeefyDeps {
 					beefy_commitment_stream: beefy_commitment_stream.clone(),
 					beefy_best_block_stream: beefy_best_block_stream.clone(),
 					subscription_executor,
 				},
 			};
 
-			polkadot_rpc::create_full(deps).map_err(Into::into)
+			axia_rpc::create_full(deps).map_err(Into::into)
 		}
 	};
 
@@ -691,7 +691,7 @@ where
 	ExecutorDispatch: NativeExecutionDispatch + 'static,
 	OverseerGenerator: OverseerGen,
 {
-	use polkadot_node_network_protocol::request_response::IncomingRequest;
+	use axia_node_network_protocol::request_response::IncomingRequest;
 
 	let role = config.role.clone();
 	let force_authoring = config.force_authoring;
@@ -741,7 +741,7 @@ where
 
 	let select_chain = if requires_overseer_for_chain_sel {
 		let metrics =
-			polkadot_node_subsystem_util::metrics::Metrics::register(prometheus_registry.as_ref())?;
+			axia_node_subsystem_util::metrics::Metrics::register(prometheus_registry.as_ref())?;
 
 		SelectRelayChain::new_disputes_aware(
 			basics.backend.clone(),
@@ -795,7 +795,7 @@ where
 	}
 
 	{
-		use polkadot_network_bridge::{peer_sets_info, IsAuthority};
+		use axia_network_bridge::{peer_sets_info, IsAuthority};
 		let is_authority = if role.is_authority() { IsAuthority::Yes } else { IsAuthority::No };
 		config.network.extra_sets.extend(peer_sets_info(is_authority));
 	}
@@ -1003,7 +1003,7 @@ where
 				Box::pin(async move {
 					use futures::{pin_mut, select, FutureExt};
 
-					let forward = polkadot_overseer::forward_events(overseer_client, handle);
+					let forward = axia_overseer::forward_events(overseer_client, handle);
 
 					let forward = forward.fuse();
 					let overseer_fut = overseer.run().fuse();
@@ -1057,7 +1057,7 @@ where
 				let overseer_handle = overseer_handle.clone();
 
 				async move {
-					let allychain = polkadot_node_core_allychains_inherent::AllychainsInherentDataProvider::create(
+					let allychain = axia_node_core_allychains_inherent::AllychainsInherentDataProvider::create(
 						&*client_clone,
 						overseer_handle,
 						parent,
@@ -1249,11 +1249,11 @@ pub fn new_chain_ops(
 		return chain_ops!(config, jaeger_agent, telemetry_worker_handle; alphanet_runtime, AlphanetExecutorDispatch, Alphanet)
 	}
 
-	#[cfg(feature = "polkadot-native")]
+	#[cfg(feature = "axia-native")]
 	{
-		return chain_ops!(config, jaeger_agent, telemetry_worker_handle; polkadot_runtime, AxiaExecutorDispatch, Axia)
+		return chain_ops!(config, jaeger_agent, telemetry_worker_handle; axia_runtime, AxiaExecutorDispatch, Axia)
 	}
-	#[cfg(not(feature = "polkadot-native"))]
+	#[cfg(not(feature = "axia-native"))]
 	Err(Error::NoRuntime)
 }
 
@@ -1327,9 +1327,9 @@ pub fn build_full(
 		.map(|full| full.with_client(Client::Alphanet))
 	}
 
-	#[cfg(feature = "polkadot-native")]
+	#[cfg(feature = "axia-native")]
 	{
-		return new_full::<polkadot_runtime::RuntimeApi, AxiaExecutorDispatch, _>(
+		return new_full::<axia_runtime::RuntimeApi, AxiaExecutorDispatch, _>(
 			config,
 			is_collator,
 			grandpa_pause,
@@ -1343,6 +1343,6 @@ pub fn build_full(
 		.map(|full| full.with_client(Client::Axia))
 	}
 
-	#[cfg(not(feature = "polkadot-native"))]
+	#[cfg(not(feature = "axia-native"))]
 	Err(Error::NoRuntime)
 }

@@ -18,7 +18,7 @@ use std::collections::{HashMap, HashSet};
 
 use futures::{channel::mpsc, future::RemoteHandle, Future, FutureExt, SinkExt};
 
-use polkadot_node_network_protocol::{
+use axia_node_network_protocol::{
 	request_response::{
 		outgoing::RequestError,
 		v1::{DisputeRequest, DisputeResponse},
@@ -26,11 +26,11 @@ use polkadot_node_network_protocol::{
 	},
 	IfDisconnected,
 };
-use polkadot_node_subsystem_util::{metrics, runtime::RuntimeInfo};
-use polkadot_primitives::v1::{
+use axia_node_subsystem_util::{metrics, runtime::RuntimeInfo};
+use axia_primitives::v1::{
 	AuthorityDiscoveryId, CandidateHash, Hash, SessionIndex, ValidatorIndex,
 };
-use polkadot_subsystem::{
+use axia_subsystem::{
 	messages::{AllMessages, NetworkBridgeMessage},
 	SubsystemContext,
 };

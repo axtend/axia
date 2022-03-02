@@ -233,8 +233,8 @@ UI_EXPECTED_ETHEREUM_NETWORK_ID=105
 
 ### UI
 
-Use [wss://rialto.bridges.test-installations.axia.io/](https://polkadot.js.org/apps/)
-as a custom endpoint for [https://polkadot.js.org/apps/](https://polkadot.js.org/apps/).
+Use [wss://rialto.bridges.test-installations.axia.io/](https://axia.js.org/apps/)
+as a custom endpoint for [https://axia.js.org/apps/](https://axia.js.org/apps/).
 
 ### Axia.js UI
 

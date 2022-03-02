@@ -20,8 +20,8 @@ use crate::{
 	KNOWN_LEAVES_CACHE_SIZE,
 };
 use lru::LruCache;
-use polkadot_node_subsystem_types::{errors::SubsystemError, messages::*};
-use polkadot_overseer_gen::{FromOverseer, SpawnedSubsystem, Subsystem, SubsystemContext};
+use axia_node_subsystem_types::{errors::SubsystemError, messages::*};
+use axia_overseer_gen::{FromOverseer, SpawnedSubsystem, Subsystem, SubsystemContext};
 
 /// A dummy subsystem that implements [`Subsystem`] for all
 /// types of messages. Used for tests or as a placeholder.

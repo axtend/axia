@@ -16,7 +16,7 @@
 
 use ::test_helpers::{dummy_digest, dummy_hash};
 use futures::{channel::oneshot, future::BoxFuture, prelude::*};
-use polkadot_node_subsystem::{
+use axia_node_subsystem::{
 	jaeger,
 	messages::{
 		AllMessages, CandidateValidationMessage, PreCheckOutcome, PvfCheckerMessage,
@@ -24,8 +24,8 @@ use polkadot_node_subsystem::{
 	},
 	ActivatedLeaf, ActiveLeavesUpdate, FromOverseer, LeafStatus, OverseerSignal, RuntimeApiError,
 };
-use polkadot_node_subsystem_test_helpers::{make_subsystem_context, TestSubsystemContextHandle};
-use polkadot_primitives::{
+use axia_node_subsystem_test_helpers::{make_subsystem_context, TestSubsystemContextHandle};
+use axia_primitives::{
 	v1::{
 		BlockNumber, Hash, Header, SessionIndex, ValidationCode, ValidationCodeHash, ValidatorId,
 	},

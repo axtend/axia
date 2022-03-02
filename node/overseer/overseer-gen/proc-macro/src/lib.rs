@@ -66,8 +66,8 @@ pub(crate) fn impl_overseer_gen(
 		quote! {crate}
 	} else {
 		use proc_macro_crate::{crate_name, FoundCrate};
-		let crate_name = crate_name("polkadot-overseer-gen")
-			.expect("Support crate polkadot-overseer-gen is present in `Cargo.toml`. qed");
+		let crate_name = crate_name("axia-overseer-gen")
+			.expect("Support crate axia-overseer-gen is present in `Cargo.toml`. qed");
 		match crate_name {
 			FoundCrate::Itself => quote! {crate},
 			FoundCrate::Name(name) => Ident::new(&name, Span::call_site()).to_token_stream(),

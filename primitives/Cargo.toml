@@ -1,5 +1,5 @@
 [package]
-name = "polkadot-primitives"
+name = "axia-primitives"
 version = "0.9.17"
 authors = ["Axia Technologies <admin@axia.io>"]
 edition = "2018"
@@ -21,8 +21,8 @@ sp-staking = { git = "https://github.com/axtend/axlib", default-features = false
 sp-arithmetic = { git = "https://github.com/axtend/axlib", default-features = false , branch = "c92f69d" }
 sp-authority-discovery = { git = "https://github.com/axtend/axlib", default-features = false , branch = "c92f69d" }
 runtime_primitives = { package = "sp-runtime", git = "https://github.com/axtend/axlib", default-features = false , branch = "c92f69d" }
-polkadot-allychain = { path = "../allychain", default-features = false }
-polkadot-core-primitives = { path = "../core-primitives", default-features = false }
+axia-allychain = { path = "../allychain", default-features = false }
+axia-core-primitives = { path = "../core-primitives", default-features = false }
 trie = { package = "sp-trie", git = "https://github.com/axtend/axlib", default-features = false , branch = "c92f69d" }
 bitvec = { version = "0.20.1", default-features = false, features = ["alloc"] }
 frame-system = { git = "https://github.com/axtend/axlib", default-features = false , branch = "c92f69d" }
@@ -50,8 +50,8 @@ std = [
 	"runtime_primitives/std",
 	"serde",
 	"parity-util-mem",
-	"polkadot-allychain/std",
-	"polkadot-core-primitives/std",
+	"axia-allychain/std",
+	"axia-core-primitives/std",
 	"bitvec/std",
 	"frame-system/std",
 ]

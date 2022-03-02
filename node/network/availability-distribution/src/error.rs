@@ -17,14 +17,14 @@
 
 //! Error handling related code and Error/Result definitions.
 
-use polkadot_node_network_protocol::request_response::outgoing::RequestError;
-use polkadot_primitives::v1::SessionIndex;
+use axia_node_network_protocol::request_response::outgoing::RequestError;
+use axia_primitives::v1::SessionIndex;
 use thiserror::Error;
 
 use futures::channel::oneshot;
 
-use polkadot_node_subsystem_util::runtime;
-use polkadot_subsystem::{ChainApiError, SubsystemError};
+use axia_node_subsystem_util::runtime;
+use axia_subsystem::{ChainApiError, SubsystemError};
 
 use crate::LOG_TARGET;
 

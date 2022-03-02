@@ -17,10 +17,10 @@
 //! Middleware interface that leverages low-level database operations
 //! to provide a clean API for processing block and candidate imports.
 
-use polkadot_node_subsystem::SubsystemResult;
+use axia_node_subsystem::SubsystemResult;
 
 use bitvec::order::Lsb0 as BitOrderLsb0;
-use polkadot_primitives::v1::{BlockNumber, CandidateHash, CandidateReceipt, GroupIndex, Hash};
+use axia_primitives::v1::{BlockNumber, CandidateHash, CandidateReceipt, GroupIndex, Hash};
 
 use std::{
 	collections::{hash_map::Entry, BTreeMap, HashMap},
@@ -174,7 +174,7 @@ pub fn canonicalize(
 
 	// due to the fork pruning, this range actually might go too far above where our actual highest block is,
 	// if a relatively short fork is canonicalized.
-	// TODO https://github.com/axiatech/polkadot/issues/3389
+	// TODO https://github.com/axiatech/axia/issues/3389
 	let new_range = StoredBlockRange(canon_number + 1, std::cmp::max(range.1, canon_number + 2));
 
 	overlay_db.write_stored_block_range(new_range);

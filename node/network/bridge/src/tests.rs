@@ -28,14 +28,14 @@ use std::{
 
 use sc_network::{Event as NetworkEvent, IfDisconnected};
 
-use polkadot_node_network_protocol::{request_response::outgoing::Requests, view, ObservedRole};
-use polkadot_node_subsystem_test_helpers::{
+use axia_node_network_protocol::{request_response::outgoing::Requests, view, ObservedRole};
+use axia_node_subsystem_test_helpers::{
 	SingleItemSink, SingleItemStream, TestSubsystemContextHandle,
 };
-use polkadot_node_subsystem_util::metered;
-use polkadot_primitives::v1::AuthorityDiscoveryId;
-use polkadot_primitives_test_helpers::dummy_collator_signature;
-use polkadot_subsystem::{
+use axia_node_subsystem_util::metered;
+use axia_primitives::v1::AuthorityDiscoveryId;
+use axia_primitives_test_helpers::dummy_collator_signature;
+use axia_subsystem::{
 	jaeger,
 	messages::{
 		ApprovalDistributionMessage, BitfieldDistributionMessage, GossipSupportMessage,
@@ -76,7 +76,7 @@ struct TestNetworkHandle {
 }
 
 fn new_test_network() -> (TestNetwork, TestNetworkHandle, TestAuthorityDiscovery) {
-	let (net_tx, net_rx) = polkadot_node_subsystem_test_helpers::single_item_sink();
+	let (net_tx, net_rx) = axia_node_subsystem_test_helpers::single_item_sink();
 	let (action_tx, action_rx) = metered::unbounded();
 
 	(
@@ -279,7 +279,7 @@ fn test_harness<T: Future<Output = VirtualOverseer>>(
 	let pool = sp_core::testing::TaskExecutor::new();
 	let (mut network, network_handle, discovery) = new_test_network();
 	let (context, virtual_overseer) =
-		polkadot_node_subsystem_test_helpers::make_subsystem_context(pool);
+		axia_node_subsystem_test_helpers::make_subsystem_context(pool);
 	let network_stream = network.event_stream();
 
 	let bridge = NetworkBridge {

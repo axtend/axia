@@ -28,9 +28,9 @@ use futures::{
 use sc_network as network;
 use sp_keyring::Sr25519Keyring;
 
-use polkadot_node_network_protocol::request_response::{v1, Recipient};
-use polkadot_node_primitives::{BlockData, PoV, Proof};
-use polkadot_primitives::v1::{CandidateHash, ValidatorIndex};
+use axia_node_network_protocol::request_response::{v1, Recipient};
+use axia_node_primitives::{BlockData, PoV, Proof};
+use axia_primitives::v1::{CandidateHash, ValidatorIndex};
 
 use super::*;
 use crate::{metrics::Metrics, tests::mock::get_valid_chunk_data};

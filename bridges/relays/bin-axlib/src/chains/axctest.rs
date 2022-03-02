@@ -105,7 +105,7 @@ impl CliChain for AxiaTest {
 }
 
 /// Storage key and initial value of Axia -> AxiaTest conversion rate.
-pub(crate) fn polkadot_to_axctest_conversion_rate_params() -> (StorageKey, FixedU128) {
+pub(crate) fn axia_to_axctest_conversion_rate_params() -> (StorageKey, FixedU128) {
 	(
 		bp_runtime::storage_parameter_key(
 			bp_axctest::AXIA_TO_AXIATEST_CONVERSION_RATE_PARAMETER_NAME,

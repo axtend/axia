@@ -21,13 +21,13 @@ use futures::{
 	FutureExt, SinkExt,
 };
 
-use polkadot_node_primitives::{ValidationResult, APPROVAL_EXECUTION_TIMEOUT};
-use polkadot_node_subsystem::{
+use axia_node_primitives::{ValidationResult, APPROVAL_EXECUTION_TIMEOUT};
+use axia_node_subsystem::{
 	messages::{AvailabilityRecoveryMessage, AvailabilityStoreMessage, CandidateValidationMessage},
 	ActiveLeavesUpdate, RecoveryError, SubsystemContext, SubsystemSender,
 };
-use polkadot_node_subsystem_util::runtime::get_validation_code_by_hash;
-use polkadot_primitives::v1::{BlockNumber, CandidateHash, CandidateReceipt, Hash, SessionIndex};
+use axia_node_subsystem_util::runtime::get_validation_code_by_hash;
+use axia_primitives::v1::{BlockNumber, CandidateHash, CandidateReceipt, Hash, SessionIndex};
 
 use crate::{
 	error::{Fatal, FatalResult, NonFatal, Result},

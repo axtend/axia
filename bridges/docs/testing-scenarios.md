@@ -31,8 +31,8 @@ kCharlie.
    or:
 
    ```rust
-   let hash = bp_polkadot::derive_axctest_account_id(kAlice);
-   let p_kAlice = bp_polkadot::AccountIdConverter::convert(hash);
+   let hash = bp_axia::derive_axctest_account_id(kAlice);
+   let p_kAlice = bp_axia::AccountIdConverter::convert(hash);
    ```
 
 2. [Axia] pBob transfers 5 AXCs to `p(kAlice)`
@@ -43,7 +43,7 @@ kCharlie.
 3. [AxiaTest] kAlice sends 2.5 AXCs to `p(kCharlie)`
    1. kAlice prepares:
       ```rust
-        let call = polkadot::Call::Balances(polkadot::Balances::Transfer(p(kCharlie), 2.5AXC)).encode();
+        let call = axia::Call::Balances(axia::Balances::Transfer(p(kCharlie), 2.5AXC)).encode();
         let weight = call.get_dispatch_info().weight;
       ```
 
@@ -53,7 +53,7 @@ kCharlie.
         // axc-transfer-lane (truncated to 4bytes)
         lane_id,
         payload: MessagePayload {
-          // Get from current polkadot runtime (kind of hardcoded)
+          // Get from current axia runtime (kind of hardcoded)
           spec_version: 1,
           // kAlice should know the exact dispatch weight of the call on the target
           // source verifies: at least to cover call.length() and below max weight

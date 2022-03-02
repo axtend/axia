@@ -20,7 +20,7 @@
 //! EXECUTION: Some(Wasm), WASM-EXECUTION: Compiled, CHAIN: Some("axctest-dev"), DB CACHE: 128
 
 // Executed Command:
-// target/release/polkadot
+// target/release/axia
 // benchmark
 // --chain=axctest-dev
 // --steps=50

@@ -16,7 +16,7 @@
 
 //! # Axia Staking Miner.
 //!
-//! Simple bot capable of monitoring a polkadot (and cousins) chain and submitting solutions to the
+//! Simple bot capable of monitoring a axia (and cousins) chain and submitting solutions to the
 //! `pallet-election-provider-multi-phase`. See `--help` for more details.
 //!
 //! # Implementation Notes:
@@ -108,12 +108,12 @@ macro_rules! construct_runtime_prelude {
 }
 
 // NOTE: we might be able to use some code from the bridges repo here.
-fn signed_ext_builder_polkadot(
+fn signed_ext_builder_axia(
 	nonce: Index,
 	tip: Balance,
 	era: sp_runtime::generic::Era,
-) -> polkadot_runtime_exports::SignedExtra {
-	use polkadot_runtime_exports::Runtime;
+) -> axia_runtime_exports::SignedExtra {
+	use axia_runtime_exports::Runtime;
 	(
 		frame_system::CheckNonZeroSender::<Runtime>::new(),
 		frame_system::CheckSpecVersion::<Runtime>::new(),
@@ -163,7 +163,7 @@ fn signed_ext_builder_alphanet(
 	)
 }
 
-construct_runtime_prelude!(polkadot);
+construct_runtime_prelude!(axia);
 construct_runtime_prelude!(axctest);
 construct_runtime_prelude!(alphanet);
 
@@ -180,7 +180,7 @@ macro_rules! any_runtime {
 			match $crate::RUNTIME {
 				$crate::AnyRuntime::Axia => {
 					#[allow(unused)]
-					use $crate::polkadot_runtime_exports::*;
+					use $crate::axia_runtime_exports::*;
 					$($code)*
 				},
 				$crate::AnyRuntime::AxiaTest => {
@@ -207,7 +207,7 @@ macro_rules! any_runtime_unit {
 			match $crate::RUNTIME {
 				$crate::AnyRuntime::Axia => {
 					#[allow(unused)]
-					use $crate::polkadot_runtime_exports::*;
+					use $crate::axia_runtime_exports::*;
 					let _ = $($code)*;
 				},
 				$crate::AnyRuntime::AxiaTest => {
@@ -547,9 +547,9 @@ async fn main() {
 		.await
 		.expect("system_chain infallible; qed.");
 	match chain.to_lowercase().as_str() {
-		"polkadot" | "development" => {
+		"axia" | "development" => {
 			sp_core::crypto::set_default_ss58_version(
-				sp_core::crypto::Ss58AddressFormatRegistry::PolkadotAccount.into(),
+				sp_core::crypto::Ss58AddressFormatRegistry::AxiaAccount.into(),
 			);
 			sub_tokens::dynamic::set_name("AXC");
 			sub_tokens::dynamic::set_decimal_points(10_000_000_000);
@@ -573,7 +573,7 @@ async fn main() {
 		},
 		"alphanet" => {
 			sp_core::crypto::set_default_ss58_version(
-				sp_core::crypto::Ss58AddressFormatRegistry::PolkadotAccount.into(),
+				sp_core::crypto::Ss58AddressFormatRegistry::AxiaAccount.into(),
 			);
 			sub_tokens::dynamic::set_name("WND");
 			sub_tokens::dynamic::set_decimal_points(1_000_000_000_000);
@@ -632,14 +632,14 @@ mod tests {
 		unsafe {
 			RUNTIME = AnyRuntime::Axia;
 		}
-		let polkadot_version = any_runtime! { get_version::<Runtime>() };
+		let axia_version = any_runtime! { get_version::<Runtime>() };
 
 		unsafe {
 			RUNTIME = AnyRuntime::AxiaTest;
 		}
 		let axctest_version = any_runtime! { get_version::<Runtime>() };
 
-		assert_eq!(polkadot_version.spec_name, "polkadot".into());
+		assert_eq!(axia_version.spec_name, "axia".into());
 		assert_eq!(axctest_version.spec_name, "axctest".into());
 	}
 }

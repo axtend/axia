@@ -1,5 +1,5 @@
 [package]
-name = "polkadot-node-core-approval-voting"
+name = "axia-node-core-approval-voting"
 version = "0.9.17"
 authors = ["Axia Technologies <admin@axia.io>"]
 edition = "2018"
@@ -16,12 +16,12 @@ schnorrkel = "0.9.1"
 kvdb = "0.10.0"
 derive_more = "0.99.17"
 
-polkadot-node-subsystem = { path = "../../subsystem" }
-polkadot-node-subsystem-util = { path = "../../subsystem-util" }
-polkadot-overseer = { path = "../../overseer" }
-polkadot-primitives = { path = "../../../primitives" }
-polkadot-node-primitives = { path = "../../primitives" }
-polkadot-node-jaeger = { path = "../../jaeger" }
+axia-node-subsystem = { path = "../../subsystem" }
+axia-node-subsystem-util = { path = "../../subsystem-util" }
+axia-overseer = { path = "../../overseer" }
+axia-primitives = { path = "../../../primitives" }
+axia-node-primitives = { path = "../../primitives" }
+axia-node-jaeger = { path = "../../jaeger" }
 
 sc-keystore = { git = "https://github.com/axtend/axlib", default-features = false , branch = "c92f69d" }
 sp-consensus = { git = "https://github.com/axtend/axlib", default-features = false , branch = "c92f69d" }
@@ -36,7 +36,7 @@ sp-keyring = { git = "https://github.com/axtend/axlib", branch = "c92f69d" }
 sp-keystore = { git = "https://github.com/axtend/axlib", branch = "c92f69d" }
 sp-core = { git = "https://github.com/axtend/axlib", branch = "c92f69d" }
 sp-consensus-babe = { git = "https://github.com/axtend/axlib", branch = "c92f69d" }
-polkadot-node-subsystem-test-helpers = { path = "../../subsystem-test-helpers" }
+axia-node-subsystem-test-helpers = { path = "../../subsystem-test-helpers" }
 assert_matches = "1.4.0"
 kvdb-memorydb = "0.10.0"
-test-helpers = { package = "polkadot-primitives-test-helpers", path = "../../../primitives/test-helpers" }
+test-helpers = { package = "axia-primitives-test-helpers", path = "../../../primitives/test-helpers" }

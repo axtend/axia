@@ -23,8 +23,8 @@ use sp_core::H256;
 use sp_runtime::{testing::Header, traits::IdentityLookup, AccountId32};
 use sp_std::cell::RefCell;
 
-use polkadot_allychain::primitives::Id as ParaId;
-use polkadot_runtime_allychains::{configuration, origin, shared};
+use axia_allychain::primitives::Id as ParaId;
+use axia_runtime_allychains::{configuration, origin, shared};
 use xcm::latest::{opaque, prelude::*};
 use xcm_executor::XcmExecutor;
 

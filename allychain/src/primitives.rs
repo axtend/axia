@@ -34,10 +34,10 @@ use sp_core::bytes;
 #[cfg(feature = "std")]
 use parity_util_mem::MallocSizeOf;
 
-use polkadot_core_primitives::{Hash, OutboundHrmpMessage};
+use axia_core_primitives::{Hash, OutboundHrmpMessage};
 
 /// Block number type used by the relay chain.
-pub use polkadot_core_primitives::BlockNumber as RelayChainBlockNumber;
+pub use axia_core_primitives::BlockNumber as RelayChainBlockNumber;
 
 /// Allychain head data included in the chain.
 #[derive(
@@ -408,7 +408,7 @@ impl XcmpMessageHandler for () {
 }
 
 /// Validation parameters for evaluating the allychain validity function.
-// TODO: balance downloads (https://github.com/axiatech/polkadot/issues/220)
+// TODO: balance downloads (https://github.com/axiatech/axia/issues/220)
 #[derive(PartialEq, Eq, Decode, Clone)]
 #[cfg_attr(feature = "std", derive(Debug, Encode))]
 pub struct ValidationParams {
@@ -423,7 +423,7 @@ pub struct ValidationParams {
 }
 
 /// The result of allychain validation.
-// TODO: balance uploads (https://github.com/axiatech/polkadot/issues/220)
+// TODO: balance uploads (https://github.com/axiatech/axia/issues/220)
 #[derive(PartialEq, Eq, Clone, Encode)]
 #[cfg_attr(feature = "std", derive(Debug, Decode))]
 pub struct ValidationResult {

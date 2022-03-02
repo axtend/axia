@@ -22,17 +22,17 @@ use futures::{
 	FutureExt, SinkExt,
 };
 
-use polkadot_erasure_coding::branch_hash;
-use polkadot_node_network_protocol::request_response::{
+use axia_erasure_coding::branch_hash;
+use axia_node_network_protocol::request_response::{
 	outgoing::{OutgoingRequest, Recipient, RequestError, Requests},
 	v1::{ChunkFetchingRequest, ChunkFetchingResponse},
 };
-use polkadot_node_primitives::ErasureChunk;
-use polkadot_primitives::v1::{
+use axia_node_primitives::ErasureChunk;
+use axia_primitives::v1::{
 	AuthorityDiscoveryId, BlakeTwo256, CandidateHash, GroupIndex, Hash, HashT, OccupiedCore,
 	SessionIndex,
 };
-use polkadot_subsystem::{
+use axia_subsystem::{
 	jaeger,
 	messages::{AllMessages, AvailabilityStoreMessage, IfDisconnected, NetworkBridgeMessage},
 	SubsystemContext,

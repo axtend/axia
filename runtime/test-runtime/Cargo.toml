@@ -1,5 +1,5 @@
 [package]
-name = "polkadot-test-runtime"
+name = "axia-test-runtime"
 version = "0.9.17"
 authors = ["Axia Technologies <admin@axia.io>"]
 edition = "2018"
@@ -55,11 +55,11 @@ pallet-timestamp = { git = "https://github.com/axtend/axlib", default-features =
 pallet-sudo = { git = "https://github.com/axtend/axlib", default-features = false , branch = "c92f69d" }
 pallet-vesting = { git = "https://github.com/axtend/axlib", default-features = false , branch = "c92f69d" }
 
-runtime-common = { package = "polkadot-runtime-common", path = "../common", default-features = false }
-primitives = { package = "polkadot-primitives", path = "../../primitives", default-features = false }
+runtime-common = { package = "axia-runtime-common", path = "../common", default-features = false }
+primitives = { package = "axia-primitives", path = "../../primitives", default-features = false }
 pallet-xcm = { path = "../../xcm/pallet-xcm", default-features = false }
-polkadot-allychain = { path = "../../allychain", default-features = false }
-polkadot-runtime-allychains = { path = "../allychains", default-features = false }
+axia-allychain = { path = "../../allychain", default-features = false }
+axia-runtime-allychains = { path = "../allychains", default-features = false }
 xcm-builder = { path = "../../xcm/xcm-builder", default-features = false }
 xcm-executor = { path = "../../xcm/xcm-executor", default-features = false }
 xcm = { path = "../../xcm", default-features = false }
@@ -78,7 +78,7 @@ axlib-wasm-builder = { git = "https://github.com/axtend/axlib", branch = "c92f69
 default = ["std"]
 no_std = []
 only-staking = []
-runtime-metrics = ["polkadot-runtime-allychains/runtime-metrics", "sp-io/with-tracing"]
+runtime-metrics = ["axia-runtime-allychains/runtime-metrics", "sp-io/with-tracing"]
 
 std = [
 	"authority-discovery-primitives/std",
@@ -90,7 +90,7 @@ std = [
 	"scale-info/std",
 	"inherents/std",
 	"sp-core/std",
-	"polkadot-allychain/std",
+	"axia-allychain/std",
 	"pallet-xcm/std",
 	"xcm-builder/std",
 	"xcm-executor/std",
