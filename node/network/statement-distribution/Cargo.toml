@@ -9,8 +9,8 @@ edition = "2018"
 futures = "0.3.21"
 tracing = "0.1.29"
 axia-primitives = { path = "../../../primitives" }
-sp-staking = { git = "https://github.com/purestake/substrate", default-features = false , branch = "moonbeam-axia-v0.9.17" }
-sp-keystore = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
+sp-staking = { git = "https://github.com/axtend/axlib", default-features = false , branch = "axlib" }
+sp-keystore = { git = "https://github.com/axtend/axlib", branch = "axlib" }
 axia-subsystem = { package = "axia-node-subsystem", path = "../../subsystem" }
 axia-node-primitives = { path = "../../primitives" }
 axia-node-subsystem-util = { path = "../../subsystem-util" }
@@ -24,12 +24,12 @@ thiserror = "1.0.30"
 [dev-dependencies]
 axia-node-subsystem-test-helpers = { path = "../../subsystem-test-helpers" }
 assert_matches = "1.4.0"
-sp-keyring = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
-sp-core = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
-sp-application-crypto = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
-sp-keystore = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
-sp-tracing = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
-sc-keystore = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
-sc-network = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
+sp-keyring = { git = "https://github.com/axtend/axlib", branch = "axlib" }
+sp-core = { git = "https://github.com/axtend/axlib", branch = "axlib" }
+sp-application-crypto = { git = "https://github.com/axtend/axlib", branch = "axlib" }
+sp-keystore = { git = "https://github.com/axtend/axlib", branch = "axlib" }
+sp-tracing = { git = "https://github.com/axtend/axlib", branch = "axlib" }
+sc-keystore = { git = "https://github.com/axtend/axlib", branch = "axlib" }
+sc-network = { git = "https://github.com/axtend/axlib", branch = "axlib" }
 futures-timer = "3.0.2"
 axia-primitives-test-helpers = { path = "../../../primitives/test-helpers" }

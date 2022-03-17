@@ -16,23 +16,23 @@ serde_json = "1.0"
 thiserror = "1.0.30"
 tokio = { version = "1.15", features = ["macros", "rt-multi-thread", "sync"] }
 
-remote-externalities = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
+remote-externalities = { git = "https://github.com/axtend/axlib", branch = "axlib" }
 
-sp-core = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
-sp-version = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
-sp-io = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
-sp-runtime = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
-sp-npos-elections = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
-sc-transaction-pool-api = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
+sp-core = { git = "https://github.com/axtend/axlib", branch = "axlib" }
+sp-version = { git = "https://github.com/axtend/axlib", branch = "axlib" }
+sp-io = { git = "https://github.com/axtend/axlib", branch = "axlib" }
+sp-runtime = { git = "https://github.com/axtend/axlib", branch = "axlib" }
+sp-npos-elections = { git = "https://github.com/axtend/axlib", branch = "axlib" }
+sc-transaction-pool-api = { git = "https://github.com/axtend/axlib", branch = "axlib" }
 
 
-frame-system = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
-frame-support = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
-frame-election-provider-support = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
-pallet-election-provider-multi-phase = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
-pallet-staking = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
-pallet-balances = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
-pallet-transaction-payment = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
+frame-system = { git = "https://github.com/axtend/axlib", branch = "axlib" }
+frame-support = { git = "https://github.com/axtend/axlib", branch = "axlib" }
+frame-election-provider-support = { git = "https://github.com/axtend/axlib", branch = "axlib" }
+pallet-election-provider-multi-phase = { git = "https://github.com/axtend/axlib", branch = "axlib" }
+pallet-staking = { git = "https://github.com/axtend/axlib", branch = "axlib" }
+pallet-balances = { git = "https://github.com/axtend/axlib", branch = "axlib" }
+pallet-transaction-payment = { git = "https://github.com/axtend/axlib", branch = "axlib" }
 
 core-primitives = { package = "axia-core-primitives", path = "../../core-primitives" }
 
@@ -44,4 +44,4 @@ westend-runtime = { path = "../../runtime/westend" }
 sub-tokens = { git = "https://github.com/paritytech/substrate-debug-kit", branch = "master" }
 
 [dev-dependencies]
-sp-version = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
+sp-version = { git = "https://github.com/axtend/axlib", branch = "axlib" }

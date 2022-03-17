@@ -15,14 +15,14 @@ axia-primitives = { path = "../../../primitives" }
 axia-node-subsystem-util = { path = "../../subsystem-util" }
 axia-overseer = { path = "../../overseer" }
 
-sp-keystore = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
+sp-keystore = { git = "https://github.com/axtend/axlib", branch = "axlib" }
 
 [dev-dependencies]
-sp-core = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
-sp-runtime = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
-sc-keystore = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
-sp-keyring = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
+sp-core = { git = "https://github.com/axtend/axlib", branch = "axlib" }
+sp-runtime = { git = "https://github.com/axtend/axlib", branch = "axlib" }
+sc-keystore = { git = "https://github.com/axtend/axlib", branch = "axlib" }
+sp-keyring = { git = "https://github.com/axtend/axlib", branch = "axlib" }
 axia-node-subsystem-test-helpers = { path = "../../subsystem-test-helpers"}
 test-helpers = { package = "axia-primitives-test-helpers", path = "../../../primitives/test-helpers" }
-sp-application-crypto = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
+sp-application-crypto = { git = "https://github.com/axtend/axlib", branch = "axlib" }
 futures-timer = "3.0.2"

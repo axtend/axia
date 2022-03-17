@@ -14,11 +14,11 @@ serde = { version = "1.0", optional = true }
 
 # Substrate Dependencies
 
-frame-support = { git = "https://github.com/purestake/substrate", default-features = false , branch = "moonbeam-axia-v0.9.17" }
-sp-core = { git = "https://github.com/purestake/substrate", default-features = false , branch = "moonbeam-axia-v0.9.17" }
-sp-finality-grandpa = { git = "https://github.com/purestake/substrate", default-features = false , branch = "moonbeam-axia-v0.9.17" }
-sp-runtime = { git = "https://github.com/purestake/substrate", default-features = false , branch = "moonbeam-axia-v0.9.17" }
-sp-std = { git = "https://github.com/purestake/substrate", default-features = false , branch = "moonbeam-axia-v0.9.17" }
+frame-support = { git = "https://github.com/axtend/axlib", default-features = false , branch = "axlib" }
+sp-core = { git = "https://github.com/axtend/axlib", default-features = false , branch = "axlib" }
+sp-finality-grandpa = { git = "https://github.com/axtend/axlib", default-features = false , branch = "axlib" }
+sp-runtime = { git = "https://github.com/axtend/axlib", default-features = false , branch = "axlib" }
+sp-std = { git = "https://github.com/axtend/axlib", default-features = false , branch = "axlib" }
 
 [dev-dependencies]
 assert_matches = "1.5"

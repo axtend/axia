@@ -23,20 +23,20 @@ service = { package = "axia-service", path = "../node/service", default-features
 axia-node-core-pvf = { path = "../node/core/pvf", optional = true }
 axia-performance-test = { path = "../node/test/performance-test", optional = true }
 
-sp-core = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
-frame-benchmarking-cli = { git = "https://github.com/purestake/substrate", optional = true , branch = "moonbeam-axia-v0.9.17" }
-try-runtime-cli = { git = "https://github.com/purestake/substrate", optional = true , branch = "moonbeam-axia-v0.9.17" }
-sc-cli = { git = "https://github.com/purestake/substrate", optional = true , branch = "moonbeam-axia-v0.9.17" }
-sc-service = { git = "https://github.com/purestake/substrate", optional = true , branch = "moonbeam-axia-v0.9.17" }
+sp-core = { git = "https://github.com/axtend/axlib", branch = "axlib" }
+frame-benchmarking-cli = { git = "https://github.com/axtend/axlib", optional = true , branch = "axlib" }
+try-runtime-cli = { git = "https://github.com/axtend/axlib", optional = true , branch = "axlib" }
+sc-cli = { git = "https://github.com/axtend/axlib", optional = true , branch = "axlib" }
+sc-service = { git = "https://github.com/axtend/axlib", optional = true , branch = "axlib" }
 axia-node-metrics = { path = "../node/metrics" }
-sc-tracing = { git = "https://github.com/purestake/substrate", optional = true , branch = "moonbeam-axia-v0.9.17" }
+sc-tracing = { git = "https://github.com/axtend/axlib", optional = true , branch = "axlib" }
 
 # this crate is used only to enable `trie-memory-tracker` feature
 # see https://github.com/paritytech/substrate/pull/6745
-sp-trie = { git = "https://github.com/purestake/substrate", default-features = false , branch = "moonbeam-axia-v0.9.17" }
+sp-trie = { git = "https://github.com/axtend/axlib", default-features = false , branch = "axlib" }
 
 [build-dependencies]
-substrate-build-script-utils = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
+substrate-build-script-utils = { git = "https://github.com/axtend/axlib", branch = "axlib" }
 
 [features]
 default = ["wasmtime", "db", "cli", "full-node", "trie-memory-tracker", "axia-native"]

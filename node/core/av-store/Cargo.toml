@@ -26,9 +26,9 @@ env_logger = "0.9.0"
 assert_matches = "1.4.0"
 kvdb-memorydb = "0.10.0"
 
-sp-core = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
+sp-core = { git = "https://github.com/axtend/axlib", branch = "axlib" }
 axia-node-subsystem-util = { path = "../../subsystem-util" }
 axia-node-subsystem-test-helpers = { path = "../../subsystem-test-helpers" }
-sp-keyring = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
+sp-keyring = { git = "https://github.com/axtend/axlib", branch = "axlib" }
 parking_lot = "0.11.1"
 test-helpers = { package = "axia-primitives-test-helpers", path = "../../../primitives/test-helpers" }

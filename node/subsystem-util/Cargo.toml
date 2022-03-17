@@ -26,9 +26,9 @@ axia-node-primitives = { path = "../primitives" }
 axia-overseer = { path = "../overseer" }
 metered-channel = { path = "../metered-channel" }
 
-sp-core = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
-sp-application-crypto = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
-sp-keystore = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
+sp-core = { git = "https://github.com/axtend/axlib", branch = "axlib" }
+sp-application-crypto = { git = "https://github.com/axtend/axlib", branch = "axlib" }
+sp-keystore = { git = "https://github.com/axtend/axlib", branch = "axlib" }
 
 [dev-dependencies]
 assert_matches = "1.4.0"

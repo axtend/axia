@@ -23,16 +23,16 @@ pallet-bridge-messages = { path = "../messages", default-features = false }
 
 # Substrate Dependencies
 
-frame-benchmarking = { git = "https://github.com/purestake/substrate", default-features = false, optional = true , branch = "moonbeam-axia-v0.9.17" }
-frame-support = { git = "https://github.com/purestake/substrate", default-features = false , branch = "moonbeam-axia-v0.9.17" }
-frame-system = { git = "https://github.com/purestake/substrate", default-features = false , branch = "moonbeam-axia-v0.9.17" }
-sp-core = { git = "https://github.com/purestake/substrate", default-features = false , branch = "moonbeam-axia-v0.9.17" }
-sp-io = { git = "https://github.com/purestake/substrate", default-features = false , branch = "moonbeam-axia-v0.9.17" }
-sp-runtime = { git = "https://github.com/purestake/substrate", default-features = false , branch = "moonbeam-axia-v0.9.17" }
-sp-std = { git = "https://github.com/purestake/substrate", default-features = false , branch = "moonbeam-axia-v0.9.17" }
+frame-benchmarking = { git = "https://github.com/axtend/axlib", default-features = false, optional = true , branch = "axlib" }
+frame-support = { git = "https://github.com/axtend/axlib", default-features = false , branch = "axlib" }
+frame-system = { git = "https://github.com/axtend/axlib", default-features = false , branch = "axlib" }
+sp-core = { git = "https://github.com/axtend/axlib", default-features = false , branch = "axlib" }
+sp-io = { git = "https://github.com/axtend/axlib", default-features = false , branch = "axlib" }
+sp-runtime = { git = "https://github.com/axtend/axlib", default-features = false , branch = "axlib" }
+sp-std = { git = "https://github.com/axtend/axlib", default-features = false , branch = "axlib" }
 
 [dev-dependencies]
-pallet-balances = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
+pallet-balances = { git = "https://github.com/axtend/axlib", branch = "axlib" }
 
 [features]
 default = ["std"]

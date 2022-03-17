@@ -27,9 +27,9 @@ axia-service = { path = "../../../../node/service", features = ["rococo-native"]
 axia-node-primitives = { path = "../../../../node/primitives" }
 axia-node-subsystem = { path = "../../../../node/subsystem" }
 
-sc-cli = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
-sp-core = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
-sc-service = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
+sc-cli = { git = "https://github.com/axtend/axlib", branch = "axlib" }
+sp-core = { git = "https://github.com/axtend/axlib", branch = "axlib" }
+sc-service = { git = "https://github.com/axtend/axlib", branch = "axlib" }
 
 # This one is tricky. Even though it is not used directly by the collator, we still need it for the
 # `puppet_worker` binary, which is required for the integration test. However, this shouldn't be
@@ -40,8 +40,8 @@ axia-node-core-pvf = { path = "../../../../node/core/pvf" }
 axia-allychain = { path = "../../.." }
 axia-test-service = { path = "../../../../node/test/service" }
 
-substrate-test-utils = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
-sc-service = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
-sp-keyring = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
+substrate-test-utils = { git = "https://github.com/axtend/axlib", branch = "axlib" }
+sc-service = { git = "https://github.com/axtend/axlib", branch = "axlib" }
+sp-keyring = { git = "https://github.com/axtend/axlib", branch = "axlib" }
 
 tokio = { version = "1.15", features = ["macros"] }

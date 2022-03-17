@@ -6,20 +6,20 @@ description = "Integration tests for the XCM Executor"
 version = "0.9.17"
 
 [dependencies]
-frame-support = { git = "https://github.com/purestake/substrate", default-features = false , branch = "moonbeam-axia-v0.9.17" }
-frame-system = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
+frame-support = { git = "https://github.com/axtend/axlib", default-features = false , branch = "axlib" }
+frame-system = { git = "https://github.com/axtend/axlib", branch = "axlib" }
 futures = "0.3.21"
 pallet-xcm = { path = "../../pallet-xcm" }
 axia-test-client = { path = "../../../node/test/client" }
 axia-test-runtime = { path = "../../../runtime/test-runtime" }
 axia-test-service = { path = "../../../node/test/service" }
-sp-consensus = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
-sp-keyring = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
-sp-runtime = { git = "https://github.com/purestake/substrate", default-features = false , branch = "moonbeam-axia-v0.9.17" }
-sp-state-machine = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
+sp-consensus = { git = "https://github.com/axtend/axlib", branch = "axlib" }
+sp-keyring = { git = "https://github.com/axtend/axlib", branch = "axlib" }
+sp-runtime = { git = "https://github.com/axtend/axlib", default-features = false , branch = "axlib" }
+sp-state-machine = { git = "https://github.com/axtend/axlib", branch = "axlib" }
 xcm = { path = "../..", default-features = false }
 xcm-executor = { path = ".." }
-sp-tracing = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
+sp-tracing = { git = "https://github.com/axtend/axlib", branch = "axlib" }
 
 [features]
 default = ["std"]

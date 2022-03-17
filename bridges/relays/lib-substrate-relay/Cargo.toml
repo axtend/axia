@@ -34,10 +34,10 @@ bp-messages = { path = "../../primitives/messages" }
 
 # Substrate Dependencies
 
-frame-support = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
-sp-core = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
-sp-finality-grandpa = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
-sp-runtime = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
+frame-support = { git = "https://github.com/axtend/axlib", branch = "axlib" }
+sp-core = { git = "https://github.com/axtend/axlib", branch = "axlib" }
+sp-finality-grandpa = { git = "https://github.com/axtend/axlib", branch = "axlib" }
+sp-runtime = { git = "https://github.com/axtend/axlib", branch = "axlib" }
 
 [dev-dependencies]
 bp-millau = { path = "../../primitives/chain-millau" }

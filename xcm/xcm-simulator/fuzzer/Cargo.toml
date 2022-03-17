@@ -10,13 +10,13 @@ codec = { package = "parity-scale-codec", version = "2.0.0" }
 honggfuzz = "0.5.54"
 scale-info = { version = "1.0", features = ["derive"] }
 
-frame-system = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
-frame-support = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
-pallet-balances = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
-sp-std = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
-sp-core = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
-sp-runtime = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
-sp-io = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
+frame-system = { git = "https://github.com/axtend/axlib", branch = "axlib" }
+frame-support = { git = "https://github.com/axtend/axlib", branch = "axlib" }
+pallet-balances = { git = "https://github.com/axtend/axlib", branch = "axlib" }
+sp-std = { git = "https://github.com/axtend/axlib", branch = "axlib" }
+sp-core = { git = "https://github.com/axtend/axlib", branch = "axlib" }
+sp-runtime = { git = "https://github.com/axtend/axlib", branch = "axlib" }
+sp-io = { git = "https://github.com/axtend/axlib", branch = "axlib" }
 
 xcm = { path = "../../" }
 xcm-simulator = { path = "../" }

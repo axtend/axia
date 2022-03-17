@@ -5,10 +5,10 @@ authors = ["Parity Technologies <admin@parity.io>"]
 edition = "2018"
 
 [dependencies]
-sp-application-crypto = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
-sp-keystore = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
-sp-core = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
-sc-network = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
+sp-application-crypto = { git = "https://github.com/axtend/axlib", branch = "axlib" }
+sp-keystore = { git = "https://github.com/axtend/axlib", branch = "axlib" }
+sp-core = { git = "https://github.com/axtend/axlib", branch = "axlib" }
+sc-network = { git = "https://github.com/axtend/axlib", branch = "axlib" }
 
 axia-node-network-protocol = { path = "../protocol" }
 axia-node-subsystem = { path = "../../subsystem" }
@@ -22,9 +22,9 @@ rand_chacha = { version = "0.3.1", default-features = false }
 tracing = "0.1.29"
 
 [dev-dependencies]
-sp-keyring = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
-sp-consensus-babe = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
-sp-tracing = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
+sp-keyring = { git = "https://github.com/axtend/axlib", branch = "axlib" }
+sp-consensus-babe = { git = "https://github.com/axtend/axlib", branch = "axlib" }
+sp-tracing = { git = "https://github.com/axtend/axlib", branch = "axlib" }
 
 axia-node-subsystem-test-helpers = { path = "../../subsystem-test-helpers" }
 

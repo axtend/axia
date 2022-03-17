@@ -22,14 +22,14 @@ serde = { version = "1.0", optional = true, features = ["derive"] }
 
 # Substrate Based Dependencies
 
-frame-support = { git = "https://github.com/purestake/substrate", default-features = false , branch = "moonbeam-axia-v0.9.17" }
-frame-system = { git = "https://github.com/purestake/substrate", default-features = false , branch = "moonbeam-axia-v0.9.17" }
-sp-api = { git = "https://github.com/purestake/substrate", default-features = false , branch = "moonbeam-axia-v0.9.17" }
-sp-core = { git = "https://github.com/purestake/substrate", default-features = false , branch = "moonbeam-axia-v0.9.17" }
-sp-io = { git = "https://github.com/purestake/substrate", default-features = false , branch = "moonbeam-axia-v0.9.17" }
-sp-runtime = { git = "https://github.com/purestake/substrate", default-features = false , branch = "moonbeam-axia-v0.9.17" }
-sp-std = { git = "https://github.com/purestake/substrate", default-features = false , branch = "moonbeam-axia-v0.9.17" }
-sp-trie = { git = "https://github.com/purestake/substrate", default-features = false , branch = "moonbeam-axia-v0.9.17" }
+frame-support = { git = "https://github.com/axtend/axlib", default-features = false , branch = "axlib" }
+frame-system = { git = "https://github.com/axtend/axlib", default-features = false , branch = "axlib" }
+sp-api = { git = "https://github.com/axtend/axlib", default-features = false , branch = "axlib" }
+sp-core = { git = "https://github.com/axtend/axlib", default-features = false , branch = "axlib" }
+sp-io = { git = "https://github.com/axtend/axlib", default-features = false , branch = "axlib" }
+sp-runtime = { git = "https://github.com/axtend/axlib", default-features = false , branch = "axlib" }
+sp-std = { git = "https://github.com/axtend/axlib", default-features = false , branch = "axlib" }
+sp-trie = { git = "https://github.com/axtend/axlib", default-features = false , branch = "axlib" }
 
 [features]
 default = ["std"]

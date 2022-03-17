@@ -14,8 +14,8 @@ axia-subsystem = { package = "axia-node-subsystem", path = "../../subsystem" }
 axia-node-network-protocol = { path = "../../network/protocol" }
 axia-node-subsystem-util = { path = "../../subsystem-util" }
 axia-node-primitives = { path = "../../primitives" }
-sp-core = { git = "https://github.com/purestake/substrate", features = ["std"] , branch = "moonbeam-axia-v0.9.17" }
-sp-keystore = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
+sp-core = { git = "https://github.com/axtend/axlib", features = ["std"] , branch = "axlib" }
+sp-keystore = { git = "https://github.com/axtend/axlib", branch = "axlib" }
 thiserror = "1.0.30"
 rand = "0.8.3"
 derive_more = "0.99.17"
@@ -23,10 +23,10 @@ lru = "0.7.2"
 
 [dev-dependencies]
 axia-subsystem-testhelpers = { package = "axia-node-subsystem-test-helpers", path = "../../subsystem-test-helpers" }
-sp-core = { git = "https://github.com/purestake/substrate", features = ["std"] , branch = "moonbeam-axia-v0.9.17" }
-sp-keyring = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
-sp-tracing = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
-sc-network = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
+sp-core = { git = "https://github.com/axtend/axlib", features = ["std"] , branch = "axlib" }
+sp-keyring = { git = "https://github.com/axtend/axlib", branch = "axlib" }
+sp-tracing = { git = "https://github.com/axtend/axlib", branch = "axlib" }
+sc-network = { git = "https://github.com/axtend/axlib", branch = "axlib" }
 futures-timer = "3.0.2"
 assert_matches = "1.4.0"
 axia-primitives-test-helpers = { path = "../../../primitives/test-helpers" }

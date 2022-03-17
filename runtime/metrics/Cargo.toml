@@ -5,8 +5,8 @@ authors = ["Parity Technologies <admin@parity.io>"]
 edition = "2018"
 
 [dependencies]
-sp-std = { package = "sp-std", git = "https://github.com/purestake/substrate", default-features = false, branch = "moonbeam-axia-v0.9.17" }
-sp-tracing = { git = "https://github.com/purestake/substrate", default-features = false , branch = "moonbeam-axia-v0.9.17" }
+sp-std = { package = "sp-std", git = "https://github.com/axtend/axlib", default-features = false, branch = "axlib" }
+sp-tracing = { git = "https://github.com/axtend/axlib", default-features = false , branch = "axlib" }
 parity-scale-codec = { version = "2.3.1", default-features = false }
 primitives = { package = "axia-primitives", path = "../../primitives", default-features = false }
 

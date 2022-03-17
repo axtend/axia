@@ -6,59 +6,59 @@ edition = "2018"
 
 [dependencies]
 # Substrate Client
-sc-authority-discovery = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
-babe = { package = "sc-consensus-babe", git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
-beefy-primitives = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
-beefy-gadget = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
-grandpa = { package = "sc-finality-grandpa", git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
-sc-block-builder = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
-sc-chain-spec = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
-sc-client-api = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
-sc-client-db = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
-sc-consensus-uncles = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
-sc-consensus = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
-sc-consensus-slots = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
-sc-executor = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
-sc-network = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
-sc-transaction-pool = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
-sc-sync-state-rpc = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
-sc-keystore = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
-sc-basic-authorship = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
-sc-offchain = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
-service = { package = "sc-service", git = "https://github.com/purestake/substrate", default-features = false , branch = "moonbeam-axia-v0.9.17" }
-telemetry = { package = "sc-telemetry", git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
+sc-authority-discovery = { git = "https://github.com/axtend/axlib", branch = "axlib" }
+babe = { package = "sc-consensus-babe", git = "https://github.com/axtend/axlib", branch = "axlib" }
+beefy-primitives = { git = "https://github.com/axtend/axlib", branch = "axlib" }
+beefy-gadget = { git = "https://github.com/axtend/axlib", branch = "axlib" }
+grandpa = { package = "sc-finality-grandpa", git = "https://github.com/axtend/axlib", branch = "axlib" }
+sc-block-builder = { git = "https://github.com/axtend/axlib", branch = "axlib" }
+sc-chain-spec = { git = "https://github.com/axtend/axlib", branch = "axlib" }
+sc-client-api = { git = "https://github.com/axtend/axlib", branch = "axlib" }
+sc-client-db = { git = "https://github.com/axtend/axlib", branch = "axlib" }
+sc-consensus-uncles = { git = "https://github.com/axtend/axlib", branch = "axlib" }
+sc-consensus = { git = "https://github.com/axtend/axlib", branch = "axlib" }
+sc-consensus-slots = { git = "https://github.com/axtend/axlib", branch = "axlib" }
+sc-executor = { git = "https://github.com/axtend/axlib", branch = "axlib" }
+sc-network = { git = "https://github.com/axtend/axlib", branch = "axlib" }
+sc-transaction-pool = { git = "https://github.com/axtend/axlib", branch = "axlib" }
+sc-sync-state-rpc = { git = "https://github.com/axtend/axlib", branch = "axlib" }
+sc-keystore = { git = "https://github.com/axtend/axlib", branch = "axlib" }
+sc-basic-authorship = { git = "https://github.com/axtend/axlib", branch = "axlib" }
+sc-offchain = { git = "https://github.com/axtend/axlib", branch = "axlib" }
+service = { package = "sc-service", git = "https://github.com/axtend/axlib", default-features = false , branch = "axlib" }
+telemetry = { package = "sc-telemetry", git = "https://github.com/axtend/axlib", branch = "axlib" }
 
 # Substrate Primitives
-sp-authority-discovery = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
-consensus_common = { package = "sp-consensus", git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
-grandpa_primitives = { package = "sp-finality-grandpa", git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
-inherents = { package = "sp-inherents", git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
-sp-api = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
-sp-block-builder = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
-sp-blockchain = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
-sp-core = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
-sp-io = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
-sp-keystore = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
-sp-offchain = { package = "sp-offchain", git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
-sp-runtime = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
-sp-session = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
-sp-storage = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
-sp-transaction-pool = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
-sp-trie = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
-sp-timestamp = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
-sp-consensus-babe = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
-sp-state-machine = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
+sp-authority-discovery = { git = "https://github.com/axtend/axlib", branch = "axlib" }
+consensus_common = { package = "sp-consensus", git = "https://github.com/axtend/axlib", branch = "axlib" }
+grandpa_primitives = { package = "sp-finality-grandpa", git = "https://github.com/axtend/axlib", branch = "axlib" }
+inherents = { package = "sp-inherents", git = "https://github.com/axtend/axlib", branch = "axlib" }
+sp-api = { git = "https://github.com/axtend/axlib", branch = "axlib" }
+sp-block-builder = { git = "https://github.com/axtend/axlib", branch = "axlib" }
+sp-blockchain = { git = "https://github.com/axtend/axlib", branch = "axlib" }
+sp-core = { git = "https://github.com/axtend/axlib", branch = "axlib" }
+sp-io = { git = "https://github.com/axtend/axlib", branch = "axlib" }
+sp-keystore = { git = "https://github.com/axtend/axlib", branch = "axlib" }
+sp-offchain = { package = "sp-offchain", git = "https://github.com/axtend/axlib", branch = "axlib" }
+sp-runtime = { git = "https://github.com/axtend/axlib", branch = "axlib" }
+sp-session = { git = "https://github.com/axtend/axlib", branch = "axlib" }
+sp-storage = { git = "https://github.com/axtend/axlib", branch = "axlib" }
+sp-transaction-pool = { git = "https://github.com/axtend/axlib", branch = "axlib" }
+sp-trie = { git = "https://github.com/axtend/axlib", branch = "axlib" }
+sp-timestamp = { git = "https://github.com/axtend/axlib", branch = "axlib" }
+sp-consensus-babe = { git = "https://github.com/axtend/axlib", branch = "axlib" }
+sp-state-machine = { git = "https://github.com/axtend/axlib", branch = "axlib" }
 
 # Substrate Pallets
-pallet-babe = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
-pallet-im-online = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
-pallet-staking = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
-pallet-transaction-payment-rpc-runtime-api = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
-pallet-mmr-primitives = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
+pallet-babe = { git = "https://github.com/axtend/axlib", branch = "axlib" }
+pallet-im-online = { git = "https://github.com/axtend/axlib", branch = "axlib" }
+pallet-staking = { git = "https://github.com/axtend/axlib", branch = "axlib" }
+pallet-transaction-payment-rpc-runtime-api = { git = "https://github.com/axtend/axlib", branch = "axlib" }
+pallet-mmr-primitives = { git = "https://github.com/axtend/axlib", branch = "axlib" }
 
 # Substrate Other
-frame-system-rpc-runtime-api = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
-prometheus-endpoint = { package = "substrate-prometheus-endpoint", git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
+frame-system-rpc-runtime-api = { git = "https://github.com/axtend/axlib", branch = "axlib" }
+prometheus-endpoint = { package = "substrate-prometheus-endpoint", git = "https://github.com/axtend/axlib", branch = "axlib" }
 
 # External Crates
 futures = "0.3.21"

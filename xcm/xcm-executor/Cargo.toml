@@ -9,14 +9,14 @@ version = "0.9.17"
 impl-trait-for-tuples = "0.2.2"
 parity-scale-codec = { version = "2.3.1", default-features = false, features = ["derive"] }
 xcm = { path = "..", default-features = false }
-sp-std = { git = "https://github.com/purestake/substrate", default-features = false , branch = "moonbeam-axia-v0.9.17" }
-sp-io = { git = "https://github.com/purestake/substrate", default-features = false , branch = "moonbeam-axia-v0.9.17" }
-sp-arithmetic = { git = "https://github.com/purestake/substrate", default-features = false , branch = "moonbeam-axia-v0.9.17" }
-sp-core = { git = "https://github.com/purestake/substrate", default-features = false , branch = "moonbeam-axia-v0.9.17" }
-sp-runtime = { git = "https://github.com/purestake/substrate", default-features = false , branch = "moonbeam-axia-v0.9.17" }
-frame-support = { git = "https://github.com/purestake/substrate", default-features = false , branch = "moonbeam-axia-v0.9.17" }
+sp-std = { git = "https://github.com/axtend/axlib", default-features = false , branch = "axlib" }
+sp-io = { git = "https://github.com/axtend/axlib", default-features = false , branch = "axlib" }
+sp-arithmetic = { git = "https://github.com/axtend/axlib", default-features = false , branch = "axlib" }
+sp-core = { git = "https://github.com/axtend/axlib", default-features = false , branch = "axlib" }
+sp-runtime = { git = "https://github.com/axtend/axlib", default-features = false , branch = "axlib" }
+frame-support = { git = "https://github.com/axtend/axlib", default-features = false , branch = "axlib" }
 log = { version = "0.4.14", default-features = false }
-frame-benchmarking = { git = "https://github.com/purestake/substrate", default-features = false, optional = true , branch = "moonbeam-axia-v0.9.17" }
+frame-benchmarking = { git = "https://github.com/axtend/axlib", default-features = false, optional = true , branch = "axlib" }
 
 [features]
 default = ["std"]

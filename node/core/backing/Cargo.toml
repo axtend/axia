@@ -6,7 +6,7 @@ edition = "2018"
 
 [dependencies]
 futures = "0.3.21"
-sp-keystore = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
+sp-keystore = { git = "https://github.com/axtend/axlib", branch = "axlib" }
 axia-primitives = { path = "../../../primitives" }
 axia-node-primitives = { path = "../../primitives" }
 axia-subsystem = { package = "axia-node-subsystem", path = "../../subsystem" }
@@ -18,11 +18,11 @@ tracing = "0.1.29"
 thiserror = "1.0.30"
 
 [dev-dependencies]
-sp-core = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
-sp-application-crypto = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
-sp-keyring = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
-sc-keystore = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
-sp-tracing = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
+sp-core = { git = "https://github.com/axtend/axlib", branch = "axlib" }
+sp-application-crypto = { git = "https://github.com/axtend/axlib", branch = "axlib" }
+sp-keyring = { git = "https://github.com/axtend/axlib", branch = "axlib" }
+sc-keystore = { git = "https://github.com/axtend/axlib", branch = "axlib" }
+sp-tracing = { git = "https://github.com/axtend/axlib", branch = "axlib" }
 futures = { version = "0.3.21", features = ["thread-pool"] }
 assert_matches = "1.4.0"
 axia-node-subsystem-test-helpers = { path = "../../subsystem-test-helpers" }

@@ -12,10 +12,10 @@ axia-runtime-constants = { version = "0.9.17", path = "../../../runtime/axia/con
 kusama-runtime-constants = { version = "0.9.17", path = "../../../runtime/kusama/constants" }
 westend-runtime-constants = { version = "0.9.17", path = "../../../runtime/westend/constants" }
 
-pallet-bags-list-remote-tests = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
-sp-tracing = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
-frame-system = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
-sp-core = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
+pallet-bags-list-remote-tests = { git = "https://github.com/axtend/axlib", branch = "axlib" }
+sp-tracing = { git = "https://github.com/axtend/axlib", branch = "axlib" }
+frame-system = { git = "https://github.com/axtend/axlib", branch = "axlib" }
+sp-core = { git = "https://github.com/axtend/axlib", branch = "axlib" }
 
 clap = { version = "3.0", features = ["derive"] }
 log = "0.4.14"

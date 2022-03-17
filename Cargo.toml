@@ -22,7 +22,7 @@ assert_cmd = "2.0.4"
 nix = "0.23.1"
 tempfile = "3.2.0"
 tokio = "1.15.0"
-remote-externalities = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
+remote-externalities = { git = "https://github.com/axtend/axlib", branch = "axlib" }
 axia-core-primitives = { path = "core-primitives" }
 
 [workspace]

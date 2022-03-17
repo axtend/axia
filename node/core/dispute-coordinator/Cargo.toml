@@ -17,14 +17,14 @@ axia-node-primitives = { path = "../../primitives" }
 axia-node-subsystem = { path = "../../subsystem" }
 axia-node-subsystem-util = { path = "../../subsystem-util" }
 
-sc-keystore = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
+sc-keystore = { git = "https://github.com/axtend/axlib", branch = "axlib" }
 
 [dev-dependencies]
 kvdb-memorydb = "0.10.0"
 axia-node-subsystem-test-helpers = { path = "../../subsystem-test-helpers" }
-sp-keyring = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
-sp-core = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
-sp-keystore = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
+sp-keyring = { git = "https://github.com/axtend/axlib", branch = "axlib" }
+sp-core = { git = "https://github.com/axtend/axlib", branch = "axlib" }
+sp-keystore = { git = "https://github.com/axtend/axlib", branch = "axlib" }
 assert_matches = "1.4.0"
 test-helpers = { package = "axia-primitives-test-helpers", path = "../../../primitives/test-helpers" }
 

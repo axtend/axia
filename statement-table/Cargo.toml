@@ -6,5 +6,5 @@ edition = "2018"
 
 [dependencies]
 parity-scale-codec = { version = "2.3.1", default-features = false, features = ["derive"] }
-sp-core = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
+sp-core = { git = "https://github.com/axtend/axlib", branch = "axlib" }
 primitives = { package = "axia-primitives", path = "../primitives" }

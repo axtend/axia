@@ -23,15 +23,15 @@ parity-scale-codec = { version = "2.3.1", default-features = false, features = [
 axia-allychain = { path = "../../../allychain" }
 axia-core-primitives = { path = "../../../core-primitives" }
 axia-node-subsystem-util = { path = "../../subsystem-util"}
-sc-executor = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
-sc-executor-wasmtime = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
-sc-executor-common = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
-sp-externalities = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
-sp-io = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
-sp-core = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
-sp-wasm-interface = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
-sp-maybe-compressed-blob = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
-sp-tracing = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
+sc-executor = { git = "https://github.com/axtend/axlib", branch = "axlib" }
+sc-executor-wasmtime = { git = "https://github.com/axtend/axlib", branch = "axlib" }
+sc-executor-common = { git = "https://github.com/axtend/axlib", branch = "axlib" }
+sp-externalities = { git = "https://github.com/axtend/axlib", branch = "axlib" }
+sp-io = { git = "https://github.com/axtend/axlib", branch = "axlib" }
+sp-core = { git = "https://github.com/axtend/axlib", branch = "axlib" }
+sp-wasm-interface = { git = "https://github.com/axtend/axlib", branch = "axlib" }
+sp-maybe-compressed-blob = { git = "https://github.com/axtend/axlib", branch = "axlib" }
+sp-tracing = { git = "https://github.com/axtend/axlib", branch = "axlib" }
 
 [dev-dependencies]
 adder = { package = "test-allychain-adder", path = "../../../allychain/test-allychains/adder" }
