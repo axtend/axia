@@ -1,33 +1,33 @@
 // Copyright 2020 Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// This file is part of Axia.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// Axia is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// Axia is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with Axia.  If not, see <http://www.gnu.org/licenses/>.
 
 //! Implements the Runtime API Subsystem
 //!
-//! This provides a clean, ownerless wrapper around the parachain-related runtime APIs. This crate
+//! This provides a clean, ownerless wrapper around the allychain-related runtime APIs. This crate
 //! can also be used to cache responses from heavy runtime APIs.
 
 #![deny(unused_crate_dependencies)]
 #![warn(missing_docs)]
 
-use polkadot_node_subsystem_util::metrics::{self, prometheus};
-use polkadot_primitives::{
+use axia_node_subsystem_util::metrics::{self, prometheus};
+use axia_primitives::{
 	v1::{Block, BlockId, Hash},
-	v2::ParachainHost,
+	v2::AllychainHost,
 };
-use polkadot_subsystem::{
+use axia_subsystem::{
 	errors::RuntimeApiError,
 	messages::{RuntimeApiMessage, RuntimeApiRequest as Request},
 	overseer, FromOverseer, OverseerSignal, SpawnedSubsystem, SubsystemContext, SubsystemError,
@@ -48,13 +48,13 @@ mod cache;
 #[cfg(test)]
 mod tests;
 
-const LOG_TARGET: &str = "parachain::runtime-api";
+const LOG_TARGET: &str = "allychain::runtime-api";
 
 /// The number of maximum runtime API requests can be executed in parallel. Further requests will be buffered.
 const MAX_PARALLEL_REQUESTS: usize = 4;
 
 /// The name of the blocking task that executes a runtime API request.
-const API_REQUEST_TASK_NAME: &str = "polkadot-runtime-api-request";
+const API_REQUEST_TASK_NAME: &str = "axia-runtime-api-request";
 
 /// The `RuntimeApiSubsystem`. See module docs for more details.
 pub struct RuntimeApiSubsystem<Client> {
@@ -93,7 +93,7 @@ impl<Client> RuntimeApiSubsystem<Client> {
 impl<Client, Context> overseer::Subsystem<Context, SubsystemError> for RuntimeApiSubsystem<Client>
 where
 	Client: ProvideRuntimeApi<Block> + Send + 'static + Sync,
-	Client::Api: ParachainHost<Block> + BabeApi<Block> + AuthorityDiscoveryApi<Block>,
+	Client::Api: AllychainHost<Block> + BabeApi<Block> + AuthorityDiscoveryApi<Block>,
 	Context: SubsystemContext<Message = RuntimeApiMessage>,
 	Context: overseer::SubsystemContext<Message = RuntimeApiMessage>,
 {
@@ -105,7 +105,7 @@ where
 impl<Client> RuntimeApiSubsystem<Client>
 where
 	Client: ProvideRuntimeApi<Block> + Send + 'static + Sync,
-	Client::Api: ParachainHost<Block> + BabeApi<Block> + AuthorityDiscoveryApi<Block>,
+	Client::Api: AllychainHost<Block> + BabeApi<Block> + AuthorityDiscoveryApi<Block>,
 {
 	fn store_cache(&mut self, result: RequestResult) {
 		use RequestResult::*;
@@ -329,7 +329,7 @@ async fn run<Client, Context>(
 ) -> SubsystemResult<()>
 where
 	Client: ProvideRuntimeApi<Block> + Send + Sync + 'static,
-	Client::Api: ParachainHost<Block> + BabeApi<Block> + AuthorityDiscoveryApi<Block>,
+	Client::Api: AllychainHost<Block> + BabeApi<Block> + AuthorityDiscoveryApi<Block>,
 	Context: SubsystemContext<Message = RuntimeApiMessage>,
 	Context: overseer::SubsystemContext<Message = RuntimeApiMessage>,
 {
@@ -358,7 +358,7 @@ fn make_runtime_api_request<Client>(
 ) -> Option<RequestResult>
 where
 	Client: ProvideRuntimeApi<Block>,
-	Client::Api: ParachainHost<Block> + BabeApi<Block> + AuthorityDiscoveryApi<Block>,
+	Client::Api: AllychainHost<Block> + BabeApi<Block> + AuthorityDiscoveryApi<Block>,
 {
 	let _timer = metrics.time_make_runtime_api_request();
 
@@ -368,7 +368,7 @@ where
 			let api = client.runtime_api();
 
 			use sp_api::ApiExt;
-			let runtime_version = api.api_version::<dyn ParachainHost<Block>>(&BlockId::Hash(relay_parent))
+			let runtime_version = api.api_version::<dyn AllychainHost<Block>>(&BlockId::Hash(relay_parent))
 				.unwrap_or_else(|e| {
 					tracing::warn!(
 						target: LOG_TARGET,
@@ -454,7 +454,7 @@ where
 			let block_id = BlockId::Hash(relay_parent);
 
 			let api_version = api
-				.api_version::<dyn ParachainHost<Block>>(&BlockId::Hash(relay_parent))
+				.api_version::<dyn AllychainHost<Block>>(&BlockId::Hash(relay_parent))
 				.unwrap_or_default()
 				.unwrap_or_default();
 
@@ -547,7 +547,7 @@ impl metrics::Metrics for Metrics {
 			chain_api_requests: prometheus::register(
 				prometheus::CounterVec::new(
 					prometheus::Opts::new(
-						"polkadot_parachain_runtime_api_requests_total",
+						"axia_allychain_runtime_api_requests_total",
 						"Number of Runtime API requests served.",
 					),
 					&["success"],
@@ -556,7 +556,7 @@ impl metrics::Metrics for Metrics {
 			)?,
 			make_runtime_api_request: prometheus::register(
 				prometheus::Histogram::with_opts(prometheus::HistogramOpts::new(
-					"polkadot_parachain_runtime_api_make_runtime_api_request",
+					"axia_allychain_runtime_api_make_runtime_api_request",
 					"Time spent within `runtime_api::make_runtime_api_request`",
 				))?,
 				registry,

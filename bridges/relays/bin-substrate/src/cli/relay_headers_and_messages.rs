@@ -55,7 +55,7 @@ const CONVERSION_RATE_ALLOWED_DIFFERENCE_RATIO: f64 = 0.05;
 pub enum RelayHeadersAndMessages {
 	MillauRialto(MillauRialtoHeadersAndMessages),
 	RococoWococo(RococoWococoHeadersAndMessages),
-	KusamaPolkadot(KusamaPolkadotHeadersAndMessages),
+	KusamaAxia(KusamaAxiaHeadersAndMessages),
 }
 
 /// Parameters that have the same names across all bridges.
@@ -229,34 +229,34 @@ macro_rules! select_bridge {
 
 				$generic
 			},
-			RelayHeadersAndMessages::KusamaPolkadot(_) => {
-				type Params = KusamaPolkadotHeadersAndMessages;
+			RelayHeadersAndMessages::KusamaAxia(_) => {
+				type Params = KusamaAxiaHeadersAndMessages;
 
 				type Left = relay_kusama_client::Kusama;
-				type Right = relay_polkadot_client::Polkadot;
+				type Right = relay_axia_client::Axia;
 
 				type LeftToRightFinality =
-					crate::chains::kusama_headers_to_polkadot::KusamaFinalityToPolkadot;
+					crate::chains::kusama_headers_to_axia::KusamaFinalityToAxia;
 				type RightToLeftFinality =
-					crate::chains::polkadot_headers_to_kusama::PolkadotFinalityToKusama;
+					crate::chains::axia_headers_to_kusama::AxiaFinalityToKusama;
 
 				type LeftAccountIdConverter = bp_kusama::AccountIdConverter;
-				type RightAccountIdConverter = bp_polkadot::AccountIdConverter;
+				type RightAccountIdConverter = bp_axia::AccountIdConverter;
 
 				const MAX_MISSING_LEFT_HEADERS_AT_RIGHT: bp_kusama::BlockNumber =
 					bp_kusama::SESSION_LENGTH;
-				const MAX_MISSING_RIGHT_HEADERS_AT_LEFT: bp_polkadot::BlockNumber =
-					bp_polkadot::SESSION_LENGTH;
+				const MAX_MISSING_RIGHT_HEADERS_AT_LEFT: bp_axia::BlockNumber =
+					bp_axia::SESSION_LENGTH;
 
 				use crate::chains::{
-					kusama_messages_to_polkadot::{
+					kusama_messages_to_axia::{
 						standalone_metrics as left_to_right_standalone_metrics,
 						run as left_to_right_messages,
-						update_polkadot_to_kusama_conversion_rate as update_right_to_left_conversion_rate,
+						update_axia_to_kusama_conversion_rate as update_right_to_left_conversion_rate,
 					},
-					polkadot_messages_to_kusama::{
+					axia_messages_to_kusama::{
 						run as right_to_left_messages,
-						update_kusama_to_polkadot_conversion_rate as update_left_to_right_conversion_rate,
+						update_kusama_to_axia_conversion_rate as update_left_to_right_conversion_rate,
 					},
 				};
 
@@ -303,10 +303,10 @@ macro_rules! select_bridge {
 								Bytes(
 									Right::sign_transaction(right_genesis_hash, &right_sign, relay_substrate_client::TransactionEra::immortal(),
 										UnsignedTransaction::new(
-											relay_polkadot_client::runtime::Call::Balances(
-												relay_polkadot_client::runtime::BalancesCall::transfer(
-													bp_polkadot::AccountAddress::Id(account_id),
-													bp_polkadot::EXISTENTIAL_DEPOSIT.into(),
+											relay_axia_client::runtime::Call::Balances(
+												relay_axia_client::runtime::BalancesCall::transfer(
+													bp_axia::AccountAddress::Id(account_id),
+													bp_axia::EXISTENTIAL_DEPOSIT.into(),
 												),
 											),
 											transaction_nonce,
@@ -332,11 +332,11 @@ declare_chain_options!(Rialto, rialto);
 declare_chain_options!(Rococo, rococo);
 declare_chain_options!(Wococo, wococo);
 declare_chain_options!(Kusama, kusama);
-declare_chain_options!(Polkadot, polkadot);
+declare_chain_options!(Axia, axia);
 // All supported bridges.
 declare_bridge_options!(Millau, Rialto);
 declare_bridge_options!(Rococo, Wococo);
-declare_bridge_options!(Kusama, Polkadot);
+declare_bridge_options!(Kusama, Axia);
 
 impl RelayHeadersAndMessages {
 	/// Run the command.

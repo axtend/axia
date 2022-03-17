@@ -1,20 +1,20 @@
 // Copyright 2017-2020 Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// This file is part of Axia.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// Axia is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// Axia is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with Axia.  If not, see <http://www.gnu.org/licenses/>.
 
-//! The Polkadot runtime. This can be compiled with `#[no_std]`, ready for Wasm.
+//! The Axia runtime. This can be compiled with `#[no_std]`, ready for Wasm.
 
 #![cfg_attr(not(feature = "std"), no_std)]
 // `construct_runtime!` does a lot of recursion and requires us to increase the limit to 256.
@@ -24,13 +24,13 @@ use pallet_transaction_payment::CurrencyAdapter;
 use parity_scale_codec::Encode;
 use sp_std::{collections::btree_map::BTreeMap, prelude::*};
 
-use polkadot_runtime_parachains::{
-	configuration as parachains_configuration, disputes as parachains_disputes,
-	dmp as parachains_dmp, hrmp as parachains_hrmp, inclusion as parachains_inclusion,
-	initializer as parachains_initializer, origin as parachains_origin, paras as parachains_paras,
-	paras_inherent as parachains_paras_inherent, runtime_api_impl::v1 as runtime_impl,
-	scheduler as parachains_scheduler, session_info as parachains_session_info,
-	shared as parachains_shared, ump as parachains_ump,
+use axia_runtime_allychains::{
+	configuration as allychains_configuration, disputes as allychains_disputes,
+	dmp as allychains_dmp, hrmp as allychains_hrmp, inclusion as allychains_inclusion,
+	initializer as allychains_initializer, origin as allychains_origin, paras as allychains_paras,
+	paras_inherent as allychains_paras_inherent, runtime_api_impl::v1 as runtime_impl,
+	scheduler as allychains_scheduler, session_info as allychains_session_info,
+	shared as allychains_shared, ump as allychains_ump,
 };
 
 use authority_discovery_primitives::AuthorityId as AuthorityDiscoveryId;
@@ -43,7 +43,7 @@ use pallet_grandpa::{fg_primitives, AuthorityId as GrandpaId};
 use pallet_mmr_primitives as mmr;
 use pallet_session::historical as session_historical;
 use pallet_transaction_payment::{FeeDetails, RuntimeDispatchInfo};
-use polkadot_runtime_parachains::reward_points::RewardValidatorsWithEraPoints;
+use axia_runtime_allychains::reward_points::RewardValidatorsWithEraPoints;
 use primitives::{
 	v1::{
 		AccountId, AccountIndex, Balance, BlockNumber, CandidateEvent, CommittedCandidateReceipt,
@@ -93,8 +93,8 @@ include!(concat!(env!("OUT_DIR"), "/wasm_binary.rs"));
 
 /// Runtime version (Test).
 pub const VERSION: RuntimeVersion = RuntimeVersion {
-	spec_name: create_runtime_str!("polkadot-test-runtime"),
-	impl_name: create_runtime_str!("parity-polkadot-test-runtime"),
+	spec_name: create_runtime_str!("axia-test-runtime"),
+	impl_name: create_runtime_str!("parity-axia-test-runtime"),
 	authoring_version: 2,
 	spec_version: 1056,
 	impl_version: 0,
@@ -463,55 +463,55 @@ impl pallet_sudo::Config for Runtime {
 	type Call = Call;
 }
 
-impl parachains_configuration::Config for Runtime {
-	type WeightInfo = parachains_configuration::TestWeightInfo;
+impl allychains_configuration::Config for Runtime {
+	type WeightInfo = allychains_configuration::TestWeightInfo;
 }
 
-impl parachains_shared::Config for Runtime {}
+impl allychains_shared::Config for Runtime {}
 
-impl parachains_inclusion::Config for Runtime {
+impl allychains_inclusion::Config for Runtime {
 	type Event = Event;
 	type DisputesHandler = ParasDisputes;
 	type RewardValidators = RewardValidatorsWithEraPoints<Runtime>;
 }
 
-impl parachains_disputes::Config for Runtime {
+impl allychains_disputes::Config for Runtime {
 	type Event = Event;
 	type RewardValidators = ();
 	type PunishValidators = ();
-	type WeightInfo = parachains_disputes::TestWeightInfo;
+	type WeightInfo = allychains_disputes::TestWeightInfo;
 }
 
-impl parachains_paras_inherent::Config for Runtime {
-	type WeightInfo = parachains_paras_inherent::TestWeightInfo;
+impl allychains_paras_inherent::Config for Runtime {
+	type WeightInfo = allychains_paras_inherent::TestWeightInfo;
 }
 
-impl parachains_initializer::Config for Runtime {
+impl allychains_initializer::Config for Runtime {
 	type Randomness = pallet_babe::RandomnessFromOneEpochAgo<Runtime>;
 	type ForceOrigin = frame_system::EnsureRoot<AccountId>;
 	type WeightInfo = ();
 }
 
-impl parachains_session_info::Config for Runtime {}
+impl allychains_session_info::Config for Runtime {}
 
 parameter_types! {
 	pub const ParasUnsignedPriority: TransactionPriority = TransactionPriority::max_value();
 }
 
-impl parachains_paras::Config for Runtime {
+impl allychains_paras::Config for Runtime {
 	type Event = Event;
-	type WeightInfo = parachains_paras::TestWeightInfo;
+	type WeightInfo = allychains_paras::TestWeightInfo;
 	type UnsignedPriority = ParasUnsignedPriority;
 	type NextSessionRotation = Babe;
 }
 
-impl parachains_dmp::Config for Runtime {}
+impl allychains_dmp::Config for Runtime {}
 
 parameter_types! {
 	pub const FirstMessageFactorPercent: u64 = 100;
 }
 
-impl parachains_ump::Config for Runtime {
+impl allychains_ump::Config for Runtime {
 	type Event = Event;
 	type UmpSink = ();
 	type FirstMessageFactorPercent = FirstMessageFactorPercent;
@@ -545,18 +545,18 @@ impl pallet_xcm::Config for Runtime {
 	type AdvertisedXcmVersion = pallet_xcm::CurrentXcmVersion;
 }
 
-impl parachains_hrmp::Config for Runtime {
+impl allychains_hrmp::Config for Runtime {
 	type Event = Event;
 	type Origin = Origin;
 	type Currency = Balances;
-	type WeightInfo = parachains_hrmp::TestWeightInfo;
+	type WeightInfo = allychains_hrmp::TestWeightInfo;
 }
 
-impl parachains_scheduler::Config for Runtime {}
+impl allychains_scheduler::Config for Runtime {}
 
 impl paras_sudo_wrapper::Config for Runtime {}
 
-impl parachains_origin::Config for Runtime {}
+impl allychains_origin::Config for Runtime {}
 
 impl pallet_test_notifier::Config for Runtime {
 	type Event = Event;
@@ -676,22 +676,22 @@ construct_runtime! {
 		// Vesting. Usable initially, but removed once all vesting is finished.
 		Vesting: pallet_vesting::{Pallet, Call, Storage, Event<T>, Config<T>},
 
-		// Parachains runtime modules
-		Configuration: parachains_configuration::{Pallet, Call, Storage, Config<T>},
-		ParaInclusion: parachains_inclusion::{Pallet, Call, Storage, Event<T>},
-		ParaInherent: parachains_paras_inherent::{Pallet, Call, Storage, Inherent},
-		Initializer: parachains_initializer::{Pallet, Call, Storage},
-		Paras: parachains_paras::{Pallet, Call, Storage, Event},
-		ParasShared: parachains_shared::{Pallet, Call, Storage},
-		Scheduler: parachains_scheduler::{Pallet, Storage},
+		// Allychains runtime modules
+		Configuration: allychains_configuration::{Pallet, Call, Storage, Config<T>},
+		ParaInclusion: allychains_inclusion::{Pallet, Call, Storage, Event<T>},
+		ParaInherent: allychains_paras_inherent::{Pallet, Call, Storage, Inherent},
+		Initializer: allychains_initializer::{Pallet, Call, Storage},
+		Paras: allychains_paras::{Pallet, Call, Storage, Event},
+		ParasShared: allychains_shared::{Pallet, Call, Storage},
+		Scheduler: allychains_scheduler::{Pallet, Storage},
 		ParasSudoWrapper: paras_sudo_wrapper::{Pallet, Call},
-		ParasOrigin: parachains_origin::{Pallet, Origin},
-		ParaSessionInfo: parachains_session_info::{Pallet, Storage},
-		Hrmp: parachains_hrmp::{Pallet, Call, Storage, Event<T>},
-		Ump: parachains_ump::{Pallet, Call, Storage, Event},
-		Dmp: parachains_dmp::{Pallet, Call, Storage},
+		ParasOrigin: allychains_origin::{Pallet, Origin},
+		ParaSessionInfo: allychains_session_info::{Pallet, Storage},
+		Hrmp: allychains_hrmp::{Pallet, Call, Storage, Event<T>},
+		Ump: allychains_ump::{Pallet, Call, Storage, Event},
+		Dmp: allychains_dmp::{Pallet, Call, Storage},
 		Xcm: pallet_xcm::{Pallet, Call, Event<T>, Origin},
-		ParasDisputes: parachains_disputes::{Pallet, Storage, Event<T>},
+		ParasDisputes: allychains_disputes::{Pallet, Storage, Event<T>},
 
 		Sudo: pallet_sudo::{Pallet, Call, Storage, Config<T>, Event<T>},
 
@@ -800,7 +800,7 @@ sp_api::impl_runtime_apis! {
 		}
 	}
 
-	impl primitives::v2::ParachainHost<Block, Hash, BlockNumber> for Runtime {
+	impl primitives::v2::AllychainHost<Block, Hash, BlockNumber> for Runtime {
 		fn validators() -> Vec<ValidatorId> {
 			runtime_impl::validators::<Runtime>()
 		}
@@ -962,7 +962,7 @@ sp_api::impl_runtime_apis! {
 			// probability of a slot being empty), is done in accordance to the
 			// slot duration and expected target block time, for safely
 			// resisting network delays of maximum two seconds.
-			// <https://research.web3.foundation/en/latest/polkadot/BABE/Babe/#6-practical-results>
+			// <https://research.web3.foundation/en/latest/axia/BABE/Babe/#6-practical-results>
 			babe_primitives::BabeGenesisConfiguration {
 				slot_duration: Babe::slot_duration(),
 				epoch_length: EpochDuration::get(),

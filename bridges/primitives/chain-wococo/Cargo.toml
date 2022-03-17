@@ -11,20 +11,20 @@ parity-scale-codec = { version = "2.2.0", default-features = false, features = [
 
 # Bridge Dependencies
 bp-messages = { path = "../messages", default-features = false }
-bp-polkadot-core = { path = "../polkadot-core", default-features = false }
+bp-axia-core = { path = "../axia-core", default-features = false }
 bp-rococo = { path = "../chain-rococo", default-features = false }
 bp-runtime = { path = "../runtime", default-features = false }
 
 # Substrate Based Dependencies
-sp-api = { git = "https://github.com/purestake/substrate", default-features = false , branch = "moonbeam-polkadot-v0.9.17" }
-sp-runtime = { git = "https://github.com/purestake/substrate", default-features = false , branch = "moonbeam-polkadot-v0.9.17" }
-sp-std = { git = "https://github.com/purestake/substrate", default-features = false , branch = "moonbeam-polkadot-v0.9.17" }
+sp-api = { git = "https://github.com/purestake/substrate", default-features = false , branch = "moonbeam-axia-v0.9.17" }
+sp-runtime = { git = "https://github.com/purestake/substrate", default-features = false , branch = "moonbeam-axia-v0.9.17" }
+sp-std = { git = "https://github.com/purestake/substrate", default-features = false , branch = "moonbeam-axia-v0.9.17" }
 
 [features]
 default = ["std"]
 std = [
 	"bp-messages/std",
-	"bp-polkadot-core/std",
+	"bp-axia-core/std",
 	"bp-runtime/std",
 	"bp-rococo/std",
 	"parity-scale-codec/std",

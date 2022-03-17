@@ -1,23 +1,23 @@
 // Copyright 2020 Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// This file is part of Axia.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// Axia is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// Axia is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with Axia.  If not, see <http://www.gnu.org/licenses/>.
 
 //! # Overseer
 //!
 //! `overseer` implements the Overseer architecture described in the
-//! [implementers-guide](https://w3f.github.io/parachain-implementers-guide/node/index.html).
+//! [implementers-guide](https://w3f.github.io/allychain-implementers-guide/node/index.html).
 //! For the motivations behind implementing the overseer itself you should
 //! check out that guide, documentation in this crate will be mostly discussing
 //! technical stuff.
@@ -71,14 +71,14 @@ use futures::{channel::oneshot, future::BoxFuture, select, Future, FutureExt, St
 use lru::LruCache;
 
 use client::{BlockImportNotification, BlockchainEvents, FinalityNotification};
-use polkadot_primitives::{
+use axia_primitives::{
 	v1::{Block, BlockId, BlockNumber, Hash},
-	v2::ParachainHost,
+	v2::AllychainHost,
 };
 use sp_api::{ApiExt, ProvideRuntimeApi};
 
-use polkadot_node_network_protocol::v1 as protocol_v1;
-use polkadot_node_subsystem_types::messages::{
+use axia_node_network_protocol::v1 as protocol_v1;
+use axia_node_subsystem_types::messages::{
 	ApprovalDistributionMessage, ApprovalVotingMessage, AvailabilityDistributionMessage,
 	AvailabilityRecoveryMessage, AvailabilityStoreMessage, BitfieldDistributionMessage,
 	BitfieldSigningMessage, CandidateBackingMessage, CandidateValidationMessage, ChainApiMessage,
@@ -87,7 +87,7 @@ use polkadot_node_subsystem_types::messages::{
 	NetworkBridgeEvent, NetworkBridgeMessage, ProvisionerMessage, PvfCheckerMessage,
 	RuntimeApiMessage, StatementDistributionMessage,
 };
-pub use polkadot_node_subsystem_types::{
+pub use axia_node_subsystem_types::{
 	errors::{SubsystemError, SubsystemResult},
 	jaeger, ActivatedLeaf, ActiveLeavesUpdate, LeafStatus, OverseerSignal,
 };
@@ -99,15 +99,15 @@ pub use self::metrics::Metrics as OverseerMetrics;
 pub mod dummy;
 pub use self::dummy::DummySubsystem;
 
-pub use polkadot_node_metrics::{
+pub use axia_node_metrics::{
 	metrics::{prometheus, Metrics as MetricsTrait},
 	Metronome,
 };
 
 use parity_util_mem::MemoryAllocationTracker;
 
-pub use polkadot_overseer_gen as gen;
-pub use polkadot_overseer_gen::{
+pub use axia_overseer_gen as gen;
+pub use axia_overseer_gen::{
 	overlord, FromOverseer, MapSubsystem, MessagePacket, SignalsReceived, SpawnNamed, Subsystem,
 	SubsystemContext, SubsystemIncomingMessages, SubsystemInstance, SubsystemMeterReadouts,
 	SubsystemMeters, SubsystemSender, TimeoutExt, ToOverseer,
@@ -120,22 +120,22 @@ pub const KNOWN_LEAVES_CACHE_SIZE: usize = 2 * 24 * 3600 / 6;
 #[cfg(test)]
 mod tests;
 
-/// Whether a header supports parachain consensus or not.
-pub trait HeadSupportsParachains {
-	/// Return true if the given header supports parachain consensus. Otherwise, false.
-	fn head_supports_parachains(&self, head: &Hash) -> bool;
+/// Whether a header supports allychain consensus or not.
+pub trait HeadSupportsAllychains {
+	/// Return true if the given header supports allychain consensus. Otherwise, false.
+	fn head_supports_allychains(&self, head: &Hash) -> bool;
 }
 
-impl<Client> HeadSupportsParachains for Arc<Client>
+impl<Client> HeadSupportsAllychains for Arc<Client>
 where
 	Client: ProvideRuntimeApi<Block>,
-	Client::Api: ParachainHost<Block>,
+	Client::Api: AllychainHost<Block>,
 {
-	fn head_supports_parachains(&self, head: &Hash) -> bool {
+	fn head_supports_allychains(&self, head: &Hash) -> bool {
 		let id = BlockId::Hash(*head);
-		// Check that the `ParachainHost` runtime api is at least with version 1 present on chain.
+		// Check that the `AllychainHost` runtime api is at least with version 1 present on chain.
 		self.runtime_api()
-			.api_version::<dyn ParachainHost<Block>>(&id)
+			.api_version::<dyn AllychainHost<Block>>(&id)
 			.ok()
 			.flatten()
 			.unwrap_or(0) >=
@@ -336,13 +336,13 @@ pub async fn forward_events<P: BlockchainEvents<Block>>(client: Arc<P>, mut hand
 /// # use std::time::Duration;
 /// # use futures::{executor, pin_mut, select, FutureExt};
 /// # use futures_timer::Delay;
-/// # use polkadot_primitives::v1::Hash;
-/// # use polkadot_overseer::{
+/// # use axia_primitives::v1::Hash;
+/// # use axia_overseer::{
 /// # 	self as overseer,
 /// #   OverseerSignal,
 /// # 	SubsystemSender as _,
 /// # 	AllMessages,
-/// # 	HeadSupportsParachains,
+/// # 	HeadSupportsAllychains,
 /// # 	Overseer,
 /// # 	SubsystemError,
 /// # 	gen::{
@@ -351,7 +351,7 @@ pub async fn forward_events<P: BlockchainEvents<Block>>(client: Arc<P>, mut hand
 /// # 		SpawnedSubsystem,
 /// # 	},
 /// # };
-/// # use polkadot_node_subsystem_types::messages::{
+/// # use axia_node_subsystem_types::messages::{
 /// # 	CandidateValidationMessage, CandidateBackingMessage,
 /// # 	NetworkBridgeMessage,
 /// # };
@@ -384,12 +384,12 @@ pub async fn forward_events<P: BlockchainEvents<Block>>(client: Arc<P>, mut hand
 ///
 /// # fn main() { executor::block_on(async move {
 ///
-/// struct AlwaysSupportsParachains;
-/// impl HeadSupportsParachains for AlwaysSupportsParachains {
-///      fn head_supports_parachains(&self, _head: &Hash) -> bool { true }
+/// struct AlwaysSupportsAllychains;
+/// impl HeadSupportsAllychains for AlwaysSupportsAllychains {
+///      fn head_supports_allychains(&self, _head: &Hash) -> bool { true }
 /// }
 /// let spawner = sp_core::testing::TaskExecutor::new();
-/// let (overseer, _handle) = dummy_overseer_builder(spawner, AlwaysSupportsParachains, None)
+/// let (overseer, _handle) = dummy_overseer_builder(spawner, AlwaysSupportsAllychains, None)
 ///		.unwrap()
 ///		.replace_candidate_validation(|_| ValidationSubsystem)
 ///		.build()
@@ -416,7 +416,7 @@ pub async fn forward_events<P: BlockchainEvents<Block>>(client: Arc<P>, mut hand
 	error=SubsystemError,
 	network=NetworkBridgeEvent<protocol_v1::ValidationProtocol>,
 )]
-pub struct Overseer<SupportsParachains> {
+pub struct Overseer<SupportsAllychains> {
 	#[subsystem(no_dispatch, CandidateValidationMessage)]
 	candidate_validation: CandidateValidation,
 
@@ -494,8 +494,8 @@ pub struct Overseer<SupportsParachains> {
 	/// The set of the "active leaves".
 	pub active_leaves: HashMap<Hash, BlockNumber>,
 
-	/// An implementation for checking whether a header supports parachain consensus.
-	pub supports_parachains: SupportsParachains,
+	/// An implementation for checking whether a header supports allychain consensus.
+	pub supports_allychains: SupportsAllychains,
 
 	/// An LRU cache for keeping track of relay-chain heads that have already been seen.
 	pub known_leaves: LruCache<Hash, ()>,
@@ -505,13 +505,13 @@ pub struct Overseer<SupportsParachains> {
 }
 
 /// Spawn the metrics metronome task.
-pub fn spawn_metronome_metrics<S, SupportsParachains>(
-	overseer: &mut Overseer<S, SupportsParachains>,
+pub fn spawn_metronome_metrics<S, SupportsAllychains>(
+	overseer: &mut Overseer<S, SupportsAllychains>,
 	metronome_metrics: OverseerMetrics,
 ) -> Result<(), SubsystemError>
 where
 	S: SpawnNamed,
-	SupportsParachains: HeadSupportsParachains,
+	SupportsAllychains: HeadSupportsAllychains,
 {
 	struct ExtractNameAndMeters;
 
@@ -578,9 +578,9 @@ where
 	Ok(())
 }
 
-impl<S, SupportsParachains> Overseer<S, SupportsParachains>
+impl<S, SupportsAllychains> Overseer<S, SupportsAllychains>
 where
-	SupportsParachains: HeadSupportsParachains,
+	SupportsAllychains: HeadSupportsAllychains,
 	S: SpawnNamed,
 {
 	/// Stop the overseer.
@@ -713,14 +713,14 @@ where
 		Ok(())
 	}
 
-	/// Handles a header activation. If the header's state doesn't support the parachains API,
+	/// Handles a header activation. If the header's state doesn't support the allychains API,
 	/// this returns `None`.
 	fn on_head_activated(
 		&mut self,
 		hash: &Hash,
 		parent_hash: Option<Hash>,
 	) -> Option<(Arc<jaeger::Span>, LeafStatus)> {
-		if !self.supports_parachains.head_supports_parachains(hash) {
+		if !self.supports_allychains.head_supports_allychains(hash) {
 			return None
 		}
 

@@ -1,20 +1,20 @@
 // Copyright 2020 Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// This file is part of Axia.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// Axia is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// Axia is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with Axia.  If not, see <http://www.gnu.org/licenses/>.
 
-//! The Rococo runtime for v1 parachains.
+//! The Rococo runtime for v1 allychains.
 
 #![cfg_attr(not(feature = "std"), no_std)]
 // `construct_runtime!` does a lot of recursion and requires us to increase the limit to 256.
@@ -47,7 +47,7 @@ use runtime_common::{
 	assigned_slots, auctions, crowdloan, impls::ToAuthor, paras_registrar, paras_sudo_wrapper,
 	slots, BlockHashCount, BlockLength, BlockWeights, RocksDbWeight, SlowAdjustingFeeUpdate,
 };
-use runtime_parachains::{self, runtime_api_impl::v1 as runtime_api_impl};
+use runtime_allychains::{self, runtime_api_impl::v1 as runtime_api_impl};
 use scale_info::TypeInfo;
 use sp_core::{OpaqueMetadata, RuntimeDebug};
 use sp_runtime::{
@@ -65,12 +65,12 @@ use sp_std::{collections::btree_map::BTreeMap, prelude::*};
 use sp_version::NativeVersion;
 use sp_version::RuntimeVersion;
 
-use runtime_parachains::{
-	configuration as parachains_configuration, disputes as parachains_disputes,
-	dmp as parachains_dmp, hrmp as parachains_hrmp, inclusion as parachains_inclusion,
-	initializer as parachains_initializer, origin as parachains_origin, paras as parachains_paras,
-	paras_inherent as parachains_paras_inherent, scheduler as parachains_scheduler,
-	session_info as parachains_session_info, shared as parachains_shared, ump as parachains_ump,
+use runtime_allychains::{
+	configuration as allychains_configuration, disputes as allychains_disputes,
+	dmp as allychains_dmp, hrmp as allychains_hrmp, inclusion as allychains_inclusion,
+	initializer as allychains_initializer, origin as allychains_origin, paras as allychains_paras,
+	paras_inherent as allychains_paras_inherent, scheduler as allychains_scheduler,
+	session_info as allychains_session_info, shared as allychains_shared, ump as allychains_ump,
 };
 
 use bridge_runtime_common::messages::{
@@ -79,7 +79,7 @@ use bridge_runtime_common::messages::{
 
 pub use pallet_balances::Call as BalancesCall;
 
-use polkadot_parachain::primitives::Id as ParaId;
+use axia_allychain::primitives::Id as ParaId;
 
 /// Constant values used within the runtime.
 use rococo_runtime_constants::{currency::*, fee::*, time::*};
@@ -219,22 +219,22 @@ construct_runtime! {
 		ImOnline: pallet_im_online,
 		AuthorityDiscovery: pallet_authority_discovery,
 
-		// Parachains modules.
-		ParachainsOrigin: parachains_origin,
-		Configuration: parachains_configuration,
-		ParasShared: parachains_shared,
-		ParaInclusion: parachains_inclusion,
-		ParaInherent: parachains_paras_inherent,
-		ParaScheduler: parachains_scheduler,
-		Paras: parachains_paras,
-		Initializer: parachains_initializer,
-		Dmp: parachains_dmp,
-		Ump: parachains_ump,
-		Hrmp: parachains_hrmp,
-		ParaSessionInfo: parachains_session_info,
-		ParasDisputes: parachains_disputes,
+		// Allychains modules.
+		AllychainsOrigin: allychains_origin,
+		Configuration: allychains_configuration,
+		ParasShared: allychains_shared,
+		ParaInclusion: allychains_inclusion,
+		ParaInherent: allychains_paras_inherent,
+		ParaScheduler: allychains_scheduler,
+		Paras: allychains_paras,
+		Initializer: allychains_initializer,
+		Dmp: allychains_dmp,
+		Ump: allychains_ump,
+		Hrmp: allychains_hrmp,
+		ParaSessionInfo: allychains_session_info,
+		ParasDisputes: allychains_disputes,
 
-		// Parachain Onboarding Pallets
+		// Allychain Onboarding Pallets
 		Registrar: paras_registrar::{Pallet, Call, Storage, Event<T>, Config},
 		Auctions: auctions::{Pallet, Call, Storage, Event<T>},
 		Crowdloan: crowdloan::{Pallet, Call, Storage, Event<T>},
@@ -391,11 +391,11 @@ impl pallet_session::historical::Config for Runtime {
 	type FullIdentificationOf = FullIdentificationOf;
 }
 
-impl parachains_disputes::Config for Runtime {
+impl allychains_disputes::Config for Runtime {
 	type Event = Event;
 	type RewardValidators = ();
 	type PunishValidators = ();
-	type WeightInfo = weights::runtime_parachains_disputes::WeightInfo<Runtime>;
+	type WeightInfo = weights::runtime_allychains_disputes::WeightInfo<Runtime>;
 }
 
 parameter_types! {
@@ -593,22 +593,22 @@ impl pallet_authorship::Config for Runtime {
 	type EventHandler = ImOnline;
 }
 
-impl parachains_origin::Config for Runtime {}
+impl allychains_origin::Config for Runtime {}
 
-impl parachains_configuration::Config for Runtime {
-	type WeightInfo = parachains_configuration::TestWeightInfo;
+impl allychains_configuration::Config for Runtime {
+	type WeightInfo = allychains_configuration::TestWeightInfo;
 }
 
-impl parachains_shared::Config for Runtime {}
+impl allychains_shared::Config for Runtime {}
 
 /// Special `RewardValidators` that does nothing ;)
 pub struct RewardValidators;
-impl runtime_parachains::inclusion::RewardValidators for RewardValidators {
+impl runtime_allychains::inclusion::RewardValidators for RewardValidators {
 	fn reward_backing(_: impl IntoIterator<Item = ValidatorIndex>) {}
 	fn reward_bitfields(_: impl IntoIterator<Item = ValidatorIndex>) {}
 }
 
-impl parachains_inclusion::Config for Runtime {
+impl allychains_inclusion::Config for Runtime {
 	type Event = Event;
 	type DisputesHandler = ParasDisputes;
 	type RewardValidators = RewardValidators;
@@ -618,43 +618,43 @@ parameter_types! {
 	pub const ParasUnsignedPriority: TransactionPriority = TransactionPriority::max_value();
 }
 
-impl parachains_paras::Config for Runtime {
+impl allychains_paras::Config for Runtime {
 	type Event = Event;
-	type WeightInfo = weights::runtime_parachains_paras::WeightInfo<Runtime>;
+	type WeightInfo = weights::runtime_allychains_paras::WeightInfo<Runtime>;
 	type UnsignedPriority = ParasUnsignedPriority;
 	type NextSessionRotation = Babe;
 }
 
-impl parachains_session_info::Config for Runtime {}
+impl allychains_session_info::Config for Runtime {}
 
 parameter_types! {
 	pub const FirstMessageFactorPercent: u64 = 100;
 }
 
-impl parachains_ump::Config for Runtime {
+impl allychains_ump::Config for Runtime {
 	type Event = Event;
 	type UmpSink =
-		crate::parachains_ump::XcmSink<xcm_executor::XcmExecutor<xcm_config::XcmConfig>, Runtime>;
+		crate::allychains_ump::XcmSink<xcm_executor::XcmExecutor<xcm_config::XcmConfig>, Runtime>;
 	type FirstMessageFactorPercent = FirstMessageFactorPercent;
 	type ExecuteOverweightOrigin = EnsureRoot<AccountId>;
 }
 
-impl parachains_dmp::Config for Runtime {}
+impl allychains_dmp::Config for Runtime {}
 
-impl parachains_hrmp::Config for Runtime {
+impl allychains_hrmp::Config for Runtime {
 	type Event = Event;
 	type Origin = Origin;
 	type Currency = Balances;
-	type WeightInfo = weights::runtime_parachains_hrmp::WeightInfo<Self>;
+	type WeightInfo = weights::runtime_allychains_hrmp::WeightInfo<Self>;
 }
 
-impl parachains_paras_inherent::Config for Runtime {
-	type WeightInfo = weights::runtime_parachains_paras_inherent::WeightInfo<Runtime>;
+impl allychains_paras_inherent::Config for Runtime {
+	type WeightInfo = weights::runtime_allychains_paras_inherent::WeightInfo<Runtime>;
 }
 
-impl parachains_scheduler::Config for Runtime {}
+impl allychains_scheduler::Config for Runtime {}
 
-impl parachains_initializer::Config for Runtime {
+impl allychains_initializer::Config for Runtime {
 	type Randomness = pallet_babe::RandomnessFromOneEpochAgo<Runtime>;
 	type ForceOrigin = EnsureRoot<AccountId>;
 	type WeightInfo = ();
@@ -715,9 +715,9 @@ impl pallet_mmr::Config for Runtime {
 }
 
 pub struct ParasProvider;
-impl pallet_beefy_mmr::ParachainHeadsProvider for ParasProvider {
-	fn parachain_heads() -> Vec<(u32, Vec<u8>)> {
-		Paras::parachains()
+impl pallet_beefy_mmr::AllychainHeadsProvider for ParasProvider {
+	fn allychain_heads() -> Vec<(u32, Vec<u8>)> {
+		Paras::allychains()
 			.into_iter()
 			.filter_map(|id| Paras::para_head(&id).map(|head| (id.into(), head.0)))
 			.collect()
@@ -744,7 +744,7 @@ parameter_types! {
 impl pallet_beefy_mmr::Config for Runtime {
 	type LeafVersion = LeafVersion;
 	type BeefyAuthorityToMerkleLeaf = pallet_beefy_mmr::BeefyEcdsaToEthereum;
-	type ParachainHeads = ParasProvider;
+	type AllychainHeads = ParasProvider;
 }
 
 parameter_types! {
@@ -1102,10 +1102,10 @@ extern crate frame_benchmarking;
 #[cfg(feature = "runtime-benchmarks")]
 mod benches {
 	define_benchmarks!(
-		[runtime_parachains::configuration, Configuration]
-		[runtime_parachains::disputes, ParasDisputes]
-		[runtime_parachains::paras_inherent, ParaInherent]
-		[runtime_parachains::paras, Paras]
+		[runtime_allychains::configuration, Configuration]
+		[runtime_allychains::disputes, ParasDisputes]
+		[runtime_allychains::paras_inherent, ParaInherent]
+		[runtime_allychains::paras, Paras]
 	);
 }
 
@@ -1168,7 +1168,7 @@ sp_api::impl_runtime_apis! {
 		}
 	}
 
-	impl primitives::v2::ParachainHost<Block, Hash, BlockNumber> for Runtime {
+	impl primitives::v2::AllychainHost<Block, Hash, BlockNumber> for Runtime {
 		fn validators() -> Vec<ValidatorId> {
 			runtime_api_impl::validators::<Runtime>()
 		}
@@ -1306,7 +1306,7 @@ sp_api::impl_runtime_apis! {
 			// probability of a slot being empty), is done in accordance to the
 			// slot duration and expected target block time, for safely
 			// resisting network delays of maximum two seconds.
-			// <https://research.web3.foundation/en/latest/polkadot/BABE/Babe/#6-practical-results>
+			// <https://research.web3.foundation/en/latest/axia/BABE/Babe/#6-practical-results>
 			babe_primitives::BabeGenesisConfiguration {
 				slot_duration: Babe::slot_duration(),
 				epoch_length: EpochDurationInBlocks::get().into(),

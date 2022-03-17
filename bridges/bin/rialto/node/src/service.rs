@@ -16,20 +16,20 @@
 
 //! Rialto chain node service.
 //!
-//! The code is mostly copy of `service/src/lib.rs` file from Polkadot repository
+//! The code is mostly copy of `service/src/lib.rs` file from Axia repository
 //! without optional functions, and with BEEFY added on top.
 
 use crate::overseer::{OverseerGen, OverseerGenArgs};
 
-use polkadot_client::RuntimeApiCollection;
-use polkadot_node_core_approval_voting::Config as ApprovalVotingConfig;
-use polkadot_node_core_av_store::Config as AvailabilityConfig;
-use polkadot_node_core_candidate_validation::Config as CandidateValidationConfig;
-use polkadot_node_core_chain_selection::Config as ChainSelectionConfig;
-use polkadot_node_core_dispute_coordinator::Config as DisputeCoordinatorConfig;
-use polkadot_node_network_protocol::request_response::IncomingRequest;
-use polkadot_overseer::{BlockInfo, OverseerConnector};
-use polkadot_primitives::v1::BlockId;
+use axia_client::RuntimeApiCollection;
+use axia_node_core_approval_voting::Config as ApprovalVotingConfig;
+use axia_node_core_av_store::Config as AvailabilityConfig;
+use axia_node_core_candidate_validation::Config as CandidateValidationConfig;
+use axia_node_core_chain_selection::Config as ChainSelectionConfig;
+use axia_node_core_dispute_coordinator::Config as DisputeCoordinatorConfig;
+use axia_node_network_protocol::request_response::IncomingRequest;
+use axia_overseer::{BlockInfo, OverseerConnector};
+use axia_primitives::v1::BlockId;
 use rialto_runtime::{self, opaque::Block, RuntimeApi};
 use sc_client_api::ExecutorProvider;
 use sc_executor::{NativeElseWasmExecutor, NativeExecutionDispatch};
@@ -42,8 +42,8 @@ use sp_runtime::traits::Block as BlockT;
 use std::{sync::Arc, time::Duration};
 use substrate_prometheus_endpoint::Registry;
 
-pub use polkadot_overseer::Handle;
-pub use polkadot_primitives::v1::ParachainHost;
+pub use axia_overseer::Handle;
+pub use axia_primitives::v1::AllychainHost;
 pub use sc_client_api::AuxStore;
 pub use sp_authority_discovery::AuthorityDiscoveryApi;
 pub use sp_blockchain::HeaderBackend;
@@ -87,7 +87,7 @@ pub enum Error {
 	Telemetry(#[from] sc_telemetry::Error),
 
 	#[error("Failed to create an overseer")]
-	Overseer(#[from] polkadot_overseer::SubsystemError),
+	Overseer(#[from] axia_overseer::SubsystemError),
 
 	#[error(transparent)]
 	Prometheus(#[from] substrate_prometheus_endpoint::PrometheusError),
@@ -110,10 +110,10 @@ type FullBabeBlockImport =
 type FullBabeLink = sc_consensus_babe::BabeLink<Block>;
 type FullGrandpaLink = sc_finality_grandpa::LinkHalf<Block, FullClient, FullSelectChain>;
 
-// If we're using prometheus, use a registry with a prefix of `polkadot`.
+// If we're using prometheus, use a registry with a prefix of `axia`.
 fn set_prometheus_registry(config: &mut Configuration) -> Result<(), Error> {
 	if let Some(PrometheusConfig { registry, .. }) = config.prometheus_config.as_mut() {
-		*registry = Registry::new_custom(Some("polkadot".into()), None)?;
+		*registry = Registry::new_custom(Some("axia".into()), None)?;
 	}
 
 	Ok(())
@@ -406,7 +406,7 @@ where
 	let shared_voter_state = rpc_setup;
 	let auth_disc_publish_non_global_ips = config.network.allow_non_globals_in_dht;
 
-	// Note: GrandPa is pushed before the Polkadot-specific protocols. This doesn't change
+	// Note: GrandPa is pushed before the Axia-specific protocols. This doesn't change
 	// anything in terms of behaviour, but makes the logs more consistent with the other
 	// Substrate nodes.
 	config.network.extra_sets.push(sc_finality_grandpa::grandpa_peers_set_config());
@@ -414,7 +414,7 @@ where
 	config.network.extra_sets.push(beefy_gadget::beefy_peers_set_config());
 
 	{
-		use polkadot_network_bridge::{peer_sets_info, IsAuthority};
+		use axia_network_bridge::{peer_sets_info, IsAuthority};
 		let is_authority = if role.is_authority() { IsAuthority::Yes } else { IsAuthority::No };
 		config.network.extra_sets.extend(peer_sets_info(is_authority));
 	}
@@ -458,18 +458,18 @@ where
 		);
 	}
 
-	let parachains_db = crate::parachains_db::open_creating(
+	let allychains_db = crate::allychains_db::open_creating(
 		config.database.path().ok_or(Error::DatabasePathRequired)?.into(),
-		crate::parachains_db::CacheSizes::default(),
+		crate::allychains_db::CacheSizes::default(),
 	)?;
 
 	let availability_config = AvailabilityConfig {
-		col_data: crate::parachains_db::REAL_COLUMNS.col_availability_data,
-		col_meta: crate::parachains_db::REAL_COLUMNS.col_availability_meta,
+		col_data: crate::allychains_db::REAL_COLUMNS.col_availability_data,
+		col_meta: crate::allychains_db::REAL_COLUMNS.col_availability_meta,
 	};
 
 	let approval_voting_config = ApprovalVotingConfig {
-		col_data: crate::parachains_db::REAL_COLUMNS.col_approval_data,
+		col_data: crate::allychains_db::REAL_COLUMNS.col_approval_data,
 		slot_duration_millis: slot_duration.as_millis() as u64,
 	};
 
@@ -487,12 +487,12 @@ where
 	};
 
 	let chain_selection_config = ChainSelectionConfig {
-		col_data: crate::parachains_db::REAL_COLUMNS.col_chain_selection_data,
-		stagnant_check_interval: polkadot_node_core_chain_selection::StagnantCheckInterval::never(),
+		col_data: crate::allychains_db::REAL_COLUMNS.col_chain_selection_data,
+		stagnant_check_interval: axia_node_core_chain_selection::StagnantCheckInterval::never(),
 	};
 
 	let dispute_coordinator_config = DisputeCoordinatorConfig {
-		col_data: crate::parachains_db::REAL_COLUMNS.col_dispute_coordinator_data,
+		col_data: crate::allychains_db::REAL_COLUMNS.col_dispute_coordinator_data,
 	};
 
 	let rpc_handlers = sc_service::spawn_tasks(sc_service::SpawnTasksParams {
@@ -566,7 +566,7 @@ where
 					leaves: active_leaves,
 					keystore,
 					runtime_client: overseer_client.clone(),
-					parachains_db,
+					allychains_db,
 					availability_config,
 					approval_voting_config,
 					network_service: network.clone(),
@@ -595,7 +595,7 @@ where
 				Box::pin(async move {
 					use futures::{pin_mut, select, FutureExt};
 
-					let forward = polkadot_overseer::forward_events(overseer_client, handle);
+					let forward = axia_overseer::forward_events(overseer_client, handle);
 
 					let forward = forward.fuse();
 					let overseer_fut = overseer.run().fuse();
@@ -645,7 +645,7 @@ where
 				let client_clone = client_clone.clone();
 				let overseer_handle = overseer_handle.clone();
 				async move {
-					let parachain = polkadot_node_core_parachains_inherent::ParachainsInherentDataProvider::create(
+					let allychain = axia_node_core_allychains_inherent::AllychainsInherentDataProvider::create(
 						&*client_clone,
 						overseer_handle,
 						parent,
@@ -665,7 +665,7 @@ where
 						slot_duration,
 					);
 
-					Ok((timestamp, slot, uncles, parachain))
+					Ok((timestamp, slot, uncles, allychain))
 				}
 			},
 			force_authoring,

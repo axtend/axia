@@ -59,7 +59,7 @@ impl SubstrateFinalitySyncPipeline for RococoFinalityToWococo {
 	type TargetChain = Wococo;
 
 	fn customize_metrics(params: MetricsParams) -> anyhow::Result<MetricsParams> {
-		crate::chains::add_polkadot_kusama_price_metrics::<Self::FinalitySyncPipeline>(params)
+		crate::chains::add_axia_kusama_price_metrics::<Self::FinalitySyncPipeline>(params)
 	}
 
 	fn start_relay_guards(&self) {

@@ -4,8 +4,8 @@ _The content of this directory is meant to be used by Parity's private CI/CD inf
 
 ## Contents of this directory
 
-`parachains`
-    At the moment this directory only have one test related to parachains: `/parachains-smoke-test`, that check the parachain registration and the block height.
+`allychains`
+    At the moment this directory only have one test related to allychains: `/allychains-smoke-test`, that check the allychain registration and the block height.
 
 ## Resources (private)
 

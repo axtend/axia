@@ -15,23 +15,23 @@ smallvec = "1.7"
 
 bp-header-chain = { path = "../header-chain", default-features = false }
 bp-messages = { path = "../messages", default-features = false }
-bp-polkadot-core = { path = "../polkadot-core", default-features = false }
+bp-axia-core = { path = "../axia-core", default-features = false }
 bp-runtime = { path = "../runtime", default-features = false }
 
 # Substrate Based Dependencies
 
-frame-support = { git = "https://github.com/purestake/substrate", default-features = false , branch = "moonbeam-polkadot-v0.9.17" }
-sp-api = { git = "https://github.com/purestake/substrate", default-features = false , branch = "moonbeam-polkadot-v0.9.17" }
-sp-runtime = { git = "https://github.com/purestake/substrate", default-features = false , branch = "moonbeam-polkadot-v0.9.17" }
-sp-std = { git = "https://github.com/purestake/substrate", default-features = false , branch = "moonbeam-polkadot-v0.9.17" }
-sp-version = { git = "https://github.com/purestake/substrate", default-features = false , branch = "moonbeam-polkadot-v0.9.17" }
+frame-support = { git = "https://github.com/purestake/substrate", default-features = false , branch = "moonbeam-axia-v0.9.17" }
+sp-api = { git = "https://github.com/purestake/substrate", default-features = false , branch = "moonbeam-axia-v0.9.17" }
+sp-runtime = { git = "https://github.com/purestake/substrate", default-features = false , branch = "moonbeam-axia-v0.9.17" }
+sp-std = { git = "https://github.com/purestake/substrate", default-features = false , branch = "moonbeam-axia-v0.9.17" }
+sp-version = { git = "https://github.com/purestake/substrate", default-features = false , branch = "moonbeam-axia-v0.9.17" }
 
 [features]
 default = ["std"]
 std = [
 	"bp-header-chain/std",
 	"bp-messages/std",
-	"bp-polkadot-core/std",
+	"bp-axia-core/std",
 	"bp-runtime/std",
 	"frame-support/std",
 	"parity-scale-codec/std",

@@ -1,18 +1,18 @@
 // Copyright 2020 Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// This file is part of Axia.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// Axia is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// Axia is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with Axia.  If not, see <http://www.gnu.org/licenses/>.
 
 use crate::{barriers::AllowSubscriptionsFrom, test_utils::*};
 pub use crate::{
@@ -45,7 +45,7 @@ pub enum TestOrigin {
 	Root,
 	Relay,
 	Signed(u64),
-	Parachain(u32),
+	Allychain(u32),
 }
 
 /// A dummy call.
@@ -55,7 +55,7 @@ pub enum TestOrigin {
 #[derive(Debug, Encode, Decode, Eq, PartialEq, Clone, Copy, scale_info::TypeInfo)]
 pub enum TestCall {
 	OnlyRoot(Weight, Option<Weight>),
-	OnlyParachain(Weight, Option<Weight>, Option<u32>),
+	OnlyAllychain(Weight, Option<Weight>, Option<u32>),
 	OnlySigned(Weight, Option<Weight>, Option<u64>),
 	Any(Weight, Option<Weight>),
 }
@@ -69,14 +69,14 @@ impl Dispatchable for TestCall {
 		post_info.actual_weight = match self {
 			TestCall::OnlyRoot(_, maybe_actual) |
 			TestCall::OnlySigned(_, maybe_actual, _) |
-			TestCall::OnlyParachain(_, maybe_actual, _) |
+			TestCall::OnlyAllychain(_, maybe_actual, _) |
 			TestCall::Any(_, maybe_actual) => maybe_actual,
 		};
 		if match (&origin, &self) {
-			(TestOrigin::Parachain(i), TestCall::OnlyParachain(_, _, Some(j))) => i == j,
+			(TestOrigin::Allychain(i), TestCall::OnlyAllychain(_, _, Some(j))) => i == j,
 			(TestOrigin::Signed(i), TestCall::OnlySigned(_, _, Some(j))) => i == j,
 			(TestOrigin::Root, TestCall::OnlyRoot(..)) |
-			(TestOrigin::Parachain(_), TestCall::OnlyParachain(_, _, None)) |
+			(TestOrigin::Allychain(_), TestCall::OnlyAllychain(_, _, None)) |
 			(TestOrigin::Signed(_), TestCall::OnlySigned(_, _, None)) |
 			(_, TestCall::Any(..)) => true,
 			_ => false,
@@ -92,7 +92,7 @@ impl GetDispatchInfo for TestCall {
 	fn get_dispatch_info(&self) -> DispatchInfo {
 		let weight = *match self {
 			TestCall::OnlyRoot(estimate, ..) |
-			TestCall::OnlyParachain(estimate, ..) |
+			TestCall::OnlyAllychain(estimate, ..) |
 			TestCall::OnlySigned(estimate, ..) |
 			TestCall::Any(estimate, ..) => estimate,
 		};
@@ -147,11 +147,11 @@ impl TransactAsset for TestAssetTransactor {
 pub fn to_account(l: MultiLocation) -> Result<u64, MultiLocation> {
 	Ok(match l {
 		// Siblings at 2000+id
-		MultiLocation { parents: 1, interior: X1(Parachain(id)) } => 2000 + id as u64,
+		MultiLocation { parents: 1, interior: X1(Allychain(id)) } => 2000 + id as u64,
 		// Accounts are their number
 		MultiLocation { parents: 0, interior: X1(AccountIndex64 { index, .. }) } => index,
 		// Children at 1000+id
-		MultiLocation { parents: 0, interior: X1(Parachain(id)) } => 1000 + id as u64,
+		MultiLocation { parents: 0, interior: X1(Allychain(id)) } => 1000 + id as u64,
 		// Self at 3000
 		MultiLocation { parents: 0, interior: Here } => 3000,
 		// Parent at 3001
@@ -170,8 +170,8 @@ impl ConvertOrigin<TestOrigin> for TestOriginConverter {
 		match (kind, origin.into()) {
 			(Superuser, _) => Ok(TestOrigin::Root),
 			(SovereignAccount, l) => Ok(TestOrigin::Signed(to_account(l)?)),
-			(Native, MultiLocation { parents: 0, interior: X1(Parachain(id)) }) =>
-				Ok(TestOrigin::Parachain(id)),
+			(Native, MultiLocation { parents: 0, interior: X1(Allychain(id)) }) =>
+				Ok(TestOrigin::Allychain(id)),
 			(Native, MultiLocation { parents: 1, interior: Here }) => Ok(TestOrigin::Relay),
 			(Native, MultiLocation { parents: 0, interior: X1(AccountIndex64 { index, .. }) }) =>
 				Ok(TestOrigin::Signed(index)),
@@ -251,7 +251,7 @@ pub fn response(query_id: u64) -> Option<Response> {
 }
 
 parameter_types! {
-	pub TestAncestry: MultiLocation = X1(Parachain(42)).into();
+	pub TestAncestry: MultiLocation = X1(Allychain(42)).into();
 	pub UnitWeightCost: Weight = 10;
 }
 parameter_types! {

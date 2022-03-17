@@ -48,8 +48,9 @@ pub const RIALTO_CHAIN_ID: ChainId = *b"rlto";
 /// Bridge-with-Millau instance id.
 pub const MILLAU_CHAIN_ID: ChainId = *b"mlau";
 
-/// Bridge-with-Polkadot instance id.
-pub const POLKADOT_CHAIN_ID: ChainId = *b"pdot";
+/// Bridge-with-Axia instance id.
+// axia:error
+pub const AXIA_CHAIN_ID: ChainId = *b"axia";
 
 /// Bridge-with-Kusama instance id.
 pub const KUSAMA_CHAIN_ID: ChainId = *b"ksma";

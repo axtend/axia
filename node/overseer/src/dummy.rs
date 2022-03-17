@@ -1,27 +1,27 @@
 // Copyright 2020 Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// This file is part of Axia.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// Axia is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// Axia is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with Axia.  If not, see <http://www.gnu.org/licenses/>.
 
 use crate::{
-	prometheus::Registry, AllMessages, HeadSupportsParachains, InitializedOverseerBuilder,
+	prometheus::Registry, AllMessages, HeadSupportsAllychains, InitializedOverseerBuilder,
 	MetricsTrait, Overseer, OverseerMetrics, OverseerSignal, OverseerSubsystemContext, SpawnNamed,
 	KNOWN_LEAVES_CACHE_SIZE,
 };
 use lru::LruCache;
-use polkadot_node_subsystem_types::{errors::SubsystemError, messages::*};
-use polkadot_overseer_gen::{FromOverseer, SpawnedSubsystem, Subsystem, SubsystemContext};
+use axia_node_subsystem_types::{errors::SubsystemError, messages::*};
+use axia_overseer_gen::{FromOverseer, SpawnedSubsystem, Subsystem, SubsystemContext};
 
 /// A dummy subsystem that implements [`Subsystem`] for all
 /// types of messages. Used for tests or as a placeholder.
@@ -61,14 +61,14 @@ where
 /// Create an overseer with all subsystem being `Sub`.
 ///
 /// Preferred way of initializing a dummy overseer for subsystem tests.
-pub fn dummy_overseer_builder<'a, Spawner, SupportsParachains>(
+pub fn dummy_overseer_builder<'a, Spawner, SupportsAllychains>(
 	spawner: Spawner,
-	supports_parachains: SupportsParachains,
+	supports_allychains: SupportsAllychains,
 	registry: Option<&'a Registry>,
 ) -> Result<
 	InitializedOverseerBuilder<
 		Spawner,
-		SupportsParachains,
+		SupportsAllychains,
 		DummySubsystem,
 		DummySubsystem,
 		DummySubsystem,
@@ -95,21 +95,21 @@ pub fn dummy_overseer_builder<'a, Spawner, SupportsParachains>(
 >
 where
 	Spawner: SpawnNamed + Send + Sync + 'static,
-	SupportsParachains: HeadSupportsParachains,
+	SupportsAllychains: HeadSupportsAllychains,
 {
-	one_for_all_overseer_builder(spawner, supports_parachains, DummySubsystem, registry)
+	one_for_all_overseer_builder(spawner, supports_allychains, DummySubsystem, registry)
 }
 
 /// Create an overseer with all subsystem being `Sub`.
-pub fn one_for_all_overseer_builder<'a, Spawner, SupportsParachains, Sub>(
+pub fn one_for_all_overseer_builder<'a, Spawner, SupportsAllychains, Sub>(
 	spawner: Spawner,
-	supports_parachains: SupportsParachains,
+	supports_allychains: SupportsAllychains,
 	subsystem: Sub,
 	registry: Option<&'a Registry>,
 ) -> Result<
 	InitializedOverseerBuilder<
 		Spawner,
-		SupportsParachains,
+		SupportsAllychains,
 		Sub,
 		Sub,
 		Sub,
@@ -136,7 +136,7 @@ pub fn one_for_all_overseer_builder<'a, Spawner, SupportsParachains, Sub>(
 >
 where
 	Spawner: SpawnNamed + Send + Sync + 'static,
-	SupportsParachains: HeadSupportsParachains,
+	SupportsAllychains: HeadSupportsAllychains,
 	Sub: Clone
 		+ Subsystem<OverseerSubsystemContext<AvailabilityDistributionMessage>, SubsystemError>
 		+ Subsystem<OverseerSubsystemContext<AvailabilityRecoveryMessage>, SubsystemError>
@@ -191,6 +191,6 @@ where
 		.leaves(Default::default())
 		.spawner(spawner)
 		.metrics(metrics)
-		.supports_parachains(supports_parachains);
+		.supports_allychains(supports_allychains);
 	Ok(builder)
 }

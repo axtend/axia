@@ -1,23 +1,23 @@
 // Copyright 2022 Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// This file is part of Axia.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// Axia is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// Axia is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot. If not, see <http://www.gnu.org/licenses/>.
+// along with Axia. If not, see <http://www.gnu.org/licenses/>.
 
 //! XCM configurations for the Kusama runtime.
 
 use super::{
-	parachains_origin, AccountId, Balances, Call, CouncilCollective, Event, Origin, ParaId,
+	allychains_origin, AccountId, Balances, Call, CouncilCollective, Event, Origin, ParaId,
 	Runtime, WeightToFee, XcmPallet,
 };
 use frame_support::{
@@ -30,8 +30,8 @@ use xcm::latest::prelude::*;
 use xcm_builder::{
 	AccountId32Aliases, AllowKnownQueryResponses, AllowSubscriptionsFrom,
 	AllowTopLevelPaidExecutionFrom, AllowUnpaidExecutionFrom, BackingToPlurality,
-	ChildParachainAsNative, ChildParachainConvertsVia, ChildSystemParachainAsSuperuser,
-	CurrencyAdapter as XcmCurrencyAdapter, FixedWeightBounds, IsChildSystemParachain, IsConcrete,
+	ChildAllychainAsNative, ChildAllychainConvertsVia, ChildSystemAllychainAsSuperuser,
+	CurrencyAdapter as XcmCurrencyAdapter, FixedWeightBounds, IsChildSystemAllychain, IsConcrete,
 	LocationInverter, SignedAccountId32AsNative, SignedToAccountId32, SovereignSignedViaLocation,
 	TakeWeightCredit, UsingComponents,
 };
@@ -53,8 +53,8 @@ parameter_types! {
 /// The canonical means of converting a `MultiLocation` into an `AccountId`, used when we want to determine
 /// the sovereign account controlled by a location.
 pub type SovereignAccountOf = (
-	// We can convert a child parachain using the standard `AccountId` conversion.
-	ChildParachainConvertsVia<ParaId, AccountId>,
+	// We can convert a child allychain using the standard `AccountId` conversion.
+	ChildAllychainConvertsVia<ParaId, AccountId>,
 	// We can directly alias an `AccountId32` into a local account.
 	AccountId32Aliases<KusamaNetwork, AccountId>,
 );
@@ -80,12 +80,12 @@ pub type LocalAssetTransactor = XcmCurrencyAdapter<
 type LocalOriginConverter = (
 	// A `Signed` origin of the sovereign account that the original location controls.
 	SovereignSignedViaLocation<SovereignAccountOf, Origin>,
-	// A child parachain, natively expressed, has the `Parachain` origin.
-	ChildParachainAsNative<parachains_origin::Origin, Origin>,
+	// A child allychain, natively expressed, has the `Allychain` origin.
+	ChildAllychainAsNative<allychains_origin::Origin, Origin>,
 	// The AccountId32 location type can be expressed natively as a `Signed` origin.
 	SignedAccountId32AsNative<KusamaNetwork, Origin>,
-	// A system child parachain, expressed as a Superuser, converts to the `Root` origin.
-	ChildSystemParachainAsSuperuser<ParaId, Origin>,
+	// A system child allychain, expressed as a Superuser, converts to the `Root` origin.
+	ChildSystemAllychainAsSuperuser<ParaId, Origin>,
 );
 
 parameter_types! {
@@ -99,21 +99,21 @@ parameter_types! {
 /// The XCM router. When we want to send an XCM message, we use this type. It amalgamates all of our
 /// individual routers.
 pub type XcmRouter = (
-	// Only one router so far - use DMP to communicate with child parachains.
-	xcm_sender::ChildParachainRouter<Runtime, XcmPallet>,
+	// Only one router so far - use DMP to communicate with child allychains.
+	xcm_sender::ChildAllychainRouter<Runtime, XcmPallet>,
 );
 
 parameter_types! {
 	pub const Kusama: MultiAssetFilter = Wild(AllOf { fun: WildFungible, id: Concrete(KsmLocation::get()) });
-	pub const KusamaForStatemine: (MultiAssetFilter, MultiLocation) = (Kusama::get(), Parachain(1000).into());
-	pub const KusamaForEncointer: (MultiAssetFilter, MultiLocation) = (Kusama::get(), Parachain(1001).into());
+	pub const KusamaForStatemine: (MultiAssetFilter, MultiLocation) = (Kusama::get(), Allychain(1000).into());
+	pub const KusamaForEncointer: (MultiAssetFilter, MultiLocation) = (Kusama::get(), Allychain(1001).into());
 }
 pub type TrustedTeleporters =
 	(xcm_builder::Case<KusamaForStatemine>, xcm_builder::Case<KusamaForEncointer>);
 
 match_type! {
-	pub type OnlyParachains: impl Contains<MultiLocation> = {
-		MultiLocation { parents: 0, interior: X1(Parachain(_)) }
+	pub type OnlyAllychains: impl Contains<MultiLocation> = {
+		MultiLocation { parents: 0, interior: X1(Allychain(_)) }
 	};
 }
 
@@ -123,12 +123,12 @@ pub type Barrier = (
 	TakeWeightCredit,
 	// If the message is one that immediately attemps to pay for execution, then allow it.
 	AllowTopLevelPaidExecutionFrom<Everything>,
-	// Messages coming from system parachains need not pay for execution.
-	AllowUnpaidExecutionFrom<IsChildSystemParachain<ParaId>>,
+	// Messages coming from system allychains need not pay for execution.
+	AllowUnpaidExecutionFrom<IsChildSystemAllychain<ParaId>>,
 	// Expected responses are OK.
 	AllowKnownQueryResponses<XcmPallet>,
 	// Subscriptions for version tracking are OK.
-	AllowSubscriptionsFrom<OnlyParachains>,
+	AllowSubscriptionsFrom<OnlyAllychains>,
 );
 
 pub struct XcmConfig;

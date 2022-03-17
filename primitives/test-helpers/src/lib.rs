@@ -1,18 +1,18 @@
 // Copyright 2021 Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// This file is part of Axia.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// Axia is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// Axia is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with Axia.  If not, see <http://www.gnu.org/licenses/>.
 
 #![forbid(unused_crate_dependencies)]
 #![forbid(unused_extern_crates)]
@@ -21,7 +21,7 @@
 //!
 //! Note that `dummy_` prefixed values are meant to be fillers, that should not matter, and will
 //! contain randomness based data.
-use polkadot_primitives::v1::{
+use axia_primitives::v1::{
 	CandidateCommitments, CandidateDescriptor, CandidateReceipt, CollatorId, CollatorSignature,
 	CommittedCandidateReceipt, Hash, HeadData, Id as ParaId, ValidationCode, ValidationCodeHash,
 	ValidatorId,
@@ -158,7 +158,7 @@ pub fn make_valid_candidate_descriptor<H: AsRef<[u8]>>(
 	collator: Sr25519Keyring,
 ) -> CandidateDescriptor<H> {
 	let validation_code_hash = validation_code_hash.into();
-	let payload = polkadot_primitives::v1::collator_signature_payload::<H>(
+	let payload = axia_primitives::v1::collator_signature_payload::<H>(
 		&relay_parent,
 		&para_id,
 		&persisted_validation_data_hash,
@@ -189,7 +189,7 @@ pub fn resign_candidate_descriptor_with_collator<H: AsRef<[u8]>>(
 	collator: Sr25519Keyring,
 ) {
 	descriptor.collator = collator.public().into();
-	let payload = polkadot_primitives::v1::collator_signature_payload::<H>(
+	let payload = axia_primitives::v1::collator_signature_payload::<H>(
 		&descriptor.relay_parent,
 		&descriptor.para_id,
 		&descriptor.persisted_validation_data_hash,

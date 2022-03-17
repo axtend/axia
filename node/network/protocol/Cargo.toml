@@ -1,5 +1,5 @@
 [package]
-name = "polkadot-node-network-protocol"
+name = "axia-node-network-protocol"
 version = "0.9.17"
 authors = ["Parity Technologies <admin@parity.io>"]
 edition = "2018"
@@ -7,12 +7,12 @@ description = "Primitives types for the Node-side"
 
 [dependencies]
 async-trait = "0.1.52"
-polkadot-primitives = { path = "../../../primitives" }
-polkadot-node-primitives = { path = "../../primitives" }
-polkadot-node-jaeger = { path = "../../jaeger" }
+axia-primitives = { path = "../../../primitives" }
+axia-node-primitives = { path = "../../primitives" }
+axia-node-jaeger = { path = "../../jaeger" }
 parity-scale-codec = { version = "2.3.1", default-features = false, features = ["derive"] }
-sc-network = { git = "https://github.com/purestake/substrate", branch = "moonbeam-polkadot-v0.9.17" }
-sc-authority-discovery = { git = "https://github.com/purestake/substrate", branch = "moonbeam-polkadot-v0.9.17" }
+sc-network = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
+sc-authority-discovery = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
 strum = { version = "0.23", features = ["derive"] }
 derive_more = "0.99.17"
 futures = "0.3.21"

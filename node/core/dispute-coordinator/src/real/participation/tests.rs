@@ -1,22 +1,22 @@
 // Copyright 2021 Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// This file is part of Axia.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// Axia is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// Axia is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with Axia.  If not, see <http://www.gnu.org/licenses/>.
 
 use assert_matches::assert_matches;
 use futures::StreamExt;
-use polkadot_node_subsystem_util::TimeoutExt;
+use axia_node_subsystem_util::TimeoutExt;
 use std::{sync::Arc, time::Duration};
 
 use sp_core::testing::TaskExecutor;
@@ -26,8 +26,8 @@ use ::test_helpers::{
 	dummy_candidate_commitments, dummy_candidate_receipt_bad_sig, dummy_digest, dummy_hash,
 };
 use parity_scale_codec::Encode;
-use polkadot_node_primitives::{AvailableData, BlockData, InvalidCandidate, PoV};
-use polkadot_node_subsystem::{
+use axia_node_primitives::{AvailableData, BlockData, InvalidCandidate, PoV};
+use axia_node_subsystem::{
 	jaeger,
 	messages::{
 		AllMessages, DisputeCoordinatorMessage, RuntimeApiMessage, RuntimeApiRequest,
@@ -35,10 +35,10 @@ use polkadot_node_subsystem::{
 	},
 	ActivatedLeaf, ActiveLeavesUpdate, LeafStatus,
 };
-use polkadot_node_subsystem_test_helpers::{
+use axia_node_subsystem_test_helpers::{
 	make_subsystem_context, TestSubsystemContext, TestSubsystemContextHandle,
 };
-use polkadot_primitives::v1::{
+use axia_primitives::v1::{
 	BlakeTwo256, CandidateCommitments, HashT, Header, PersistedValidationData, ValidationCode,
 };
 

@@ -170,11 +170,11 @@ pallet_bridge_grandpa
 pallet_bridge_messages
 pallet_message_lane
 parablock/MS
-parachain/MS
+allychain/MS
 param/MS
 parameterize/D
 plancks
-polkadot/MS
+axia/MS
 pov-block/MS
 precommit
 prometheus

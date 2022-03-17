@@ -1,24 +1,24 @@
 // Copyright 2021 Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// This file is part of Axia.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// Axia is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// Axia is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with Axia.  If not, see <http://www.gnu.org/licenses/>.
 
 use std::collections::{BTreeMap, HashMap};
 
 use thiserror::Error;
 
-use polkadot_primitives::v1::{CandidateHash, CandidateReceipt, SessionIndex};
+use axia_primitives::v1::{CandidateHash, CandidateReceipt, SessionIndex};
 
 use crate::real::ordering::CandidateComparator;
 
@@ -37,7 +37,7 @@ const BEST_EFFORT_QUEUE_SIZE: usize = 3;
 /// the queue. Note that for each vote import the request will be re-added, if there is free
 /// capacity. This limit just serves as a safe guard, it is not expected to ever really be reached.
 ///
-/// For 100 parachains, this would allow for every single candidate in 100 blocks on
+/// For 100 allychains, this would allow for every single candidate in 100 blocks on
 /// two forks to get disputed, which should be plenty to deal with any realistic attack.
 #[cfg(not(test))]
 const PRIORITY_QUEUE_SIZE: usize = 20_000;

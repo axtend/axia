@@ -236,11 +236,11 @@ TRACE bridge Sent transaction to Millau node: 0x5e68...
 ## Community
 
 Main hangout for the community is [Element](https://element.io/) (formerly Riot). Element is a chat
-server like, for example, Discord. Most discussions around Polkadot and Substrate happen
+server like, for example, Discord. Most discussions around Axia and Substrate happen
 in various Element "rooms" (channels). So, joining Element might be a good idea, anyway.
 
-If you are interested in information exchange and development of Polkadot related bridges please
-feel free to join the [Polkadot Bridges](https://app.element.io/#/room/#bridges:web3.foundation)
+If you are interested in information exchange and development of Axia related bridges please
+feel free to join the [Axia Bridges](https://app.element.io/#/room/#bridges:web3.foundation)
 Element channel.
 
 The [Substrate Technical](https://app.element.io/#/room/#substrate-technical:matrix.org) Element

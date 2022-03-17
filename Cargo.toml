@@ -1,10 +1,10 @@
 [[bin]]
-name = "polkadot"
+name = "axia"
 path = "src/main.rs"
 
 [package]
-name = "polkadot"
-description = "Implementation of a `https://polkadot.network` node in Rust based on the Substrate framework."
+name = "axia"
+description = "Implementation of a `https://axia.network` node in Rust based on the Substrate framework."
 license = "GPL-3.0-only"
 version = "0.9.17"
 authors = ["Parity Technologies <admin@parity.io>"]
@@ -13,7 +13,7 @@ rust-version = "1.57.0" # custom profiles
 readme = "README.md"
 
 [dependencies]
-polkadot-cli = { path = "cli", features = [ "kusama-native", "westend-native", "rococo-native" ]  }
+axia-cli = { path = "cli", features = [ "kusama-native", "westend-native", "rococo-native" ]  }
 color-eyre = { version = "0.6.0", default-features = false }
 parity-util-mem = { version = "*", default-features = false, features = ["jemalloc-global"] }
 
@@ -22,8 +22,8 @@ assert_cmd = "2.0.4"
 nix = "0.23.1"
 tempfile = "3.2.0"
 tokio = "1.15.0"
-remote-externalities = { git = "https://github.com/purestake/substrate", branch = "moonbeam-polkadot-v0.9.17" }
-polkadot-core-primitives = { path = "core-primitives" }
+remote-externalities = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
+axia-core-primitives = { path = "core-primitives" }
 
 [workspace]
 members = [
@@ -35,9 +35,9 @@ members = [
 	"runtime/common",
 	"runtime/common/slot_range_helper",
 	"runtime/metrics",
-	"runtime/parachains",
-	"runtime/polkadot",
-	"runtime/polkadot/constants",
+	"runtime/allychains",
+	"runtime/axia",
+	"runtime/axia/constants",
 	"runtime/kusama",
 	"runtime/kusama/constants",
 	"runtime/rococo",
@@ -67,7 +67,7 @@ members = [
 	"node/core/chain-api",
 	"node/core/chain-selection",
 	"node/core/dispute-coordinator",
-	"node/core/parachains-inherent",
+	"node/core/allychains-inherent",
 	"node/core/provisioner",
 	"node/core/pvf",
 	"node/core/pvf-checker",
@@ -100,25 +100,25 @@ members = [
 	"node/test/service",
 	"node/zombienet-backchannel",
 	"rpc",
-	"parachain",
-	"parachain/test-parachains",
-	"parachain/test-parachains/adder",
-	"parachain/test-parachains/adder/collator",
-	"parachain/test-parachains/halt",
+	"allychain",
+	"allychain/test-allychains",
+	"allychain/test-allychains/adder",
+	"allychain/test-allychains/adder/collator",
+	"allychain/test-allychains/halt",
 	"utils/staking-miner",
 	"utils/remote-ext-tests/bags-list",
 	"utils/generate-bags",
 ]
 
 # We want to be able to build the bridge relayer without pulling it (and all of its
-# dependencies into the Polkadot workspace)
+# dependencies into the Axia workspace)
 exclude = ["bridges/relays/bin-substrate", "bridges/bin/rialto/runtime", "bridges/bin/millau/runtime"]
 
 [badges]
 maintenance = { status = "actively-developed" }
 
 [profile.release]
-# Polkadot runtime requires unwinding.
+# Axia runtime requires unwinding.
 panic = "unwind"
 opt-level = 3
 
@@ -139,40 +139,40 @@ debug-assertions = true
 overflow-checks = true
 
 [features]
-runtime-benchmarks= [ "polkadot-cli/runtime-benchmarks" ]
-try-runtime = [ "polkadot-cli/try-runtime" ]
-fast-runtime = [ "polkadot-cli/fast-runtime" ]
-runtime-metrics = [ "polkadot-cli/runtime-metrics" ]
+runtime-benchmarks= [ "axia-cli/runtime-benchmarks" ]
+try-runtime = [ "axia-cli/try-runtime" ]
+fast-runtime = [ "axia-cli/fast-runtime" ]
+runtime-metrics = [ "axia-cli/runtime-metrics" ]
 
 # Configuration for building a .deb package - for use with `cargo-deb`
 [package.metadata.deb]
-name = "polkadot"
-extended-description = "Implementation of a https://polkadot.network node in Rust based on the Substrate framework."
+name = "axia"
+extended-description = "Implementation of a https://axia.network node in Rust based on the Substrate framework."
 section = "misc"
 maintainer = "martin@parity.io"
 license-file = ["LICENSE", "0"]
 # https://www.debian.org/doc/debian-policy/ch-maintainerscripts.html
 maintainer-scripts = "scripts/packaging/deb-maintainer-scripts"
 assets = [
-	["target/release/polkadot", "/usr/bin/", "755"],
-	["scripts/packaging/polkadot.service", "/lib/systemd/system/", "644"]
+	["target/release/axia", "/usr/bin/", "755"],
+	["scripts/packaging/axia.service", "/lib/systemd/system/", "644"]
 ]
 conf-files = [
-	"/etc/default/polkadot"
+	"/etc/default/axia"
 ]
 
 # Configuration for building an .rpm package - for use with `cargo-rpm`
 [package.metadata.rpm]
-package = "polkadot"
+package = "axia"
 
 [package.metadata.rpm.cargo]
 buildflags = ["--release"]
 
 [package.metadata.rpm.targets]
-polkadot = { path = "/usr/bin/polkadot" }
+axia = { path = "/usr/bin/axia" }
 
 [package.metadata.rpm.files]
-"../scripts/packaging/polkadot.service" = { path = "/usr/lib/systemd/system/polkadot.service", mode = "644" }
+"../scripts/packaging/axia.service" = { path = "/usr/lib/systemd/system/axia.service", mode = "644" }
 
 [package.metadata.spellcheck]
 config = "./scripts/gitlab/spellcheck.toml"

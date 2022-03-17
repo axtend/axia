@@ -1,23 +1,23 @@
 // Copyright 2022 Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// This file is part of Axia.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// Axia is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// Axia is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with Axia.  If not, see <http://www.gnu.org/licenses/>.
 
 //! XCM configuration for Rococo.
 
 use super::{
-	parachains_origin, AccountId, Balances, Call, Event, Origin, ParaId, Runtime, WeightToFee,
+	allychains_origin, AccountId, Balances, Call, Event, Origin, ParaId, Runtime, WeightToFee,
 	XcmPallet,
 };
 use frame_support::{
@@ -30,20 +30,20 @@ use sp_std::prelude::*;
 use xcm::latest::prelude::*;
 use xcm_builder::{
 	AccountId32Aliases, AllowKnownQueryResponses, AllowSubscriptionsFrom, BackingToPlurality,
-	ChildParachainAsNative, ChildParachainConvertsVia, ChildSystemParachainAsSuperuser,
+	ChildAllychainAsNative, ChildAllychainConvertsVia, ChildSystemAllychainAsSuperuser,
 	CurrencyAdapter as XcmCurrencyAdapter, FixedWeightBounds, IsConcrete, LocationInverter,
 	SignedAccountId32AsNative, SignedToAccountId32, SovereignSignedViaLocation, UsingComponents,
 };
 
 parameter_types! {
 	pub const RocLocation: MultiLocation = Here.into();
-	pub const RococoNetwork: NetworkId = NetworkId::Polkadot;
+	pub const RococoNetwork: NetworkId = NetworkId::Axia;
 	pub const Ancestry: MultiLocation = Here.into();
 	pub CheckAccount: AccountId = XcmPallet::check_account();
 }
 
 pub type SovereignAccountOf =
-	(ChildParachainConvertsVia<ParaId, AccountId>, AccountId32Aliases<RococoNetwork, AccountId>);
+	(ChildAllychainConvertsVia<ParaId, AccountId>, AccountId32Aliases<RococoNetwork, AccountId>);
 
 pub type LocalAssetTransactor = XcmCurrencyAdapter<
 	// Use this currency:
@@ -60,9 +60,9 @@ pub type LocalAssetTransactor = XcmCurrencyAdapter<
 
 type LocalOriginConverter = (
 	SovereignSignedViaLocation<SovereignAccountOf, Origin>,
-	ChildParachainAsNative<parachains_origin::Origin, Origin>,
+	ChildAllychainAsNative<allychains_origin::Origin, Origin>,
 	SignedAccountId32AsNative<RococoNetwork, Origin>,
-	ChildSystemParachainAsSuperuser<ParaId, Origin>,
+	ChildSystemAllychainAsSuperuser<ParaId, Origin>,
 );
 
 parameter_types! {
@@ -72,18 +72,18 @@ parameter_types! {
 /// The XCM router. When we want to send an XCM message, we use this type. It amalgamates all of our
 /// individual routers.
 pub type XcmRouter = (
-	// Only one router so far - use DMP to communicate with child parachains.
-	xcm_sender::ChildParachainRouter<Runtime, XcmPallet>,
+	// Only one router so far - use DMP to communicate with child allychains.
+	xcm_sender::ChildAllychainRouter<Runtime, XcmPallet>,
 );
 
 parameter_types! {
 	pub const Rococo: MultiAssetFilter = Wild(AllOf { fun: WildFungible, id: Concrete(RocLocation::get()) });
-	pub const RococoForTick: (MultiAssetFilter, MultiLocation) = (Rococo::get(), Parachain(100).into());
-	pub const RococoForTrick: (MultiAssetFilter, MultiLocation) = (Rococo::get(), Parachain(110).into());
-	pub const RococoForTrack: (MultiAssetFilter, MultiLocation) = (Rococo::get(), Parachain(120).into());
-	pub const RococoForStatemine: (MultiAssetFilter, MultiLocation) = (Rococo::get(), Parachain(1000).into());
-	pub const RococoForCanvas: (MultiAssetFilter, MultiLocation) = (Rococo::get(), Parachain(1002).into());
-	pub const RococoForEncointer: (MultiAssetFilter, MultiLocation) = (Rococo::get(), Parachain(1003).into());
+	pub const RococoForTick: (MultiAssetFilter, MultiLocation) = (Rococo::get(), Allychain(100).into());
+	pub const RococoForTrick: (MultiAssetFilter, MultiLocation) = (Rococo::get(), Allychain(110).into());
+	pub const RococoForTrack: (MultiAssetFilter, MultiLocation) = (Rococo::get(), Allychain(120).into());
+	pub const RococoForStatemine: (MultiAssetFilter, MultiLocation) = (Rococo::get(), Allychain(1000).into());
+	pub const RococoForCanvas: (MultiAssetFilter, MultiLocation) = (Rococo::get(), Allychain(1002).into());
+	pub const RococoForEncointer: (MultiAssetFilter, MultiLocation) = (Rococo::get(), Allychain(1003).into());
 	pub const MaxInstructions: u32 = 100;
 }
 pub type TrustedTeleporters = (
@@ -98,12 +98,12 @@ pub type TrustedTeleporters = (
 parameter_types! {
 	pub AllowUnpaidFrom: Vec<MultiLocation> =
 		vec![
-			Parachain(100).into(),
-			Parachain(110).into(),
-			Parachain(120).into(),
-			Parachain(1000).into(),
-			Parachain(1002).into(),
-			Parachain(1003).into(),
+			Allychain(100).into(),
+			Allychain(110).into(),
+			Allychain(120).into(),
+			Allychain(1000).into(),
+			Allychain(1002).into(),
+			Allychain(1003).into(),
 		];
 }
 
@@ -111,7 +111,7 @@ use xcm_builder::{AllowTopLevelPaidExecutionFrom, AllowUnpaidExecutionFrom, Take
 pub type Barrier = (
 	TakeWeightCredit,
 	AllowTopLevelPaidExecutionFrom<Everything>,
-	AllowUnpaidExecutionFrom<IsInVec<AllowUnpaidFrom>>, // <- Trusted parachains get free execution
+	AllowUnpaidExecutionFrom<IsInVec<AllowUnpaidFrom>>, // <- Trusted allychains get free execution
 	// Expected responses are OK.
 	AllowKnownQueryResponses<XcmPallet>,
 	// Subscriptions for version tracking are OK.

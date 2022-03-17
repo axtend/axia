@@ -42,7 +42,7 @@ function show_help () {
   exit 1
 }
 
-RIALTO=' -f ./networks/rialto.yml -f ./networks/rialto-parachain.yml'
+RIALTO=' -f ./networks/rialto.yml -f ./networks/rialto-allychain.yml'
 MILLAU=' -f ./networks/millau.yml'
 MONITORING=' -f ./monitoring/docker-compose.yml'
 UI=' -f ./ui/docker-compose.yml'

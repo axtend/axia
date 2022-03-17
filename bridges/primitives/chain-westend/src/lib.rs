@@ -28,12 +28,12 @@ use scale_info::TypeInfo;
 use sp_std::prelude::*;
 use sp_version::RuntimeVersion;
 
-pub use bp_polkadot_core::*;
+pub use bp_axia_core::*;
 
 /// Westend Chain
-pub type Westend = PolkadotLike;
+pub type Westend = AxiaLike;
 
-// NOTE: This needs to be kept up to date with the Westend runtime found in the Polkadot repo.
+// NOTE: This needs to be kept up to date with the Westend runtime found in the Axia repo.
 pub struct WeightToFee;
 impl WeightToFeePolynomial for WeightToFee {
 	type Balance = Balance;
@@ -51,7 +51,7 @@ impl WeightToFeePolynomial for WeightToFee {
 	}
 }
 
-// NOTE: This needs to be kept up to date with the Westend runtime found in the Polkadot repo.
+// NOTE: This needs to be kept up to date with the Westend runtime found in the Axia repo.
 pub const VERSION: RuntimeVersion = RuntimeVersion {
 	spec_name: sp_version::create_runtime_str!("westend"),
 	impl_name: sp_version::create_runtime_str!("parity-westend"),

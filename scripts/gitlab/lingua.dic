@@ -180,7 +180,7 @@ overseer/MS
 ownerless
 p2p
 parablock/MS
-parachain/MS
+allychain/MS
 ParaId
 parameterization
 parameterize/D
@@ -194,8 +194,8 @@ pessimization
 phragmen
 picosecond/SM
 PoA/MS
-polkadot/MS
-Polkadot/MS
+axia/MS
+Axia/MS
 PoS/MS
 PoV/MS
 PoW/MS

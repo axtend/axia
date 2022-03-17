@@ -1,14 +1,14 @@
 [package]
-name = "polkadot-runtime-metrics"
+name = "axia-runtime-metrics"
 version = "0.9.17"
 authors = ["Parity Technologies <admin@parity.io>"]
 edition = "2018"
 
 [dependencies]
-sp-std = { package = "sp-std", git = "https://github.com/purestake/substrate", default-features = false, branch = "moonbeam-polkadot-v0.9.17" }
-sp-tracing = { git = "https://github.com/purestake/substrate", default-features = false , branch = "moonbeam-polkadot-v0.9.17" }
+sp-std = { package = "sp-std", git = "https://github.com/purestake/substrate", default-features = false, branch = "moonbeam-axia-v0.9.17" }
+sp-tracing = { git = "https://github.com/purestake/substrate", default-features = false , branch = "moonbeam-axia-v0.9.17" }
 parity-scale-codec = { version = "2.3.1", default-features = false }
-primitives = { package = "polkadot-primitives", path = "../../primitives", default-features = false }
+primitives = { package = "axia-primitives", path = "../../primitives", default-features = false }
 
 bs58 = { version = "0.4.0", default-features = false, features = ["alloc"] }
 

@@ -1,5 +1,5 @@
 [package]
-name = "polkadot-node-primitives"
+name = "axia-node-primitives"
 version = "0.9.17"
 authors = ["Parity Technologies <admin@parity.io>"]
 edition = "2018"
@@ -8,15 +8,15 @@ description = "Primitives types for the Node-side"
 [dependencies]
 bounded-vec = "0.5"
 futures = "0.3.21"
-polkadot-primitives = { path = "../../primitives" }
+axia-primitives = { path = "../../primitives" }
 parity-scale-codec = { version = "2.3.1", default-features = false, features = ["derive"] }
-sp-core = { git = "https://github.com/purestake/substrate", branch = "moonbeam-polkadot-v0.9.17" }
-sp-application-crypto = { git = "https://github.com/purestake/substrate", branch = "moonbeam-polkadot-v0.9.17" }
-sp-consensus-vrf = { git = "https://github.com/purestake/substrate", branch = "moonbeam-polkadot-v0.9.17" }
-sp-consensus-babe = { git = "https://github.com/purestake/substrate", branch = "moonbeam-polkadot-v0.9.17" }
-sp-keystore = { git = "https://github.com/purestake/substrate", branch = "moonbeam-polkadot-v0.9.17" }
-sp-maybe-compressed-blob = { git = "https://github.com/purestake/substrate", branch = "moonbeam-polkadot-v0.9.17" }
-polkadot-parachain = { path = "../../parachain", default-features = false }
+sp-core = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
+sp-application-crypto = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
+sp-consensus-vrf = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
+sp-consensus-babe = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
+sp-keystore = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
+sp-maybe-compressed-blob = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
+axia-allychain = { path = "../../allychain", default-features = false }
 schnorrkel = "0.9.1"
 thiserror = "1.0.30"
 serde = { version = "1.0.136", features = ["derive"] }
@@ -25,4 +25,4 @@ serde = { version = "1.0.136", features = ["derive"] }
 zstd = "0.9.2"
 
 [dev-dependencies]
-polkadot-erasure-coding = { path = "../../erasure-coding" }
+axia-erasure-coding = { path = "../../erasure-coding" }

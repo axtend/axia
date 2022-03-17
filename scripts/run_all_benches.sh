@@ -5,7 +5,7 @@
 # current reference machine: https://github.com/paritytech/substrate/pull/5848
 
 runtimes=(
-  polkadot
+  axia
   kusama
   westend
 )

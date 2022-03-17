@@ -1,22 +1,22 @@
 // Copyright 2021 Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// This file is part of Axia.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// Axia is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// Axia is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with Axia.  If not, see <http://www.gnu.org/licenses/>.
 
-//! # Polkadot Staking Miner.
+//! # Axia Staking Miner.
 //!
-//! Simple bot capable of monitoring a polkadot (and cousins) chain and submitting solutions to the
+//! Simple bot capable of monitoring a axia (and cousins) chain and submitting solutions to the
 //! `pallet-election-provider-multi-phase`. See `--help` for more details.
 //!
 //! # Implementation Notes:
@@ -47,12 +47,12 @@ use sp_npos_elections::ExtendedBalance;
 use sp_runtime::{traits::Block as BlockT, DeserializeOwned};
 
 pub(crate) enum AnyRuntime {
-	Polkadot,
+	Axia,
 	Kusama,
 	Westend,
 }
 
-pub(crate) static mut RUNTIME: AnyRuntime = AnyRuntime::Polkadot;
+pub(crate) static mut RUNTIME: AnyRuntime = AnyRuntime::Axia;
 
 macro_rules! construct_runtime_prelude {
 	($runtime:ident) => { paste::paste! {
@@ -108,12 +108,12 @@ macro_rules! construct_runtime_prelude {
 }
 
 // NOTE: we might be able to use some code from the bridges repo here.
-fn signed_ext_builder_polkadot(
+fn signed_ext_builder_axia(
 	nonce: Index,
 	tip: Balance,
 	era: sp_runtime::generic::Era,
-) -> polkadot_runtime_exports::SignedExtra {
-	use polkadot_runtime_exports::Runtime;
+) -> axia_runtime_exports::SignedExtra {
+	use axia_runtime_exports::Runtime;
 	(
 		frame_system::CheckNonZeroSender::<Runtime>::new(),
 		frame_system::CheckSpecVersion::<Runtime>::new(),
@@ -163,7 +163,7 @@ fn signed_ext_builder_westend(
 	)
 }
 
-construct_runtime_prelude!(polkadot);
+construct_runtime_prelude!(axia);
 construct_runtime_prelude!(kusama);
 construct_runtime_prelude!(westend);
 
@@ -178,9 +178,9 @@ macro_rules! any_runtime {
 	($($code:tt)*) => {
 		unsafe {
 			match $crate::RUNTIME {
-				$crate::AnyRuntime::Polkadot => {
+				$crate::AnyRuntime::Axia => {
 					#[allow(unused)]
-					use $crate::polkadot_runtime_exports::*;
+					use $crate::axia_runtime_exports::*;
 					$($code)*
 				},
 				$crate::AnyRuntime::Kusama => {
@@ -205,9 +205,9 @@ macro_rules! any_runtime_unit {
 	($($code:tt)*) => {
 		unsafe {
 			match $crate::RUNTIME {
-				$crate::AnyRuntime::Polkadot => {
+				$crate::AnyRuntime::Axia => {
 					#[allow(unused)]
-					use $crate::polkadot_runtime_exports::*;
+					use $crate::axia_runtime_exports::*;
 					let _ = $($code)*;
 				},
 				$crate::AnyRuntime::Kusama => {
@@ -547,16 +547,16 @@ async fn main() {
 		.await
 		.expect("system_chain infallible; qed.");
 	match chain.to_lowercase().as_str() {
-		"polkadot" | "development" => {
+		"axia" | "development" => {
 			sp_core::crypto::set_default_ss58_version(
-				sp_core::crypto::Ss58AddressFormatRegistry::PolkadotAccount.into(),
+				sp_core::crypto::Ss58AddressFormatRegistry::AxiaAccount.into(),
 			);
 			sub_tokens::dynamic::set_name("DOT");
 			sub_tokens::dynamic::set_decimal_points(10_000_000_000);
 			// safety: this program will always be single threaded, thus accessing global static is
 			// safe.
 			unsafe {
-				RUNTIME = AnyRuntime::Polkadot;
+				RUNTIME = AnyRuntime::Axia;
 			}
 		},
 		"kusama" | "kusama-dev" => {
@@ -573,7 +573,7 @@ async fn main() {
 		},
 		"westend" => {
 			sp_core::crypto::set_default_ss58_version(
-				sp_core::crypto::Ss58AddressFormatRegistry::PolkadotAccount.into(),
+				sp_core::crypto::Ss58AddressFormatRegistry::AxiaAccount.into(),
 			);
 			sub_tokens::dynamic::set_name("WND");
 			sub_tokens::dynamic::set_decimal_points(1_000_000_000_000);
@@ -630,16 +630,16 @@ mod tests {
 	#[test]
 	fn any_runtime_works() {
 		unsafe {
-			RUNTIME = AnyRuntime::Polkadot;
+			RUNTIME = AnyRuntime::Axia;
 		}
-		let polkadot_version = any_runtime! { get_version::<Runtime>() };
+		let axia_version = any_runtime! { get_version::<Runtime>() };
 
 		unsafe {
 			RUNTIME = AnyRuntime::Kusama;
 		}
 		let kusama_version = any_runtime! { get_version::<Runtime>() };
 
-		assert_eq!(polkadot_version.spec_name, "polkadot".into());
+		assert_eq!(axia_version.spec_name, "axia".into());
 		assert_eq!(kusama_version.spec_name, "kusama".into());
 	}
 }

@@ -1,32 +1,32 @@
 // Copyright 2020 Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// This file is part of Axia.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// Axia is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// Axia is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with Axia.  If not, see <http://www.gnu.org/licenses/>.
 
 //! Implements the dispute coordinator subsystem (dummy implementation).
 
-use polkadot_node_subsystem::{
+use axia_node_subsystem::{
 	messages::DisputeCoordinatorMessage, overseer, FromOverseer, OverseerSignal, SpawnedSubsystem,
 	SubsystemContext, SubsystemError,
 };
-use polkadot_primitives::v1::BlockNumber;
+use axia_primitives::v1::BlockNumber;
 
 use futures::prelude::*;
 
 use crate::error::{Error, Result};
 
-const LOG_TARGET: &str = "parachain::dispute-coordinator";
+const LOG_TARGET: &str = "allychain::dispute-coordinator";
 
 #[derive(Eq, PartialEq)]
 enum Participation {}

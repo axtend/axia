@@ -1,5 +1,5 @@
 [package]
-name = "polkadot-node-core-runtime-api"
+name = "axia-node-core-runtime-api"
 version = "0.9.17"
 authors = ["Parity Technologies <admin@parity.io>"]
 edition = "2018"
@@ -10,19 +10,19 @@ tracing = "0.1.29"
 memory-lru = "0.1.0"
 parity-util-mem = { version = "0.10.0", default-features = false }
 
-sp-api = { git = "https://github.com/purestake/substrate", branch = "moonbeam-polkadot-v0.9.17" }
-sp-authority-discovery = { git = "https://github.com/purestake/substrate", branch = "moonbeam-polkadot-v0.9.17" }
-sp-core = { git = "https://github.com/purestake/substrate", branch = "moonbeam-polkadot-v0.9.17" }
-sp-consensus-babe = { git = "https://github.com/purestake/substrate", branch = "moonbeam-polkadot-v0.9.17" }
+sp-api = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
+sp-authority-discovery = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
+sp-core = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
+sp-consensus-babe = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
 
-polkadot-primitives = { path = "../../../primitives" }
-polkadot-subsystem = { package = "polkadot-node-subsystem", path = "../../subsystem" }
-polkadot-node-subsystem-util = { path = "../../subsystem-util" }
+axia-primitives = { path = "../../../primitives" }
+axia-subsystem = { package = "axia-node-subsystem", path = "../../subsystem" }
+axia-node-subsystem-util = { path = "../../subsystem-util" }
 
 [dev-dependencies]
-sp-core = { git = "https://github.com/purestake/substrate", branch = "moonbeam-polkadot-v0.9.17" }
-sp-keyring = { git = "https://github.com/purestake/substrate", branch = "moonbeam-polkadot-v0.9.17" }
+sp-core = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
+sp-keyring = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
 futures = { version = "0.3.21", features = ["thread-pool"] }
-polkadot-node-subsystem-test-helpers = { path = "../../subsystem-test-helpers" }
-polkadot-node-primitives = { path = "../../primitives" }
-test-helpers = { package = "polkadot-primitives-test-helpers", path = "../../../primitives/test-helpers" }
+axia-node-subsystem-test-helpers = { path = "../../subsystem-test-helpers" }
+axia-node-primitives = { path = "../../primitives" }
+test-helpers = { package = "axia-primitives-test-helpers", path = "../../../primitives/test-helpers" }

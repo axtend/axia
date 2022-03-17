@@ -1,20 +1,20 @@
 // Copyright 2020 Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// This file is part of Axia.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// Axia is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// Axia is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with Axia.  If not, see <http://www.gnu.org/licenses/>.
 
-use polkadot_node_subsystem_util::metrics::{self, prometheus};
+use axia_node_subsystem_util::metrics::{self, prometheus};
 use std::convert::TryInto;
 
 #[derive(Clone)]
@@ -25,7 +25,7 @@ struct MetricsInner {
 
 	/// The following metrics track how many disputes/votes the runtime will have to process. These will count
 	/// all recent statements meaning every dispute from last sessions: 10 min on Rococo, 60 min on Kusama and
-	/// 4 hours on Polkadot. The metrics are updated only when the node authors a block, so values vary across nodes.
+	/// 4 hours on Axia. The metrics are updated only when the node authors a block, so values vary across nodes.
 	inherent_data_dispute_statement_sets: prometheus::Counter<prometheus::U64>,
 	inherent_data_dispute_statements: prometheus::CounterVec<prometheus::U64>,
 }
@@ -91,7 +91,7 @@ impl metrics::Metrics for Metrics {
 			inherent_data_requests: prometheus::register(
 				prometheus::CounterVec::new(
 					prometheus::Opts::new(
-						"polkadot_parachain_inherent_data_requests_total",
+						"axia_allychain_inherent_data_requests_total",
 						"Number of InherentData requests served by provisioner.",
 					),
 					&["success"],
@@ -100,14 +100,14 @@ impl metrics::Metrics for Metrics {
 			)?,
 			request_inherent_data: prometheus::register(
 				prometheus::Histogram::with_opts(prometheus::HistogramOpts::new(
-					"polkadot_parachain_provisioner_request_inherent_data_time",
+					"axia_allychain_provisioner_request_inherent_data_time",
 					"Time spent within `provisioner::request_inherent_data`",
 				))?,
 				registry,
 			)?,
 			provisionable_data: prometheus::register(
 				prometheus::Histogram::with_opts(prometheus::HistogramOpts::new(
-					"polkadot_parachain_provisioner_provisionable_data_time",
+					"axia_allychain_provisioner_provisionable_data_time",
 					"Time spent within `provisioner::provisionable_data`",
 				))?,
 				registry,
@@ -115,7 +115,7 @@ impl metrics::Metrics for Metrics {
 			inherent_data_dispute_statements: prometheus::register(
 				prometheus::CounterVec::new(
 					prometheus::Opts::new(
-						"polkadot_parachain_inherent_data_dispute_statements",
+						"axia_allychain_inherent_data_dispute_statements",
 						"Number of dispute statements passed to `create_inherent()`.",
 					),
 					&["validity"],
@@ -124,7 +124,7 @@ impl metrics::Metrics for Metrics {
 			)?,
 			inherent_data_dispute_statement_sets: prometheus::register(
 				prometheus::Counter::new(
-					"polkadot_parachain_inherent_data_dispute_statement_sets",
+					"axia_allychain_inherent_data_dispute_statement_sets",
 					"Number of dispute statements sets passed to `create_inherent()`.",
 				)?,
 				registry,

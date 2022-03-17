@@ -1,20 +1,20 @@
 // Copyright 2017-2020 Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// This file is part of Axia.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// Axia is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// Axia is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with Axia.  If not, see <http://www.gnu.org/licenses/>.
 
-//! Polkadot chain configurations.
+//! Axia chain configurations.
 
 use beefy_primitives::crypto::AuthorityId as BeefyId;
 use grandpa::AuthorityId as GrandpaId;
@@ -24,11 +24,11 @@ use kusama_runtime as kusama;
 use kusama_runtime_constants::currency::UNITS as KSM;
 use pallet_im_online::sr25519::AuthorityId as ImOnlineId;
 use pallet_staking::Forcing;
-use polkadot_primitives::v1::{AccountId, AccountPublic, AssignmentId, ValidatorId};
-#[cfg(feature = "polkadot-native")]
-use polkadot_runtime as polkadot;
-#[cfg(feature = "polkadot-native")]
-use polkadot_runtime_constants::currency::UNITS as DOT;
+use axia_primitives::v1::{AccountId, AccountPublic, AssignmentId, ValidatorId};
+#[cfg(feature = "axia-native")]
+use axia_runtime as axia;
+#[cfg(feature = "axia-native")]
+use axia_runtime_constants::currency::UNITS as DOT;
 use sp_authority_discovery::AuthorityId as AuthorityDiscoveryId;
 use sp_consensus_babe::AuthorityId as BabeId;
 
@@ -46,14 +46,14 @@ use westend_runtime as westend;
 #[cfg(feature = "westend-native")]
 use westend_runtime_constants::currency::UNITS as WND;
 
-#[cfg(feature = "polkadot-native")]
-const POLKADOT_STAGING_TELEMETRY_URL: &str = "wss://telemetry.polkadot.io/submit/";
+#[cfg(feature = "axia-native")]
+const AXIA_STAGING_TELEMETRY_URL: &str = "wss://telemetry.axia.io/submit/";
 #[cfg(feature = "kusama-native")]
-const KUSAMA_STAGING_TELEMETRY_URL: &str = "wss://telemetry.polkadot.io/submit/";
+const KUSAMA_STAGING_TELEMETRY_URL: &str = "wss://telemetry.axia.io/submit/";
 #[cfg(feature = "westend-native")]
-const WESTEND_STAGING_TELEMETRY_URL: &str = "wss://telemetry.polkadot.io/submit/";
+const WESTEND_STAGING_TELEMETRY_URL: &str = "wss://telemetry.axia.io/submit/";
 #[cfg(feature = "rococo-native")]
-const ROCOCO_STAGING_TELEMETRY_URL: &str = "wss://telemetry.polkadot.io/submit/";
+const ROCOCO_STAGING_TELEMETRY_URL: &str = "wss://telemetry.axia.io/submit/";
 const DEFAULT_PROTOCOL_ID: &str = "dot";
 
 /// Node `ChainSpec` extensions.
@@ -64,25 +64,25 @@ const DEFAULT_PROTOCOL_ID: &str = "dot";
 #[serde(rename_all = "camelCase")]
 pub struct Extensions {
 	/// Block numbers with known hashes.
-	pub fork_blocks: sc_client_api::ForkBlocks<polkadot_primitives::v1::Block>,
+	pub fork_blocks: sc_client_api::ForkBlocks<axia_primitives::v1::Block>,
 	/// Known bad block hashes.
-	pub bad_blocks: sc_client_api::BadBlocks<polkadot_primitives::v1::Block>,
+	pub bad_blocks: sc_client_api::BadBlocks<axia_primitives::v1::Block>,
 	/// The light sync state.
 	///
 	/// This value will be set by the `sync-state rpc` implementation.
 	pub light_sync_state: sc_sync_state_rpc::LightSyncStateExtension,
 }
 
-/// The `ChainSpec` parameterized for the polkadot runtime.
-#[cfg(feature = "polkadot-native")]
-pub type PolkadotChainSpec = service::GenericChainSpec<polkadot::GenesisConfig, Extensions>;
+/// The `ChainSpec` parameterized for the axia runtime.
+#[cfg(feature = "axia-native")]
+pub type AxiaChainSpec = service::GenericChainSpec<axia::GenesisConfig, Extensions>;
 
 // Dummy chain spec, in case when we don't have the native runtime.
 pub type DummyChainSpec = service::GenericChainSpec<(), Extensions>;
 
 // Dummy chain spec, but that is fine when we don't have the native runtime.
-#[cfg(not(feature = "polkadot-native"))]
-pub type PolkadotChainSpec = DummyChainSpec;
+#[cfg(not(feature = "axia-native"))]
+pub type AxiaChainSpec = DummyChainSpec;
 
 /// The `ChainSpec` parameterized for the kusama runtime.
 #[cfg(feature = "kusama-native")]
@@ -140,8 +140,8 @@ impl sp_runtime::BuildStorage for RococoGenesisExt {
 	}
 }
 
-pub fn polkadot_config() -> Result<PolkadotChainSpec, String> {
-	PolkadotChainSpec::from_json_bytes(&include_bytes!("../res/polkadot.json")[..])
+pub fn axia_config() -> Result<AxiaChainSpec, String> {
+	AxiaChainSpec::from_json_bytes(&include_bytes!("../res/axia.json")[..])
 }
 
 pub fn kusama_config() -> Result<KusamaChainSpec, String> {
@@ -165,20 +165,20 @@ pub fn wococo_config() -> Result<RococoChainSpec, String> {
 	RococoChainSpec::from_json_bytes(&include_bytes!("../res/wococo.json")[..])
 }
 
-/// The default parachains host configuration.
+/// The default allychains host configuration.
 #[cfg(any(
 	feature = "rococo-native",
 	feature = "kusama-native",
 	feature = "westend-native",
-	feature = "polkadot-native"
+	feature = "axia-native"
 ))]
-fn default_parachains_host_configuration(
-) -> polkadot_runtime_parachains::configuration::HostConfiguration<
-	polkadot_primitives::v1::BlockNumber,
+fn default_allychains_host_configuration(
+) -> axia_runtime_allychains::configuration::HostConfiguration<
+	axia_primitives::v1::BlockNumber,
 > {
-	use polkadot_primitives::v1::{MAX_CODE_SIZE, MAX_POV_SIZE};
+	use axia_primitives::v1::{MAX_CODE_SIZE, MAX_POV_SIZE};
 
-	polkadot_runtime_parachains::configuration::HostConfiguration {
+	axia_runtime_allychains::configuration::HostConfiguration {
 		validation_upgrade_cooldown: 2u32,
 		validation_upgrade_delay: 2,
 		code_retention_period: 1200,
@@ -198,10 +198,10 @@ fn default_parachains_host_configuration(
 		hrmp_recipient_deposit: 0,
 		hrmp_channel_max_capacity: 8,
 		hrmp_channel_max_total_size: 8 * 1024,
-		hrmp_max_parachain_inbound_channels: 4,
+		hrmp_max_allychain_inbound_channels: 4,
 		hrmp_max_parathread_inbound_channels: 4,
 		hrmp_channel_max_message_size: 1024 * 1024,
-		hrmp_max_parachain_outbound_channels: 4,
+		hrmp_max_allychain_outbound_channels: 4,
 		hrmp_max_parathread_outbound_channels: 4,
 		hrmp_max_message_num_per_candidate: 5,
 		dispute_period: 6,
@@ -219,23 +219,23 @@ fn default_parachains_host_configuration(
 	feature = "rococo-native",
 	feature = "kusama-native",
 	feature = "westend-native",
-	feature = "polkadot-native"
+	feature = "axia-native"
 ))]
 #[test]
-fn default_parachains_host_configuration_is_consistent() {
-	default_parachains_host_configuration().panic_if_not_consistent();
+fn default_allychains_host_configuration_is_consistent() {
+	default_allychains_host_configuration().panic_if_not_consistent();
 }
 
-#[cfg(feature = "polkadot-native")]
-fn polkadot_session_keys(
+#[cfg(feature = "axia-native")]
+fn axia_session_keys(
 	babe: BabeId,
 	grandpa: GrandpaId,
 	im_online: ImOnlineId,
 	para_validator: ValidatorId,
 	para_assignment: AssignmentId,
 	authority_discovery: AuthorityDiscoveryId,
-) -> polkadot::SessionKeys {
-	polkadot::SessionKeys {
+) -> axia::SessionKeys {
+	axia::SessionKeys {
 		babe,
 		grandpa,
 		im_online,
@@ -304,8 +304,8 @@ fn rococo_session_keys(
 	}
 }
 
-#[cfg(feature = "polkadot-native")]
-fn polkadot_staging_testnet_config_genesis(wasm_binary: &[u8]) -> polkadot::GenesisConfig {
+#[cfg(feature = "axia-native")]
+fn axia_staging_testnet_config_genesis(wasm_binary: &[u8]) -> axia::GenesisConfig {
 	// subkey inspect "$SECRET"
 	let endowed_accounts = vec![];
 
@@ -323,24 +323,24 @@ fn polkadot_staging_testnet_config_genesis(wasm_binary: &[u8]) -> polkadot::Gene
 	const ENDOWMENT: u128 = 1_000_000 * DOT;
 	const STASH: u128 = 100 * DOT;
 
-	polkadot::GenesisConfig {
-		system: polkadot::SystemConfig { code: wasm_binary.to_vec() },
-		balances: polkadot::BalancesConfig {
+	axia::GenesisConfig {
+		system: axia::SystemConfig { code: wasm_binary.to_vec() },
+		balances: axia::BalancesConfig {
 			balances: endowed_accounts
 				.iter()
 				.map(|k: &AccountId| (k.clone(), ENDOWMENT))
 				.chain(initial_authorities.iter().map(|x| (x.0.clone(), STASH)))
 				.collect(),
 		},
-		indices: polkadot::IndicesConfig { indices: vec![] },
-		session: polkadot::SessionConfig {
+		indices: axia::IndicesConfig { indices: vec![] },
+		session: axia::SessionConfig {
 			keys: initial_authorities
 				.iter()
 				.map(|x| {
 					(
 						x.0.clone(),
 						x.0.clone(),
-						polkadot_session_keys(
+						axia_session_keys(
 							x.2.clone(),
 							x.3.clone(),
 							x.4.clone(),
@@ -352,12 +352,12 @@ fn polkadot_staging_testnet_config_genesis(wasm_binary: &[u8]) -> polkadot::Gene
 				})
 				.collect::<Vec<_>>(),
 		},
-		staking: polkadot::StakingConfig {
+		staking: axia::StakingConfig {
 			validator_count: 50,
 			minimum_validator_count: 4,
 			stakers: initial_authorities
 				.iter()
-				.map(|x| (x.0.clone(), x.1.clone(), STASH, polkadot::StakerStatus::Validator))
+				.map(|x| (x.0.clone(), x.1.clone(), STASH, axia::StakerStatus::Validator))
 				.collect(),
 			invulnerables: initial_authorities.iter().map(|x| x.0.clone()).collect(),
 			force_era: Forcing::ForceNone,
@@ -366,25 +366,25 @@ fn polkadot_staging_testnet_config_genesis(wasm_binary: &[u8]) -> polkadot::Gene
 		},
 		phragmen_election: Default::default(),
 		democracy: Default::default(),
-		council: polkadot::CouncilConfig { members: vec![], phantom: Default::default() },
-		technical_committee: polkadot::TechnicalCommitteeConfig {
+		council: axia::CouncilConfig { members: vec![], phantom: Default::default() },
+		technical_committee: axia::TechnicalCommitteeConfig {
 			members: vec![],
 			phantom: Default::default(),
 		},
 		technical_membership: Default::default(),
-		babe: polkadot::BabeConfig {
+		babe: axia::BabeConfig {
 			authorities: Default::default(),
-			epoch_config: Some(polkadot::BABE_GENESIS_EPOCH_CONFIG),
+			epoch_config: Some(axia::BABE_GENESIS_EPOCH_CONFIG),
 		},
 		grandpa: Default::default(),
 		im_online: Default::default(),
-		authority_discovery: polkadot::AuthorityDiscoveryConfig { keys: vec![] },
-		claims: polkadot::ClaimsConfig { claims: vec![], vesting: vec![] },
-		vesting: polkadot::VestingConfig { vesting: vec![] },
+		authority_discovery: axia::AuthorityDiscoveryConfig { keys: vec![] },
+		claims: axia::ClaimsConfig { claims: vec![], vesting: vec![] },
+		vesting: axia::VestingConfig { vesting: vec![] },
 		treasury: Default::default(),
 		hrmp: Default::default(),
-		configuration: polkadot::ConfigurationConfig {
-			config: default_parachains_host_configuration(),
+		configuration: axia::ConfigurationConfig {
+			config: default_allychains_host_configuration(),
 		},
 		paras: Default::default(),
 		xcm_pallet: Default::default(),
@@ -565,11 +565,11 @@ fn westend_staging_testnet_config_genesis(wasm_binary: &[u8]) -> westend::Genesi
 		sudo: westend::SudoConfig { key: Some(endowed_accounts[0].clone()) },
 		hrmp: Default::default(),
 		configuration: westend::ConfigurationConfig {
-			config: default_parachains_host_configuration(),
+			config: default_allychains_host_configuration(),
 		},
 		paras: Default::default(),
 		registrar: westend_runtime::RegistrarConfig {
-			next_free_para_id: polkadot_primitives::v1::LOWEST_PUBLIC_ID,
+			next_free_para_id: axia_primitives::v1::LOWEST_PUBLIC_ID,
 		},
 		xcm_pallet: Default::default(),
 	}
@@ -763,7 +763,7 @@ fn kusama_staging_testnet_config_genesis(wasm_binary: &[u8]) -> kusama::GenesisC
 		treasury: Default::default(),
 		hrmp: Default::default(),
 		configuration: kusama::ConfigurationConfig {
-			config: default_parachains_host_configuration(),
+			config: default_allychains_host_configuration(),
 		},
 		gilt: Default::default(),
 		paras: Default::default(),
@@ -1059,10 +1059,10 @@ fn rococo_staging_testnet_config_genesis(wasm_binary: &[u8]) -> rococo_runtime::
 		paras: rococo_runtime::ParasConfig { paras: vec![] },
 		hrmp: Default::default(),
 		configuration: rococo_runtime::ConfigurationConfig {
-			config: default_parachains_host_configuration(),
+			config: default_allychains_host_configuration(),
 		},
 		registrar: rococo_runtime::RegistrarConfig {
-			next_free_para_id: polkadot_primitives::v1::LOWEST_PUBLIC_ID,
+			next_free_para_id: axia_primitives::v1::LOWEST_PUBLIC_ID,
 		},
 		xcm_pallet: Default::default(),
 		transaction_payment: Default::default(),
@@ -1085,21 +1085,21 @@ fn rococo_staging_testnet_config_genesis(wasm_binary: &[u8]) -> rococo_runtime::
 	}
 }
 
-/// Polkadot staging testnet config.
-#[cfg(feature = "polkadot-native")]
-pub fn polkadot_staging_testnet_config() -> Result<PolkadotChainSpec, String> {
-	let wasm_binary = polkadot::WASM_BINARY.ok_or("Polkadot development wasm not available")?;
+/// Axia staging testnet config.
+#[cfg(feature = "axia-native")]
+pub fn axia_staging_testnet_config() -> Result<AxiaChainSpec, String> {
+	let wasm_binary = axia::WASM_BINARY.ok_or("Axia development wasm not available")?;
 	let boot_nodes = vec![];
 
-	Ok(PolkadotChainSpec::from_genesis(
-		"Polkadot Staging Testnet",
-		"polkadot_staging_testnet",
+	Ok(AxiaChainSpec::from_genesis(
+		"Axia Staging Testnet",
+		"axia_staging_testnet",
 		ChainType::Live,
-		move || polkadot_staging_testnet_config_genesis(wasm_binary),
+		move || axia_staging_testnet_config_genesis(wasm_binary),
 		boot_nodes,
 		Some(
-			TelemetryEndpoints::new(vec![(POLKADOT_STAGING_TELEMETRY_URL.to_string(), 0)])
-				.expect("Polkadot Staging telemetry url is valid; qed"),
+			TelemetryEndpoints::new(vec![(AXIA_STAGING_TELEMETRY_URL.to_string(), 0)])
+				.expect("Axia Staging telemetry url is valid; qed"),
 		),
 		Some(DEFAULT_PROTOCOL_ID),
 		None,
@@ -1255,9 +1255,9 @@ fn testnet_accounts() -> Vec<AccountId> {
 	]
 }
 
-/// Helper function to create polkadot `GenesisConfig` for testing
-#[cfg(feature = "polkadot-native")]
-pub fn polkadot_testnet_genesis(
+/// Helper function to create axia `GenesisConfig` for testing
+#[cfg(feature = "axia-native")]
+pub fn axia_testnet_genesis(
 	wasm_binary: &[u8],
 	initial_authorities: Vec<(
 		AccountId,
@@ -1271,26 +1271,26 @@ pub fn polkadot_testnet_genesis(
 	)>,
 	_root_key: AccountId,
 	endowed_accounts: Option<Vec<AccountId>>,
-) -> polkadot::GenesisConfig {
+) -> axia::GenesisConfig {
 	let endowed_accounts: Vec<AccountId> = endowed_accounts.unwrap_or_else(testnet_accounts);
 
 	const ENDOWMENT: u128 = 1_000_000 * DOT;
 	const STASH: u128 = 100 * DOT;
 
-	polkadot::GenesisConfig {
-		system: polkadot::SystemConfig { code: wasm_binary.to_vec() },
-		indices: polkadot::IndicesConfig { indices: vec![] },
-		balances: polkadot::BalancesConfig {
+	axia::GenesisConfig {
+		system: axia::SystemConfig { code: wasm_binary.to_vec() },
+		indices: axia::IndicesConfig { indices: vec![] },
+		balances: axia::BalancesConfig {
 			balances: endowed_accounts.iter().map(|k| (k.clone(), ENDOWMENT)).collect(),
 		},
-		session: polkadot::SessionConfig {
+		session: axia::SessionConfig {
 			keys: initial_authorities
 				.iter()
 				.map(|x| {
 					(
 						x.0.clone(),
 						x.0.clone(),
-						polkadot_session_keys(
+						axia_session_keys(
 							x.2.clone(),
 							x.3.clone(),
 							x.4.clone(),
@@ -1302,12 +1302,12 @@ pub fn polkadot_testnet_genesis(
 				})
 				.collect::<Vec<_>>(),
 		},
-		staking: polkadot::StakingConfig {
+		staking: axia::StakingConfig {
 			minimum_validator_count: 1,
 			validator_count: initial_authorities.len() as u32,
 			stakers: initial_authorities
 				.iter()
-				.map(|x| (x.0.clone(), x.1.clone(), STASH, polkadot::StakerStatus::Validator))
+				.map(|x| (x.0.clone(), x.1.clone(), STASH, axia::StakerStatus::Validator))
 				.collect(),
 			invulnerables: initial_authorities.iter().map(|x| x.0.clone()).collect(),
 			force_era: Forcing::NotForcing,
@@ -1315,26 +1315,26 @@ pub fn polkadot_testnet_genesis(
 			..Default::default()
 		},
 		phragmen_election: Default::default(),
-		democracy: polkadot::DemocracyConfig::default(),
-		council: polkadot::CouncilConfig { members: vec![], phantom: Default::default() },
-		technical_committee: polkadot::TechnicalCommitteeConfig {
+		democracy: axia::DemocracyConfig::default(),
+		council: axia::CouncilConfig { members: vec![], phantom: Default::default() },
+		technical_committee: axia::TechnicalCommitteeConfig {
 			members: vec![],
 			phantom: Default::default(),
 		},
 		technical_membership: Default::default(),
-		babe: polkadot::BabeConfig {
+		babe: axia::BabeConfig {
 			authorities: Default::default(),
-			epoch_config: Some(polkadot::BABE_GENESIS_EPOCH_CONFIG),
+			epoch_config: Some(axia::BABE_GENESIS_EPOCH_CONFIG),
 		},
 		grandpa: Default::default(),
 		im_online: Default::default(),
-		authority_discovery: polkadot::AuthorityDiscoveryConfig { keys: vec![] },
-		claims: polkadot::ClaimsConfig { claims: vec![], vesting: vec![] },
-		vesting: polkadot::VestingConfig { vesting: vec![] },
+		authority_discovery: axia::AuthorityDiscoveryConfig { keys: vec![] },
+		claims: axia::ClaimsConfig { claims: vec![], vesting: vec![] },
+		vesting: axia::VestingConfig { vesting: vec![] },
 		treasury: Default::default(),
 		hrmp: Default::default(),
-		configuration: polkadot::ConfigurationConfig {
-			config: default_parachains_host_configuration(),
+		configuration: axia::ConfigurationConfig {
+			config: default_allychains_host_configuration(),
 		},
 		paras: Default::default(),
 		xcm_pallet: Default::default(),
@@ -1420,7 +1420,7 @@ pub fn kusama_testnet_genesis(
 		treasury: Default::default(),
 		hrmp: Default::default(),
 		configuration: kusama::ConfigurationConfig {
-			config: default_parachains_host_configuration(),
+			config: default_allychains_host_configuration(),
 		},
 		gilt: Default::default(),
 		paras: Default::default(),
@@ -1498,11 +1498,11 @@ pub fn westend_testnet_genesis(
 		sudo: westend::SudoConfig { key: Some(root_key) },
 		hrmp: Default::default(),
 		configuration: westend::ConfigurationConfig {
-			config: default_parachains_host_configuration(),
+			config: default_allychains_host_configuration(),
 		},
 		paras: Default::default(),
 		registrar: westend_runtime::RegistrarConfig {
-			next_free_para_id: polkadot_primitives::v1::LOWEST_PUBLIC_ID,
+			next_free_para_id: axia_primitives::v1::LOWEST_PUBLIC_ID,
 		},
 		xcm_pallet: Default::default(),
 	}
@@ -1569,14 +1569,14 @@ pub fn rococo_testnet_genesis(
 		sudo: rococo_runtime::SudoConfig { key: Some(root_key.clone()) },
 		hrmp: Default::default(),
 		configuration: rococo_runtime::ConfigurationConfig {
-			config: polkadot_runtime_parachains::configuration::HostConfiguration {
+			config: axia_runtime_allychains::configuration::HostConfiguration {
 				max_validators_per_core: Some(1),
-				..default_parachains_host_configuration()
+				..default_allychains_host_configuration()
 			},
 		},
 		paras: rococo_runtime::ParasConfig { paras: vec![] },
 		registrar: rococo_runtime::RegistrarConfig {
-			next_free_para_id: polkadot_primitives::v1::LOWEST_PUBLIC_ID,
+			next_free_para_id: axia_primitives::v1::LOWEST_PUBLIC_ID,
 		},
 		xcm_pallet: Default::default(),
 		transaction_payment: Default::default(),
@@ -1599,9 +1599,9 @@ pub fn rococo_testnet_genesis(
 	}
 }
 
-#[cfg(feature = "polkadot-native")]
-fn polkadot_development_config_genesis(wasm_binary: &[u8]) -> polkadot::GenesisConfig {
-	polkadot_testnet_genesis(
+#[cfg(feature = "axia-native")]
+fn axia_development_config_genesis(wasm_binary: &[u8]) -> axia::GenesisConfig {
+	axia_testnet_genesis(
 		wasm_binary,
 		vec![get_authority_keys_from_seed_no_beefy("Alice")],
 		get_account_id_from_seed::<sr25519::Public>("Alice"),
@@ -1639,16 +1639,16 @@ fn rococo_development_config_genesis(wasm_binary: &[u8]) -> rococo_runtime::Gene
 	)
 }
 
-/// Polkadot development config (single validator Alice)
-#[cfg(feature = "polkadot-native")]
-pub fn polkadot_development_config() -> Result<PolkadotChainSpec, String> {
-	let wasm_binary = polkadot::WASM_BINARY.ok_or("Polkadot development wasm not available")?;
+/// Axia development config (single validator Alice)
+#[cfg(feature = "axia-native")]
+pub fn axia_development_config() -> Result<AxiaChainSpec, String> {
+	let wasm_binary = axia::WASM_BINARY.ok_or("Axia development wasm not available")?;
 
-	Ok(PolkadotChainSpec::from_genesis(
+	Ok(AxiaChainSpec::from_genesis(
 		"Development",
 		"dev",
 		ChainType::Development,
-		move || polkadot_development_config_genesis(wasm_binary),
+		move || axia_development_config_genesis(wasm_binary),
 		vec![],
 		None,
 		Some(DEFAULT_PROTOCOL_ID),
@@ -1766,9 +1766,9 @@ pub fn wococo_development_config() -> Result<RococoChainSpec, String> {
 	))
 }
 
-#[cfg(feature = "polkadot-native")]
-fn polkadot_local_testnet_genesis(wasm_binary: &[u8]) -> polkadot::GenesisConfig {
-	polkadot_testnet_genesis(
+#[cfg(feature = "axia-native")]
+fn axia_local_testnet_genesis(wasm_binary: &[u8]) -> axia::GenesisConfig {
+	axia_testnet_genesis(
 		wasm_binary,
 		vec![
 			get_authority_keys_from_seed_no_beefy("Alice"),
@@ -1779,16 +1779,16 @@ fn polkadot_local_testnet_genesis(wasm_binary: &[u8]) -> polkadot::GenesisConfig
 	)
 }
 
-/// Polkadot local testnet config (multivalidator Alice + Bob)
-#[cfg(feature = "polkadot-native")]
-pub fn polkadot_local_testnet_config() -> Result<PolkadotChainSpec, String> {
-	let wasm_binary = polkadot::WASM_BINARY.ok_or("Polkadot development wasm not available")?;
+/// Axia local testnet config (multivalidator Alice + Bob)
+#[cfg(feature = "axia-native")]
+pub fn axia_local_testnet_config() -> Result<AxiaChainSpec, String> {
+	let wasm_binary = axia::WASM_BINARY.ok_or("Axia development wasm not available")?;
 
-	Ok(PolkadotChainSpec::from_genesis(
+	Ok(AxiaChainSpec::from_genesis(
 		"Local Testnet",
 		"local_testnet",
 		ChainType::Local,
-		move || polkadot_local_testnet_genesis(wasm_binary),
+		move || axia_local_testnet_genesis(wasm_binary),
 		vec![],
 		None,
 		Some(DEFAULT_PROTOCOL_ID),

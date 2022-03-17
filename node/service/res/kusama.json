@@ -14,7 +14,7 @@
   ],
   "telemetryEndpoints": [
     [
-      "wss://telemetry.polkadot.io/submit/",
+      "wss://telemetry.axia.io/submit/",
       0
     ]
   ],

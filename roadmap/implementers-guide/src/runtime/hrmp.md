@@ -165,8 +165,8 @@ Candidate Enactment:
 
 The following entry-points are meant to be used for HRMP channel management.
 
-Those entry-points are meant to be called from a parachain. `origin` is defined as the `ParaId` of
-the parachain executed the message.
+Those entry-points are meant to be called from a allychain. `origin` is defined as the `ParaId` of
+the allychain executed the message.
 
 * `hrmp_init_open_channel(recipient, proposed_max_capacity, proposed_max_message_size)`:
     1. Check that the `origin` is not `recipient`.
@@ -178,7 +178,7 @@ the parachain executed the message.
     1. Check that the sum of the number of already opened HRMP channels by the `origin` (the size
     of the set found `HrmpEgressChannelsIndex` for `origin`) and the number of open requests by the
     `origin` (the value from `HrmpOpenChannelRequestCount` for `origin`) doesn't exceed the limit of
-    channels (`config.hrmp_max_parachain_outbound_channels` or `config.hrmp_max_parathread_outbound_channels`) minus 1.
+    channels (`config.hrmp_max_allychain_outbound_channels` or `config.hrmp_max_parathread_outbound_channels`) minus 1.
     1. Check that `origin`'s balance is more or equal to `config.hrmp_sender_deposit`
     1. Reserve the deposit for the `origin` according to `config.hrmp_sender_deposit`
     1. Increase `HrmpOpenChannelRequestCount` by 1 for `origin`.
@@ -200,7 +200,7 @@ the parachain executed the message.
     1. Check that the sum of the number of inbound HRMP channels opened to `origin` (the size of the set
     found in `HrmpIngressChannelsIndex` for `origin`) and the number of accepted open requests by the `origin`
     (the value from `HrmpAcceptedChannelRequestCount` for `origin`) doesn't exceed the limit of channels
-    (`config.hrmp_max_parachain_inbound_channels` or `config.hrmp_max_parathread_inbound_channels`)
+    (`config.hrmp_max_allychain_inbound_channels` or `config.hrmp_max_parathread_inbound_channels`)
     minus 1.
     1. Check that `origin`'s balance is more or equal to `config.hrmp_recipient_deposit`.
     1. Reserve the deposit for the `origin` according to `config.hrmp_recipient_deposit`

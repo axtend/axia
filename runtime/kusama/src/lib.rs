@@ -1,18 +1,18 @@
 // Copyright 2017-2020 Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// This file is part of Axia.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// Axia is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// Axia is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot. If not, see <http://www.gnu.org/licenses/>.
+// along with Axia. If not, see <http://www.gnu.org/licenses/>.
 
 //! The Kusama runtime. This can be compiled with `#[no_std]`, ready for Wasm.
 
@@ -40,13 +40,13 @@ use runtime_common::{
 use sp_core::u32_trait::{_1, _2, _3, _5};
 use sp_std::{cmp::Ordering, collections::btree_map::BTreeMap, prelude::*};
 
-use runtime_parachains::{
-	configuration as parachains_configuration, disputes as parachains_disputes,
-	dmp as parachains_dmp, hrmp as parachains_hrmp, inclusion as parachains_inclusion,
-	initializer as parachains_initializer, origin as parachains_origin, paras as parachains_paras,
-	paras_inherent as parachains_paras_inherent, reward_points as parachains_reward_points,
-	runtime_api_impl::v1 as parachains_runtime_api_impl, scheduler as parachains_scheduler,
-	session_info as parachains_session_info, shared as parachains_shared, ump as parachains_ump,
+use runtime_allychains::{
+	configuration as allychains_configuration, disputes as allychains_disputes,
+	dmp as allychains_dmp, hrmp as allychains_hrmp, inclusion as allychains_inclusion,
+	initializer as allychains_initializer, origin as allychains_origin, paras as allychains_paras,
+	paras_inherent as allychains_paras_inherent, reward_points as allychains_reward_points,
+	runtime_api_impl::v1 as allychains_runtime_api_impl, scheduler as allychains_scheduler,
+	session_info as allychains_session_info, shared as allychains_shared, ump as allychains_ump,
 };
 
 use authority_discovery_primitives::AuthorityId as AuthorityDiscoveryId;
@@ -523,7 +523,7 @@ impl pallet_staking::EraPayout<Balance> for EraPayout {
 		era_duration_millis: u64,
 	) -> (Balance, Balance) {
 		// TODO: #3011 Update with proper auctioned slots tracking.
-		// This should be fine for the first year of parachains.
+		// This should be fine for the first year of allychains.
 		let auctioned_slots: u64 = auctions::Pallet::<Runtime>::auction_counter().into();
 		const MAX_ANNUAL_INFLATION: Perquintill = Perquintill::from_percent(10);
 		const MILLISECONDS_PER_YEAR: u64 = 1000 * 3600 * 24 * 36525 / 100;
@@ -1188,29 +1188,29 @@ impl pallet_proxy::Config for Runtime {
 	type AnnouncementDepositFactor = AnnouncementDepositFactor;
 }
 
-impl parachains_origin::Config for Runtime {}
+impl allychains_origin::Config for Runtime {}
 
-impl parachains_configuration::Config for Runtime {
-	type WeightInfo = weights::runtime_parachains_configuration::WeightInfo<Runtime>;
+impl allychains_configuration::Config for Runtime {
+	type WeightInfo = weights::runtime_allychains_configuration::WeightInfo<Runtime>;
 }
 
-impl parachains_shared::Config for Runtime {}
+impl allychains_shared::Config for Runtime {}
 
-impl parachains_session_info::Config for Runtime {}
+impl allychains_session_info::Config for Runtime {}
 
-impl parachains_inclusion::Config for Runtime {
+impl allychains_inclusion::Config for Runtime {
 	type Event = Event;
 	type DisputesHandler = ParasDisputes;
-	type RewardValidators = parachains_reward_points::RewardValidatorsWithEraPoints<Runtime>;
+	type RewardValidators = allychains_reward_points::RewardValidatorsWithEraPoints<Runtime>;
 }
 
 parameter_types! {
 	pub const ParasUnsignedPriority: TransactionPriority = TransactionPriority::max_value();
 }
 
-impl parachains_paras::Config for Runtime {
+impl allychains_paras::Config for Runtime {
 	type Event = Event;
-	type WeightInfo = weights::runtime_parachains_paras::WeightInfo<Runtime>;
+	type WeightInfo = weights::runtime_allychains_paras::WeightInfo<Runtime>;
 	type UnsignedPriority = ParasUnsignedPriority;
 	type NextSessionRotation = Babe;
 }
@@ -1219,40 +1219,40 @@ parameter_types! {
 	pub const FirstMessageFactorPercent: u64 = 100;
 }
 
-impl parachains_ump::Config for Runtime {
+impl allychains_ump::Config for Runtime {
 	type Event = Event;
 	type UmpSink =
-		crate::parachains_ump::XcmSink<xcm_executor::XcmExecutor<xcm_config::XcmConfig>, Runtime>;
+		crate::allychains_ump::XcmSink<xcm_executor::XcmExecutor<xcm_config::XcmConfig>, Runtime>;
 	type FirstMessageFactorPercent = FirstMessageFactorPercent;
 	type ExecuteOverweightOrigin = EnsureRoot<AccountId>;
 }
 
-impl parachains_dmp::Config for Runtime {}
+impl allychains_dmp::Config for Runtime {}
 
-impl parachains_hrmp::Config for Runtime {
+impl allychains_hrmp::Config for Runtime {
 	type Event = Event;
 	type Origin = Origin;
 	type Currency = Balances;
-	type WeightInfo = weights::runtime_parachains_hrmp::WeightInfo<Self>;
+	type WeightInfo = weights::runtime_allychains_hrmp::WeightInfo<Self>;
 }
 
-impl parachains_paras_inherent::Config for Runtime {
-	type WeightInfo = weights::runtime_parachains_paras_inherent::WeightInfo<Runtime>;
+impl allychains_paras_inherent::Config for Runtime {
+	type WeightInfo = weights::runtime_allychains_paras_inherent::WeightInfo<Runtime>;
 }
 
-impl parachains_scheduler::Config for Runtime {}
+impl allychains_scheduler::Config for Runtime {}
 
-impl parachains_initializer::Config for Runtime {
+impl allychains_initializer::Config for Runtime {
 	type Randomness = pallet_babe::RandomnessFromOneEpochAgo<Runtime>;
 	type ForceOrigin = EnsureRoot<AccountId>;
-	type WeightInfo = weights::runtime_parachains_initializer::WeightInfo<Runtime>;
+	type WeightInfo = weights::runtime_allychains_initializer::WeightInfo<Runtime>;
 }
 
-impl parachains_disputes::Config for Runtime {
+impl allychains_disputes::Config for Runtime {
 	type Event = Event;
 	type RewardValidators = ();
 	type PunishValidators = ();
-	type WeightInfo = weights::runtime_parachains_disputes::WeightInfo<Runtime>;
+	type WeightInfo = weights::runtime_allychains_disputes::WeightInfo<Runtime>;
 }
 
 parameter_types! {
@@ -1441,22 +1441,22 @@ construct_runtime! {
 		// Provides a semi-sorted list of nominators for staking.
 		BagsList: pallet_bags_list::{Pallet, Call, Storage, Event<T>} = 39,
 
-		// Parachains pallets. Start indices at 50 to leave room.
-		ParachainsOrigin: parachains_origin::{Pallet, Origin} = 50,
-		Configuration: parachains_configuration::{Pallet, Call, Storage, Config<T>} = 51,
-		ParasShared: parachains_shared::{Pallet, Call, Storage} = 52,
-		ParaInclusion: parachains_inclusion::{Pallet, Call, Storage, Event<T>} = 53,
-		ParaInherent: parachains_paras_inherent::{Pallet, Call, Storage, Inherent} = 54,
-		ParaScheduler: parachains_scheduler::{Pallet, Storage} = 55,
-		Paras: parachains_paras::{Pallet, Call, Storage, Event, Config} = 56,
-		Initializer: parachains_initializer::{Pallet, Call, Storage} = 57,
-		Dmp: parachains_dmp::{Pallet, Call, Storage} = 58,
-		Ump: parachains_ump::{Pallet, Call, Storage, Event} = 59,
-		Hrmp: parachains_hrmp::{Pallet, Call, Storage, Event<T>, Config} = 60,
-		ParaSessionInfo: parachains_session_info::{Pallet, Storage} = 61,
-		ParasDisputes: parachains_disputes::{Pallet, Call, Storage, Event<T>} = 62,
+		// Allychains pallets. Start indices at 50 to leave room.
+		AllychainsOrigin: allychains_origin::{Pallet, Origin} = 50,
+		Configuration: allychains_configuration::{Pallet, Call, Storage, Config<T>} = 51,
+		ParasShared: allychains_shared::{Pallet, Call, Storage} = 52,
+		ParaInclusion: allychains_inclusion::{Pallet, Call, Storage, Event<T>} = 53,
+		ParaInherent: allychains_paras_inherent::{Pallet, Call, Storage, Inherent} = 54,
+		ParaScheduler: allychains_scheduler::{Pallet, Storage} = 55,
+		Paras: allychains_paras::{Pallet, Call, Storage, Event, Config} = 56,
+		Initializer: allychains_initializer::{Pallet, Call, Storage} = 57,
+		Dmp: allychains_dmp::{Pallet, Call, Storage} = 58,
+		Ump: allychains_ump::{Pallet, Call, Storage, Event} = 59,
+		Hrmp: allychains_hrmp::{Pallet, Call, Storage, Event<T>, Config} = 60,
+		ParaSessionInfo: allychains_session_info::{Pallet, Storage} = 61,
+		ParasDisputes: allychains_disputes::{Pallet, Call, Storage, Event<T>} = 62,
 
-		// Parachain Onboarding Pallets. Start indices at 70 to leave room.
+		// Allychain Onboarding Pallets. Start indices at 70 to leave room.
 		Registrar: paras_registrar::{Pallet, Call, Storage, Event<T>} = 70,
 		Slots: slots::{Pallet, Call, Storage, Event<T>} = 71,
 		Auctions: auctions::{Pallet, Call, Storage, Event<T>} = 72,
@@ -2895,7 +2895,7 @@ impl RefundNickPalletDeposit {
 impl OnRuntimeUpgrade for RefundNickPalletDeposit {
 	fn on_runtime_upgrade() -> frame_support::weights::Weight {
 		if VERSION.spec_version == 9150 {
-			log::info!(target: "runtime::kusama", "executing the refund migration of https://github.com/paritytech/polkadot/pull/4656");
+			log::info!(target: "runtime::kusama", "executing the refund migration of https://github.com/paritytech/axia/pull/4656");
 			Self::execute(false)
 		} else {
 			log::warn!(target: "runtime::kusama", "RefundNickPalletDeposit should be removed");
@@ -2957,7 +2957,7 @@ extern crate frame_benchmarking;
 #[cfg(feature = "runtime-benchmarks")]
 mod benches {
 	define_benchmarks!(
-		// Polkadot
+		// Axia
 		// NOTE: Make sure to prefix these with `runtime_common::` so
 		// the that path resolves correctly in the generated file.
 		[runtime_common::auctions, Auctions]
@@ -2965,12 +2965,12 @@ mod benches {
 		[runtime_common::claims, Claims]
 		[runtime_common::slots, Slots]
 		[runtime_common::paras_registrar, Registrar]
-		[runtime_parachains::configuration, Configuration]
-		[runtime_parachains::hrmp, Hrmp]
-		[runtime_parachains::disputes, ParasDisputes]
-		[runtime_parachains::initializer, Initializer]
-		[runtime_parachains::paras_inherent, ParaInherent]
-		[runtime_parachains::paras, Paras]
+		[runtime_allychains::configuration, Configuration]
+		[runtime_allychains::hrmp, Hrmp]
+		[runtime_allychains::disputes, ParasDisputes]
+		[runtime_allychains::initializer, Initializer]
+		[runtime_allychains::paras_inherent, ParaInherent]
+		[runtime_allychains::paras, Paras]
 		// Substrate
 		[pallet_balances, Balances]
 		[pallet_bags_list, BagsList]
@@ -3061,29 +3061,29 @@ sp_api::impl_runtime_apis! {
 		}
 	}
 
-	impl primitives::v2::ParachainHost<Block, Hash, BlockNumber> for Runtime {
+	impl primitives::v2::AllychainHost<Block, Hash, BlockNumber> for Runtime {
 		fn validators() -> Vec<ValidatorId> {
-			parachains_runtime_api_impl::validators::<Runtime>()
+			allychains_runtime_api_impl::validators::<Runtime>()
 		}
 
 		fn validator_groups() -> (Vec<Vec<ValidatorIndex>>, GroupRotationInfo<BlockNumber>) {
-			parachains_runtime_api_impl::validator_groups::<Runtime>()
+			allychains_runtime_api_impl::validator_groups::<Runtime>()
 		}
 
 		fn availability_cores() -> Vec<CoreState<Hash, BlockNumber>> {
-			parachains_runtime_api_impl::availability_cores::<Runtime>()
+			allychains_runtime_api_impl::availability_cores::<Runtime>()
 		}
 
 		fn persisted_validation_data(para_id: ParaId, assumption: OccupiedCoreAssumption)
 			-> Option<PersistedValidationData<Hash, BlockNumber>> {
-			parachains_runtime_api_impl::persisted_validation_data::<Runtime>(para_id, assumption)
+			allychains_runtime_api_impl::persisted_validation_data::<Runtime>(para_id, assumption)
 		}
 
 		fn assumed_validation_data(
 			para_id: ParaId,
 			expected_persisted_validation_data_hash: Hash,
 		) -> Option<(PersistedValidationData<Hash, BlockNumber>, ValidationCodeHash)> {
-			parachains_runtime_api_impl::assumed_validation_data::<Runtime>(
+			allychains_runtime_api_impl::assumed_validation_data::<Runtime>(
 				para_id,
 				expected_persisted_validation_data_hash,
 			)
@@ -3093,24 +3093,24 @@ sp_api::impl_runtime_apis! {
 			para_id: ParaId,
 			outputs: primitives::v1::CandidateCommitments,
 		) -> bool {
-			parachains_runtime_api_impl::check_validation_outputs::<Runtime>(para_id, outputs)
+			allychains_runtime_api_impl::check_validation_outputs::<Runtime>(para_id, outputs)
 		}
 
 		fn session_index_for_child() -> SessionIndex {
-			parachains_runtime_api_impl::session_index_for_child::<Runtime>()
+			allychains_runtime_api_impl::session_index_for_child::<Runtime>()
 		}
 
 		fn validation_code(para_id: ParaId, assumption: OccupiedCoreAssumption)
 			-> Option<ValidationCode> {
-			parachains_runtime_api_impl::validation_code::<Runtime>(para_id, assumption)
+			allychains_runtime_api_impl::validation_code::<Runtime>(para_id, assumption)
 		}
 
 		fn candidate_pending_availability(para_id: ParaId) -> Option<CommittedCandidateReceipt<Hash>> {
-			parachains_runtime_api_impl::candidate_pending_availability::<Runtime>(para_id)
+			allychains_runtime_api_impl::candidate_pending_availability::<Runtime>(para_id)
 		}
 
 		fn candidate_events() -> Vec<CandidateEvent<Hash>> {
-			parachains_runtime_api_impl::candidate_events::<Runtime, _>(|ev| {
+			allychains_runtime_api_impl::candidate_events::<Runtime, _>(|ev| {
 				match ev {
 					Event::ParaInclusion(ev) => {
 						Some(ev)
@@ -3121,42 +3121,42 @@ sp_api::impl_runtime_apis! {
 		}
 
 		fn session_info(index: SessionIndex) -> Option<SessionInfo> {
-			parachains_runtime_api_impl::session_info::<Runtime>(index)
+			allychains_runtime_api_impl::session_info::<Runtime>(index)
 		}
 
 		fn dmq_contents(recipient: ParaId) -> Vec<InboundDownwardMessage<BlockNumber>> {
-			parachains_runtime_api_impl::dmq_contents::<Runtime>(recipient)
+			allychains_runtime_api_impl::dmq_contents::<Runtime>(recipient)
 		}
 
 		fn inbound_hrmp_channels_contents(
 			recipient: ParaId
 		) -> BTreeMap<ParaId, Vec<InboundHrmpMessage<BlockNumber>>> {
-			parachains_runtime_api_impl::inbound_hrmp_channels_contents::<Runtime>(recipient)
+			allychains_runtime_api_impl::inbound_hrmp_channels_contents::<Runtime>(recipient)
 		}
 
 		fn validation_code_by_hash(hash: ValidationCodeHash) -> Option<ValidationCode> {
-			parachains_runtime_api_impl::validation_code_by_hash::<Runtime>(hash)
+			allychains_runtime_api_impl::validation_code_by_hash::<Runtime>(hash)
 		}
 
 		fn on_chain_votes() -> Option<ScrapedOnChainVotes<Hash>> {
-			parachains_runtime_api_impl::on_chain_votes::<Runtime>()
+			allychains_runtime_api_impl::on_chain_votes::<Runtime>()
 		}
 
 		fn submit_pvf_check_statement(
 			stmt: primitives::v2::PvfCheckStatement,
 			signature: primitives::v1::ValidatorSignature,
 		) {
-			parachains_runtime_api_impl::submit_pvf_check_statement::<Runtime>(stmt, signature)
+			allychains_runtime_api_impl::submit_pvf_check_statement::<Runtime>(stmt, signature)
 		}
 
 		fn pvfs_require_precheck() -> Vec<ValidationCodeHash> {
-			parachains_runtime_api_impl::pvfs_require_precheck::<Runtime>()
+			allychains_runtime_api_impl::pvfs_require_precheck::<Runtime>()
 		}
 
 		fn validation_code_hash(para_id: ParaId, assumption: OccupiedCoreAssumption)
 			-> Option<ValidationCodeHash>
 		{
-			parachains_runtime_api_impl::validation_code_hash::<Runtime>(para_id, assumption)
+			allychains_runtime_api_impl::validation_code_hash::<Runtime>(para_id, assumption)
 		}
 	}
 
@@ -3234,7 +3234,7 @@ sp_api::impl_runtime_apis! {
 			// probability of a slot being empty), is done in accordance to the
 			// slot duration and expected target block time, for safely
 			// resisting network delays of maximum two seconds.
-			// <https://research.web3.foundation/en/latest/polkadot/BABE/Babe/#6-practical-results>
+			// <https://research.web3.foundation/en/latest/axia/BABE/Babe/#6-practical-results>
 			babe_primitives::BabeGenesisConfiguration {
 				slot_duration: Babe::slot_duration(),
 				epoch_length: EpochDuration::get(),
@@ -3283,7 +3283,7 @@ sp_api::impl_runtime_apis! {
 
 	impl authority_discovery_primitives::AuthorityDiscoveryApi<Block> for Runtime {
 		fn authorities() -> Vec<AuthorityDiscoveryId> {
-			parachains_runtime_api_impl::relevant_authority_ids::<Runtime>()
+			allychains_runtime_api_impl::relevant_authority_ids::<Runtime>()
 		}
 	}
 

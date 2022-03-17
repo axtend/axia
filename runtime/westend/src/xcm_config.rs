@@ -1,23 +1,23 @@
 // Copyright 2022 Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// This file is part of Axia.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// Axia is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// Axia is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with Axia.  If not, see <http://www.gnu.org/licenses/>.
 
 //! XCM configurations for Westend.
 
 use super::{
-	parachains_origin, weights, AccountId, Balances, Call, Event, Origin, ParaId, Runtime,
+	allychains_origin, weights, AccountId, Balances, Call, Event, Origin, ParaId, Runtime,
 	WeightToFee, XcmPallet,
 };
 use frame_support::{
@@ -28,9 +28,9 @@ use runtime_common::{xcm_sender, ToAuthor};
 use xcm::latest::prelude::*;
 use xcm_builder::{
 	AccountId32Aliases, AllowKnownQueryResponses, AllowSubscriptionsFrom,
-	AllowTopLevelPaidExecutionFrom, AllowUnpaidExecutionFrom, ChildParachainAsNative,
-	ChildParachainConvertsVia, ChildSystemParachainAsSuperuser,
-	CurrencyAdapter as XcmCurrencyAdapter, IsChildSystemParachain, IsConcrete, LocationInverter,
+	AllowTopLevelPaidExecutionFrom, AllowUnpaidExecutionFrom, ChildAllychainAsNative,
+	ChildAllychainConvertsVia, ChildSystemAllychainAsSuperuser,
+	CurrencyAdapter as XcmCurrencyAdapter, IsChildSystemAllychain, IsConcrete, LocationInverter,
 	SignedAccountId32AsNative, SignedToAccountId32, SovereignSignedViaLocation, TakeWeightCredit,
 	UsingComponents, WeightInfoBounds,
 };
@@ -43,7 +43,7 @@ parameter_types! {
 }
 
 pub type LocationConverter =
-	(ChildParachainConvertsVia<ParaId, AccountId>, AccountId32Aliases<WestendNetwork, AccountId>);
+	(ChildAllychainConvertsVia<ParaId, AccountId>, AccountId32Aliases<WestendNetwork, AccountId>);
 
 pub type LocalAssetTransactor = XcmCurrencyAdapter<
 	// Use this currency:
@@ -60,21 +60,21 @@ pub type LocalAssetTransactor = XcmCurrencyAdapter<
 
 type LocalOriginConverter = (
 	SovereignSignedViaLocation<LocationConverter, Origin>,
-	ChildParachainAsNative<parachains_origin::Origin, Origin>,
+	ChildAllychainAsNative<allychains_origin::Origin, Origin>,
 	SignedAccountId32AsNative<WestendNetwork, Origin>,
-	ChildSystemParachainAsSuperuser<ParaId, Origin>,
+	ChildSystemAllychainAsSuperuser<ParaId, Origin>,
 );
 
 /// The XCM router. When we want to send an XCM message, we use this type. It amalgamates all of our
 /// individual routers.
 pub type XcmRouter = (
-	// Only one router so far - use DMP to communicate with child parachains.
-	xcm_sender::ChildParachainRouter<Runtime, XcmPallet>,
+	// Only one router so far - use DMP to communicate with child allychains.
+	xcm_sender::ChildAllychainRouter<Runtime, XcmPallet>,
 );
 
 parameter_types! {
-	pub const Westmint: MultiLocation = Parachain(1000).into();
-	pub const Encointer: MultiLocation = Parachain(1001).into();
+	pub const Westmint: MultiLocation = Allychain(1000).into();
+	pub const Encointer: MultiLocation = Allychain(1001).into();
 	pub const WestendForWestmint: (MultiAssetFilter, MultiLocation) =
 		(Wild(AllOf { fun: WildFungible, id: Concrete(WndLocation::get()) }), Westmint::get());
 	pub const WestendForEncointer: (MultiAssetFilter, MultiLocation) =
@@ -90,8 +90,8 @@ pub type Barrier = (
 	TakeWeightCredit,
 	// If the message is one that immediately attemps to pay for execution, then allow it.
 	AllowTopLevelPaidExecutionFrom<Everything>,
-	// Messages coming from system parachains need not pay for execution.
-	AllowUnpaidExecutionFrom<IsChildSystemParachain<ParaId>>,
+	// Messages coming from system allychains need not pay for execution.
+	AllowUnpaidExecutionFrom<IsChildSystemAllychain<ParaId>>,
 	// Expected responses are OK.
 	AllowKnownQueryResponses<XcmPallet>,
 	// Subscriptions for version tracking are OK.

@@ -1,18 +1,18 @@
 // Copyright 2021 Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// This file is part of Axia.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// Axia is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// Axia is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with Axia.  If not, see <http://www.gnu.org/licenses/>.
 
 //! Runtime Metrics helpers.
 //!
@@ -35,7 +35,7 @@ use std::{
 use substrate_prometheus_endpoint::{
 	register, Counter, CounterVec, Opts, PrometheusError, Registry, U64,
 };
-mod parachain;
+mod allychain;
 
 const LOG_TARGET: &'static str = "metrics::runtime";
 
@@ -200,7 +200,7 @@ pub fn logger_hook() -> impl FnOnce(&mut sc_cli::LoggerBuilder, &sc_service::Con
 		}
 		let registry = config.prometheus_registry().cloned().unwrap();
 		let metrics_provider = RuntimeMetricsProvider::new(registry);
-		parachain::register_metrics(&metrics_provider);
+		allychain::register_metrics(&metrics_provider);
 		logger_builder.with_custom_profiling(Box::new(metrics_provider));
 	}
 }

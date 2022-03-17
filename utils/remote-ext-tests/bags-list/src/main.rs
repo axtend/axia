@@ -1,18 +1,18 @@
 // Copyright 2021 Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// This file is part of Axia.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// Axia is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// Axia is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with Axia.  If not, see <http://www.gnu.org/licenses/>.
 
 //! Remote tests for bags-list pallet.
 
@@ -30,14 +30,14 @@ enum Command {
 #[derive(Clone, Debug, ArgEnum)]
 #[clap(rename_all = "PascalCase")]
 enum Runtime {
-	Polkadot,
+	Axia,
 	Kusama,
 	Westend,
 }
 
 #[derive(Parser)]
 struct Cli {
-	#[clap(long, short, default_value = "wss://kusama-rpc.polkadot.io:443")]
+	#[clap(long, short, default_value = "wss://kusama-rpc.axia.io:443")]
 	uri: String,
 	#[clap(long, short, ignore_case = true, arg_enum, default_value = "kusama")]
 	runtime: Runtime,
@@ -61,8 +61,8 @@ async fn main() {
 
 	use pallet_bags_list_remote_tests::*;
 	match options.runtime {
-		Runtime::Polkadot => sp_core::crypto::set_default_ss58_version(
-			<polkadot_runtime::Runtime as frame_system::Config>::SS58Prefix::get()
+		Runtime::Axia => sp_core::crypto::set_default_ss58_version(
+			<axia_runtime::Runtime as frame_system::Config>::SS58Prefix::get()
 				.try_into()
 				.unwrap(),
 		),
@@ -121,19 +121,19 @@ async fn main() {
 			.await;
 		},
 
-		(Runtime::Polkadot, Command::CheckMigration) => {
-			use polkadot_runtime::{Block, Runtime};
-			use polkadot_runtime_constants::currency::UNITS;
+		(Runtime::Axia, Command::CheckMigration) => {
+			use axia_runtime::{Block, Runtime};
+			use axia_runtime_constants::currency::UNITS;
 			migration::execute::<Runtime, Block>(UNITS as u64, "DOT", options.uri.clone()).await;
 		},
-		(Runtime::Polkadot, Command::SanityCheck) => {
-			use polkadot_runtime::{Block, Runtime};
-			use polkadot_runtime_constants::currency::UNITS;
+		(Runtime::Axia, Command::SanityCheck) => {
+			use axia_runtime::{Block, Runtime};
+			use axia_runtime_constants::currency::UNITS;
 			sanity_check::execute::<Runtime, Block>(UNITS as u64, "DOT", options.uri.clone()).await;
 		},
-		(Runtime::Polkadot, Command::Snapshot) => {
-			use polkadot_runtime::{Block, Runtime};
-			use polkadot_runtime_constants::currency::UNITS;
+		(Runtime::Axia, Command::Snapshot) => {
+			use axia_runtime::{Block, Runtime};
+			use axia_runtime_constants::currency::UNITS;
 			snapshot::execute::<Runtime, Block>(
 				options.snapshot_limit,
 				UNITS.try_into().unwrap(),

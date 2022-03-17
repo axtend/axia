@@ -1,18 +1,18 @@
 // Copyright 2020 Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// This file is part of Axia.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// Axia is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// Axia is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with Axia.  If not, see <http://www.gnu.org/licenses/>.
 
 //! Implements the Chain API Subsystem
 //!
@@ -37,9 +37,9 @@ use futures::prelude::*;
 use sc_client_api::AuxStore;
 use sp_blockchain::HeaderBackend;
 
-use polkadot_node_subsystem_util::metrics::{self, prometheus};
-use polkadot_primitives::v1::{Block, BlockId};
-use polkadot_subsystem::{
+use axia_node_subsystem_util::metrics::{self, prometheus};
+use axia_primitives::v1::{Block, BlockId};
+use axia_subsystem::{
 	messages::ChainApiMessage, overseer, FromOverseer, OverseerSignal, SpawnedSubsystem,
 	SubsystemContext, SubsystemError, SubsystemResult,
 };
@@ -47,7 +47,7 @@ use polkadot_subsystem::{
 #[cfg(test)]
 mod tests;
 
-const LOG_TARGET: &str = "parachain::chain-api";
+const LOG_TARGET: &str = "allychain::chain-api";
 
 /// The Chain API Subsystem implementation.
 pub struct ChainApiSubsystem<Client> {
@@ -229,7 +229,7 @@ impl metrics::Metrics for Metrics {
 			chain_api_requests: prometheus::register(
 				prometheus::CounterVec::new(
 					prometheus::Opts::new(
-						"polkadot_parachain_chain_api_requests_total",
+						"axia_allychain_chain_api_requests_total",
 						"Number of Chain API requests served.",
 					),
 					&["success"],
@@ -238,42 +238,42 @@ impl metrics::Metrics for Metrics {
 			)?,
 			block_number: prometheus::register(
 				prometheus::Histogram::with_opts(prometheus::HistogramOpts::new(
-					"polkadot_parachain_chain_api_block_number",
+					"axia_allychain_chain_api_block_number",
 					"Time spent within `chain_api::block_number`",
 				))?,
 				registry,
 			)?,
 			block_header: prometheus::register(
 				prometheus::Histogram::with_opts(prometheus::HistogramOpts::new(
-					"polkadot_parachain_chain_api_block_headers",
+					"axia_allychain_chain_api_block_headers",
 					"Time spent within `chain_api::block_headers`",
 				))?,
 				registry,
 			)?,
 			block_weight: prometheus::register(
 				prometheus::Histogram::with_opts(prometheus::HistogramOpts::new(
-					"polkadot_parachain_chain_api_block_weight",
+					"axia_allychain_chain_api_block_weight",
 					"Time spent within `chain_api::block_weight`",
 				))?,
 				registry,
 			)?,
 			finalized_block_hash: prometheus::register(
 				prometheus::Histogram::with_opts(prometheus::HistogramOpts::new(
-					"polkadot_parachain_chain_api_finalized_block_hash",
+					"axia_allychain_chain_api_finalized_block_hash",
 					"Time spent within `chain_api::finalized_block_hash`",
 				))?,
 				registry,
 			)?,
 			finalized_block_number: prometheus::register(
 				prometheus::Histogram::with_opts(prometheus::HistogramOpts::new(
-					"polkadot_parachain_chain_api_finalized_block_number",
+					"axia_allychain_chain_api_finalized_block_number",
 					"Time spent within `chain_api::finalized_block_number`",
 				))?,
 				registry,
 			)?,
 			ancestors: prometheus::register(
 				prometheus::Histogram::with_opts(prometheus::HistogramOpts::new(
-					"polkadot_parachain_chain_api_ancestors",
+					"axia_allychain_chain_api_ancestors",
 					"Time spent within `chain_api::ancestors`",
 				))?,
 				registry,

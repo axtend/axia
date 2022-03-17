@@ -202,7 +202,7 @@ impl frame_system::Config for Runtime {
 	type DbWeight = DbWeight;
 	/// The designated `SS58` prefix of this chain.
 	type SS58Prefix = SS58Prefix;
-	/// The set code logic, just the default since we're not a parachain.
+	/// The set code logic, just the default since we're not a allychain.
 	type OnSetCode = ();
 	type MaxConsumers = frame_support::traits::ConstU32<16>;
 }
@@ -282,7 +282,7 @@ parameter_types! {
 impl pallet_beefy_mmr::Config for Runtime {
 	type LeafVersion = LeafVersion;
 	type BeefyAuthorityToMerkleLeaf = pallet_beefy_mmr::BeefyEcdsaToEthereum;
-	type ParachainHeads = ();
+	type AllychainHeads = ();
 }
 
 parameter_types! {
@@ -325,8 +325,8 @@ parameter_types! {
 	pub const TransactionBaseFee: Balance = 0;
 	pub const TransactionByteFee: Balance = 1;
 	pub const OperationalFeeMultiplier: u8 = 5;
-	// values for following parameters are copied from polkadot repo, but it is fine
-	// not to sync them - we're not going to make Rialto a full copy of one of Polkadot-like chains
+	// values for following parameters are copied from axia repo, but it is fine
+	// not to sync them - we're not going to make Rialto a full copy of one of Axia-like chains
 	pub const TargetBlockFullness: Perquintill = Perquintill::from_percent(25);
 	pub AdjustmentVariable: Multiplier = Multiplier::saturating_from_rational(3, 100_000);
 	pub MinimumMultiplier: Multiplier = Multiplier::saturating_from_rational(1, 1_000_000u128);
@@ -940,7 +940,7 @@ mod tests {
 
 	#[test]
 	fn call_size() {
-		const MAX_CALL_SIZE: usize = 230; // value from polkadot-runtime tests
+		const MAX_CALL_SIZE: usize = 230; // value from axia-runtime tests
 		assert!(core::mem::size_of::<Call>() <= MAX_CALL_SIZE);
 	}
 }

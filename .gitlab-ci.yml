@@ -1,6 +1,6 @@
 # .gitlab-ci.yml
 #
-# polkadot
+# axia
 #
 # Pipelines can be triggered manually in the web.
 #
@@ -195,20 +195,20 @@ test-build-linux-stable:
   script:
     - ./scripts/gitlab/test_linux_stable.sh
     # we're using the bin built here, instead of having a parallel `build-linux-release`
-    - time cargo build --profile testnet --verbose --bin polkadot
+    - time cargo build --profile testnet --verbose --bin axia
     - sccache -s
     # pack artifacts
     - mkdir -p ./artifacts
     - VERSION="${CI_COMMIT_REF_NAME}" # will be tag or branch name
-    - mv ./target/testnet/polkadot ./artifacts/.
+    - mv ./target/testnet/axia ./artifacts/.
     - pushd artifacts
-    - sha256sum polkadot | tee polkadot.sha256
-    - shasum -c polkadot.sha256
+    - sha256sum axia | tee axia.sha256
+    - shasum -c axia.sha256
     - popd
-    - EXTRATAG="$(./artifacts/polkadot --version |
-        sed -n -r 's/^polkadot ([0-9.]+.*-[0-9a-f]{7,13})-.*$/\1/p')"
-    - EXTRATAG="${CI_COMMIT_REF_NAME}-${EXTRATAG}-$(cut -c 1-8 ./artifacts/polkadot.sha256)"
-    - echo "Polkadot version = ${VERSION} (EXTRATAG = ${EXTRATAG})"
+    - EXTRATAG="$(./artifacts/axia --version |
+        sed -n -r 's/^axia ([0-9.]+.*-[0-9a-f]{7,13})-.*$/\1/p')"
+    - EXTRATAG="${CI_COMMIT_REF_NAME}-${EXTRATAG}-$(cut -c 1-8 ./artifacts/axia.sha256)"
+    - echo "Axia version = ${VERSION} (EXTRATAG = ${EXTRATAG})"
     - echo -n ${VERSION} > ./artifacts/VERSION
     - echo -n ${EXTRATAG} > ./artifacts/EXTRATAG
     - cp -r scripts/* ./artifacts
@@ -239,7 +239,7 @@ check-no-default-features:
   <<:                              *docker-env
   <<:                              *compiler-info
   script:
-    # Check that polkadot-cli will compile no default features.
+    # Check that axia-cli will compile no default features.
     - pushd node/service && cargo check --no-default-features && popd
     - pushd cli && cargo check --no-default-features --features "service" && popd
     - sccache -s
@@ -265,7 +265,7 @@ build-adder-collator:
   <<:                              *compiler-info
   <<:                              *test-refs
   script:
-    - time cargo build --profile testnet --verbose -p test-parachain-adder-collator
+    - time cargo build --profile testnet --verbose -p test-allychain-adder-collator
     - sccache -s
     # pack artifacts
     - mkdir -p ./artifacts
@@ -282,14 +282,14 @@ build-malus:
   <<:                              *compiler-info
   <<:                              *test-refs
   script:
-    - time cargo build --profile testnet --verbose -p polkadot-test-malus
+    - time cargo build --profile testnet --verbose -p axia-test-malus
     - sccache -s
     # pack artifacts
     - mkdir -p ./artifacts
     - mv ./target/testnet/malus ./artifacts/.
     - echo -n "${CI_COMMIT_REF_NAME}" > ./artifacts/VERSION
     - echo -n "${CI_COMMIT_REF_NAME}-${CI_COMMIT_SHORT_SHA}" > ./artifacts/EXTRATAG
-    - echo "polkadot-test-malus = $(cat ./artifacts/VERSION) (EXTRATAG = $(cat ./artifacts/EXTRATAG))"
+    - echo "axia-test-malus = $(cat ./artifacts/VERSION) (EXTRATAG = $(cat ./artifacts/EXTRATAG))"
     - cp -r scripts/* ./artifacts
 
 #### stage:                        build
@@ -305,8 +305,8 @@ build-malus:
         https://github.com/paritytech/pipeline-scripts
     - ./pipeline-scripts/check_dependent_project.sh
         paritytech
-        polkadot
-        --polkadot
+        axia
+        --axia
         "$DEPENDENT_REPO"
         "$GITHUB_PR_TOKEN"
         $CARGO_UPDATE_CRATES
@@ -315,7 +315,7 @@ check-dependent-cumulus:
   <<: *check-dependent-project
   variables:
     DEPENDENT_REPO: cumulus
-    CARGO_UPDATE_CRATES: "sp-io polkadot-runtime-common"
+    CARGO_UPDATE_CRATES: "sp-io axia-runtime-common"
 
 check-transaction-versions:
   stage:                           build
@@ -327,9 +327,9 @@ check-transaction-versions:
       artifacts:                   true
   before_script:
     - apt-get -y update; apt-get -y install jq lsof
-    - npm install --ignore-scripts -g @polkadot/metadata-cmp
+    - npm install --ignore-scripts -g @axia/metadata-cmp
     # Set git config
-    - git config remote.origin.url "https://github.com/paritytech/polkadot.git"
+    - git config remote.origin.url "https://github.com/paritytech/axia.git"
     - git fetch origin release
   script:
     - scripts/gitlab/check_extrinsics_ordering.sh
@@ -363,7 +363,7 @@ build-rustdoc:
     - mv ./target/doc ./crate-docs
     # FIXME: remove me after CI image gets nonroot
     - chown -R nonroot:nonroot ./crate-docs
-    - echo "<meta http-equiv=refresh content=0;url=polkadot_service/index.html>" > ./crate-docs/index.html
+    - echo "<meta http-equiv=refresh content=0;url=axia_service/index.html>" > ./crate-docs/index.html
     - sccache -s
 
 .build-push-image:                 &build-push-image
@@ -378,7 +378,7 @@ build-rustdoc:
     - test -s ./artifacts/EXTRATAG || exit 1
     - VERSION="$(cat ./artifacts/VERSION)"
     - EXTRATAG="$(cat ./artifacts/EXTRATAG)"
-    - echo "Polkadot version = ${VERSION} (EXTRATAG = ${EXTRATAG})"
+    - echo "Axia version = ${VERSION} (EXTRATAG = ${EXTRATAG})"
   script:
     - test "$DOCKER_USER" -a "$DOCKER_PASS" ||
         ( echo "no docker credentials provided"; exit 1 )
@@ -400,13 +400,13 @@ build-rustdoc:
   after_script:
     - buildah logout --all
 
-publish-polkadot-image:
+publish-axia-image:
   stage:                           build
   <<:                              *build-push-image
   variables:
     <<:                            *image-variables
-    # scripts/dockerfiles/polkadot_injected_debug.Dockerfile
-    DOCKERFILE:                    dockerfiles/polkadot_injected_debug.Dockerfile
+    # scripts/dockerfiles/axia_injected_debug.Dockerfile
+    DOCKERFILE:                    dockerfiles/axia_injected_debug.Dockerfile
     IMAGE_NAME:                    docker.io/paritypr/synth-wave
   rules:
     # Don't run on releases - this is handled by the Github Action here:
@@ -424,12 +424,12 @@ publish-polkadot-image:
   after_script:
     # pass artifacts to the zombienet-tests job
     # https://docs.gitlab.com/ee/ci/multi_project_pipelines.html#with-variable-inheritance
-    - echo "PARACHAINS_IMAGE_NAME=${IMAGE_NAME}" > ./artifacts/parachains.env
-    - echo "PARACHAINS_IMAGE_TAG=$(cat ./artifacts/EXTRATAG)" >> ./artifacts/parachains.env
+    - echo "ALLYCHAINS_IMAGE_NAME=${IMAGE_NAME}" > ./artifacts/allychains.env
+    - echo "ALLYCHAINS_IMAGE_TAG=$(cat ./artifacts/EXTRATAG)" >> ./artifacts/allychains.env
   artifacts:
     reports:
       # this artifact is used in zombienet-tests job
-      dotenv: ./artifacts/parachains.env
+      dotenv: ./artifacts/allychains.env
 
 publish-adder-collator-image:
   # service image for Simnet
@@ -477,11 +477,11 @@ publish-malus-image:
       # this artifact is used in zombienet-tests job
       dotenv: ./artifacts/malus.env
 
-update_polkadot_weights:           &update-weights
+update_axia_weights:           &update-weights
   stage:                           build
   when:                            manual
   variables:
-    RUNTIME:                       polkadot
+    RUNTIME:                       axia
   artifacts:
     paths:
       - ${RUNTIME}_weights_${CI_COMMIT_SHORT_SHA}.patch
@@ -514,7 +514,7 @@ publish-s3-release:                &publish-s3
   image:                           paritytech/awscli:latest
   variables:
     GIT_STRATEGY:                  none
-    PREFIX:                        "builds/polkadot/${ARCH}-${DOCKER_OS}"
+    PREFIX:                        "builds/axia/${ARCH}-${DOCKER_OS}"
   rules:
     - if: $CI_PIPELINE_SOURCE == "pipeline"
       when: never
@@ -535,10 +535,10 @@ publish-s3-release:                &publish-s3
     - |
       cat <<-EOM
       |
-      |  polkadot binary paths:
+      |  axia binary paths:
       |
-      |  - https://releases.parity.io/${PREFIX}/${EXTRATAG}/polkadot
-      |  - https://releases.parity.io/${PREFIX}/${VERSION}/polkadot
+      |  - https://releases.parity.io/${PREFIX}/${EXTRATAG}/axia
+      |  - https://releases.parity.io/${PREFIX}/${VERSION}/axia
       |
       EOM
   after_script:
@@ -590,7 +590,7 @@ publish-rustdoc:
     - git commit -m "Updated docs for ${CI_COMMIT_REF_NAME}" ||
         echo "___Nothing to commit___"
     - git push origin gh-pages --force
-    - echo "___Rustdoc was successfully published to https://paritytech.github.io/polkadot/___"
+    - echo "___Rustdoc was successfully published to https://paritytech.github.io/axia/___"
   after_script:
     - rm -rf .git/ ./*
 
@@ -600,40 +600,40 @@ deploy-parity-testnet:
   stage:                           deploy
   <<:                              *publish-refs
   variables:
-    POLKADOT_CI_COMMIT_NAME:       "${CI_COMMIT_REF_NAME}"
-    POLKADOT_CI_COMMIT_REF:        "${CI_COMMIT_SHORT_SHA}"
+    AXIA_CI_COMMIT_NAME:       "${CI_COMMIT_REF_NAME}"
+    AXIA_CI_COMMIT_REF:        "${CI_COMMIT_SHORT_SHA}"
   allow_failure:                   true
   trigger:                         "parity/infrastructure/parity-testnet"
 
-zombienet-tests-parachains-smoke-test:
+zombienet-tests-allychains-smoke-test:
   stage:                           deploy
   image:                           "${ZOMBIENET_IMAGE}"
   <<:                              *kubernetes-env
   <<:                              *zombienet-refs
   needs:
-    - job:                         publish-polkadot-image
+    - job:                         publish-axia-image
     - job:                         publish-malus-image
     - job:                         publish-adder-collator-image
   variables:
-    GH_DIR:                        "https://github.com/paritytech/polkadot/tree/${CI_COMMIT_SHORT_SHA}/zombienet_tests/parachains"
+    GH_DIR:                        "https://github.com/paritytech/axia/tree/${CI_COMMIT_SHORT_SHA}/zombienet_tests/allychains"
   before_script:
     - echo "Zombie-net Tests Config"
     - echo "${ZOMBIENET_IMAGE}"
-    - echo "${PARACHAINS_IMAGE_NAME} ${PARACHAINS_IMAGE_TAG}"
+    - echo "${ALLYCHAINS_IMAGE_NAME} ${ALLYCHAINS_IMAGE_TAG}"
     - echo "${MALUS_IMAGE_NAME} ${MALUS_IMAGE_TAG}"
     - echo "${GH_DIR}"
     - export DEBUG=zombie,zombie::network-node
-    - export ZOMBIENET_INTEGRATION_TEST_IMAGE=${PARACHAINS_IMAGE_NAME}:${PARACHAINS_IMAGE_TAG}
+    - export ZOMBIENET_INTEGRATION_TEST_IMAGE=${ALLYCHAINS_IMAGE_NAME}:${ALLYCHAINS_IMAGE_TAG}
     - export MALUS_IMAGE=${MALUS_IMAGE_NAME}:${MALUS_IMAGE_TAG}
     - export COL_IMAGE="docker.io/paritypr/colander:4519" # The collator image is fixed
   script:
     - /home/nonroot/zombie-net/scripts/run-test-env-manager.sh
         --github-remote-dir="${GH_DIR}"
-        --test="0001-parachains-smoke-test.feature"
+        --test="0001-allychains-smoke-test.feature"
   allow_failure:                   true
   retry: 2
   tags:
-    - zombienet-polkadot-integration-test
+    - zombienet-axia-integration-test
 
 zombienet-tests-malus-dispute-valid:
   stage:                           deploy
@@ -641,19 +641,19 @@ zombienet-tests-malus-dispute-valid:
   <<:                              *kubernetes-env
   <<:                              *zombienet-refs
   needs:
-    - job:                         publish-polkadot-image
+    - job:                         publish-axia-image
     - job:                         publish-malus-image
     - job:                         publish-adder-collator-image
   variables:
-    GH_DIR:                        "https://github.com/paritytech/polkadot/tree/${CI_COMMIT_SHORT_SHA}/node/malus/integrationtests"
+    GH_DIR:                        "https://github.com/paritytech/axia/tree/${CI_COMMIT_SHORT_SHA}/node/malus/integrationtests"
   before_script:
     - echo "Zombie-net Tests Config"
     - echo "${ZOMBIENET_IMAGE_NAME}"
-    - echo "${PARACHAINS_IMAGE_NAME} ${PARACHAINS_IMAGE_TAG}"
+    - echo "${ALLYCHAINS_IMAGE_NAME} ${ALLYCHAINS_IMAGE_TAG}"
     - echo "${MALUS_IMAGE_NAME} ${MALUS_IMAGE_TAG}"
     - echo "${GH_DIR}"
     - export DEBUG=zombie*
-    - export ZOMBIENET_INTEGRATION_TEST_IMAGE=${PARACHAINS_IMAGE_NAME}:${PARACHAINS_IMAGE_TAG}
+    - export ZOMBIENET_INTEGRATION_TEST_IMAGE=${ALLYCHAINS_IMAGE_NAME}:${ALLYCHAINS_IMAGE_TAG}
     - export MALUS_IMAGE=${MALUS_IMAGE_NAME}:${MALUS_IMAGE_TAG}
     - export COL_IMAGE=${COLLATOR_IMAGE_NAME}:${COLLATOR_IMAGE_TAG}
   script:
@@ -663,4 +663,4 @@ zombienet-tests-malus-dispute-valid:
   allow_failure:                   true
   retry: 2
   tags:
-    - zombienet-polkadot-integration-test
+    - zombienet-axia-integration-test

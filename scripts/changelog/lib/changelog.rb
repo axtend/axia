@@ -31,7 +31,7 @@ class SubRef
   end
 
   # Get the git ref of the last release for the repo.
-  # repo is given in the form paritytech/polkadot
+  # repo is given in the form paritytech/axia
   def get_last_ref()
     'refs/tags/' + @client.latest_release(@repository.full_name).tag_name
   end

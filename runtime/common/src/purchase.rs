@@ -1,5 +1,5 @@
 // Copyright 2017-2020 Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// This file is part of Axia.
 
 // Substrate is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -414,7 +414,7 @@ impl<T: Config> Pallet<T> {
 		ensure!(signature.len() == 64, Error::<T>::InvalidSignature);
 		let signature: AnySignature = sr25519::Signature::from_slice(signature).into();
 
-		// In Polkadot, the AccountId is always the same as the 32 byte public key.
+		// In Axia, the AccountId is always the same as the 32 byte public key.
 		let account_bytes: [u8; 32] = account_to_bytes(who)?;
 		let public_key = sr25519::Public::from_raw(account_bytes);
 

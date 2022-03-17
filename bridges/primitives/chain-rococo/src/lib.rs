@@ -27,10 +27,10 @@ use frame_support::weights::{
 use sp_std::prelude::*;
 use sp_version::RuntimeVersion;
 
-pub use bp_polkadot_core::*;
+pub use bp_axia_core::*;
 
 /// Rococo Chain
-pub type Rococo = PolkadotLike;
+pub type Rococo = AxiaLike;
 
 /// The target length of a session (how often authorities change) on Westend measured in of number
 /// of blocks.
@@ -39,7 +39,7 @@ pub type Rococo = PolkadotLike;
 /// conditions.
 pub const SESSION_LENGTH: BlockNumber = 10 * time_units::MINUTES;
 
-// NOTE: This needs to be kept up to date with the Rococo runtime found in the Polkadot repo.
+// NOTE: This needs to be kept up to date with the Rococo runtime found in the Axia repo.
 pub const VERSION: RuntimeVersion = RuntimeVersion {
 	spec_name: sp_version::create_runtime_str!("rococo"),
 	impl_name: sp_version::create_runtime_str!("parity-rococo-v1.6"),
@@ -51,7 +51,7 @@ pub const VERSION: RuntimeVersion = RuntimeVersion {
 	state_version: 0,
 };
 
-// NOTE: This needs to be kept up to date with the Rococo runtime found in the Polkadot repo.
+// NOTE: This needs to be kept up to date with the Rococo runtime found in the Axia repo.
 pub struct WeightToFee;
 impl WeightToFeePolynomial for WeightToFee {
 	type Balance = Balance;

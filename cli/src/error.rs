@@ -1,23 +1,23 @@
 // Copyright 2017-2021 Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// This file is part of Axia.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// Axia is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// Axia is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with Axia.  If not, see <http://www.gnu.org/licenses/>.
 
 #[derive(thiserror::Error, Debug)]
 pub enum Error {
 	#[error(transparent)]
-	PolkadotService(#[from] service::Error),
+	AxiaService(#[from] service::Error),
 
 	#[error(transparent)]
 	SubstrateCli(#[from] sc_cli::Error),
@@ -29,7 +29,7 @@ pub enum Error {
 	SubstrateTracing(#[from] sc_tracing::logging::Error),
 
 	#[error(transparent)]
-	PerfCheck(#[from] polkadot_performance_test::PerfCheckError),
+	PerfCheck(#[from] axia_performance_test::PerfCheckError),
 
 	#[error("Other: {0}")]
 	Other(String),

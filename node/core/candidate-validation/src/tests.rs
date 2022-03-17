@@ -1,28 +1,28 @@
 // Copyright 2020-2021 Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// This file is part of Axia.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// Axia is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// Axia is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with Axia.  If not, see <http://www.gnu.org/licenses/>.
 
 use super::*;
 use ::test_helpers::{dummy_hash, make_valid_candidate_descriptor};
 use assert_matches::assert_matches;
 use futures::executor;
-use polkadot_node_core_pvf::PrepareError;
-use polkadot_node_subsystem::messages::AllMessages;
-use polkadot_node_subsystem_test_helpers as test_helpers;
-use polkadot_node_subsystem_util::reexports::SubsystemContext;
-use polkadot_primitives::v1::{HeadData, UpwardMessage};
+use axia_node_core_pvf::PrepareError;
+use axia_node_subsystem::messages::AllMessages;
+use axia_node_subsystem_test_helpers as test_helpers;
+use axia_node_subsystem_util::reexports::SubsystemContext;
+use axia_primitives::v1::{HeadData, UpwardMessage};
 use sp_core::testing::TaskExecutor;
 use sp_keyring::Sr25519Keyring;
 

@@ -16,7 +16,7 @@
 
 use beefy_primitives::crypto::AuthorityId as BeefyId;
 use bp_rialto::derive_account_from_millau_id;
-use polkadot_primitives::v1::{AssignmentId, ValidatorId};
+use axia_primitives::v1::{AssignmentId, ValidatorId};
 use rialto_runtime::{
 	AccountId, BabeConfig, BalancesConfig, BeefyConfig, BridgeMillauMessagesConfig,
 	ConfigurationConfig, GenesisConfig, GrandpaConfig, SessionConfig, SessionKeys, Signature,
@@ -243,15 +243,15 @@ fn testnet_genesis(
 		},
 		authority_discovery: Default::default(),
 		hrmp: Default::default(),
-		// this configuration is exact copy of configuration from Polkadot repo
-		// (see /node/service/src/chain_spec.rs:default_parachains_host_configuration)
+		// this configuration is exact copy of configuration from Axia repo
+		// (see /node/service/src/chain_spec.rs:default_allychains_host_configuration)
 		configuration: ConfigurationConfig {
-			config: polkadot_runtime_parachains::configuration::HostConfiguration {
+			config: axia_runtime_allychains::configuration::HostConfiguration {
 				validation_upgrade_frequency: 1u32,
 				validation_upgrade_delay: 1,
 				code_retention_period: 1200,
-				max_code_size: polkadot_primitives::v1::MAX_CODE_SIZE,
-				max_pov_size: polkadot_primitives::v1::MAX_POV_SIZE,
+				max_code_size: axia_primitives::v1::MAX_CODE_SIZE,
+				max_pov_size: axia_primitives::v1::MAX_POV_SIZE,
 				max_head_data_size: 32 * 1024,
 				group_rotation_frequency: 20,
 				chain_availability_period: 4,
@@ -271,10 +271,10 @@ fn testnet_genesis(
 				hrmp_recipient_deposit: 0,
 				hrmp_channel_max_capacity: 8,
 				hrmp_channel_max_total_size: 8 * 1024,
-				hrmp_max_parachain_inbound_channels: 4,
+				hrmp_max_allychain_inbound_channels: 4,
 				hrmp_max_parathread_inbound_channels: 4,
 				hrmp_channel_max_message_size: 1024 * 1024,
-				hrmp_max_parachain_outbound_channels: 4,
+				hrmp_max_allychain_outbound_channels: 4,
 				hrmp_max_parathread_outbound_channels: 4,
 				hrmp_max_message_num_per_candidate: 5,
 				dispute_period: 6,

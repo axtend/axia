@@ -1,20 +1,20 @@
 // Copyright 2021 Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// This file is part of Axia.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// Axia is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// Axia is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with Axia.  If not, see <http://www.gnu.org/licenses/>.
 
-use polkadot_node_subsystem_util::{
+use axia_node_subsystem_util::{
 	metrics,
 	metrics::{
 		prometheus,
@@ -106,7 +106,7 @@ impl metrics::Metrics for Metrics {
 			fetched_chunks: prometheus::register(
 				CounterVec::new(
 					Opts::new(
-						"polkadot_parachain_fetched_chunks_total",
+						"axia_allychain_fetched_chunks_total",
 						"Total number of fetched chunks.",
 					),
 					&["success"]
@@ -116,7 +116,7 @@ impl metrics::Metrics for Metrics {
 			served_chunks: prometheus::register(
 				CounterVec::new(
 					Opts::new(
-						"polkadot_parachain_served_chunks_total",
+						"axia_allychain_served_chunks_total",
 						"Total number of chunks served by this backer.",
 					),
 					&["success"]
@@ -126,7 +126,7 @@ impl metrics::Metrics for Metrics {
 			fetched_povs: prometheus::register(
 				CounterVec::new(
 					Opts::new(
-						"polkadot_parachain_fetched_povs_total",
+						"axia_allychain_fetched_povs_total",
 						"Total number of povs fetches by this backer.",
 					),
 					&["success"]
@@ -136,7 +136,7 @@ impl metrics::Metrics for Metrics {
 			served_povs: prometheus::register(
 				CounterVec::new(
 					Opts::new(
-						"polkadot_parachain_served_povs_total",
+						"axia_allychain_served_povs_total",
 						"Total number of povs served by this backer.",
 					),
 					&["success"]
@@ -145,7 +145,7 @@ impl metrics::Metrics for Metrics {
 			)?,
 			retries: prometheus::register(
 				Counter::new(
-					"polkadot_parachain_fetch_retries_total",
+					"axia_allychain_fetch_retries_total",
 					"Number of times we did not succeed in fetching a chunk and needed to try more backers.",
 				)?,
 				registry,

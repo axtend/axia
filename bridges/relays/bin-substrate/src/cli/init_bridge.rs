@@ -46,8 +46,8 @@ pub enum InitBridgeName {
 	WestendToMillau,
 	RococoToWococo,
 	WococoToRococo,
-	KusamaToPolkadot,
-	PolkadotToKusama,
+	KusamaToAxia,
+	AxiaToKusama,
 }
 
 macro_rules! select_bridge {
@@ -143,15 +143,15 @@ macro_rules! select_bridge {
 
 				$generic
 			},
-			InitBridgeName::KusamaToPolkadot => {
+			InitBridgeName::KusamaToAxia => {
 				type Source = relay_kusama_client::Kusama;
-				type Target = relay_polkadot_client::Polkadot;
+				type Target = relay_axia_client::Axia;
 
 				fn encode_init_bridge(
 					init_data: InitializationData<<Source as ChainBase>::Header>,
 				) -> <Target as Chain>::Call {
-					relay_polkadot_client::runtime::Call::BridgeKusamaGrandpa(
-						relay_polkadot_client::runtime::BridgeKusamaGrandpaCall::initialize(
+					relay_axia_client::runtime::Call::BridgeKusamaGrandpa(
+						relay_axia_client::runtime::BridgeKusamaGrandpaCall::initialize(
 							init_data,
 						),
 					)
@@ -159,15 +159,15 @@ macro_rules! select_bridge {
 
 				$generic
 			},
-			InitBridgeName::PolkadotToKusama => {
-				type Source = relay_polkadot_client::Polkadot;
+			InitBridgeName::AxiaToKusama => {
+				type Source = relay_axia_client::Axia;
 				type Target = relay_kusama_client::Kusama;
 
 				fn encode_init_bridge(
 					init_data: InitializationData<<Source as ChainBase>::Header>,
 				) -> <Target as Chain>::Call {
-					relay_kusama_client::runtime::Call::BridgePolkadotGrandpa(
-						relay_kusama_client::runtime::BridgePolkadotGrandpaCall::initialize(
+					relay_kusama_client::runtime::Call::BridgeAxiaGrandpa(
+						relay_kusama_client::runtime::BridgeAxiaGrandpaCall::initialize(
 							init_data,
 						),
 					)

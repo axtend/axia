@@ -150,7 +150,7 @@ pub fn run() -> sc_cli::Result<()> {
 			builder.with_colors(false);
 			let _ = builder.init();
 
-			polkadot_node_core_pvf::prepare_worker_entrypoint(&cmd.socket_path);
+			axia_node_core_pvf::prepare_worker_entrypoint(&cmd.socket_path);
 			Ok(())
 		},
 		Some(crate::cli::Subcommand::PvfExecuteWorker(cmd)) => {
@@ -158,13 +158,13 @@ pub fn run() -> sc_cli::Result<()> {
 			builder.with_colors(false);
 			let _ = builder.init();
 
-			polkadot_node_core_pvf::execute_worker_entrypoint(&cmd.socket_path);
+			axia_node_core_pvf::execute_worker_entrypoint(&cmd.socket_path);
 			Ok(())
 		},
 		None => {
 			let runner = cli.create_runner(&cli.run)?;
 
-			// some parameters that are used by polkadot nodes, but that are not used by our binary
+			// some parameters that are used by axia nodes, but that are not used by our binary
 			// let jaeger_agent = None;
 			// let grandpa_pause = None;
 			// let no_beefy = true;
@@ -186,7 +186,7 @@ pub fn run() -> sc_cli::Result<()> {
 }
 
 // We don't want to change 'service.rs' too much to ease future updates => it'll keep using
-// its own error enum like original polkadot service does.
+// its own error enum like original axia service does.
 fn service_error(err: crate::service::Error) -> sc_cli::Error {
 	sc_cli::Error::Application(Box::new(err))
 }

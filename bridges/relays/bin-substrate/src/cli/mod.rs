@@ -32,7 +32,7 @@ pub(crate) mod send_message;
 
 mod derive_account;
 mod init_bridge;
-mod register_parachain;
+mod register_allychain;
 mod relay_headers;
 mod relay_headers_and_messages;
 mod relay_messages;
@@ -94,8 +94,8 @@ pub enum Command {
 	ResubmitTransactions(resubmit_transactions::ResubmitTransactions),
 	/// Swap tokens using token-swap bridge.
 	SwapTokens(swap_tokens::SwapTokens),
-	/// Register parachain.
-	RegisterParachain(register_parachain::RegisterParachain),
+	/// Register allychain.
+	RegisterAllychain(register_allychain::RegisterAllychain),
 }
 
 impl Command {
@@ -131,7 +131,7 @@ impl Command {
 			Self::DeriveAccount(arg) => arg.run().await?,
 			Self::ResubmitTransactions(arg) => arg.run().await?,
 			Self::SwapTokens(arg) => arg.run().await?,
-			Self::RegisterParachain(arg) => arg.run().await?,
+			Self::RegisterAllychain(arg) => arg.run().await?,
 		}
 		Ok(())
 	}
@@ -521,7 +521,7 @@ macro_rules! declare_chain_options {
 declare_chain_options!(Source, source);
 declare_chain_options!(Target, target);
 declare_chain_options!(Relaychain, relaychain);
-declare_chain_options!(Parachain, parachain);
+declare_chain_options!(Allychain, allychain);
 
 #[cfg(test)]
 mod tests {

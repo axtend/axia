@@ -1,18 +1,18 @@
 // Copyright 2021 Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// This file is part of Axia.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// Axia is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// Axia is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with Axia.  If not, see <http://www.gnu.org/licenses/>.
 
 //! Implements the PVF pre-checking subsystem.
 //!
@@ -21,19 +21,19 @@
 
 use futures::{channel::oneshot, future::BoxFuture, prelude::*, stream::FuturesUnordered};
 
-use polkadot_node_subsystem::{
+use axia_node_subsystem::{
 	messages::{CandidateValidationMessage, PreCheckOutcome, PvfCheckerMessage},
 	overseer, ActiveLeavesUpdate, FromOverseer, OverseerSignal, SpawnedSubsystem, SubsystemContext,
 	SubsystemError, SubsystemResult, SubsystemSender,
 };
-use polkadot_primitives::{
+use axia_primitives::{
 	v1::{BlockNumber, Hash, SessionIndex, ValidationCodeHash, ValidatorId, ValidatorIndex},
 	v2::PvfCheckStatement,
 };
 use sp_keystore::SyncCryptoStorePtr;
 use std::collections::HashSet;
 
-const LOG_TARGET: &str = "parachain::pvf-checker";
+const LOG_TARGET: &str = "allychain::pvf-checker";
 
 mod interest_view;
 mod metrics;
@@ -73,7 +73,7 @@ where
 
 			SpawnedSubsystem { name: "pvf-checker-subsystem", future }
 		} else {
-			polkadot_overseer::DummySubsystem.start(ctx)
+			axia_overseer::DummySubsystem.start(ctx)
 		}
 	}
 }
@@ -431,7 +431,7 @@ async fn check_signing_credentials(
 		},
 	};
 
-	polkadot_node_subsystem_util::signing_key_and_index(&validators, keystore)
+	axia_node_subsystem_util::signing_key_and_index(&validators, keystore)
 		.await
 		.map(|(validator_key, validator_index)| SigningCredentials {
 			validator_key,
@@ -482,7 +482,7 @@ async fn sign_and_submit_pvf_check_statement(
 		subject: validation_code_hash,
 		validator_index: credentials.validator_index,
 	};
-	let signature = match polkadot_node_subsystem_util::sign(
+	let signature = match axia_node_subsystem_util::sign(
 		keystore,
 		&credentials.validator_key,
 		&stmt.signing_payload(),

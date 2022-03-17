@@ -1,11 +1,11 @@
 #![allow(dead_code)]
 
-use polkadot_overseer_gen::*;
+use axia_overseer_gen::*;
 
 #[derive(Default)]
 struct AwesomeSubSys;
 
-impl ::polkadot_overseer_gen::Subsystem<OverseerSubsystemContext<MsgStrukt>, OverseerError> for AwesomeSubSys {
+impl ::axia_overseer_gen::Subsystem<OverseerSubsystemContext<MsgStrukt>, OverseerError> for AwesomeSubSys {
 	fn start(self, _ctx: OverseerSubsystemContext<MsgStrukt>) -> SpawnedSubsystem<OverseerError> {
 		unimplemented!("starting yay!")
 	}

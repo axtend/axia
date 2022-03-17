@@ -1,5 +1,5 @@
 [package]
-name = "polkadot-dispute-distribution"
+name = "axia-dispute-distribution"
 version = "0.9.17"
 authors = ["Parity Technologies <admin@parity.io>"]
 edition = "2018"
@@ -9,25 +9,25 @@ futures = "0.3.21"
 tracing = "0.1.29"
 derive_more = "0.99.17"
 parity-scale-codec = { version = "2.3.1", features = ["std"] }
-polkadot-primitives = { path = "../../../primitives" }
-polkadot-erasure-coding = { path = "../../../erasure-coding" }
-polkadot-subsystem = { package = "polkadot-node-subsystem", path = "../../subsystem" }
-polkadot-node-network-protocol = { path = "../../network/protocol" }
-polkadot-node-subsystem-util = { path = "../../subsystem-util" }
-polkadot-node-primitives = { path = "../../primitives" }
-sc-network = { git = "https://github.com/purestake/substrate", branch = "moonbeam-polkadot-v0.9.17" }
-sp-application-crypto = { git = "https://github.com/purestake/substrate", branch = "moonbeam-polkadot-v0.9.17" }
-sp-keystore = { git = "https://github.com/purestake/substrate", branch = "moonbeam-polkadot-v0.9.17" }
+axia-primitives = { path = "../../../primitives" }
+axia-erasure-coding = { path = "../../../erasure-coding" }
+axia-subsystem = { package = "axia-node-subsystem", path = "../../subsystem" }
+axia-node-network-protocol = { path = "../../network/protocol" }
+axia-node-subsystem-util = { path = "../../subsystem-util" }
+axia-node-primitives = { path = "../../primitives" }
+sc-network = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
+sp-application-crypto = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
+sp-keystore = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
 thiserror = "1.0.30"
 lru = "0.7.2"
 
 [dev-dependencies]
 async-trait = "0.1.52"
-polkadot-subsystem-testhelpers = { package = "polkadot-node-subsystem-test-helpers", path = "../../subsystem-test-helpers" }
-sp-keyring = { git = "https://github.com/purestake/substrate", branch = "moonbeam-polkadot-v0.9.17" }
-sp-tracing = { git = "https://github.com/purestake/substrate", branch = "moonbeam-polkadot-v0.9.17" }
-sc-keystore = { git = "https://github.com/purestake/substrate", branch = "moonbeam-polkadot-v0.9.17" }
+axia-subsystem-testhelpers = { package = "axia-node-subsystem-test-helpers", path = "../../subsystem-test-helpers" }
+sp-keyring = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
+sp-tracing = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
+sc-keystore = { git = "https://github.com/purestake/substrate", branch = "moonbeam-axia-v0.9.17" }
 futures-timer = "3.0.2"
 assert_matches = "1.4.0"
 lazy_static = "1.4.0"
-polkadot-primitives-test-helpers = { path = "../../../primitives/test-helpers" }
+axia-primitives-test-helpers = { path = "../../../primitives/test-helpers" }

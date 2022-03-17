@@ -14,29 +14,29 @@
 // You should have received a copy of the GNU General Public License
 // along with Parity Bridges Common.  If not, see <http://www.gnu.org/licenses/>.
 
-//! This is almost 1:1 copy of `node/service/src/overseer.rs` file from Polkadot repository.
+//! This is almost 1:1 copy of `node/service/src/overseer.rs` file from Axia repository.
 //! The only exception is that we don't support db upgrades => no `upgrade.rs` module.
 
-// this warning comes from `polkadot_overseer::AllSubsystems` type
+// this warning comes from `axia_overseer::AllSubsystems` type
 #![allow(clippy::type_complexity)]
 
 use crate::service::{AuthorityDiscoveryApi, Error};
 use rialto_runtime::{opaque::Block, Hash};
 
 use lru::LruCache;
-use polkadot_availability_distribution::IncomingRequestReceivers;
-use polkadot_node_core_approval_voting::Config as ApprovalVotingConfig;
-use polkadot_node_core_av_store::Config as AvailabilityConfig;
-use polkadot_node_core_candidate_validation::Config as CandidateValidationConfig;
-use polkadot_node_core_chain_selection::Config as ChainSelectionConfig;
-use polkadot_node_core_dispute_coordinator::Config as DisputeCoordinatorConfig;
-use polkadot_node_core_provisioner::ProvisionerConfig;
-use polkadot_node_network_protocol::request_response::{v1 as request_v1, IncomingRequestReceiver};
-use polkadot_overseer::{
+use axia_availability_distribution::IncomingRequestReceivers;
+use axia_node_core_approval_voting::Config as ApprovalVotingConfig;
+use axia_node_core_av_store::Config as AvailabilityConfig;
+use axia_node_core_candidate_validation::Config as CandidateValidationConfig;
+use axia_node_core_chain_selection::Config as ChainSelectionConfig;
+use axia_node_core_dispute_coordinator::Config as DisputeCoordinatorConfig;
+use axia_node_core_provisioner::ProvisionerConfig;
+use axia_node_network_protocol::request_response::{v1 as request_v1, IncomingRequestReceiver};
+use axia_overseer::{
 	metrics::Metrics as OverseerMetrics, BlockInfo, MetricsTrait, Overseer, InitializedOverseerBuilder,
 	OverseerConnector, OverseerHandle,
 };
-use polkadot_primitives::v1::ParachainHost;
+use axia_primitives::v1::AllychainHost;
 use sc_authority_discovery::Service as AuthorityDiscoveryService;
 use sc_client_api::AuxStore;
 use sc_keystore::LocalKeystore;
@@ -47,32 +47,32 @@ use sp_core::traits::SpawnNamed;
 use std::sync::Arc;
 use substrate_prometheus_endpoint::Registry;
 
-pub use polkadot_approval_distribution::ApprovalDistribution as ApprovalDistributionSubsystem;
-pub use polkadot_availability_bitfield_distribution::BitfieldDistribution as BitfieldDistributionSubsystem;
-pub use polkadot_availability_distribution::AvailabilityDistributionSubsystem;
-pub use polkadot_availability_recovery::AvailabilityRecoverySubsystem;
-pub use polkadot_collator_protocol::{CollatorProtocolSubsystem, ProtocolSide};
-pub use polkadot_dispute_distribution::DisputeDistributionSubsystem;
-pub use polkadot_gossip_support::GossipSupport as GossipSupportSubsystem;
-pub use polkadot_network_bridge::NetworkBridge as NetworkBridgeSubsystem;
-pub use polkadot_node_collation_generation::CollationGenerationSubsystem;
-pub use polkadot_node_core_approval_voting::ApprovalVotingSubsystem;
-pub use polkadot_node_core_av_store::AvailabilityStoreSubsystem;
-pub use polkadot_node_core_backing::CandidateBackingSubsystem;
-pub use polkadot_node_core_bitfield_signing::BitfieldSigningSubsystem;
-pub use polkadot_node_core_candidate_validation::CandidateValidationSubsystem;
-pub use polkadot_node_core_chain_api::ChainApiSubsystem;
-pub use polkadot_node_core_chain_selection::ChainSelectionSubsystem;
-pub use polkadot_node_core_dispute_coordinator::DisputeCoordinatorSubsystem;
-pub use polkadot_node_core_provisioner::ProvisionerSubsystem;
-pub use polkadot_node_core_runtime_api::RuntimeApiSubsystem;
-pub use polkadot_statement_distribution::StatementDistributionSubsystem;
+pub use axia_approval_distribution::ApprovalDistribution as ApprovalDistributionSubsystem;
+pub use axia_availability_bitfield_distribution::BitfieldDistribution as BitfieldDistributionSubsystem;
+pub use axia_availability_distribution::AvailabilityDistributionSubsystem;
+pub use axia_availability_recovery::AvailabilityRecoverySubsystem;
+pub use axia_collator_protocol::{CollatorProtocolSubsystem, ProtocolSide};
+pub use axia_dispute_distribution::DisputeDistributionSubsystem;
+pub use axia_gossip_support::GossipSupport as GossipSupportSubsystem;
+pub use axia_network_bridge::NetworkBridge as NetworkBridgeSubsystem;
+pub use axia_node_collation_generation::CollationGenerationSubsystem;
+pub use axia_node_core_approval_voting::ApprovalVotingSubsystem;
+pub use axia_node_core_av_store::AvailabilityStoreSubsystem;
+pub use axia_node_core_backing::CandidateBackingSubsystem;
+pub use axia_node_core_bitfield_signing::BitfieldSigningSubsystem;
+pub use axia_node_core_candidate_validation::CandidateValidationSubsystem;
+pub use axia_node_core_chain_api::ChainApiSubsystem;
+pub use axia_node_core_chain_selection::ChainSelectionSubsystem;
+pub use axia_node_core_dispute_coordinator::DisputeCoordinatorSubsystem;
+pub use axia_node_core_provisioner::ProvisionerSubsystem;
+pub use axia_node_core_runtime_api::RuntimeApiSubsystem;
+pub use axia_statement_distribution::StatementDistributionSubsystem;
 
 /// Arguments passed for overseer construction.
 pub struct OverseerGenArgs<'a, Spawner, RuntimeClient>
 where
 	RuntimeClient: 'static + ProvideRuntimeApi<Block> + HeaderBackend<Block> + AuxStore,
-	RuntimeClient::Api: ParachainHost<Block> + BabeApi<Block> + AuthorityDiscoveryApi<Block>,
+	RuntimeClient::Api: AllychainHost<Block> + BabeApi<Block> + AuthorityDiscoveryApi<Block>,
 	Spawner: 'static + SpawnNamed + Clone + Unpin,
 {
 	/// Set of initial relay chain leaves to track.
@@ -81,8 +81,8 @@ where
 	pub keystore: Arc<LocalKeystore>,
 	/// Runtime client generic, providing the `ProvieRuntimeApi` trait besides others.
 	pub runtime_client: Arc<RuntimeClient>,
-	/// The underlying key value store for the parachains.
-	pub parachains_db: Arc<dyn kvdb::KeyValueDB>,
+	/// The underlying key value store for the allychains.
+	pub allychains_db: Arc<dyn kvdb::KeyValueDB>,
 	/// Underlying network service implementation.
 	pub network_service: Arc<sc_network::NetworkService<Block, Hash>>,
 	/// Underlying authority discovery service.
@@ -120,7 +120,7 @@ pub fn prepared_overseer_builder<Spawner, RuntimeClient>(
 		leaves,
 		keystore,
 		runtime_client,
-		parachains_db,
+		allychains_db,
 		network_service,
 		authority_discovery_service,
 		pov_req_receiver,
@@ -170,10 +170,10 @@ pub fn prepared_overseer_builder<Spawner, RuntimeClient>(
 >
 where
 	RuntimeClient: 'static + ProvideRuntimeApi<Block> + HeaderBackend<Block> + AuxStore,
-	RuntimeClient::Api: ParachainHost<Block> + BabeApi<Block> + AuthorityDiscoveryApi<Block>,
+	RuntimeClient::Api: AllychainHost<Block> + BabeApi<Block> + AuthorityDiscoveryApi<Block>,
 	Spawner: 'static + SpawnNamed + Clone + Unpin,
 {
-	use polkadot_node_subsystem_util::metrics::Metrics;
+	use axia_node_subsystem_util::metrics::Metrics;
 	use std::iter::FromIterator;
 
 	let metrics = <OverseerMetrics as MetricsTrait>::register(registry)?;
@@ -189,7 +189,7 @@ where
 			Metrics::register(registry)?,
 		))
 		.availability_store(AvailabilityStoreSubsystem::new(
-			parachains_db.clone(),
+			allychains_db.clone(),
 			availability_config,
 			Metrics::register(registry)?,
 		))
@@ -236,7 +236,7 @@ where
 		.approval_distribution(ApprovalDistributionSubsystem::new(Metrics::register(registry)?))
 		.approval_voting(ApprovalVotingSubsystem::with_config(
 			approval_voting_config,
-			parachains_db.clone(),
+			allychains_db.clone(),
 			keystore.clone(),
 			Box::new(network_service),
 			Metrics::register(registry)?,
@@ -246,7 +246,7 @@ where
 			authority_discovery_service.clone(),
 		))
 		.dispute_coordinator(DisputeCoordinatorSubsystem::new(
-			parachains_db.clone(),
+			allychains_db.clone(),
 			dispute_coordinator_config,
 			keystore.clone(),
 			Metrics::register(registry)?,
@@ -257,7 +257,7 @@ where
 			authority_discovery_service,
 			Metrics::register(registry)?,
 		))
-		.chain_selection(ChainSelectionSubsystem::new(chain_selection_config, parachains_db))
+		.chain_selection(ChainSelectionSubsystem::new(chain_selection_config, allychains_db))
 		.leaves(Vec::from_iter(
 			leaves
 				.into_iter()
@@ -266,7 +266,7 @@ where
 		.activation_external_listeners(Default::default())
 		.span_per_active_leaf(Default::default())
 		.active_leaves(Default::default())
-		.supports_parachains(runtime_client)
+		.supports_allychains(runtime_client)
 		.known_leaves(LruCache::new(KNOWN_LEAVES_CACHE_SIZE))
 		.metrics(metrics)
 		.spawner(spawner);
@@ -286,7 +286,7 @@ pub trait OverseerGen {
 	) -> Result<(Overseer<Spawner, Arc<RuntimeClient>>, OverseerHandle), Error>
 	where
 		RuntimeClient: 'static + ProvideRuntimeApi<Block> + HeaderBackend<Block> + AuxStore,
-		RuntimeClient::Api: ParachainHost<Block> + BabeApi<Block> + AuthorityDiscoveryApi<Block>,
+		RuntimeClient::Api: AllychainHost<Block> + BabeApi<Block> + AuthorityDiscoveryApi<Block>,
 		Spawner: 'static + SpawnNamed + Clone + Unpin,
 	{
 		let gen = RealOverseerGen;
@@ -297,7 +297,7 @@ pub trait OverseerGen {
 	// as consequence make this rather annoying to implement and use.
 }
 
-use polkadot_overseer::KNOWN_LEAVES_CACHE_SIZE;
+use axia_overseer::KNOWN_LEAVES_CACHE_SIZE;
 
 /// The regular set of subsystems.
 pub struct RealOverseerGen;
@@ -310,7 +310,7 @@ impl OverseerGen for RealOverseerGen {
 	) -> Result<(Overseer<Spawner, Arc<RuntimeClient>>, OverseerHandle), Error>
 	where
 		RuntimeClient: 'static + ProvideRuntimeApi<Block> + HeaderBackend<Block> + AuxStore,
-		RuntimeClient::Api: ParachainHost<Block> + BabeApi<Block> + AuthorityDiscoveryApi<Block>,
+		RuntimeClient::Api: AllychainHost<Block> + BabeApi<Block> + AuthorityDiscoveryApi<Block>,
 		Spawner: 'static + SpawnNamed + Clone + Unpin,
 	{
 		prepared_overseer_builder(args)?

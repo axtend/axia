@@ -142,8 +142,8 @@ test:
 #    RUSTFLAGS:                     "-D warnings"
   script:                          &test-script
     - time cargo fetch
-    - time cargo fetch --manifest-path=`cargo metadata --format-version=1 | jq --compact-output --raw-output  ".packages[] | select(.name == \"polkadot-test-runtime\").manifest_path"`
-    - time cargo fetch --manifest-path=`cargo metadata --format-version=1 | jq --compact-output --raw-output  ".packages[] | select(.name == \"polkadot-runtime\").manifest_path"`
+    - time cargo fetch --manifest-path=`cargo metadata --format-version=1 | jq --compact-output --raw-output  ".packages[] | select(.name == \"axia-test-runtime\").manifest_path"`
+    - time cargo fetch --manifest-path=`cargo metadata --format-version=1 | jq --compact-output --raw-output  ".packages[] | select(.name == \"axia-runtime\").manifest_path"`
     - CARGO_NET_OFFLINE=true time cargo test --verbose --workspace
 
 test-nightly:
@@ -192,16 +192,16 @@ build:
   # master
   script:                          &build-script
     - time cargo fetch
-    - time cargo fetch --manifest-path=`cargo metadata --format-version=1 | jq --compact-output --raw-output  ".packages[] | select(.name == \"polkadot-test-runtime\").manifest_path"`
-    - time cargo fetch --manifest-path=`cargo metadata --format-version=1 | jq --compact-output --raw-output  ".packages[] | select(.name == \"polkadot-runtime\").manifest_path"`
+    - time cargo fetch --manifest-path=`cargo metadata --format-version=1 | jq --compact-output --raw-output  ".packages[] | select(.name == \"axia-test-runtime\").manifest_path"`
+    - time cargo fetch --manifest-path=`cargo metadata --format-version=1 | jq --compact-output --raw-output  ".packages[] | select(.name == \"axia-runtime\").manifest_path"`
     - CARGO_NET_OFFLINE=true time cargo build --release --verbose --workspace
   after_script:
     # Prepare artifacts
     - mkdir -p ./artifacts
     - strip ./target/release/rialto-bridge-node
     - mv -v ./target/release/rialto-bridge-node ./artifacts/
-    - strip ./target/release/rialto-parachain-collator
-    - mv -v ./target/release/rialto-parachain-collator ./artifacts/
+    - strip ./target/release/rialto-allychain-collator
+    - mv -v ./target/release/rialto-allychain-collator ./artifacts/
     - strip ./target/release/millau-bridge-node
     - mv -v ./target/release/millau-bridge-node ./artifacts/
     - strip ./target/release/substrate-relay
@@ -276,7 +276,7 @@ rialto-bridge-node:
   stage:                           publish
   <<:                              *build-push-image
 
-rialto-parachain-collator:
+rialto-allychain-collator:
   stage:                           publish
   <<:                              *build-push-image
 

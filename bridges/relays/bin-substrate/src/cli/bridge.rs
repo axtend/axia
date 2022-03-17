@@ -24,8 +24,8 @@ pub enum FullBridge {
 	RialtoToMillau,
 	RococoToWococo,
 	WococoToRococo,
-	KusamaToPolkadot,
-	PolkadotToKusama,
+	KusamaToAxia,
+	AxiaToKusama,
 }
 
 impl FullBridge {
@@ -36,8 +36,8 @@ impl FullBridge {
 			Self::RialtoToMillau => RIALTO_TO_MILLAU_INDEX,
 			Self::RococoToWococo => ROCOCO_TO_WOCOCO_INDEX,
 			Self::WococoToRococo => WOCOCO_TO_ROCOCO_INDEX,
-			Self::KusamaToPolkadot => KUSAMA_TO_POLKADOT_INDEX,
-			Self::PolkadotToKusama => POLKADOT_TO_KUSAMA_INDEX,
+			Self::KusamaToAxia => KUSAMA_TO_AXIA_INDEX,
+			Self::AxiaToKusama => AXIA_TO_KUSAMA_INDEX,
 		}
 	}
 }
@@ -46,8 +46,8 @@ pub const RIALTO_TO_MILLAU_INDEX: u8 = 0;
 pub const MILLAU_TO_RIALTO_INDEX: u8 = 0;
 pub const ROCOCO_TO_WOCOCO_INDEX: u8 = 0;
 pub const WOCOCO_TO_ROCOCO_INDEX: u8 = 0;
-pub const KUSAMA_TO_POLKADOT_INDEX: u8 = 0;
-pub const POLKADOT_TO_KUSAMA_INDEX: u8 = 0;
+pub const KUSAMA_TO_AXIA_INDEX: u8 = 0;
+pub const AXIA_TO_KUSAMA_INDEX: u8 = 0;
 
 /// The macro allows executing bridge-specific code without going fully generic.
 ///
@@ -146,47 +146,47 @@ macro_rules! select_full_bridge {
 
 				$generic
 			}
-			FullBridge::KusamaToPolkadot => {
+			FullBridge::KusamaToAxia => {
 				type Source = relay_kusama_client::Kusama;
 				#[allow(dead_code)]
-				type Target = relay_polkadot_client::Polkadot;
+				type Target = relay_axia_client::Axia;
 
 				// Derive-account
 				#[allow(unused_imports)]
-				use bp_polkadot::derive_account_from_kusama_id as derive_account;
+				use bp_axia::derive_account_from_kusama_id as derive_account;
 
 				// Relay-messages
 				#[allow(unused_imports)]
-				use crate::chains::kusama_messages_to_polkadot::run as relay_messages;
+				use crate::chains::kusama_messages_to_axia::run as relay_messages;
 
 				// Send-message / Estimate-fee
 				#[allow(unused_imports)]
-				use bp_polkadot::TO_POLKADOT_ESTIMATE_MESSAGE_FEE_METHOD as ESTIMATE_MESSAGE_FEE_METHOD;
+				use bp_axia::TO_AXIA_ESTIMATE_MESSAGE_FEE_METHOD as ESTIMATE_MESSAGE_FEE_METHOD;
 				// Send-message
 				#[allow(unused_imports)]
-				use relay_kusama_client::runtime::kusama_to_polkadot_account_ownership_digest as account_ownership_digest;
+				use relay_kusama_client::runtime::kusama_to_axia_account_ownership_digest as account_ownership_digest;
 
 				$generic
 			}
-			FullBridge::PolkadotToKusama => {
-				type Source = relay_polkadot_client::Polkadot;
+			FullBridge::AxiaToKusama => {
+				type Source = relay_axia_client::Axia;
 				#[allow(dead_code)]
 				type Target = relay_kusama_client::Kusama;
 
 				// Derive-account
 				#[allow(unused_imports)]
-				use bp_kusama::derive_account_from_polkadot_id as derive_account;
+				use bp_kusama::derive_account_from_axia_id as derive_account;
 
 				// Relay-messages
 				#[allow(unused_imports)]
-				use crate::chains::polkadot_messages_to_kusama::run as relay_messages;
+				use crate::chains::axia_messages_to_kusama::run as relay_messages;
 
 				// Send-message / Estimate-fee
 				#[allow(unused_imports)]
 				use bp_kusama::TO_KUSAMA_ESTIMATE_MESSAGE_FEE_METHOD as ESTIMATE_MESSAGE_FEE_METHOD;
 				// Send-message
 				#[allow(unused_imports)]
-				use relay_polkadot_client::runtime::polkadot_to_kusama_account_ownership_digest as account_ownership_digest;
+				use relay_axia_client::runtime::axia_to_kusama_account_ownership_digest as account_ownership_digest;
 
 				$generic
 			}

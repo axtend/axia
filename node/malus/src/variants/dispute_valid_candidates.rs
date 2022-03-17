@@ -1,18 +1,18 @@
 // Copyright 2021 Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// This file is part of Axia.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// Axia is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// Axia is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with Axia.  If not, see <http://www.gnu.org/licenses/>.
 
 //! A malicious node that replaces approvals with invalid disputes
 //! against valid candidates.
@@ -21,11 +21,11 @@
 
 #![allow(missing_docs)]
 
-use polkadot_cli::{
+use axia_cli::{
 	prepared_overseer_builder,
 	service::{
 		AuthorityDiscoveryApi, AuxStore, BabeApi, Block, Error, HeaderBackend, Overseer,
-		OverseerConnector, OverseerGen, OverseerGenArgs, OverseerHandle, ParachainHost,
+		OverseerConnector, OverseerGen, OverseerGenArgs, OverseerHandle, AllychainHost,
 		ProvideRuntimeApi, SpawnNamed,
 	},
 };
@@ -35,8 +35,8 @@ use crate::interceptor::*;
 
 // Import extra types relevant to the particular
 // subsystem.
-use polkadot_node_core_backing::CandidateBackingSubsystem;
-use polkadot_node_subsystem::messages::{
+use axia_node_core_backing::CandidateBackingSubsystem;
+use axia_node_subsystem::messages::{
 	ApprovalDistributionMessage, CandidateBackingMessage, DisputeCoordinatorMessage,
 };
 use sp_keystore::SyncCryptoStorePtr;
@@ -101,7 +101,7 @@ impl OverseerGen for DisputeValidCandidates {
 	) -> Result<(Overseer<Spawner, Arc<RuntimeClient>>, OverseerHandle), Error>
 	where
 		RuntimeClient: 'static + ProvideRuntimeApi<Block> + HeaderBackend<Block> + AuxStore,
-		RuntimeClient::Api: ParachainHost<Block> + BabeApi<Block> + AuthorityDiscoveryApi<Block>,
+		RuntimeClient::Api: AllychainHost<Block> + BabeApi<Block> + AuthorityDiscoveryApi<Block>,
 		Spawner: 'static + SpawnNamed + Clone + Unpin,
 	{
 		let spawner = args.spawner.clone();

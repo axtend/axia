@@ -1,18 +1,18 @@
 // Copyright 2021 Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// This file is part of Axia.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// Axia is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// Axia is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with Axia.  If not, see <http://www.gnu.org/licenses/>.
 
 use frame_support::{
 	construct_runtime, parameter_types,
@@ -23,16 +23,16 @@ use sp_core::H256;
 use sp_runtime::{testing::Header, traits::IdentityLookup, AccountId32};
 use sp_std::cell::RefCell;
 
-use polkadot_parachain::primitives::Id as ParaId;
-use polkadot_runtime_parachains::{configuration, origin, shared};
+use axia_allychain::primitives::Id as ParaId;
+use axia_runtime_allychains::{configuration, origin, shared};
 use xcm::latest::{opaque, prelude::*};
 use xcm_executor::XcmExecutor;
 
 use xcm_builder::{
 	AccountId32Aliases, AllowTopLevelPaidExecutionFrom, AllowUnpaidExecutionFrom,
-	ChildParachainAsNative, ChildParachainConvertsVia, ChildSystemParachainAsSuperuser,
+	ChildAllychainAsNative, ChildAllychainConvertsVia, ChildSystemAllychainAsSuperuser,
 	CurrencyAdapter as XcmCurrencyAdapter, FixedRateOfFungible, FixedWeightBounds,
-	IsChildSystemParachain, IsConcrete, LocationInverter, SignedAccountId32AsNative,
+	IsChildSystemAllychain, IsConcrete, LocationInverter, SignedAccountId32AsNative,
 	SignedToAccountId32, SovereignSignedViaLocation, TakeWeightCredit,
 };
 
@@ -121,7 +121,7 @@ parameter_types! {
 }
 
 pub type SovereignAccountOf =
-	(ChildParachainConvertsVia<ParaId, AccountId>, AccountId32Aliases<KusamaNetwork, AccountId>);
+	(ChildAllychainConvertsVia<ParaId, AccountId>, AccountId32Aliases<KusamaNetwork, AccountId>);
 
 pub type LocalAssetTransactor = XcmCurrencyAdapter<
 	Balances,
@@ -133,9 +133,9 @@ pub type LocalAssetTransactor = XcmCurrencyAdapter<
 
 type LocalOriginConverter = (
 	SovereignSignedViaLocation<SovereignAccountOf, Origin>,
-	ChildParachainAsNative<origin::Origin, Origin>,
+	ChildAllychainAsNative<origin::Origin, Origin>,
 	SignedAccountId32AsNative<KusamaNetwork, Origin>,
-	ChildSystemParachainAsSuperuser<ParaId, Origin>,
+	ChildSystemAllychainAsSuperuser<ParaId, Origin>,
 );
 
 parameter_types! {
@@ -147,12 +147,12 @@ pub type Barrier = (
 	TakeWeightCredit,
 	AllowTopLevelPaidExecutionFrom<Everything>,
 	// Unused/Untested
-	AllowUnpaidExecutionFrom<IsChildSystemParachain<ParaId>>,
+	AllowUnpaidExecutionFrom<IsChildSystemAllychain<ParaId>>,
 );
 
 parameter_types! {
 	pub const KusamaForStatemine: (MultiAssetFilter, MultiLocation) =
-		(MultiAssetFilter::Wild(WildMultiAsset::AllOf { id: Concrete(MultiLocation::here()), fun: WildFungible }), X1(Parachain(1000)).into());
+		(MultiAssetFilter::Wild(WildMultiAsset::AllOf { id: Concrete(MultiLocation::here()), fun: WildFungible }), X1(Allychain(1000)).into());
 	pub const MaxInstructions: u32 = 100;
 }
 pub type TrustedTeleporters = (xcm_builder::Case<KusamaForStatemine>,);
