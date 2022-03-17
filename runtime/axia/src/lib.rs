@@ -22,7 +22,7 @@
 
 use pallet_transaction_payment::CurrencyAdapter;
 use runtime_common::{
-	auctions, claims, crowdloan, impls::DealWithFees, paras_registrar, prod_or_fast, slots,
+	auctions, claims, crowdloan, impls::DealWithFees, paras_registrar, paras_sudo_wrapper, prod_or_fast, slots,
 	BlockHashCount, BlockLength, BlockWeights, CurrencyToVote, OffchainSolutionLengthLimit,
 	OffchainSolutionWeightLimit, RocksDbWeight, SlowAdjustingFeeUpdate,
 };
@@ -137,58 +137,58 @@ pub fn native_version() -> NativeVersion {
 	NativeVersion { runtime_version: VERSION, can_author_with: Default::default() }
 }
 
-pub struct BaseFilter;
-impl Contains<Call> for BaseFilter {
-	fn contains(call: &Call) -> bool {
-		match call {
-			// These modules are all allowed to be called by transactions:
-			Call::Democracy(_) |
-			Call::Council(_) |
-			Call::TechnicalCommittee(_) |
-			Call::TechnicalMembership(_) |
-			Call::Treasury(_) |
-			Call::PhragmenElection(_) |
-			Call::System(_) |
-			Call::Scheduler(_) |
-			Call::Preimage(_) |
-			Call::Indices(_) |
-			Call::Babe(_) |
-			Call::Timestamp(_) |
-			Call::Balances(_) |
-			Call::Authorship(_) |
-			Call::Staking(_) |
-			Call::Session(_) |
-			Call::Grandpa(_) |
-			Call::ImOnline(_) |
-			Call::Utility(_) |
-			Call::Claims(_) |
-			Call::Vesting(_) |
-			Call::Identity(_) |
-			Call::Proxy(_) |
-			Call::Multisig(_) |
-			Call::Bounties(_) |
-			Call::Tips(_) |
-			Call::ElectionProviderMultiPhase(_) |
-			Call::Configuration(_) |
-			Call::ParasShared(_) |
-			Call::ParaInclusion(_) |
-			Call::Paras(_) |
-			Call::Initializer(_) |
-			Call::ParaInherent(_) |
-			Call::Dmp(_) |
-			Call::Ump(_) |
-			Call::Hrmp(_) |
-			Call::Slots(_) |
-			Call::Registrar(_) |
-			Call::Auctions(_) |
-			Call::Crowdloan(_) |
-			Call::BagsList(_) |
-			Call::XcmPallet(_) => true,
-			// All pallets are allowed, but exhaustive match is defensive
-			// in the case of adding new pallets.
-		}
-	}
-}
+// pub struct BaseFilter;
+// impl Contains<Call> for BaseFilter {
+// 	fn contains(call: &Call) -> bool {
+// 		match call {
+// 			// These modules are all allowed to be called by transactions:
+// 			Call::Democracy(_) |
+// 			Call::Council(_) |
+// 			Call::TechnicalCommittee(_) |
+// 			Call::TechnicalMembership(_) |
+// 			Call::Treasury(_) |
+// 			Call::PhragmenElection(_) |
+// 			Call::System(_) |
+// 			Call::Scheduler(_) |
+// 			Call::Preimage(_) |
+// 			Call::Indices(_) |
+// 			Call::Babe(_) |
+// 			Call::Timestamp(_) |
+// 			Call::Balances(_) |
+// 			Call::Authorship(_) |
+// 			Call::Staking(_) |
+// 			Call::Session(_) |
+// 			Call::Grandpa(_) |
+// 			Call::ImOnline(_) |
+// 			Call::Utility(_) |
+// 			Call::Claims(_) |
+// 			Call::Vesting(_) |
+// 			Call::Identity(_) |
+// 			Call::Proxy(_) |
+// 			Call::Multisig(_) |
+// 			Call::Bounties(_) |
+// 			Call::Tips(_) |
+// 			Call::ElectionProviderMultiPhase(_) |
+// 			Call::Configuration(_) |
+// 			Call::ParasShared(_) |
+// 			Call::ParaInclusion(_) |
+// 			Call::Paras(_) |
+// 			Call::Initializer(_) |
+// 			Call::ParaInherent(_) |
+// 			Call::Dmp(_) |
+// 			Call::Ump(_) |
+// 			Call::Hrmp(_) |
+// 			Call::Slots(_) |
+// 			Call::Registrar(_) |
+// 			Call::Auctions(_) |
+// 			Call::Crowdloan(_) |
+// 			Call::BagsList(_) |
+// 			Call::XcmPallet(_) => true,
+// 			// All pallets are allowed, but exhaustive match is defensive
+// 			// in the case of adding new pallets.
+// 		}
+// 	}
+// }
 
 type MoreThanHalfCouncil = EnsureOneOf<
 	EnsureRoot<AccountId>,
@@ -201,7 +201,7 @@ parameter_types! {
 }
 
 impl frame_system::Config for Runtime {
-	type BaseCallFilter = BaseFilter;
+	type BaseCallFilter = frame_support::traits::Everything;
 	type BlockWeights = BlockWeights;
 	type BlockLength = BlockLength;
 	type Origin = Origin;
@@ -1322,6 +1322,13 @@ impl auctions::Config for Runtime {
 	type WeightInfo = weights::runtime_common_auctions::WeightInfo<Runtime>;
 }
 
+impl paras_sudo_wrapper::Config for Runtime {}
+
+impl pallet_sudo::Config for Runtime {
+	type Event = Event;
+	type Call = Call;
+}
+
 construct_runtime! {
 	pub enum Runtime where
 		Block = Block,
@@ -1412,6 +1419,11 @@ construct_runtime! {
 
 		// Pallet for sending XCM.
 		XcmPallet: pallet_xcm::{Pallet, Call, Storage, Event<T>, Origin, Config} = 99,
+	
+		// New
+		Sudo: pallet_sudo::{Pallet, Call, Storage, Config<T>, Event<T>},
+		ParasSudoWrapper: paras_sudo_wrapper::{Pallet, Call},
+
 	}
 }
 
