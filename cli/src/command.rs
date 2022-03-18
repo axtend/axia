@@ -197,7 +197,7 @@ fn set_default_ss58_version(spec: &Box<dyn service::ChainSpec>) {
 	} else if spec.is_westend() {
 		Ss58AddressFormatRegistry::SubstrateAccount
 	} else {
-		Ss58AddressFormatRegistry::AxiaAccount
+		Ss58AddressFormatRegistry::PolkadotAccount
 	}
 	.into();
 
