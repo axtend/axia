@@ -551,7 +551,7 @@ async fn main() {
 			sp_core::crypto::set_default_ss58_version(
 				sp_core::crypto::Ss58AddressFormatRegistry::PolkadotAccount.into(),
 			);
-			sub_tokens::dynamic::set_name("DOT");
+			sub_tokens::dynamic::set_name("AXC");
 			sub_tokens::dynamic::set_decimal_points(10_000_000_000);
 			// safety: this program will always be single threaded, thus accessing global static is
 			// safe.

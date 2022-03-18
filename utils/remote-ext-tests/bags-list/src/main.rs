@@ -124,12 +124,12 @@ async fn main() {
 		(Runtime::Axia, Command::CheckMigration) => {
 			use axia_runtime::{Block, Runtime};
 			use axia_runtime_constants::currency::UNITS;
-			migration::execute::<Runtime, Block>(UNITS as u64, "DOT", options.uri.clone()).await;
+			migration::execute::<Runtime, Block>(UNITS as u64, "AXC", options.uri.clone()).await;
 		},
 		(Runtime::Axia, Command::SanityCheck) => {
 			use axia_runtime::{Block, Runtime};
 			use axia_runtime_constants::currency::UNITS;
-			sanity_check::execute::<Runtime, Block>(UNITS as u64, "DOT", options.uri.clone()).await;
+			sanity_check::execute::<Runtime, Block>(UNITS as u64, "AXC", options.uri.clone()).await;
 		},
 		(Runtime::Axia, Command::Snapshot) => {
 			use axia_runtime::{Block, Runtime};

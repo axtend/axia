@@ -47,14 +47,14 @@ use westend_runtime as westend;
 use westend_runtime_constants::currency::UNITS as WND;
 
 #[cfg(feature = "axia-native")]
-const AXIA_STAGING_TELEMETRY_URL: &str = "wss://telemetry.axia.io/submit/";
+const AXIA_STAGING_TELEMETRY_URL: &str = "ws://localhost:8001/submit/";
 #[cfg(feature = "kusama-native")]
-const KUSAMA_STAGING_TELEMETRY_URL: &str = "wss://telemetry.axia.io/submit/";
+const KUSAMA_STAGING_TELEMETRY_URL: &str = "ws://localhost:8001/submit/";
 #[cfg(feature = "westend-native")]
-const WESTEND_STAGING_TELEMETRY_URL: &str = "wss://telemetry.axia.io/submit/";
+const WESTEND_STAGING_TELEMETRY_URL: &str = "ws://localhost:8001/submit/";
 #[cfg(feature = "rococo-native")]
-const ROCOCO_STAGING_TELEMETRY_URL: &str = "wss://telemetry.axia.io/submit/";
-const DEFAULT_PROTOCOL_ID: &str = "dot";
+const ROCOCO_STAGING_TELEMETRY_URL: &str = "ws://localhost:8001/submit/";
+const DEFAULT_PROTOCOL_ID: &str = "axc";
 
 /// Node `ChainSpec` extensions.
 ///

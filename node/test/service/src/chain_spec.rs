@@ -28,7 +28,7 @@ use sp_core::sr25519;
 use sp_runtime::Perbill;
 use test_runtime_constants::currency::DOTS;
 
-const DEFAULT_PROTOCOL_ID: &str = "dot";
+const DEFAULT_PROTOCOL_ID: &str = "axc";
 
 /// The `ChainSpec` parameterized for axia test runtime.
 pub type AxiaChainSpec =
