@@ -181,7 +181,7 @@ pub mod pallet {
 	#[pallet::storage]
 	pub(super) type Statement<T> = StorageValue<_, Vec<u8>, ValueQuery>;
 
-	// The block where all locked dots will unlock.
+	// The block where all locked axcs will unlock.
 	#[pallet::storage]
 	pub(super) type UnlockBlock<T: Config> = StorageValue<_, T::BlockNumber, ValueQuery>;
 

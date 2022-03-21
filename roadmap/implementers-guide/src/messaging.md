@@ -7,7 +7,7 @@ used for communication between the relay chain and allychains.
 
 ## Vertical Message Passing
 
-```dot process
+```axc process
 digraph {
     rc [shape=Mdiamond label="Relay Chain"];
     p1 [shape=box label = "Allychain"];
@@ -51,7 +51,7 @@ namely messages meant to request opening and closing HRMP channels (HRMP will be
 
 ## Horizontal Message Passing
 
-```dot process
+```axc process
 digraph {
     rc [shape=Mdiamond color="gray" fontcolor="gray" label="Relay Chain"];
 

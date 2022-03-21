@@ -8,7 +8,7 @@ Diagrams are rendered in high resolution; open them in a separate tab to see ful
 
 These data types are defined in `axia/primitives/src/v1.rs`:
 
-```dot process
+```axc process
 digraph {
     rankdir = LR;
     node [shape = plain]
@@ -339,7 +339,7 @@ digraph {
 
 These data types are defined in `axia/allychain/src/primitives.rs`:
 
-```dot process
+```axc process
 digraph {
     rankdir = LR;
     node [shape = plain]

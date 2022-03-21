@@ -21,7 +21,7 @@ Which subsystems send messages to which other subsystems.
 **Note**: Messages with a filled diamond arrowhead ("♦") include a `oneshot::Sender` which communicates a response from the recipient.
 Messages with an open triangle arrowhead ("Δ") do not include a return sender.
 
-```dot process
+```axc process
 digraph {
     rankdir=LR;
     node [shape = oval];
