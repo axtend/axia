@@ -561,7 +561,7 @@ async fn main() {
 		},
 		"axctest" | "axctest-dev" => {
 			sp_core::crypto::set_default_ss58_version(
-				sp_core::crypto::Ss58AddressFormatRegistry::AxiaTestAccount.into(),
+				sp_core::crypto::Ss58AddressFormatRegistry::KusamaAccount.into(),
 			);
 			sub_tokens::dynamic::set_name("KSM");
 			sub_tokens::dynamic::set_decimal_points(1_000_000_000_000);
