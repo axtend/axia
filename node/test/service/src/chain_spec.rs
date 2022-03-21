@@ -26,7 +26,7 @@ use sc_chain_spec::{ChainSpec, ChainType};
 use sp_authority_discovery::AuthorityId as AuthorityDiscoveryId;
 use sp_core::sr25519;
 use sp_runtime::Perbill;
-use test_runtime_constants::currency::DOTS;
+use test_runtime_constants::currency::AXCS;
 
 const DEFAULT_PROTOCOL_ID: &str = "axc";
 
@@ -109,8 +109,8 @@ fn axia_testnet_genesis(
 
 	let endowed_accounts: Vec<AccountId> = endowed_accounts.unwrap_or_else(testnet_accounts);
 
-	const ENDOWMENT: u128 = 1_000_000 * DOTS;
-	const STASH: u128 = 100 * DOTS;
+	const ENDOWMENT: u128 = 1_000_000 * AXCS;
+	const STASH: u128 = 100 * AXCS;
 
 	runtime::GenesisConfig {
 		system: runtime::SystemConfig {

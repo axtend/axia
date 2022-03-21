@@ -36,7 +36,7 @@ use xcm_builder::{
 };
 
 parameter_types! {
-	/// The location of the DOT token, from the context of this chain. Since this token is native to this
+	/// The location of the AXC token, from the context of this chain. Since this token is native to this
 	/// chain, we make it synonymous with it and thus it is the `Here` location, which means "equivalent to
 	/// the context".
 	pub const DotLocation: MultiLocation = Here.into();

@@ -28,7 +28,7 @@ use axia_primitives::v1::{AccountId, AccountPublic, AssignmentId, ValidatorId};
 #[cfg(feature = "axia-native")]
 use axia_runtime as axia;
 #[cfg(feature = "axia-native")]
-use axia_runtime_constants::currency::UNITS as DOT;
+use axia_runtime_constants::currency::UNITS as AXC;
 use sp_authority_discovery::AuthorityId as AuthorityDiscoveryId;
 use sp_consensus_babe::AuthorityId as BabeId;
 
@@ -398,8 +398,8 @@ fn axia_staging_testnet_config_genesis(wasm_binary: &[u8]) -> axia::GenesisConfi
 		)
 	];
 
-	const ENDOWMENT: u128 = 1_000_000_000 * DOT;
-	const STASH: u128 = 1_000_000_000 * DOT;
+	const ENDOWMENT: u128 = 1_000_000_000 * AXC;
+	const STASH: u128 = 1_000_000_000 * AXC;
 
 	axia::GenesisConfig {
 		system: axia::SystemConfig { code: wasm_binary.to_vec() },
@@ -1353,8 +1353,8 @@ pub fn axia_testnet_genesis(
 ) -> axia::GenesisConfig {
 	let endowed_accounts: Vec<AccountId> = endowed_accounts.unwrap_or_else(testnet_accounts);
 
-	const ENDOWMENT: u128 = 1_000_000 * DOT;
-	const STASH: u128 = 100 * DOT;
+	const ENDOWMENT: u128 = 1_000_000 * AXC;
+	const STASH: u128 = 100 * AXC;
 
 	axia::GenesisConfig {
 		system: axia::SystemConfig { code: wasm_binary.to_vec() },
@@ -1527,8 +1527,8 @@ pub fn alphanet_testnet_genesis(
 ) -> alphanet::GenesisConfig {
 	let endowed_accounts: Vec<AccountId> = endowed_accounts.unwrap_or_else(testnet_accounts);
 
-	const ENDOWMENT: u128 = 1_000_000 * DOT;
-	const STASH: u128 = 100 * DOT;
+	const ENDOWMENT: u128 = 1_000_000 * AXC;
+	const STASH: u128 = 100 * AXC;
 
 	alphanet::GenesisConfig {
 		system: alphanet::SystemConfig { code: wasm_binary.to_vec() },
@@ -1608,7 +1608,7 @@ pub fn betanet_testnet_genesis(
 ) -> betanet_runtime::GenesisConfig {
 	let endowed_accounts: Vec<AccountId> = endowed_accounts.unwrap_or_else(testnet_accounts);
 
-	const ENDOWMENT: u128 = 1_000_000 * DOT;
+	const ENDOWMENT: u128 = 1_000_000 * AXC;
 
 	betanet_runtime::GenesisConfig {
 		system: betanet_runtime::SystemConfig { code: wasm_binary.to_vec() },

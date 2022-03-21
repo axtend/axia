@@ -84,7 +84,7 @@ pub const SESSION_LENGTH: BlockNumber = time_units::HOURS;
 /// Name of the With-Axia messages pallet instance in the AxiaTest runtime.
 pub const WITH_AXIA_MESSAGES_PALLET_NAME: &str = "BridgeAxiaMessages";
 
-/// Name of the DOT->KSM conversion rate stored in the AxiaTest runtime.
+/// Name of the AXC->KSM conversion rate stored in the AxiaTest runtime.
 pub const AXIA_TO_AXIATEST_CONVERSION_RATE_PARAMETER_NAME: &str =
 	"AxiaToAxiaTestConversionRate";
 

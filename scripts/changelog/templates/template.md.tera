@@ -12,7 +12,7 @@ This release contains the changes from `{{ env.REF1 }}` to `{{ env.REF2 }}`.
 {%- include "debug.md.tera" -%}
 
 {%- set CML = "[C]" -%}
-{%- set DOT = "[P]" -%}
+{%- set AXC = "[P]" -%}
 {%- set SUB = "[S]" -%}
 
 {% include "global_priority.md.tera" -%}

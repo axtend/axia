@@ -32,7 +32,7 @@ use substrate_relay_helper::finality_pipeline::{
 /// relay as gone wild.
 ///
 /// Actual value, returned by `maximal_balance_decrease_per_day_is_sane` test is approximately 21
-/// DOT, but let's round up to 30 DOT here.
+/// AXC, but let's round up to 30 AXC here.
 pub(crate) const MAXIMAL_BALANCE_DECREASE_PER_DAY: bp_axia::Balance = 30_000_000_000;
 
 /// AxiaTest-to-Axia finality sync pipeline.
