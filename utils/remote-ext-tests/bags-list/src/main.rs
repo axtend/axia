@@ -31,15 +31,15 @@ enum Command {
 #[clap(rename_all = "PascalCase")]
 enum Runtime {
 	Axia,
-	Kusama,
-	Westend,
+	AxiaTest,
+	Alphanet,
 }
 
 #[derive(Parser)]
 struct Cli {
-	#[clap(long, short, default_value = "wss://kusama-rpc.axia.io:443")]
+	#[clap(long, short, default_value = "wss://axctest-rpc.axia.io:443")]
 	uri: String,
-	#[clap(long, short, ignore_case = true, arg_enum, default_value = "kusama")]
+	#[clap(long, short, ignore_case = true, arg_enum, default_value = "axctest")]
 	runtime: Runtime,
 	#[clap(long, short, ignore_case = true, arg_enum, default_value = "SanityCheck")]
 	command: Command,
@@ -66,32 +66,32 @@ async fn main() {
 				.try_into()
 				.unwrap(),
 		),
-		Runtime::Kusama => sp_core::crypto::set_default_ss58_version(
-			<kusama_runtime::Runtime as frame_system::Config>::SS58Prefix::get()
+		Runtime::AxiaTest => sp_core::crypto::set_default_ss58_version(
+			<axctest_runtime::Runtime as frame_system::Config>::SS58Prefix::get()
 				.try_into()
 				.unwrap(),
 		),
-		Runtime::Westend => sp_core::crypto::set_default_ss58_version(
-			<westend_runtime::Runtime as frame_system::Config>::SS58Prefix::get()
+		Runtime::Alphanet => sp_core::crypto::set_default_ss58_version(
+			<alphanet_runtime::Runtime as frame_system::Config>::SS58Prefix::get()
 				.try_into()
 				.unwrap(),
 		),
 	};
 
 	match (options.runtime, options.command) {
-		(Runtime::Kusama, Command::CheckMigration) => {
-			use kusama_runtime::{Block, Runtime};
-			use kusama_runtime_constants::currency::UNITS;
+		(Runtime::AxiaTest, Command::CheckMigration) => {
+			use axctest_runtime::{Block, Runtime};
+			use axctest_runtime_constants::currency::UNITS;
 			migration::execute::<Runtime, Block>(UNITS as u64, "KSM", options.uri.clone()).await;
 		},
-		(Runtime::Kusama, Command::SanityCheck) => {
-			use kusama_runtime::{Block, Runtime};
-			use kusama_runtime_constants::currency::UNITS;
+		(Runtime::AxiaTest, Command::SanityCheck) => {
+			use axctest_runtime::{Block, Runtime};
+			use axctest_runtime_constants::currency::UNITS;
 			sanity_check::execute::<Runtime, Block>(UNITS as u64, "KSM", options.uri.clone()).await;
 		},
-		(Runtime::Kusama, Command::Snapshot) => {
-			use kusama_runtime::{Block, Runtime};
-			use kusama_runtime_constants::currency::UNITS;
+		(Runtime::AxiaTest, Command::Snapshot) => {
+			use axctest_runtime::{Block, Runtime};
+			use axctest_runtime_constants::currency::UNITS;
 			snapshot::execute::<Runtime, Block>(
 				options.snapshot_limit,
 				UNITS.try_into().unwrap(),
@@ -100,19 +100,19 @@ async fn main() {
 			.await;
 		},
 
-		(Runtime::Westend, Command::CheckMigration) => {
-			use westend_runtime::{Block, Runtime};
-			use westend_runtime_constants::currency::UNITS;
+		(Runtime::Alphanet, Command::CheckMigration) => {
+			use alphanet_runtime::{Block, Runtime};
+			use alphanet_runtime_constants::currency::UNITS;
 			migration::execute::<Runtime, Block>(UNITS as u64, "WND", options.uri.clone()).await;
 		},
-		(Runtime::Westend, Command::SanityCheck) => {
-			use westend_runtime::{Block, Runtime};
-			use westend_runtime_constants::currency::UNITS;
+		(Runtime::Alphanet, Command::SanityCheck) => {
+			use alphanet_runtime::{Block, Runtime};
+			use alphanet_runtime_constants::currency::UNITS;
 			sanity_check::execute::<Runtime, Block>(UNITS as u64, "WND", options.uri.clone()).await;
 		},
-		(Runtime::Westend, Command::Snapshot) => {
-			use westend_runtime::{Block, Runtime};
-			use westend_runtime_constants::currency::UNITS;
+		(Runtime::Alphanet, Command::Snapshot) => {
+			use alphanet_runtime::{Block, Runtime};
+			use alphanet_runtime_constants::currency::UNITS;
 			snapshot::execute::<Runtime, Block>(
 				options.snapshot_limit,
 				UNITS.try_into().unwrap(),

@@ -87,7 +87,7 @@ U256
 Unparsed
 Vec
 WND/S
-Westend/MS
+Alphanet/MS
 Wococo/MS
 XCM/S
 XCMP/M
@@ -149,7 +149,7 @@ keccak
 keccak256/M
 keyring
 keystore/MS
-kusama/S
+axctest/S
 lane
 malus
 max_value

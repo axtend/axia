@@ -108,7 +108,7 @@ macro_rules! new_session_window_size {
 }
 
 /// It would be nice to draw this from the chain state, but we have no tools for it right now.
-/// On Axia this is 1 day, and on Kusama it's 6 hours.
+/// On Axia this is 1 day, and on AxiaTest it's 6 hours.
 ///
 /// Number of sessions we want to consider in disputes.
 pub const DISPUTE_WINDOW: SessionWindowSize = new_session_window_size!(6);

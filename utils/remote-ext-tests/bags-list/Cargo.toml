@@ -6,11 +6,11 @@ edition = "2018"
 
 [dependencies]
 axia-runtime = { version = "0.9.17", path = "../../../runtime/axia" }
-kusama-runtime = { version = "0.9.17", path = "../../../runtime/kusama" }
-westend-runtime = { version = "0.9.17", path = "../../../runtime/westend" }
+axctest-runtime = { version = "0.9.17", path = "../../../runtime/axctest" }
+alphanet-runtime = { version = "0.9.17", path = "../../../runtime/alphanet" }
 axia-runtime-constants = { version = "0.9.17", path = "../../../runtime/axia/constants" }
-kusama-runtime-constants = { version = "0.9.17", path = "../../../runtime/kusama/constants" }
-westend-runtime-constants = { version = "0.9.17", path = "../../../runtime/westend/constants" }
+axctest-runtime-constants = { version = "0.9.17", path = "../../../runtime/axctest/constants" }
+alphanet-runtime-constants = { version = "0.9.17", path = "../../../runtime/alphanet/constants" }
 
 pallet-bags-list-remote-tests = { git = "https://github.com/axtend/axlib", branch = "axlib" }
 sp-tracing = { git = "https://github.com/axtend/axlib", branch = "axlib" }

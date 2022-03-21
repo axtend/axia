@@ -52,11 +52,11 @@ pub const MILLAU_CHAIN_ID: ChainId = *b"mlau";
 // axia:error
 pub const AXIA_CHAIN_ID: ChainId = *b"axia";
 
-/// Bridge-with-Kusama instance id.
-pub const KUSAMA_CHAIN_ID: ChainId = *b"ksma";
+/// Bridge-with-AxiaTest instance id.
+pub const AXIATEST_CHAIN_ID: ChainId = *b"ksma";
 
-/// Bridge-with-Rococo instance id.
-pub const ROCOCO_CHAIN_ID: ChainId = *b"roco";
+/// Bridge-with-Betanet instance id.
+pub const BETANET_CHAIN_ID: ChainId = *b"roco";
 
 /// Bridge-with-Wococo instance id.
 pub const WOCOCO_CHAIN_ID: ChainId = *b"woco";

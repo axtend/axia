@@ -1,18 +1,18 @@
 {
-  "--1": "Rococo Types",
-  "RococoAddress": "AccountId",
-  "RococoLookupSource": "AccountId",
-  "RococoBalance": "u128",
-  "RococoBlockHash": "H256",
-  "RococoBlockNumber": "u32",
-  "RococoHeader": "Header",
+  "--1": "Betanet Types",
+  "BetanetAddress": "AccountId",
+  "BetanetLookupSource": "AccountId",
+  "BetanetBalance": "u128",
+  "BetanetBlockHash": "H256",
+  "BetanetBlockNumber": "u32",
+  "BetanetHeader": "Header",
   "--2": "Wococo Types",
   "WococoAddress": "AccountId",
   "WococoLookupSource": "AccountId",
-  "WococoBalance": "RococoBalance",
-  "WococoBlockHash": "RococoBlockHash",
-  "WococoBlockNumber": "RococoBlockNumber",
-  "WococoHeader": "RococoHeader",
+  "WococoBalance": "BetanetBalance",
+  "WococoBlockHash": "BetanetBlockHash",
+  "WococoBlockNumber": "BetanetBlockNumber",
+  "WococoHeader": "BetanetHeader",
   "--3": "Common types",
   "AccountSigner": "MultiSigner",
   "SpecVersion": "u32",
@@ -141,12 +141,12 @@
   "Hash": "WococoBlockHash",
   "BlockHash": "WococoBlockHash",
   "BlockNumber": "WococoBlockNumber",
-  "BridgedBlockHash": "RococoBlockHash",
-  "BridgedBlockNumber": "RococoBlockNumber",
-  "BridgedHeader": "RococoHeader",
+  "BridgedBlockHash": "BetanetBlockHash",
+  "BridgedBlockNumber": "BetanetBlockNumber",
+  "BridgedHeader": "BetanetHeader",
   "Parameter": {
     "_enum": {
-      "WococoToRococoConversionRate": "u128"
+      "WococoToBetanetConversionRate": "u128"
     }
   }
 }

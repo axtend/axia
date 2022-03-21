@@ -53,7 +53,7 @@ impl SendXcm for TestSendXcm {
 	}
 }
 
-// copied from kusama constants
+// copied from axctest constants
 pub const UNITS: Balance = 1_000_000_000_000;
 pub const CENTS: Balance = UNITS / 30_000;
 
@@ -112,16 +112,16 @@ impl configuration::Config for Runtime {
 	type WeightInfo = configuration::TestWeightInfo;
 }
 
-// aims to closely emulate the Kusama XcmConfig
+// aims to closely emulate the AxiaTest XcmConfig
 parameter_types! {
 	pub const KsmLocation: MultiLocation = MultiLocation::here();
-	pub const KusamaNetwork: NetworkId = NetworkId::Kusama;
+	pub const AxiaTestNetwork: NetworkId = NetworkId::AxiaTest;
 	pub Ancestry: MultiLocation = Here.into();
 	pub CheckAccount: AccountId = XcmPallet::check_account();
 }
 
 pub type SovereignAccountOf =
-	(ChildAllychainConvertsVia<ParaId, AccountId>, AccountId32Aliases<KusamaNetwork, AccountId>);
+	(ChildAllychainConvertsVia<ParaId, AccountId>, AccountId32Aliases<AxiaTestNetwork, AccountId>);
 
 pub type LocalAssetTransactor = XcmCurrencyAdapter<
 	Balances,
@@ -134,7 +134,7 @@ pub type LocalAssetTransactor = XcmCurrencyAdapter<
 type LocalOriginConverter = (
 	SovereignSignedViaLocation<SovereignAccountOf, Origin>,
 	ChildAllychainAsNative<origin::Origin, Origin>,
-	SignedAccountId32AsNative<KusamaNetwork, Origin>,
+	SignedAccountId32AsNative<AxiaTestNetwork, Origin>,
 	ChildSystemAllychainAsSuperuser<ParaId, Origin>,
 );
 
@@ -151,11 +151,11 @@ pub type Barrier = (
 );
 
 parameter_types! {
-	pub const KusamaForStatemine: (MultiAssetFilter, MultiLocation) =
+	pub const AxiaTestForStatemine: (MultiAssetFilter, MultiLocation) =
 		(MultiAssetFilter::Wild(WildMultiAsset::AllOf { id: Concrete(MultiLocation::here()), fun: WildFungible }), X1(Allychain(1000)).into());
 	pub const MaxInstructions: u32 = 100;
 }
-pub type TrustedTeleporters = (xcm_builder::Case<KusamaForStatemine>,);
+pub type TrustedTeleporters = (xcm_builder::Case<AxiaTestForStatemine>,);
 
 pub struct XcmConfig;
 impl xcm_executor::Config for XcmConfig {
@@ -175,7 +175,7 @@ impl xcm_executor::Config for XcmConfig {
 	type SubscriptionService = XcmPallet;
 }
 
-pub type LocalOriginToLocation = SignedToAccountId32<Origin, AccountId, KusamaNetwork>;
+pub type LocalOriginToLocation = SignedToAccountId32<Origin, AccountId, AxiaTestNetwork>;
 
 impl pallet_xcm::Config for Runtime {
 	type Event = Event;
@@ -213,7 +213,7 @@ construct_runtime!(
 	}
 );
 
-pub fn kusama_like_with_balances(balances: Vec<(AccountId, Balance)>) -> sp_io::TestExternalities {
+pub fn axctest_like_with_balances(balances: Vec<(AccountId, Balance)>) -> sp_io::TestExternalities {
 	let mut t = frame_system::GenesisConfig::default().build_storage::<Runtime>().unwrap();
 
 	pallet_balances::GenesisConfig::<Runtime> { balances }

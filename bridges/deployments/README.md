@@ -45,12 +45,12 @@ the monitoring Compose file is _not_ optional, and must be included for bridge d
 ### Running and Updating Deployments
 We currently support two bridge deployments
 1. Rialto Substrate to Millau Substrate
-2. Westend Substrate to Millau Substrate
+2. Alphanet Substrate to Millau Substrate
 
 These bridges can be deployed using our [`./run.sh`](./run.sh) script.
 
 The first argument it takes is the name of the bridge you want to run. Right now we only support two
-bridges: `rialto-millau` and `westend-millau`.
+bridges: `rialto-millau` and `alphanet-millau`.
 
 ```bash
 ./run.sh rialto-millau
@@ -117,9 +117,9 @@ Following accounts are used when `rialto-millau` bridge is running:
 - Millau's `RialtoMessagesOwner` signs relay transactions with updated Rialto -> Millau conversion rate;
 - Rialto's `MillauMessagesOwner` signs relay transactions with updated Millau -> Rialto conversion rate.
 
-Following accounts are used when `westend-millau` bridge is running:
+Following accounts are used when `alphanet-millau` bridge is running:
 
-- Millau's `George` signs relay transactions with new Westend headers.
+- Millau's `George` signs relay transactions with new Alphanet headers.
 
 ### Docker Usage
 When the network is running you can query logs from individual nodes using:

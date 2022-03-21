@@ -13,7 +13,7 @@ rust-version = "1.57.0" # custom profiles
 readme = "README.md"
 
 [dependencies]
-axia-cli = { path = "cli", features = [ "kusama-native", "westend-native", "rococo-native" ]  }
+axia-cli = { path = "cli", features = [ "axctest-native", "alphanet-native", "betanet-native" ]  }
 color-eyre = { version = "0.6.0", default-features = false }
 parity-util-mem = { version = "*", default-features = false, features = ["jemalloc-global"] }
 
@@ -38,12 +38,12 @@ members = [
 	"runtime/allychains",
 	"runtime/axia",
 	"runtime/axia/constants",
-	"runtime/kusama",
-	"runtime/kusama/constants",
-	"runtime/rococo",
-	"runtime/rococo/constants",
-	"runtime/westend",
-	"runtime/westend/constants",
+	"runtime/axctest",
+	"runtime/axctest/constants",
+	"runtime/betanet",
+	"runtime/betanet/constants",
+	"runtime/alphanet",
+	"runtime/alphanet/constants",
 	"runtime/test-runtime",
 	"runtime/test-runtime/constants",
 	"statement-table",

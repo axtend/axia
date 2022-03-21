@@ -393,9 +393,9 @@ impl pallet_bridge_grandpa::Config for Runtime {
 	type WeightInfo = pallet_bridge_grandpa::weights::RialtoWeight<Runtime>;
 }
 
-pub type WestendGrandpaInstance = pallet_bridge_grandpa::Instance1;
-impl pallet_bridge_grandpa::Config<WestendGrandpaInstance> for Runtime {
-	type BridgedChain = bp_westend::Westend;
+pub type AlphanetGrandpaInstance = pallet_bridge_grandpa::Instance1;
+impl pallet_bridge_grandpa::Config<AlphanetGrandpaInstance> for Runtime {
+	type BridgedChain = bp_alphanet::Alphanet;
 	type MaxRequests = MaxRequests;
 	type HeadersToKeep = HeadersToKeep;
 
@@ -515,8 +515,8 @@ construct_runtime!(
 		BridgeRialtoMessages: pallet_bridge_messages::{Pallet, Call, Storage, Event<T>, Config<T>},
 		BridgeRialtoTokenSwap: pallet_bridge_token_swap::{Pallet, Call, Storage, Event<T>},
 
-		// Westend bridge modules.
-		BridgeWestendGrandpa: pallet_bridge_grandpa::<Instance1>::{Pallet, Call, Config<T>, Storage},
+		// Alphanet bridge modules.
+		BridgeAlphanetGrandpa: pallet_bridge_grandpa::<Instance1>::{Pallet, Call, Config<T>, Storage},
 	}
 );
 
@@ -750,14 +750,14 @@ impl_runtime_apis! {
 		}
 	}
 
-	impl bp_westend::WestendFinalityApi<Block> for Runtime {
-		fn best_finalized() -> (bp_westend::BlockNumber, bp_westend::Hash) {
-			let header = BridgeWestendGrandpa::best_finalized();
+	impl bp_alphanet::AlphanetFinalityApi<Block> for Runtime {
+		fn best_finalized() -> (bp_alphanet::BlockNumber, bp_alphanet::Hash) {
+			let header = BridgeAlphanetGrandpa::best_finalized();
 			(header.number, header.hash())
 		}
 
-		fn is_known_header(hash: bp_westend::Hash) -> bool {
-			BridgeWestendGrandpa::is_known_header(hash)
+		fn is_known_header(hash: bp_alphanet::Hash) -> bool {
+			BridgeAlphanetGrandpa::is_known_header(hash)
 		}
 	}
 

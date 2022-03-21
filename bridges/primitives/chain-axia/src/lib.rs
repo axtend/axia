@@ -61,10 +61,10 @@ impl WeightToFeePolynomial for WeightToFee {
 	}
 }
 
-// We use this to get the account on Axia (target) which is derived from Kusama's (source)
+// We use this to get the account on Axia (target) which is derived from AxiaTest's (source)
 // account.
-pub fn derive_account_from_kusama_id(id: bp_runtime::SourceAccount<AccountId>) -> AccountId {
-	let encoded_id = bp_runtime::derive_account_id(bp_runtime::KUSAMA_CHAIN_ID, id);
+pub fn derive_account_from_axctest_id(id: bp_runtime::SourceAccount<AccountId>) -> AccountId {
+	let encoded_id = bp_runtime::derive_account_id(bp_runtime::AXIATEST_CHAIN_ID, id);
 	AccountIdConverter::convert(encoded_id)
 }
 
@@ -81,12 +81,12 @@ pub const EXISTENTIAL_DEPOSIT: Balance = 10_000_000_000;
 /// conditions.
 pub const SESSION_LENGTH: BlockNumber = 4 * time_units::HOURS;
 
-/// Name of the With-Kusama messages pallet instance in the Axia runtime.
-pub const WITH_KUSAMA_MESSAGES_PALLET_NAME: &str = "BridgeKusamaMessages";
+/// Name of the With-AxiaTest messages pallet instance in the Axia runtime.
+pub const WITH_AXIATEST_MESSAGES_PALLET_NAME: &str = "BridgeAxiaTestMessages";
 
 /// Name of the KSM->DOT conversion rate stored in the Axia runtime.
-pub const KUSAMA_TO_AXIA_CONVERSION_RATE_PARAMETER_NAME: &str =
-	"KusamaToAxiaConversionRate";
+pub const AXIATEST_TO_AXIA_CONVERSION_RATE_PARAMETER_NAME: &str =
+	"AxiaTestToAxiaConversionRate";
 
 /// Name of the `AxiaFinalityApi::best_finalized` runtime method.
 pub const BEST_FINALIZED_AXIA_HEADER_METHOD: &str = "AxiaFinalityApi_best_finalized";

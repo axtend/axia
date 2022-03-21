@@ -18,10 +18,10 @@
 
 use beefy_primitives::crypto::AuthorityId as BeefyId;
 use grandpa::AuthorityId as GrandpaId;
-#[cfg(feature = "kusama-native")]
-use kusama_runtime as kusama;
-#[cfg(feature = "kusama-native")]
-use kusama_runtime_constants::currency::UNITS as KSM;
+#[cfg(feature = "axctest-native")]
+use axctest_runtime as axctest;
+#[cfg(feature = "axctest-native")]
+use axctest_runtime_constants::currency::UNITS as KSM;
 use pallet_im_online::sr25519::AuthorityId as ImOnlineId;
 use pallet_staking::Forcing;
 use axia_primitives::v1::{AccountId, AccountPublic, AssignmentId, ValidatorId};
@@ -32,28 +32,28 @@ use axia_runtime_constants::currency::UNITS as DOT;
 use sp_authority_discovery::AuthorityId as AuthorityDiscoveryId;
 use sp_consensus_babe::AuthorityId as BabeId;
 
-#[cfg(feature = "rococo-native")]
-use rococo_runtime as rococo;
-#[cfg(feature = "rococo-native")]
-use rococo_runtime_constants::currency::UNITS as ROC;
+#[cfg(feature = "betanet-native")]
+use betanet_runtime as betanet;
+#[cfg(feature = "betanet-native")]
+use betanet_runtime_constants::currency::UNITS as ROC;
 use sc_chain_spec::{ChainSpecExtension, ChainType};
 use serde::{Deserialize, Serialize};
 use sp_core::{sr25519, Pair, Public};
 use sp_runtime::{traits::IdentifyAccount, Perbill};
 use telemetry::TelemetryEndpoints;
-#[cfg(feature = "westend-native")]
-use westend_runtime as westend;
-#[cfg(feature = "westend-native")]
-use westend_runtime_constants::currency::UNITS as WND;
+#[cfg(feature = "alphanet-native")]
+use alphanet_runtime as alphanet;
+#[cfg(feature = "alphanet-native")]
+use alphanet_runtime_constants::currency::UNITS as WND;
 
 #[cfg(feature = "axia-native")]
 const AXIA_STAGING_TELEMETRY_URL: &str = "ws://localhost:8001/submit/";
-#[cfg(feature = "kusama-native")]
-const KUSAMA_STAGING_TELEMETRY_URL: &str = "ws://localhost:8001/submit/";
-#[cfg(feature = "westend-native")]
-const WESTEND_STAGING_TELEMETRY_URL: &str = "ws://localhost:8001/submit/";
-#[cfg(feature = "rococo-native")]
-const ROCOCO_STAGING_TELEMETRY_URL: &str = "ws://localhost:8001/submit/";
+#[cfg(feature = "axctest-native")]
+const AXIATEST_STAGING_TELEMETRY_URL: &str = "ws://localhost:8001/submit/";
+#[cfg(feature = "alphanet-native")]
+const ALPHANET_STAGING_TELEMETRY_URL: &str = "ws://localhost:8001/submit/";
+#[cfg(feature = "betanet-native")]
+const BETANET_STAGING_TELEMETRY_URL: &str = "ws://localhost:8001/submit/";
 const DEFAULT_PROTOCOL_ID: &str = "axc";
 
 /// Node `ChainSpec` extensions.
@@ -84,56 +84,56 @@ pub type DummyChainSpec = service::GenericChainSpec<(), Extensions>;
 #[cfg(not(feature = "axia-native"))]
 pub type AxiaChainSpec = DummyChainSpec;
 
-/// The `ChainSpec` parameterized for the kusama runtime.
-#[cfg(feature = "kusama-native")]
-pub type KusamaChainSpec = service::GenericChainSpec<kusama::GenesisConfig, Extensions>;
+/// The `ChainSpec` parameterized for the axctest runtime.
+#[cfg(feature = "axctest-native")]
+pub type AxiaTestChainSpec = service::GenericChainSpec<axctest::GenesisConfig, Extensions>;
 
-/// The `ChainSpec` parameterized for the kusama runtime.
+/// The `ChainSpec` parameterized for the axctest runtime.
 // Dummy chain spec, but that is fine when we don't have the native runtime.
-#[cfg(not(feature = "kusama-native"))]
-pub type KusamaChainSpec = DummyChainSpec;
+#[cfg(not(feature = "axctest-native"))]
+pub type AxiaTestChainSpec = DummyChainSpec;
 
-/// The `ChainSpec` parameterized for the westend runtime.
-#[cfg(feature = "westend-native")]
-pub type WestendChainSpec = service::GenericChainSpec<westend::GenesisConfig, Extensions>;
+/// The `ChainSpec` parameterized for the alphanet runtime.
+#[cfg(feature = "alphanet-native")]
+pub type AlphanetChainSpec = service::GenericChainSpec<alphanet::GenesisConfig, Extensions>;
 
-/// The `ChainSpec` parameterized for the westend runtime.
+/// The `ChainSpec` parameterized for the alphanet runtime.
 // Dummy chain spec, but that is fine when we don't have the native runtime.
-#[cfg(not(feature = "westend-native"))]
-pub type WestendChainSpec = DummyChainSpec;
+#[cfg(not(feature = "alphanet-native"))]
+pub type AlphanetChainSpec = DummyChainSpec;
 
-/// The `ChainSpec` parameterized for the rococo runtime.
-#[cfg(feature = "rococo-native")]
-pub type RococoChainSpec = service::GenericChainSpec<RococoGenesisExt, Extensions>;
+/// The `ChainSpec` parameterized for the betanet runtime.
+#[cfg(feature = "betanet-native")]
+pub type BetanetChainSpec = service::GenericChainSpec<BetanetGenesisExt, Extensions>;
 
 /// The `ChainSpec` parameterized for the `versi` runtime.
 ///
-/// As of now `Versi` will just be a clone of `Rococo`, until we need it to differ.
-pub type VersiChainSpec = RococoChainSpec;
+/// As of now `Versi` will just be a clone of `Betanet`, until we need it to differ.
+pub type VersiChainSpec = BetanetChainSpec;
 
-/// The `ChainSpec` parameterized for the rococo runtime.
+/// The `ChainSpec` parameterized for the betanet runtime.
 // Dummy chain spec, but that is fine when we don't have the native runtime.
-#[cfg(not(feature = "rococo-native"))]
-pub type RococoChainSpec = DummyChainSpec;
+#[cfg(not(feature = "betanet-native"))]
+pub type BetanetChainSpec = DummyChainSpec;
 
-/// Extension for the Rococo genesis config to support a custom changes to the genesis state.
+/// Extension for the Betanet genesis config to support a custom changes to the genesis state.
 #[derive(serde::Serialize, serde::Deserialize)]
-#[cfg(feature = "rococo-native")]
-pub struct RococoGenesisExt {
+#[cfg(feature = "betanet-native")]
+pub struct BetanetGenesisExt {
 	/// The runtime genesis config.
-	runtime_genesis_config: rococo::GenesisConfig,
+	runtime_genesis_config: betanet::GenesisConfig,
 	/// The session length in blocks.
 	///
 	/// If `None` is supplied, the default value is used.
 	session_length_in_blocks: Option<u32>,
 }
 
-#[cfg(feature = "rococo-native")]
-impl sp_runtime::BuildStorage for RococoGenesisExt {
+#[cfg(feature = "betanet-native")]
+impl sp_runtime::BuildStorage for BetanetGenesisExt {
 	fn assimilate_storage(&self, storage: &mut sp_core::storage::Storage) -> Result<(), String> {
 		sp_state_machine::BasicExternalities::execute_with_storage(storage, || {
 			if let Some(length) = self.session_length_in_blocks.as_ref() {
-				rococo_runtime_constants::time::EpochDurationInBlocks::set(length);
+				betanet_runtime_constants::time::EpochDurationInBlocks::set(length);
 			}
 		});
 		self.runtime_genesis_config.assimilate_storage(storage)
@@ -144,32 +144,32 @@ pub fn axia_config() -> Result<AxiaChainSpec, String> {
 	AxiaChainSpec::from_json_bytes(&include_bytes!("../res/axia.json")[..])
 }
 
-pub fn kusama_config() -> Result<KusamaChainSpec, String> {
-	KusamaChainSpec::from_json_bytes(&include_bytes!("../res/kusama.json")[..])
+pub fn axctest_config() -> Result<AxiaTestChainSpec, String> {
+	AxiaTestChainSpec::from_json_bytes(&include_bytes!("../res/axctest.json")[..])
 }
 
-pub fn westend_config() -> Result<WestendChainSpec, String> {
-	WestendChainSpec::from_json_bytes(&include_bytes!("../res/westend.json")[..])
+pub fn alphanet_config() -> Result<AlphanetChainSpec, String> {
+	AlphanetChainSpec::from_json_bytes(&include_bytes!("../res/alphanet.json")[..])
 }
 
-pub fn rococo_config() -> Result<RococoChainSpec, String> {
-	RococoChainSpec::from_json_bytes(&include_bytes!("../res/rococo.json")[..])
+pub fn betanet_config() -> Result<BetanetChainSpec, String> {
+	BetanetChainSpec::from_json_bytes(&include_bytes!("../res/betanet.json")[..])
 }
 
 pub fn versi_config() -> Result<VersiChainSpec, String> {
 	VersiChainSpec::from_json_bytes(&include_bytes!("../res/versi.json")[..])
 }
 
-/// This is a temporary testnet that uses the same runtime as rococo.
-pub fn wococo_config() -> Result<RococoChainSpec, String> {
-	RococoChainSpec::from_json_bytes(&include_bytes!("../res/wococo.json")[..])
+/// This is a temporary testnet that uses the same runtime as betanet.
+pub fn wococo_config() -> Result<BetanetChainSpec, String> {
+	BetanetChainSpec::from_json_bytes(&include_bytes!("../res/wococo.json")[..])
 }
 
 /// The default allychains host configuration.
 #[cfg(any(
-	feature = "rococo-native",
-	feature = "kusama-native",
-	feature = "westend-native",
+	feature = "betanet-native",
+	feature = "axctest-native",
+	feature = "alphanet-native",
 	feature = "axia-native"
 ))]
 fn default_allychains_host_configuration(
@@ -216,9 +216,9 @@ fn default_allychains_host_configuration(
 }
 
 #[cfg(any(
-	feature = "rococo-native",
-	feature = "kusama-native",
-	feature = "westend-native",
+	feature = "betanet-native",
+	feature = "axctest-native",
+	feature = "alphanet-native",
 	feature = "axia-native"
 ))]
 #[test]
@@ -245,16 +245,16 @@ fn axia_session_keys(
 	}
 }
 
-#[cfg(feature = "kusama-native")]
-fn kusama_session_keys(
+#[cfg(feature = "axctest-native")]
+fn axctest_session_keys(
 	babe: BabeId,
 	grandpa: GrandpaId,
 	im_online: ImOnlineId,
 	para_validator: ValidatorId,
 	para_assignment: AssignmentId,
 	authority_discovery: AuthorityDiscoveryId,
-) -> kusama::SessionKeys {
-	kusama::SessionKeys {
+) -> axctest::SessionKeys {
+	axctest::SessionKeys {
 		babe,
 		grandpa,
 		im_online,
@@ -264,16 +264,16 @@ fn kusama_session_keys(
 	}
 }
 
-#[cfg(feature = "westend-native")]
-fn westend_session_keys(
+#[cfg(feature = "alphanet-native")]
+fn alphanet_session_keys(
 	babe: BabeId,
 	grandpa: GrandpaId,
 	im_online: ImOnlineId,
 	para_validator: ValidatorId,
 	para_assignment: AssignmentId,
 	authority_discovery: AuthorityDiscoveryId,
-) -> westend::SessionKeys {
-	westend::SessionKeys {
+) -> alphanet::SessionKeys {
+	alphanet::SessionKeys {
 		babe,
 		grandpa,
 		im_online,
@@ -283,8 +283,8 @@ fn westend_session_keys(
 	}
 }
 
-#[cfg(feature = "rococo-native")]
-fn rococo_session_keys(
+#[cfg(feature = "betanet-native")]
+fn betanet_session_keys(
 	babe: BabeId,
 	grandpa: GrandpaId,
 	im_online: ImOnlineId,
@@ -292,8 +292,8 @@ fn rococo_session_keys(
 	para_assignment: AssignmentId,
 	authority_discovery: AuthorityDiscoveryId,
 	beefy: BeefyId,
-) -> rococo_runtime::SessionKeys {
-	rococo_runtime::SessionKeys {
+) -> betanet_runtime::SessionKeys {
+	betanet_runtime::SessionKeys {
 		babe,
 		grandpa,
 		im_online,
@@ -470,8 +470,8 @@ fn axia_staging_testnet_config_genesis(wasm_binary: &[u8]) -> axia::GenesisConfi
 	}
 }
 
-#[cfg(feature = "westend-native")]
-fn westend_staging_testnet_config_genesis(wasm_binary: &[u8]) -> westend::GenesisConfig {
+#[cfg(feature = "alphanet-native")]
+fn alphanet_staging_testnet_config_genesis(wasm_binary: &[u8]) -> alphanet::GenesisConfig {
 	use hex_literal::hex;
 	use sp_core::crypto::UncheckedInto;
 
@@ -592,24 +592,24 @@ fn westend_staging_testnet_config_genesis(wasm_binary: &[u8]) -> westend::Genesi
 	const ENDOWMENT: u128 = 1_000_000 * WND;
 	const STASH: u128 = 100 * WND;
 
-	westend::GenesisConfig {
-		system: westend::SystemConfig { code: wasm_binary.to_vec() },
-		balances: westend::BalancesConfig {
+	alphanet::GenesisConfig {
+		system: alphanet::SystemConfig { code: wasm_binary.to_vec() },
+		balances: alphanet::BalancesConfig {
 			balances: endowed_accounts
 				.iter()
 				.map(|k: &AccountId| (k.clone(), ENDOWMENT))
 				.chain(initial_authorities.iter().map(|x| (x.0.clone(), STASH)))
 				.collect(),
 		},
-		indices: westend::IndicesConfig { indices: vec![] },
-		session: westend::SessionConfig {
+		indices: alphanet::IndicesConfig { indices: vec![] },
+		session: alphanet::SessionConfig {
 			keys: initial_authorities
 				.iter()
 				.map(|x| {
 					(
 						x.0.clone(),
 						x.0.clone(),
-						westend_session_keys(
+						alphanet_session_keys(
 							x.2.clone(),
 							x.3.clone(),
 							x.4.clone(),
@@ -621,41 +621,41 @@ fn westend_staging_testnet_config_genesis(wasm_binary: &[u8]) -> westend::Genesi
 				})
 				.collect::<Vec<_>>(),
 		},
-		staking: westend::StakingConfig {
+		staking: alphanet::StakingConfig {
 			validator_count: 50,
 			minimum_validator_count: 4,
 			stakers: initial_authorities
 				.iter()
-				.map(|x| (x.0.clone(), x.1.clone(), STASH, westend::StakerStatus::Validator))
+				.map(|x| (x.0.clone(), x.1.clone(), STASH, alphanet::StakerStatus::Validator))
 				.collect(),
 			invulnerables: initial_authorities.iter().map(|x| x.0.clone()).collect(),
 			force_era: Forcing::ForceNone,
 			slash_reward_fraction: Perbill::from_percent(10),
 			..Default::default()
 		},
-		babe: westend::BabeConfig {
+		babe: alphanet::BabeConfig {
 			authorities: Default::default(),
-			epoch_config: Some(westend::BABE_GENESIS_EPOCH_CONFIG),
+			epoch_config: Some(alphanet::BABE_GENESIS_EPOCH_CONFIG),
 		},
 		grandpa: Default::default(),
 		im_online: Default::default(),
-		authority_discovery: westend::AuthorityDiscoveryConfig { keys: vec![] },
-		vesting: westend::VestingConfig { vesting: vec![] },
-		sudo: westend::SudoConfig { key: Some(endowed_accounts[0].clone()) },
+		authority_discovery: alphanet::AuthorityDiscoveryConfig { keys: vec![] },
+		vesting: alphanet::VestingConfig { vesting: vec![] },
+		sudo: alphanet::SudoConfig { key: Some(endowed_accounts[0].clone()) },
 		hrmp: Default::default(),
-		configuration: westend::ConfigurationConfig {
+		configuration: alphanet::ConfigurationConfig {
 			config: default_allychains_host_configuration(),
 		},
 		paras: Default::default(),
-		registrar: westend_runtime::RegistrarConfig {
+		registrar: alphanet_runtime::RegistrarConfig {
 			next_free_para_id: axia_primitives::v1::LOWEST_PUBLIC_ID,
 		},
 		xcm_pallet: Default::default(),
 	}
 }
 
-#[cfg(feature = "kusama-native")]
-fn kusama_staging_testnet_config_genesis(wasm_binary: &[u8]) -> kusama::GenesisConfig {
+#[cfg(feature = "axctest-native")]
+fn axctest_staging_testnet_config_genesis(wasm_binary: &[u8]) -> axctest::GenesisConfig {
 	use hex_literal::hex;
 	use sp_core::crypto::UncheckedInto;
 
@@ -781,24 +781,24 @@ fn kusama_staging_testnet_config_genesis(wasm_binary: &[u8]) -> kusama::GenesisC
 	const ENDOWMENT: u128 = 1_000_000 * KSM;
 	const STASH: u128 = 100 * KSM;
 
-	kusama::GenesisConfig {
-		system: kusama::SystemConfig { code: wasm_binary.to_vec() },
-		balances: kusama::BalancesConfig {
+	axctest::GenesisConfig {
+		system: axctest::SystemConfig { code: wasm_binary.to_vec() },
+		balances: axctest::BalancesConfig {
 			balances: endowed_accounts
 				.iter()
 				.map(|k: &AccountId| (k.clone(), ENDOWMENT))
 				.chain(initial_authorities.iter().map(|x| (x.0.clone(), STASH)))
 				.collect(),
 		},
-		indices: kusama::IndicesConfig { indices: vec![] },
-		session: kusama::SessionConfig {
+		indices: axctest::IndicesConfig { indices: vec![] },
+		session: axctest::SessionConfig {
 			keys: initial_authorities
 				.iter()
 				.map(|x| {
 					(
 						x.0.clone(),
 						x.0.clone(),
-						kusama_session_keys(
+						axctest_session_keys(
 							x.2.clone(),
 							x.3.clone(),
 							x.4.clone(),
@@ -810,12 +810,12 @@ fn kusama_staging_testnet_config_genesis(wasm_binary: &[u8]) -> kusama::GenesisC
 				})
 				.collect::<Vec<_>>(),
 		},
-		staking: kusama::StakingConfig {
+		staking: axctest::StakingConfig {
 			validator_count: 50,
 			minimum_validator_count: 4,
 			stakers: initial_authorities
 				.iter()
-				.map(|x| (x.0.clone(), x.1.clone(), STASH, kusama::StakerStatus::Validator))
+				.map(|x| (x.0.clone(), x.1.clone(), STASH, axctest::StakerStatus::Validator))
 				.collect(),
 			invulnerables: initial_authorities.iter().map(|x| x.0.clone()).collect(),
 			force_era: Forcing::ForceNone,
@@ -824,24 +824,24 @@ fn kusama_staging_testnet_config_genesis(wasm_binary: &[u8]) -> kusama::GenesisC
 		},
 		phragmen_election: Default::default(),
 		democracy: Default::default(),
-		council: kusama::CouncilConfig { members: vec![], phantom: Default::default() },
-		technical_committee: kusama::TechnicalCommitteeConfig {
+		council: axctest::CouncilConfig { members: vec![], phantom: Default::default() },
+		technical_committee: axctest::TechnicalCommitteeConfig {
 			members: vec![],
 			phantom: Default::default(),
 		},
 		technical_membership: Default::default(),
-		babe: kusama::BabeConfig {
+		babe: axctest::BabeConfig {
 			authorities: Default::default(),
-			epoch_config: Some(kusama::BABE_GENESIS_EPOCH_CONFIG),
+			epoch_config: Some(axctest::BABE_GENESIS_EPOCH_CONFIG),
 		},
 		grandpa: Default::default(),
 		im_online: Default::default(),
-		authority_discovery: kusama::AuthorityDiscoveryConfig { keys: vec![] },
-		claims: kusama::ClaimsConfig { claims: vec![], vesting: vec![] },
-		vesting: kusama::VestingConfig { vesting: vec![] },
+		authority_discovery: axctest::AuthorityDiscoveryConfig { keys: vec![] },
+		claims: axctest::ClaimsConfig { claims: vec![], vesting: vec![] },
+		vesting: axctest::VestingConfig { vesting: vec![] },
 		treasury: Default::default(),
 		hrmp: Default::default(),
-		configuration: kusama::ConfigurationConfig {
+		configuration: axctest::ConfigurationConfig {
 			config: default_allychains_host_configuration(),
 		},
 		gilt: Default::default(),
@@ -850,8 +850,8 @@ fn kusama_staging_testnet_config_genesis(wasm_binary: &[u8]) -> kusama::GenesisC
 	}
 }
 
-#[cfg(feature = "rococo-native")]
-fn rococo_staging_testnet_config_genesis(wasm_binary: &[u8]) -> rococo_runtime::GenesisConfig {
+#[cfg(feature = "betanet-native")]
+fn betanet_staging_testnet_config_genesis(wasm_binary: &[u8]) -> betanet_runtime::GenesisConfig {
 	use hex_literal::hex;
 	use sp_core::crypto::UncheckedInto;
 
@@ -1094,9 +1094,9 @@ fn rococo_staging_testnet_config_genesis(wasm_binary: &[u8]) -> rococo_runtime::
 	const ENDOWMENT: u128 = 1_000_000 * ROC;
 	const STASH: u128 = 100 * ROC;
 
-	rococo_runtime::GenesisConfig {
-		system: rococo_runtime::SystemConfig { code: wasm_binary.to_vec() },
-		balances: rococo_runtime::BalancesConfig {
+	betanet_runtime::GenesisConfig {
+		system: betanet_runtime::SystemConfig { code: wasm_binary.to_vec() },
+		balances: betanet_runtime::BalancesConfig {
 			balances: endowed_accounts
 				.iter()
 				.map(|k: &AccountId| (k.clone(), ENDOWMENT))
@@ -1104,15 +1104,15 @@ fn rococo_staging_testnet_config_genesis(wasm_binary: &[u8]) -> rococo_runtime::
 				.collect(),
 		},
 		beefy: Default::default(),
-		indices: rococo_runtime::IndicesConfig { indices: vec![] },
-		session: rococo_runtime::SessionConfig {
+		indices: betanet_runtime::IndicesConfig { indices: vec![] },
+		session: betanet_runtime::SessionConfig {
 			keys: initial_authorities
 				.iter()
 				.map(|x| {
 					(
 						x.0.clone(),
 						x.0.clone(),
-						rococo_session_keys(
+						betanet_session_keys(
 							x.2.clone(),
 							x.3.clone(),
 							x.4.clone(),
@@ -1125,39 +1125,39 @@ fn rococo_staging_testnet_config_genesis(wasm_binary: &[u8]) -> rococo_runtime::
 				})
 				.collect::<Vec<_>>(),
 		},
-		babe: rococo_runtime::BabeConfig {
+		babe: betanet_runtime::BabeConfig {
 			authorities: Default::default(),
-			epoch_config: Some(rococo_runtime::BABE_GENESIS_EPOCH_CONFIG),
+			epoch_config: Some(betanet_runtime::BABE_GENESIS_EPOCH_CONFIG),
 		},
 		grandpa: Default::default(),
 		im_online: Default::default(),
 		collective: Default::default(),
 		membership: Default::default(),
-		authority_discovery: rococo_runtime::AuthorityDiscoveryConfig { keys: vec![] },
-		sudo: rococo_runtime::SudoConfig { key: Some(endowed_accounts[0].clone()) },
-		paras: rococo_runtime::ParasConfig { paras: vec![] },
+		authority_discovery: betanet_runtime::AuthorityDiscoveryConfig { keys: vec![] },
+		sudo: betanet_runtime::SudoConfig { key: Some(endowed_accounts[0].clone()) },
+		paras: betanet_runtime::ParasConfig { paras: vec![] },
 		hrmp: Default::default(),
-		configuration: rococo_runtime::ConfigurationConfig {
+		configuration: betanet_runtime::ConfigurationConfig {
 			config: default_allychains_host_configuration(),
 		},
-		registrar: rococo_runtime::RegistrarConfig {
+		registrar: betanet_runtime::RegistrarConfig {
 			next_free_para_id: axia_primitives::v1::LOWEST_PUBLIC_ID,
 		},
 		xcm_pallet: Default::default(),
 		transaction_payment: Default::default(),
-		bridge_rococo_grandpa: rococo_runtime::BridgeRococoGrandpaConfig {
+		bridge_betanet_grandpa: betanet_runtime::BridgeBetanetGrandpaConfig {
 			owner: Some(endowed_accounts[0].clone()),
 			..Default::default()
 		},
-		bridge_wococo_grandpa: rococo_runtime::BridgeWococoGrandpaConfig {
+		bridge_wococo_grandpa: betanet_runtime::BridgeWococoGrandpaConfig {
 			owner: Some(endowed_accounts[0].clone()),
 			..Default::default()
 		},
-		bridge_rococo_messages: rococo_runtime::BridgeRococoMessagesConfig {
+		bridge_betanet_messages: betanet_runtime::BridgeBetanetMessagesConfig {
 			owner: Some(endowed_accounts[0].clone()),
 			..Default::default()
 		},
-		bridge_wococo_messages: rococo_runtime::BridgeWococoMessagesConfig {
+		bridge_wococo_messages: betanet_runtime::BridgeWococoMessagesConfig {
 			owner: Some(endowed_accounts[0].clone()),
 			..Default::default()
 		},
@@ -1188,20 +1188,20 @@ pub fn axia_staging_testnet_config() -> Result<AxiaChainSpec, String> {
 }
 
 /// Staging testnet config.
-#[cfg(feature = "kusama-native")]
-pub fn kusama_staging_testnet_config() -> Result<KusamaChainSpec, String> {
-	let wasm_binary = kusama::WASM_BINARY.ok_or("Kusama development wasm not available")?;
+#[cfg(feature = "axctest-native")]
+pub fn axctest_staging_testnet_config() -> Result<AxiaTestChainSpec, String> {
+	let wasm_binary = axctest::WASM_BINARY.ok_or("AxiaTest development wasm not available")?;
 	let boot_nodes = vec![];
 
-	Ok(KusamaChainSpec::from_genesis(
-		"Kusama Staging Testnet",
-		"kusama_staging_testnet",
+	Ok(AxiaTestChainSpec::from_genesis(
+		"AxiaTest Staging Testnet",
+		"axctest_staging_testnet",
 		ChainType::Live,
-		move || kusama_staging_testnet_config_genesis(wasm_binary),
+		move || axctest_staging_testnet_config_genesis(wasm_binary),
 		boot_nodes,
 		Some(
-			TelemetryEndpoints::new(vec![(KUSAMA_STAGING_TELEMETRY_URL.to_string(), 0)])
-				.expect("Kusama Staging telemetry url is valid; qed"),
+			TelemetryEndpoints::new(vec![(AXIATEST_STAGING_TELEMETRY_URL.to_string(), 0)])
+				.expect("AxiaTest Staging telemetry url is valid; qed"),
 		),
 		Some(DEFAULT_PROTOCOL_ID),
 		None,
@@ -1210,21 +1210,21 @@ pub fn kusama_staging_testnet_config() -> Result<KusamaChainSpec, String> {
 	))
 }
 
-/// Westend staging testnet config.
-#[cfg(feature = "westend-native")]
-pub fn westend_staging_testnet_config() -> Result<WestendChainSpec, String> {
-	let wasm_binary = westend::WASM_BINARY.ok_or("Westend development wasm not available")?;
+/// Alphanet staging testnet config.
+#[cfg(feature = "alphanet-native")]
+pub fn alphanet_staging_testnet_config() -> Result<AlphanetChainSpec, String> {
+	let wasm_binary = alphanet::WASM_BINARY.ok_or("Alphanet development wasm not available")?;
 	let boot_nodes = vec![];
 
-	Ok(WestendChainSpec::from_genesis(
-		"Westend Staging Testnet",
-		"westend_staging_testnet",
+	Ok(AlphanetChainSpec::from_genesis(
+		"Alphanet Staging Testnet",
+		"alphanet_staging_testnet",
 		ChainType::Live,
-		move || westend_staging_testnet_config_genesis(wasm_binary),
+		move || alphanet_staging_testnet_config_genesis(wasm_binary),
 		boot_nodes,
 		Some(
-			TelemetryEndpoints::new(vec![(WESTEND_STAGING_TELEMETRY_URL.to_string(), 0)])
-				.expect("Westend Staging telemetry url is valid; qed"),
+			TelemetryEndpoints::new(vec![(ALPHANET_STAGING_TELEMETRY_URL.to_string(), 0)])
+				.expect("Alphanet Staging telemetry url is valid; qed"),
 		),
 		Some(DEFAULT_PROTOCOL_ID),
 		None,
@@ -1233,24 +1233,24 @@ pub fn westend_staging_testnet_config() -> Result<WestendChainSpec, String> {
 	))
 }
 
-/// Rococo staging testnet config.
-#[cfg(feature = "rococo-native")]
-pub fn rococo_staging_testnet_config() -> Result<RococoChainSpec, String> {
-	let wasm_binary = rococo::WASM_BINARY.ok_or("Rococo development wasm not available")?;
+/// Betanet staging testnet config.
+#[cfg(feature = "betanet-native")]
+pub fn betanet_staging_testnet_config() -> Result<BetanetChainSpec, String> {
+	let wasm_binary = betanet::WASM_BINARY.ok_or("Betanet development wasm not available")?;
 	let boot_nodes = vec![];
 
-	Ok(RococoChainSpec::from_genesis(
-		"Rococo Staging Testnet",
-		"rococo_staging_testnet",
+	Ok(BetanetChainSpec::from_genesis(
+		"Betanet Staging Testnet",
+		"betanet_staging_testnet",
 		ChainType::Live,
-		move || RococoGenesisExt {
-			runtime_genesis_config: rococo_staging_testnet_config_genesis(wasm_binary),
+		move || BetanetGenesisExt {
+			runtime_genesis_config: betanet_staging_testnet_config_genesis(wasm_binary),
 			session_length_in_blocks: None,
 		},
 		boot_nodes,
 		Some(
-			TelemetryEndpoints::new(vec![(ROCOCO_STAGING_TELEMETRY_URL.to_string(), 0)])
-				.expect("Rococo Staging telemetry url is valid; qed"),
+			TelemetryEndpoints::new(vec![(BETANET_STAGING_TELEMETRY_URL.to_string(), 0)])
+				.expect("Betanet Staging telemetry url is valid; qed"),
 		),
 		Some(DEFAULT_PROTOCOL_ID),
 		None,
@@ -1421,9 +1421,9 @@ pub fn axia_testnet_genesis(
 	}
 }
 
-/// Helper function to create kusama `GenesisConfig` for testing
-#[cfg(feature = "kusama-native")]
-pub fn kusama_testnet_genesis(
+/// Helper function to create axctest `GenesisConfig` for testing
+#[cfg(feature = "axctest-native")]
+pub fn axctest_testnet_genesis(
 	wasm_binary: &[u8],
 	initial_authorities: Vec<(
 		AccountId,
@@ -1437,26 +1437,26 @@ pub fn kusama_testnet_genesis(
 	)>,
 	_root_key: AccountId,
 	endowed_accounts: Option<Vec<AccountId>>,
-) -> kusama::GenesisConfig {
+) -> axctest::GenesisConfig {
 	let endowed_accounts: Vec<AccountId> = endowed_accounts.unwrap_or_else(testnet_accounts);
 
 	const ENDOWMENT: u128 = 1_000_000 * KSM;
 	const STASH: u128 = 100 * KSM;
 
-	kusama::GenesisConfig {
-		system: kusama::SystemConfig { code: wasm_binary.to_vec() },
-		indices: kusama::IndicesConfig { indices: vec![] },
-		balances: kusama::BalancesConfig {
+	axctest::GenesisConfig {
+		system: axctest::SystemConfig { code: wasm_binary.to_vec() },
+		indices: axctest::IndicesConfig { indices: vec![] },
+		balances: axctest::BalancesConfig {
 			balances: endowed_accounts.iter().map(|k| (k.clone(), ENDOWMENT)).collect(),
 		},
-		session: kusama::SessionConfig {
+		session: axctest::SessionConfig {
 			keys: initial_authorities
 				.iter()
 				.map(|x| {
 					(
 						x.0.clone(),
 						x.0.clone(),
-						kusama_session_keys(
+						axctest_session_keys(
 							x.2.clone(),
 							x.3.clone(),
 							x.4.clone(),
@@ -1468,12 +1468,12 @@ pub fn kusama_testnet_genesis(
 				})
 				.collect::<Vec<_>>(),
 		},
-		staking: kusama::StakingConfig {
+		staking: axctest::StakingConfig {
 			minimum_validator_count: 1,
 			validator_count: initial_authorities.len() as u32,
 			stakers: initial_authorities
 				.iter()
-				.map(|x| (x.0.clone(), x.1.clone(), STASH, kusama::StakerStatus::Validator))
+				.map(|x| (x.0.clone(), x.1.clone(), STASH, axctest::StakerStatus::Validator))
 				.collect(),
 			invulnerables: initial_authorities.iter().map(|x| x.0.clone()).collect(),
 			force_era: Forcing::NotForcing,
@@ -1481,25 +1481,25 @@ pub fn kusama_testnet_genesis(
 			..Default::default()
 		},
 		phragmen_election: Default::default(),
-		democracy: kusama::DemocracyConfig::default(),
-		council: kusama::CouncilConfig { members: vec![], phantom: Default::default() },
-		technical_committee: kusama::TechnicalCommitteeConfig {
+		democracy: axctest::DemocracyConfig::default(),
+		council: axctest::CouncilConfig { members: vec![], phantom: Default::default() },
+		technical_committee: axctest::TechnicalCommitteeConfig {
 			members: vec![],
 			phantom: Default::default(),
 		},
 		technical_membership: Default::default(),
-		babe: kusama::BabeConfig {
+		babe: axctest::BabeConfig {
 			authorities: Default::default(),
-			epoch_config: Some(kusama::BABE_GENESIS_EPOCH_CONFIG),
+			epoch_config: Some(axctest::BABE_GENESIS_EPOCH_CONFIG),
 		},
 		grandpa: Default::default(),
 		im_online: Default::default(),
-		authority_discovery: kusama::AuthorityDiscoveryConfig { keys: vec![] },
-		claims: kusama::ClaimsConfig { claims: vec![], vesting: vec![] },
-		vesting: kusama::VestingConfig { vesting: vec![] },
+		authority_discovery: axctest::AuthorityDiscoveryConfig { keys: vec![] },
+		claims: axctest::ClaimsConfig { claims: vec![], vesting: vec![] },
+		vesting: axctest::VestingConfig { vesting: vec![] },
 		treasury: Default::default(),
 		hrmp: Default::default(),
-		configuration: kusama::ConfigurationConfig {
+		configuration: axctest::ConfigurationConfig {
 			config: default_allychains_host_configuration(),
 		},
 		gilt: Default::default(),
@@ -1508,9 +1508,9 @@ pub fn kusama_testnet_genesis(
 	}
 }
 
-/// Helper function to create westend `GenesisConfig` for testing
-#[cfg(feature = "westend-native")]
-pub fn westend_testnet_genesis(
+/// Helper function to create alphanet `GenesisConfig` for testing
+#[cfg(feature = "alphanet-native")]
+pub fn alphanet_testnet_genesis(
 	wasm_binary: &[u8],
 	initial_authorities: Vec<(
 		AccountId,
@@ -1524,26 +1524,26 @@ pub fn westend_testnet_genesis(
 	)>,
 	root_key: AccountId,
 	endowed_accounts: Option<Vec<AccountId>>,
-) -> westend::GenesisConfig {
+) -> alphanet::GenesisConfig {
 	let endowed_accounts: Vec<AccountId> = endowed_accounts.unwrap_or_else(testnet_accounts);
 
 	const ENDOWMENT: u128 = 1_000_000 * DOT;
 	const STASH: u128 = 100 * DOT;
 
-	westend::GenesisConfig {
-		system: westend::SystemConfig { code: wasm_binary.to_vec() },
-		indices: westend::IndicesConfig { indices: vec![] },
-		balances: westend::BalancesConfig {
+	alphanet::GenesisConfig {
+		system: alphanet::SystemConfig { code: wasm_binary.to_vec() },
+		indices: alphanet::IndicesConfig { indices: vec![] },
+		balances: alphanet::BalancesConfig {
 			balances: endowed_accounts.iter().map(|k| (k.clone(), ENDOWMENT)).collect(),
 		},
-		session: westend::SessionConfig {
+		session: alphanet::SessionConfig {
 			keys: initial_authorities
 				.iter()
 				.map(|x| {
 					(
 						x.0.clone(),
 						x.0.clone(),
-						westend_session_keys(
+						alphanet_session_keys(
 							x.2.clone(),
 							x.3.clone(),
 							x.4.clone(),
@@ -1555,42 +1555,42 @@ pub fn westend_testnet_genesis(
 				})
 				.collect::<Vec<_>>(),
 		},
-		staking: westend::StakingConfig {
+		staking: alphanet::StakingConfig {
 			minimum_validator_count: 1,
 			validator_count: initial_authorities.len() as u32,
 			stakers: initial_authorities
 				.iter()
-				.map(|x| (x.0.clone(), x.1.clone(), STASH, westend::StakerStatus::Validator))
+				.map(|x| (x.0.clone(), x.1.clone(), STASH, alphanet::StakerStatus::Validator))
 				.collect(),
 			invulnerables: initial_authorities.iter().map(|x| x.0.clone()).collect(),
 			force_era: Forcing::NotForcing,
 			slash_reward_fraction: Perbill::from_percent(10),
 			..Default::default()
 		},
-		babe: westend::BabeConfig {
+		babe: alphanet::BabeConfig {
 			authorities: Default::default(),
-			epoch_config: Some(westend::BABE_GENESIS_EPOCH_CONFIG),
+			epoch_config: Some(alphanet::BABE_GENESIS_EPOCH_CONFIG),
 		},
 		grandpa: Default::default(),
 		im_online: Default::default(),
-		authority_discovery: westend::AuthorityDiscoveryConfig { keys: vec![] },
-		vesting: westend::VestingConfig { vesting: vec![] },
-		sudo: westend::SudoConfig { key: Some(root_key) },
+		authority_discovery: alphanet::AuthorityDiscoveryConfig { keys: vec![] },
+		vesting: alphanet::VestingConfig { vesting: vec![] },
+		sudo: alphanet::SudoConfig { key: Some(root_key) },
 		hrmp: Default::default(),
-		configuration: westend::ConfigurationConfig {
+		configuration: alphanet::ConfigurationConfig {
 			config: default_allychains_host_configuration(),
 		},
 		paras: Default::default(),
-		registrar: westend_runtime::RegistrarConfig {
+		registrar: alphanet_runtime::RegistrarConfig {
 			next_free_para_id: axia_primitives::v1::LOWEST_PUBLIC_ID,
 		},
 		xcm_pallet: Default::default(),
 	}
 }
 
-/// Helper function to create rococo `GenesisConfig` for testing
-#[cfg(feature = "rococo-native")]
-pub fn rococo_testnet_genesis(
+/// Helper function to create betanet `GenesisConfig` for testing
+#[cfg(feature = "betanet-native")]
+pub fn betanet_testnet_genesis(
 	wasm_binary: &[u8],
 	initial_authorities: Vec<(
 		AccountId,
@@ -1605,26 +1605,26 @@ pub fn rococo_testnet_genesis(
 	)>,
 	root_key: AccountId,
 	endowed_accounts: Option<Vec<AccountId>>,
-) -> rococo_runtime::GenesisConfig {
+) -> betanet_runtime::GenesisConfig {
 	let endowed_accounts: Vec<AccountId> = endowed_accounts.unwrap_or_else(testnet_accounts);
 
 	const ENDOWMENT: u128 = 1_000_000 * DOT;
 
-	rococo_runtime::GenesisConfig {
-		system: rococo_runtime::SystemConfig { code: wasm_binary.to_vec() },
+	betanet_runtime::GenesisConfig {
+		system: betanet_runtime::SystemConfig { code: wasm_binary.to_vec() },
 		beefy: Default::default(),
-		indices: rococo_runtime::IndicesConfig { indices: vec![] },
-		balances: rococo_runtime::BalancesConfig {
+		indices: betanet_runtime::IndicesConfig { indices: vec![] },
+		balances: betanet_runtime::BalancesConfig {
 			balances: endowed_accounts.iter().map(|k| (k.clone(), ENDOWMENT)).collect(),
 		},
-		session: rococo_runtime::SessionConfig {
+		session: betanet_runtime::SessionConfig {
 			keys: initial_authorities
 				.iter()
 				.map(|x| {
 					(
 						x.0.clone(),
 						x.0.clone(),
-						rococo_session_keys(
+						betanet_session_keys(
 							x.2.clone(),
 							x.3.clone(),
 							x.4.clone(),
@@ -1637,42 +1637,42 @@ pub fn rococo_testnet_genesis(
 				})
 				.collect::<Vec<_>>(),
 		},
-		babe: rococo_runtime::BabeConfig {
+		babe: betanet_runtime::BabeConfig {
 			authorities: Default::default(),
-			epoch_config: Some(rococo_runtime::BABE_GENESIS_EPOCH_CONFIG),
+			epoch_config: Some(betanet_runtime::BABE_GENESIS_EPOCH_CONFIG),
 		},
 		grandpa: Default::default(),
 		im_online: Default::default(),
 		collective: Default::default(),
 		membership: Default::default(),
-		authority_discovery: rococo_runtime::AuthorityDiscoveryConfig { keys: vec![] },
-		sudo: rococo_runtime::SudoConfig { key: Some(root_key.clone()) },
+		authority_discovery: betanet_runtime::AuthorityDiscoveryConfig { keys: vec![] },
+		sudo: betanet_runtime::SudoConfig { key: Some(root_key.clone()) },
 		hrmp: Default::default(),
-		configuration: rococo_runtime::ConfigurationConfig {
+		configuration: betanet_runtime::ConfigurationConfig {
 			config: axia_runtime_allychains::configuration::HostConfiguration {
 				max_validators_per_core: Some(1),
 				..default_allychains_host_configuration()
 			},
 		},
-		paras: rococo_runtime::ParasConfig { paras: vec![] },
-		registrar: rococo_runtime::RegistrarConfig {
+		paras: betanet_runtime::ParasConfig { paras: vec![] },
+		registrar: betanet_runtime::RegistrarConfig {
 			next_free_para_id: axia_primitives::v1::LOWEST_PUBLIC_ID,
 		},
 		xcm_pallet: Default::default(),
 		transaction_payment: Default::default(),
-		bridge_rococo_grandpa: rococo_runtime::BridgeRococoGrandpaConfig {
+		bridge_betanet_grandpa: betanet_runtime::BridgeBetanetGrandpaConfig {
 			owner: Some(root_key.clone()),
 			..Default::default()
 		},
-		bridge_wococo_grandpa: rococo_runtime::BridgeWococoGrandpaConfig {
+		bridge_wococo_grandpa: betanet_runtime::BridgeWococoGrandpaConfig {
 			owner: Some(root_key.clone()),
 			..Default::default()
 		},
-		bridge_rococo_messages: rococo_runtime::BridgeRococoMessagesConfig {
+		bridge_betanet_messages: betanet_runtime::BridgeBetanetMessagesConfig {
 			owner: Some(root_key.clone()),
 			..Default::default()
 		},
-		bridge_wococo_messages: rococo_runtime::BridgeWococoMessagesConfig {
+		bridge_wococo_messages: betanet_runtime::BridgeWococoMessagesConfig {
 			owner: Some(root_key.clone()),
 			..Default::default()
 		},
@@ -1689,9 +1689,9 @@ fn axia_development_config_genesis(wasm_binary: &[u8]) -> axia::GenesisConfig {
 	)
 }
 
-#[cfg(feature = "kusama-native")]
-fn kusama_development_config_genesis(wasm_binary: &[u8]) -> kusama::GenesisConfig {
-	kusama_testnet_genesis(
+#[cfg(feature = "axctest-native")]
+fn axctest_development_config_genesis(wasm_binary: &[u8]) -> axctest::GenesisConfig {
+	axctest_testnet_genesis(
 		wasm_binary,
 		vec![get_authority_keys_from_seed_no_beefy("Alice")],
 		get_account_id_from_seed::<sr25519::Public>("Alice"),
@@ -1699,9 +1699,9 @@ fn kusama_development_config_genesis(wasm_binary: &[u8]) -> kusama::GenesisConfi
 	)
 }
 
-#[cfg(feature = "westend-native")]
-fn westend_development_config_genesis(wasm_binary: &[u8]) -> westend::GenesisConfig {
-	westend_testnet_genesis(
+#[cfg(feature = "alphanet-native")]
+fn alphanet_development_config_genesis(wasm_binary: &[u8]) -> alphanet::GenesisConfig {
+	alphanet_testnet_genesis(
 		wasm_binary,
 		vec![get_authority_keys_from_seed_no_beefy("Alice")],
 		get_account_id_from_seed::<sr25519::Public>("Alice"),
@@ -1709,9 +1709,9 @@ fn westend_development_config_genesis(wasm_binary: &[u8]) -> westend::GenesisCon
 	)
 }
 
-#[cfg(feature = "rococo-native")]
-fn rococo_development_config_genesis(wasm_binary: &[u8]) -> rococo_runtime::GenesisConfig {
-	rococo_testnet_genesis(
+#[cfg(feature = "betanet-native")]
+fn betanet_development_config_genesis(wasm_binary: &[u8]) -> betanet_runtime::GenesisConfig {
+	betanet_testnet_genesis(
 		wasm_binary,
 		vec![get_authority_keys_from_seed("Alice")],
 		get_account_id_from_seed::<sr25519::Public>("Alice"),
@@ -1738,16 +1738,16 @@ pub fn axia_development_config() -> Result<AxiaChainSpec, String> {
 	))
 }
 
-/// Kusama development config (single validator Alice)
-#[cfg(feature = "kusama-native")]
-pub fn kusama_development_config() -> Result<KusamaChainSpec, String> {
-	let wasm_binary = kusama::WASM_BINARY.ok_or("Kusama development wasm not available")?;
+/// AxiaTest development config (single validator Alice)
+#[cfg(feature = "axctest-native")]
+pub fn axctest_development_config() -> Result<AxiaTestChainSpec, String> {
+	let wasm_binary = axctest::WASM_BINARY.ok_or("AxiaTest development wasm not available")?;
 
-	Ok(KusamaChainSpec::from_genesis(
+	Ok(AxiaTestChainSpec::from_genesis(
 		"Development",
-		"kusama_dev",
+		"axctest_dev",
 		ChainType::Development,
-		move || kusama_development_config_genesis(wasm_binary),
+		move || axctest_development_config_genesis(wasm_binary),
 		vec![],
 		None,
 		Some(DEFAULT_PROTOCOL_ID),
@@ -1757,16 +1757,16 @@ pub fn kusama_development_config() -> Result<KusamaChainSpec, String> {
 	))
 }
 
-/// Westend development config (single validator Alice)
-#[cfg(feature = "westend-native")]
-pub fn westend_development_config() -> Result<WestendChainSpec, String> {
-	let wasm_binary = westend::WASM_BINARY.ok_or("Westend development wasm not available")?;
+/// Alphanet development config (single validator Alice)
+#[cfg(feature = "alphanet-native")]
+pub fn alphanet_development_config() -> Result<AlphanetChainSpec, String> {
+	let wasm_binary = alphanet::WASM_BINARY.ok_or("Alphanet development wasm not available")?;
 
-	Ok(WestendChainSpec::from_genesis(
+	Ok(AlphanetChainSpec::from_genesis(
 		"Development",
-		"westend_dev",
+		"alphanet_dev",
 		ChainType::Development,
-		move || westend_development_config_genesis(wasm_binary),
+		move || alphanet_development_config_genesis(wasm_binary),
 		vec![],
 		None,
 		Some(DEFAULT_PROTOCOL_ID),
@@ -1776,17 +1776,17 @@ pub fn westend_development_config() -> Result<WestendChainSpec, String> {
 	))
 }
 
-/// Rococo development config (single validator Alice)
-#[cfg(feature = "rococo-native")]
-pub fn rococo_development_config() -> Result<RococoChainSpec, String> {
-	let wasm_binary = rococo::WASM_BINARY.ok_or("Rococo development wasm not available")?;
+/// Betanet development config (single validator Alice)
+#[cfg(feature = "betanet-native")]
+pub fn betanet_development_config() -> Result<BetanetChainSpec, String> {
+	let wasm_binary = betanet::WASM_BINARY.ok_or("Betanet development wasm not available")?;
 
-	Ok(RococoChainSpec::from_genesis(
+	Ok(BetanetChainSpec::from_genesis(
 		"Development",
-		"rococo_dev",
+		"betanet_dev",
 		ChainType::Development,
-		move || RococoGenesisExt {
-			runtime_genesis_config: rococo_development_config_genesis(wasm_binary),
+		move || BetanetGenesisExt {
+			runtime_genesis_config: betanet_development_config_genesis(wasm_binary),
 			// Use 1 minute session length.
 			session_length_in_blocks: Some(10),
 		},
@@ -1800,16 +1800,16 @@ pub fn rococo_development_config() -> Result<RococoChainSpec, String> {
 }
 
 /// `Versi` development config (single validator Alice)
-#[cfg(feature = "rococo-native")]
-pub fn versi_development_config() -> Result<RococoChainSpec, String> {
-	let wasm_binary = rococo::WASM_BINARY.ok_or("Versi development wasm not available")?;
+#[cfg(feature = "betanet-native")]
+pub fn versi_development_config() -> Result<BetanetChainSpec, String> {
+	let wasm_binary = betanet::WASM_BINARY.ok_or("Versi development wasm not available")?;
 
-	Ok(RococoChainSpec::from_genesis(
+	Ok(BetanetChainSpec::from_genesis(
 		"Development",
 		"versi_dev",
 		ChainType::Development,
-		move || RococoGenesisExt {
-			runtime_genesis_config: rococo_development_config_genesis(wasm_binary),
+		move || BetanetGenesisExt {
+			runtime_genesis_config: betanet_development_config_genesis(wasm_binary),
 			// Use 1 minute session length.
 			session_length_in_blocks: Some(10),
 		},
@@ -1823,17 +1823,17 @@ pub fn versi_development_config() -> Result<RococoChainSpec, String> {
 }
 
 /// Wococo development config (single validator Alice)
-#[cfg(feature = "rococo-native")]
-pub fn wococo_development_config() -> Result<RococoChainSpec, String> {
+#[cfg(feature = "betanet-native")]
+pub fn wococo_development_config() -> Result<BetanetChainSpec, String> {
 	const WOCOCO_DEV_PROTOCOL_ID: &str = "woco";
-	let wasm_binary = rococo::WASM_BINARY.ok_or("Wococo development wasm not available")?;
+	let wasm_binary = betanet::WASM_BINARY.ok_or("Wococo development wasm not available")?;
 
-	Ok(RococoChainSpec::from_genesis(
+	Ok(BetanetChainSpec::from_genesis(
 		"Development",
 		"wococo_dev",
 		ChainType::Development,
-		move || RococoGenesisExt {
-			runtime_genesis_config: rococo_development_config_genesis(wasm_binary),
+		move || BetanetGenesisExt {
+			runtime_genesis_config: betanet_development_config_genesis(wasm_binary),
 			// Use 1 minute session length.
 			session_length_in_blocks: Some(10),
 		},
@@ -1878,9 +1878,9 @@ pub fn axia_local_testnet_config() -> Result<AxiaChainSpec, String> {
 	))
 }
 
-#[cfg(feature = "kusama-native")]
-fn kusama_local_testnet_genesis(wasm_binary: &[u8]) -> kusama::GenesisConfig {
-	kusama_testnet_genesis(
+#[cfg(feature = "axctest-native")]
+fn axctest_local_testnet_genesis(wasm_binary: &[u8]) -> axctest::GenesisConfig {
+	axctest_testnet_genesis(
 		wasm_binary,
 		vec![
 			get_authority_keys_from_seed_no_beefy("Alice"),
@@ -1891,16 +1891,16 @@ fn kusama_local_testnet_genesis(wasm_binary: &[u8]) -> kusama::GenesisConfig {
 	)
 }
 
-/// Kusama local testnet config (multivalidator Alice + Bob)
-#[cfg(feature = "kusama-native")]
-pub fn kusama_local_testnet_config() -> Result<KusamaChainSpec, String> {
-	let wasm_binary = kusama::WASM_BINARY.ok_or("Kusama development wasm not available")?;
+/// AxiaTest local testnet config (multivalidator Alice + Bob)
+#[cfg(feature = "axctest-native")]
+pub fn axctest_local_testnet_config() -> Result<AxiaTestChainSpec, String> {
+	let wasm_binary = axctest::WASM_BINARY.ok_or("AxiaTest development wasm not available")?;
 
-	Ok(KusamaChainSpec::from_genesis(
-		"Kusama Local Testnet",
-		"kusama_local_testnet",
+	Ok(AxiaTestChainSpec::from_genesis(
+		"AxiaTest Local Testnet",
+		"axctest_local_testnet",
 		ChainType::Local,
-		move || kusama_local_testnet_genesis(wasm_binary),
+		move || axctest_local_testnet_genesis(wasm_binary),
 		vec![],
 		None,
 		Some(DEFAULT_PROTOCOL_ID),
@@ -1910,9 +1910,9 @@ pub fn kusama_local_testnet_config() -> Result<KusamaChainSpec, String> {
 	))
 }
 
-#[cfg(feature = "westend-native")]
-fn westend_local_testnet_genesis(wasm_binary: &[u8]) -> westend::GenesisConfig {
-	westend_testnet_genesis(
+#[cfg(feature = "alphanet-native")]
+fn alphanet_local_testnet_genesis(wasm_binary: &[u8]) -> alphanet::GenesisConfig {
+	alphanet_testnet_genesis(
 		wasm_binary,
 		vec![
 			get_authority_keys_from_seed_no_beefy("Alice"),
@@ -1923,16 +1923,16 @@ fn westend_local_testnet_genesis(wasm_binary: &[u8]) -> westend::GenesisConfig {
 	)
 }
 
-/// Westend local testnet config (multivalidator Alice + Bob)
-#[cfg(feature = "westend-native")]
-pub fn westend_local_testnet_config() -> Result<WestendChainSpec, String> {
-	let wasm_binary = westend::WASM_BINARY.ok_or("Westend development wasm not available")?;
+/// Alphanet local testnet config (multivalidator Alice + Bob)
+#[cfg(feature = "alphanet-native")]
+pub fn alphanet_local_testnet_config() -> Result<AlphanetChainSpec, String> {
+	let wasm_binary = alphanet::WASM_BINARY.ok_or("Alphanet development wasm not available")?;
 
-	Ok(WestendChainSpec::from_genesis(
-		"Westend Local Testnet",
-		"westend_local_testnet",
+	Ok(AlphanetChainSpec::from_genesis(
+		"Alphanet Local Testnet",
+		"alphanet_local_testnet",
 		ChainType::Local,
-		move || westend_local_testnet_genesis(wasm_binary),
+		move || alphanet_local_testnet_genesis(wasm_binary),
 		vec![],
 		None,
 		Some(DEFAULT_PROTOCOL_ID),
@@ -1942,9 +1942,9 @@ pub fn westend_local_testnet_config() -> Result<WestendChainSpec, String> {
 	))
 }
 
-#[cfg(feature = "rococo-native")]
-fn rococo_local_testnet_genesis(wasm_binary: &[u8]) -> rococo_runtime::GenesisConfig {
-	rococo_testnet_genesis(
+#[cfg(feature = "betanet-native")]
+fn betanet_local_testnet_genesis(wasm_binary: &[u8]) -> betanet_runtime::GenesisConfig {
+	betanet_testnet_genesis(
 		wasm_binary,
 		vec![get_authority_keys_from_seed("Alice"), get_authority_keys_from_seed("Bob")],
 		get_account_id_from_seed::<sr25519::Public>("Alice"),
@@ -1952,17 +1952,17 @@ fn rococo_local_testnet_genesis(wasm_binary: &[u8]) -> rococo_runtime::GenesisCo
 	)
 }
 
-/// Rococo local testnet config (multivalidator Alice + Bob)
-#[cfg(feature = "rococo-native")]
-pub fn rococo_local_testnet_config() -> Result<RococoChainSpec, String> {
-	let wasm_binary = rococo::WASM_BINARY.ok_or("Rococo development wasm not available")?;
+/// Betanet local testnet config (multivalidator Alice + Bob)
+#[cfg(feature = "betanet-native")]
+pub fn betanet_local_testnet_config() -> Result<BetanetChainSpec, String> {
+	let wasm_binary = betanet::WASM_BINARY.ok_or("Betanet development wasm not available")?;
 
-	Ok(RococoChainSpec::from_genesis(
-		"Rococo Local Testnet",
-		"rococo_local_testnet",
+	Ok(BetanetChainSpec::from_genesis(
+		"Betanet Local Testnet",
+		"betanet_local_testnet",
 		ChainType::Local,
-		move || RococoGenesisExt {
-			runtime_genesis_config: rococo_local_testnet_genesis(wasm_binary),
+		move || BetanetGenesisExt {
+			runtime_genesis_config: betanet_local_testnet_genesis(wasm_binary),
 			// Use 1 minute session length.
 			session_length_in_blocks: Some(10),
 		},
@@ -1975,10 +1975,10 @@ pub fn rococo_local_testnet_config() -> Result<RococoChainSpec, String> {
 	))
 }
 
-/// Wococo is a temporary testnet that uses almost the same runtime as rococo.
-#[cfg(feature = "rococo-native")]
-fn wococo_local_testnet_genesis(wasm_binary: &[u8]) -> rococo_runtime::GenesisConfig {
-	rococo_testnet_genesis(
+/// Wococo is a temporary testnet that uses almost the same runtime as betanet.
+#[cfg(feature = "betanet-native")]
+fn wococo_local_testnet_genesis(wasm_binary: &[u8]) -> betanet_runtime::GenesisConfig {
+	betanet_testnet_genesis(
 		wasm_binary,
 		vec![
 			get_authority_keys_from_seed("Alice"),
@@ -1991,10 +1991,10 @@ fn wococo_local_testnet_genesis(wasm_binary: &[u8]) -> rococo_runtime::GenesisCo
 	)
 }
 
-/// `Versi` is a temporary testnet that uses the same runtime as rococo.
-#[cfg(feature = "rococo-native")]
-fn versi_local_testnet_genesis(wasm_binary: &[u8]) -> rococo_runtime::GenesisConfig {
-	rococo_testnet_genesis(
+/// `Versi` is a temporary testnet that uses the same runtime as betanet.
+#[cfg(feature = "betanet-native")]
+fn versi_local_testnet_genesis(wasm_binary: &[u8]) -> betanet_runtime::GenesisConfig {
+	betanet_testnet_genesis(
 		wasm_binary,
 		vec![
 			get_authority_keys_from_seed("Alice"),
@@ -2008,15 +2008,15 @@ fn versi_local_testnet_genesis(wasm_binary: &[u8]) -> rococo_runtime::GenesisCon
 }
 
 /// Wococo local testnet config (multivalidator Alice + Bob + Charlie + Dave)
-#[cfg(feature = "rococo-native")]
-pub fn wococo_local_testnet_config() -> Result<RococoChainSpec, String> {
-	let wasm_binary = rococo::WASM_BINARY.ok_or("Wococo development wasm not available")?;
+#[cfg(feature = "betanet-native")]
+pub fn wococo_local_testnet_config() -> Result<BetanetChainSpec, String> {
+	let wasm_binary = betanet::WASM_BINARY.ok_or("Wococo development wasm not available")?;
 
-	Ok(RococoChainSpec::from_genesis(
+	Ok(BetanetChainSpec::from_genesis(
 		"Wococo Local Testnet",
 		"wococo_local_testnet",
 		ChainType::Local,
-		move || RococoGenesisExt {
+		move || BetanetGenesisExt {
 			runtime_genesis_config: wococo_local_testnet_genesis(wasm_binary),
 			// Use 1 minute session length.
 			session_length_in_blocks: Some(10),
@@ -2031,15 +2031,15 @@ pub fn wococo_local_testnet_config() -> Result<RococoChainSpec, String> {
 }
 
 /// `Versi` local testnet config (multivalidator Alice + Bob + Charlie + Dave)
-#[cfg(feature = "rococo-native")]
-pub fn versi_local_testnet_config() -> Result<RococoChainSpec, String> {
-	let wasm_binary = rococo::WASM_BINARY.ok_or("Versi development wasm not available")?;
+#[cfg(feature = "betanet-native")]
+pub fn versi_local_testnet_config() -> Result<BetanetChainSpec, String> {
+	let wasm_binary = betanet::WASM_BINARY.ok_or("Versi development wasm not available")?;
 
-	Ok(RococoChainSpec::from_genesis(
+	Ok(BetanetChainSpec::from_genesis(
 		"Versi Local Testnet",
 		"versi_local_testnet",
 		ChainType::Local,
-		move || RococoGenesisExt {
+		move || BetanetGenesisExt {
 			runtime_genesis_config: versi_local_testnet_genesis(wasm_binary),
 			// Use 1 minute session length.
 			session_length_in_blocks: Some(10),

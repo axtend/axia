@@ -14,7 +14,7 @@ axia-node-core-pvf = { path = "../../core/pvf" }
 axia-erasure-coding = { path = "../../../erasure-coding" }
 axia-node-primitives = { path = "../../primitives" }
 
-kusama-runtime = { path = "../../../runtime/kusama" }
+axctest-runtime = { path = "../../../runtime/axctest" }
 
 [[bin]]
 name = "gen-ref-constants"

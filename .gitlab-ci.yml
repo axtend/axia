@@ -492,15 +492,15 @@ update_axia_weights:           &update-weights
   tags:
     - weights
 
-update_kusama_weights:
+update_axctest_weights:
   <<:                              *update-weights
   variables:
-    RUNTIME:                       kusama
+    RUNTIME:                       axctest
 
-update_westend_weights:
+update_alphanet_weights:
   <<:                              *update-weights
   variables:
-    RUNTIME:                       westend
+    RUNTIME:                       alphanet
 
 #### stage:                        publish
 

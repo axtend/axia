@@ -10,8 +10,8 @@ HEAD_WS=ws://localhost:9944
 RELEASE_WS=ws://localhost:9945
 
 runtimes=(
-  "westend"
-  "kusama"
+  "alphanet"
+  "axctest"
   "axia"
 )
 

@@ -9,10 +9,10 @@ jobs:
     strategy:
       matrix:
         channel:
-          - name: '#KusamaValidatorLounge:axia.builders'
+          - name: '#AxiaTestValidatorLounge:axia.builders'
             room: '!LhjZccBOqFNYKLdmbb:axia.builders'
             pre-releases: false
-          - name: '#kusama-announcements:matrix.parity.io'
+          - name: '#axctest-announcements:matrix.parity.io'
             room: '!FMwxpQnYhRCNDRsYGI:matrix.parity.io'
             pre-release: false
           - name: '#axiavalidatorlounge:web3.foundation'

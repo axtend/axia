@@ -22,10 +22,10 @@ use strum::{EnumString, EnumVariantNames};
 pub enum FullBridge {
 	MillauToRialto,
 	RialtoToMillau,
-	RococoToWococo,
-	WococoToRococo,
-	KusamaToAxia,
-	AxiaToKusama,
+	BetanetToWococo,
+	WococoToBetanet,
+	AxiaTestToAxia,
+	AxiaToAxiaTest,
 }
 
 impl FullBridge {
@@ -34,20 +34,20 @@ impl FullBridge {
 		match self {
 			Self::MillauToRialto => MILLAU_TO_RIALTO_INDEX,
 			Self::RialtoToMillau => RIALTO_TO_MILLAU_INDEX,
-			Self::RococoToWococo => ROCOCO_TO_WOCOCO_INDEX,
-			Self::WococoToRococo => WOCOCO_TO_ROCOCO_INDEX,
-			Self::KusamaToAxia => KUSAMA_TO_AXIA_INDEX,
-			Self::AxiaToKusama => AXIA_TO_KUSAMA_INDEX,
+			Self::BetanetToWococo => BETANET_TO_WOCOCO_INDEX,
+			Self::WococoToBetanet => WOCOCO_TO_BETANET_INDEX,
+			Self::AxiaTestToAxia => AXIATEST_TO_AXIA_INDEX,
+			Self::AxiaToAxiaTest => AXIA_TO_AXIATEST_INDEX,
 		}
 	}
 }
 
 pub const RIALTO_TO_MILLAU_INDEX: u8 = 0;
 pub const MILLAU_TO_RIALTO_INDEX: u8 = 0;
-pub const ROCOCO_TO_WOCOCO_INDEX: u8 = 0;
-pub const WOCOCO_TO_ROCOCO_INDEX: u8 = 0;
-pub const KUSAMA_TO_AXIA_INDEX: u8 = 0;
-pub const AXIA_TO_KUSAMA_INDEX: u8 = 0;
+pub const BETANET_TO_WOCOCO_INDEX: u8 = 0;
+pub const WOCOCO_TO_BETANET_INDEX: u8 = 0;
+pub const AXIATEST_TO_AXIA_INDEX: u8 = 0;
+pub const AXIA_TO_AXIATEST_INDEX: u8 = 0;
 
 /// The macro allows executing bridge-specific code without going fully generic.
 ///
@@ -102,91 +102,91 @@ macro_rules! select_full_bridge {
 
 				$generic
 			}
-			FullBridge::RococoToWococo => {
-				type Source = relay_rococo_client::Rococo;
+			FullBridge::BetanetToWococo => {
+				type Source = relay_betanet_client::Betanet;
 				#[allow(dead_code)]
 				type Target = relay_wococo_client::Wococo;
 
 				// Derive-account
 				#[allow(unused_imports)]
-				use bp_wococo::derive_account_from_rococo_id as derive_account;
+				use bp_wococo::derive_account_from_betanet_id as derive_account;
 
 				// Relay-messages
 				#[allow(unused_imports)]
-				use crate::chains::rococo_messages_to_wococo::run as relay_messages;
+				use crate::chains::betanet_messages_to_wococo::run as relay_messages;
 
 				// Send-message / Estimate-fee
 				#[allow(unused_imports)]
 				use bp_wococo::TO_WOCOCO_ESTIMATE_MESSAGE_FEE_METHOD as ESTIMATE_MESSAGE_FEE_METHOD;
 				// Send-message
 				#[allow(unused_imports)]
-				use relay_rococo_client::runtime::rococo_to_wococo_account_ownership_digest as account_ownership_digest;
+				use relay_betanet_client::runtime::betanet_to_wococo_account_ownership_digest as account_ownership_digest;
 
 				$generic
 			}
-			FullBridge::WococoToRococo => {
+			FullBridge::WococoToBetanet => {
 				type Source = relay_wococo_client::Wococo;
 				#[allow(dead_code)]
-				type Target = relay_rococo_client::Rococo;
+				type Target = relay_betanet_client::Betanet;
 
 				// Derive-account
 				#[allow(unused_imports)]
-				use bp_rococo::derive_account_from_wococo_id as derive_account;
+				use bp_betanet::derive_account_from_wococo_id as derive_account;
 
 				// Relay-messages
 				#[allow(unused_imports)]
-				use crate::chains::wococo_messages_to_rococo::run as relay_messages;
+				use crate::chains::wococo_messages_to_betanet::run as relay_messages;
 
 				// Send-message / Estimate-fee
 				#[allow(unused_imports)]
-				use bp_rococo::TO_ROCOCO_ESTIMATE_MESSAGE_FEE_METHOD as ESTIMATE_MESSAGE_FEE_METHOD;
+				use bp_betanet::TO_BETANET_ESTIMATE_MESSAGE_FEE_METHOD as ESTIMATE_MESSAGE_FEE_METHOD;
 				// Send-message
 				#[allow(unused_imports)]
-				use relay_wococo_client::runtime::wococo_to_rococo_account_ownership_digest as account_ownership_digest;
+				use relay_wococo_client::runtime::wococo_to_betanet_account_ownership_digest as account_ownership_digest;
 
 				$generic
 			}
-			FullBridge::KusamaToAxia => {
-				type Source = relay_kusama_client::Kusama;
+			FullBridge::AxiaTestToAxia => {
+				type Source = relay_axctest_client::AxiaTest;
 				#[allow(dead_code)]
 				type Target = relay_axia_client::Axia;
 
 				// Derive-account
 				#[allow(unused_imports)]
-				use bp_axia::derive_account_from_kusama_id as derive_account;
+				use bp_axia::derive_account_from_axctest_id as derive_account;
 
 				// Relay-messages
 				#[allow(unused_imports)]
-				use crate::chains::kusama_messages_to_axia::run as relay_messages;
+				use crate::chains::axctest_messages_to_axia::run as relay_messages;
 
 				// Send-message / Estimate-fee
 				#[allow(unused_imports)]
 				use bp_axia::TO_AXIA_ESTIMATE_MESSAGE_FEE_METHOD as ESTIMATE_MESSAGE_FEE_METHOD;
 				// Send-message
 				#[allow(unused_imports)]
-				use relay_kusama_client::runtime::kusama_to_axia_account_ownership_digest as account_ownership_digest;
+				use relay_axctest_client::runtime::axctest_to_axia_account_ownership_digest as account_ownership_digest;
 
 				$generic
 			}
-			FullBridge::AxiaToKusama => {
+			FullBridge::AxiaToAxiaTest => {
 				type Source = relay_axia_client::Axia;
 				#[allow(dead_code)]
-				type Target = relay_kusama_client::Kusama;
+				type Target = relay_axctest_client::AxiaTest;
 
 				// Derive-account
 				#[allow(unused_imports)]
-				use bp_kusama::derive_account_from_axia_id as derive_account;
+				use bp_axctest::derive_account_from_axia_id as derive_account;
 
 				// Relay-messages
 				#[allow(unused_imports)]
-				use crate::chains::axia_messages_to_kusama::run as relay_messages;
+				use crate::chains::axia_messages_to_axctest::run as relay_messages;
 
 				// Send-message / Estimate-fee
 				#[allow(unused_imports)]
-				use bp_kusama::TO_KUSAMA_ESTIMATE_MESSAGE_FEE_METHOD as ESTIMATE_MESSAGE_FEE_METHOD;
+				use bp_axctest::TO_AXIATEST_ESTIMATE_MESSAGE_FEE_METHOD as ESTIMATE_MESSAGE_FEE_METHOD;
 				// Send-message
 				#[allow(unused_imports)]
-				use relay_axia_client::runtime::axia_to_kusama_account_ownership_digest as account_ownership_digest;
+				use relay_axia_client::runtime::axia_to_axctest_account_ownership_digest as account_ownership_digest;
 
 				$generic
 			}

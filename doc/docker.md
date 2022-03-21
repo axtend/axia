@@ -4,7 +4,7 @@
 
 The easiest/faster option to run Axia in Docker is to use the latest release images. These are small images that use the latest official release of the Axia binary, pulled from our package repository.
 
-**_Following examples are running on westend chain and without SSL. They can be used to quick start and learn how Axia needs to be configured. Please find out how to secure your node, if you want to operate it on the internet. Do not expose RPC and WS ports, if they are not correctly configured._**
+**_Following examples are running on alphanet chain and without SSL. They can be used to quick start and learn how Axia needs to be configured. Please find out how to secure your node, if you want to operate it on the internet. Do not expose RPC and WS ports, if they are not correctly configured._**
 
 Let's first check the version we have. The first time you run this command, the Axia docker image will be downloaded. This takes a bit of time and bandwidth, be patient:
 
@@ -15,7 +15,7 @@ docker run --rm -it parity/axia:latest --version
 You can also pass any argument/flag that Axia supports:
 
 ```bash
-docker run --rm -it parity/axia:latest --chain westend --name "PolkaDocker"
+docker run --rm -it parity/axia:latest --chain alphanet --name "PolkaDocker"
 ```
 
 ## Examples
@@ -25,19 +25,19 @@ Once you are done experimenting and picking the best node name :) you can start 
 To start a Axia node on default rpc port 9933 and default p2p port 30333 use the following command. If you want to connect to rpc port 9933, then must add Axia startup parameter: `--rpc-external`.
 
 ```bash
-docker run -d -p 30333:30333 -p 9933:9933 -v /my/local/folder:/axia parity/axia:latest --chain westend --rpc-external --rpc-cors all
+docker run -d -p 30333:30333 -p 9933:9933 -v /my/local/folder:/axia parity/axia:latest --chain alphanet --rpc-external --rpc-cors all
 ```
 
 Additionally if you want to have custom node name you can add the `--name "YourName"` at the end
 
 ```bash
-docker run -d -p 30333:30333 -p 9933:9933 -v /my/local/folder:/axia parity/axia:latest --chain westend --rpc-external --rpc-cors all --name "PolkaDocker"
+docker run -d -p 30333:30333 -p 9933:9933 -v /my/local/folder:/axia parity/axia:latest --chain alphanet --rpc-external --rpc-cors all --name "PolkaDocker"
 ```
 
 If you also want to expose the webservice port 9944 use the following command:
 
 ```bash
-docker run -d -p 30333:30333 -p 9933:9933 -p 9944:9944 -v /my/local/folder:/axia parity/axia:latest --chain westend --ws-external --rpc-external --rpc-cors all --name "PolkaDocker"
+docker run -d -p 30333:30333 -p 9933:9933 -p 9944:9944 -v /my/local/folder:/axia parity/axia:latest --chain alphanet --ws-external --rpc-external --rpc-cors all --name "PolkaDocker"
 ```
 
 ## Using Docker compose

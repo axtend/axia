@@ -18,7 +18,7 @@ use beefy_primitives::crypto::AuthorityId as BeefyId;
 use bp_millau::derive_account_from_rialto_id;
 use millau_runtime::{
 	AccountId, AuraConfig, BalancesConfig, BeefyConfig, BridgeRialtoMessagesConfig,
-	BridgeWestendGrandpaConfig, GenesisConfig, GrandpaConfig, SessionConfig, SessionKeys,
+	BridgeAlphanetGrandpaConfig, GenesisConfig, GrandpaConfig, SessionConfig, SessionKeys,
 	Signature, SudoConfig, SystemConfig, WASM_BINARY,
 };
 use sp_consensus_aura::sr25519::AuthorityId as AuraId;
@@ -204,10 +204,10 @@ fn testnet_genesis(
 				})
 				.collect::<Vec<_>>(),
 		},
-		bridge_westend_grandpa: BridgeWestendGrandpaConfig {
+		bridge_alphanet_grandpa: BridgeAlphanetGrandpaConfig {
 			// for our deployments to avoid multiple same-nonces transactions:
 			// //Alice is already used to initialize Rialto<->Millau bridge
-			// => let's use //George to initialize Westend->Millau bridge
+			// => let's use //George to initialize Alphanet->Millau bridge
 			owner: Some(get_account_id_from_seed::<sr25519::Public>("George")),
 			..Default::default()
 		},

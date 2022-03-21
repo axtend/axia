@@ -33,21 +33,21 @@ beefy-primitives = { git = "https://github.com/axtend/axlib", branch = "axlib" }
 
 # Axia Runtimes
 axia-runtime = { path = "../../runtime/axia", optional = true }
-kusama-runtime = { path = "../../runtime/kusama", optional = true }
-westend-runtime = { path = "../../runtime/westend", optional = true }
-rococo-runtime = { path = "../../runtime/rococo", optional = true }
+axctest-runtime = { path = "../../runtime/axctest", optional = true }
+alphanet-runtime = { path = "../../runtime/alphanet", optional = true }
+betanet-runtime = { path = "../../runtime/betanet", optional = true }
 
 axia-primitives = { path = "../../primitives" }
 
 [features]
 default = ["axia"]
 axia = ["axia-runtime"]
-kusama = ["kusama-runtime"]
-rococo = ["rococo-runtime"]
-westend = ["westend-runtime"]
+axctest = ["axctest-runtime"]
+betanet = ["betanet-runtime"]
+alphanet = ["alphanet-runtime"]
 runtime-metrics = [
-    "rococo-runtime/runtime-metrics",
-    "kusama-runtime/runtime-metrics",
-    "westend-runtime/runtime-metrics",
+    "betanet-runtime/runtime-metrics",
+    "axctest-runtime/runtime-metrics",
+    "alphanet-runtime/runtime-metrics",
     "axia-runtime/runtime-metrics",
 ]

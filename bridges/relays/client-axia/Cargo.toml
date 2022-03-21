@@ -14,7 +14,7 @@ scale-info = { version = "1.0", features = ["derive"] }
 # Bridge dependencies
 
 bp-header-chain = { path = "../../primitives/header-chain" }
-bp-kusama = { path = "../../primitives/chain-kusama" }
+bp-axctest = { path = "../../primitives/chain-axctest" }
 bp-message-dispatch = { path = "../../primitives/message-dispatch" }
 bp-messages = { path = "../../primitives/messages" }
 bp-axia = { path = "../../primitives/chain-axia" }

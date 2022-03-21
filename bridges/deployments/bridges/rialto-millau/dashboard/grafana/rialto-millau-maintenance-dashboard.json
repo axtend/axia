@@ -169,9 +169,9 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "kusama_to_base_conversion_rate{instance='relay-millau-rialto:9616'} / axia_to_base_conversion_rate{instance='relay-millau-rialto:9616'}",
+          "expr": "axctest_to_base_conversion_rate{instance='relay-millau-rialto:9616'} / axia_to_base_conversion_rate{instance='relay-millau-rialto:9616'}",
           "interval": "",
-          "legendFormat": "Outside of runtime (actually Axia -> Kusama)",
+          "legendFormat": "Outside of runtime (actually Axia -> AxiaTest)",
           "refId": "A"
         },
         {
@@ -377,9 +377,9 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "axia_to_base_conversion_rate{instance='relay-millau-rialto:9616'} / kusama_to_base_conversion_rate{instance='relay-millau-rialto:9616'}",
+          "expr": "axia_to_base_conversion_rate{instance='relay-millau-rialto:9616'} / axctest_to_base_conversion_rate{instance='relay-millau-rialto:9616'}",
           "interval": "",
-          "legendFormat": "Outside of runtime (actually Kusama -> Axia)",
+          "legendFormat": "Outside of runtime (actually AxiaTest -> Axia)",
           "refId": "A"
         },
         {

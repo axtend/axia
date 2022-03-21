@@ -27,15 +27,15 @@ use sp_runtime::FixedU128;
 /// Unchecked Axia extrinsic.
 pub type UncheckedExtrinsic = bp_axia_core::UncheckedExtrinsic<Call>;
 
-/// Kusama account ownership digest from Axia.
+/// AxiaTest account ownership digest from Axia.
 ///
-/// The byte vector returned by this function should be signed with a Kusama account private key.
-/// This way, the owner of `kusam_account_id` on Axia proves that the Kusama account private key
+/// The byte vector returned by this function should be signed with a AxiaTest account private key.
+/// This way, the owner of `kusam_account_id` on Axia proves that the AxiaTest account private key
 /// is also under his control.
-pub fn axia_to_kusama_account_ownership_digest<Call, AccountId, SpecVersion>(
-	kusama_call: &Call,
+pub fn axia_to_axctest_account_ownership_digest<Call, AccountId, SpecVersion>(
+	axctest_call: &Call,
 	kusam_account_id: AccountId,
-	kusama_spec_version: SpecVersion,
+	axctest_spec_version: SpecVersion,
 ) -> Vec<u8>
 where
 	Call: codec::Encode,
@@ -43,11 +43,11 @@ where
 	SpecVersion: codec::Encode,
 {
 	pallet_bridge_dispatch::account_ownership_digest(
-		kusama_call,
+		axctest_call,
 		kusam_account_id,
-		kusama_spec_version,
+		axctest_spec_version,
 		bp_runtime::AXIA_CHAIN_ID,
-		bp_runtime::KUSAMA_CHAIN_ID,
+		bp_runtime::AXIATEST_CHAIN_ID,
 	)
 }
 
@@ -60,7 +60,7 @@ where
 /// All entries here (like pretty much in the entire file) must be kept in sync with Axia
 /// `construct_runtime`, so that we maintain SCALE-compatibility.
 ///
-/// See: [link](https://github.com/paritytech/kusama/blob/master/runtime/kusam/src/lib.rs)
+/// See: [link](https://github.com/paritytech/axctest/blob/master/runtime/kusam/src/lib.rs)
 #[allow(clippy::large_enum_variant)]
 #[derive(Encode, Decode, Debug, PartialEq, Eq, Clone, TypeInfo)]
 pub enum Call {
@@ -70,12 +70,12 @@ pub enum Call {
 	/// Balances pallet.
 	#[codec(index = 5)]
 	Balances(BalancesCall),
-	/// Kusama bridge pallet.
+	/// AxiaTest bridge pallet.
 	#[codec(index = 110)]
-	BridgeKusamaGrandpa(BridgeKusamaGrandpaCall),
-	/// Kusama messages pallet.
+	BridgeAxiaTestGrandpa(BridgeAxiaTestGrandpaCall),
+	/// AxiaTest messages pallet.
 	#[codec(index = 111)]
-	BridgeKusamaMessages(BridgeKusamaMessagesCall),
+	BridgeAxiaTestMessages(BridgeAxiaTestMessagesCall),
 }
 
 #[derive(Encode, Decode, Debug, PartialEq, Eq, Clone, TypeInfo)]
@@ -94,7 +94,7 @@ pub enum BalancesCall {
 
 #[derive(Encode, Decode, Debug, PartialEq, Eq, Clone, TypeInfo)]
 #[allow(non_camel_case_types)]
-pub enum BridgeKusamaGrandpaCall {
+pub enum BridgeAxiaTestGrandpaCall {
 	#[codec(index = 0)]
 	submit_finality_proof(
 		Box<<AxiaLike as Chain>::Header>,
@@ -106,40 +106,40 @@ pub enum BridgeKusamaGrandpaCall {
 
 #[derive(Encode, Decode, Debug, PartialEq, Eq, Clone, TypeInfo)]
 #[allow(non_camel_case_types)]
-pub enum BridgeKusamaMessagesCall {
+pub enum BridgeAxiaTestMessagesCall {
 	#[codec(index = 2)]
-	update_pallet_parameter(BridgeKusamaMessagesParameter),
+	update_pallet_parameter(BridgeAxiaTestMessagesParameter),
 	#[codec(index = 3)]
 	send_message(
 		LaneId,
 		bp_message_dispatch::MessagePayload<
 			bp_axia::AccountId,
-			bp_kusama::AccountId,
-			bp_kusama::AccountPublic,
+			bp_axctest::AccountId,
+			bp_axctest::AccountPublic,
 			Vec<u8>,
 		>,
 		bp_axia::Balance,
 	),
 	#[codec(index = 5)]
 	receive_messages_proof(
-		bp_kusama::AccountId,
-		bridge_runtime_common::messages::target::FromBridgedChainMessagesProof<bp_kusama::Hash>,
+		bp_axctest::AccountId,
+		bridge_runtime_common::messages::target::FromBridgedChainMessagesProof<bp_axctest::Hash>,
 		u32,
 		Weight,
 	),
 	#[codec(index = 6)]
 	receive_messages_delivery_proof(
 		bridge_runtime_common::messages::source::FromBridgedChainMessagesDeliveryProof<
-			bp_kusama::Hash,
+			bp_axctest::Hash,
 		>,
 		UnrewardedRelayersState,
 	),
 }
 
 #[derive(Encode, Decode, Debug, PartialEq, Eq, Clone, TypeInfo)]
-pub enum BridgeKusamaMessagesParameter {
+pub enum BridgeAxiaTestMessagesParameter {
 	#[codec(index = 0)]
-	KusamaToAxiaConversionRate(FixedU128),
+	AxiaTestToAxiaConversionRate(FixedU128),
 }
 
 impl sp_runtime::traits::Dispatchable for Call {

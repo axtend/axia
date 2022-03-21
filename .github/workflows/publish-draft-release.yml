@@ -24,7 +24,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        runtime: ["axia", "kusama", "westend"]
+        runtime: ["axia", "axctest", "alphanet"]
     steps:
       - name: Checkout sources
         uses: actions/checkout@v2
@@ -103,15 +103,15 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NO_CACHE: 1
           DEBUG: 1
-          WESTEND_DIGEST: ${{ github.workspace}}/westend-srtool-json/westend_srtool_output.json
-          KUSAMA_DIGEST: ${{ github.workspace}}/kusama-srtool-json/kusama_srtool_output.json
+          ALPHANET_DIGEST: ${{ github.workspace}}/alphanet-srtool-json/alphanet_srtool_output.json
+          AXIATEST_DIGEST: ${{ github.workspace}}/axctest-srtool-json/axctest_srtool_output.json
           AXIA_DIGEST: ${{ github.workspace}}/axia-srtool-json/axia_srtool_output.json
           PRE_RELEASE: ${{ github.event.inputs.pre_release }}
-          HIDE_SRTOOL_ROCOCO: false
+          HIDE_SRTOOL_BETANET: false
         run: |
           find ${{env.GITHUB_WORKSPACE}} -type f -name "*_srtool_output.json"
-          ls -al $WESTEND_DIGEST
-          ls -al $KUSAMA_DIGEST
+          ls -al $ALPHANET_DIGEST
+          ls -al $AXIATEST_DIGEST
           ls -al $AXIA_DIGEST
 
           cd axia/scripts/changelog
@@ -146,7 +146,7 @@ jobs:
       RUNTIME_DIR: runtime
     strategy:
       matrix:
-        runtime: ["axia", "kusama", "westend"]
+        runtime: ["axia", "axctest", "alphanet"]
     steps:
       - name: Checkout sources
         uses: actions/checkout@v2

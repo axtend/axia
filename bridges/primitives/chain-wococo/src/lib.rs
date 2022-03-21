@@ -24,21 +24,21 @@ use bp_messages::{LaneId, MessageDetails, MessageNonce, UnrewardedRelayersState}
 use sp_std::prelude::*;
 
 pub use bp_axia_core::*;
-// Rococo runtime = Wococo runtime
-pub use bp_rococo::{WeightToFee, PAY_INBOUND_DISPATCH_FEE_WEIGHT, SESSION_LENGTH, VERSION};
+// Betanet runtime = Wococo runtime
+pub use bp_betanet::{WeightToFee, PAY_INBOUND_DISPATCH_FEE_WEIGHT, SESSION_LENGTH, VERSION};
 
 /// Wococo Chain
 pub type Wococo = AxiaLike;
 
-// We use this to get the account on Wococo (target) which is derived from Rococo's (source)
+// We use this to get the account on Wococo (target) which is derived from Betanet's (source)
 // account.
-pub fn derive_account_from_rococo_id(id: bp_runtime::SourceAccount<AccountId>) -> AccountId {
-	let encoded_id = bp_runtime::derive_account_id(bp_runtime::ROCOCO_CHAIN_ID, id);
+pub fn derive_account_from_betanet_id(id: bp_runtime::SourceAccount<AccountId>) -> AccountId {
+	let encoded_id = bp_runtime::derive_account_id(bp_runtime::BETANET_CHAIN_ID, id);
 	AccountIdConverter::convert(encoded_id)
 }
 
-/// Name of the With-Rococo messages pallet instance in the Wococo runtime.
-pub const WITH_ROCOCO_MESSAGES_PALLET_NAME: &str = "BridgeRococoMessages";
+/// Name of the With-Betanet messages pallet instance in the Wococo runtime.
+pub const WITH_BETANET_MESSAGES_PALLET_NAME: &str = "BridgeBetanetMessages";
 
 /// Name of the `WococoFinalityApi::best_finalized` runtime method.
 pub const BEST_FINALIZED_WOCOCO_HEADER_METHOD: &str = "WococoFinalityApi_best_finalized";

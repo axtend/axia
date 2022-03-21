@@ -50,11 +50,11 @@ pub struct RelayHeaders {
 pub enum RelayHeadersBridge {
 	MillauToRialto,
 	RialtoToMillau,
-	WestendToMillau,
-	RococoToWococo,
-	WococoToRococo,
-	KusamaToAxia,
-	AxiaToKusama,
+	AlphanetToMillau,
+	BetanetToWococo,
+	WococoToBetanet,
+	AxiaTestToAxia,
+	AxiaToAxiaTest,
 }
 
 macro_rules! select_bridge {
@@ -74,38 +74,38 @@ macro_rules! select_bridge {
 
 				$generic
 			},
-			RelayHeadersBridge::WestendToMillau => {
-				type Source = relay_westend_client::Westend;
+			RelayHeadersBridge::AlphanetToMillau => {
+				type Source = relay_alphanet_client::Alphanet;
 				type Target = relay_millau_client::Millau;
-				type Finality = crate::chains::westend_headers_to_millau::WestendFinalityToMillau;
+				type Finality = crate::chains::alphanet_headers_to_millau::AlphanetFinalityToMillau;
 
 				$generic
 			},
-			RelayHeadersBridge::RococoToWococo => {
-				type Source = relay_rococo_client::Rococo;
+			RelayHeadersBridge::BetanetToWococo => {
+				type Source = relay_betanet_client::Betanet;
 				type Target = relay_wococo_client::Wococo;
-				type Finality = crate::chains::rococo_headers_to_wococo::RococoFinalityToWococo;
+				type Finality = crate::chains::betanet_headers_to_wococo::BetanetFinalityToWococo;
 
 				$generic
 			},
-			RelayHeadersBridge::WococoToRococo => {
+			RelayHeadersBridge::WococoToBetanet => {
 				type Source = relay_wococo_client::Wococo;
-				type Target = relay_rococo_client::Rococo;
-				type Finality = crate::chains::wococo_headers_to_rococo::WococoFinalityToRococo;
+				type Target = relay_betanet_client::Betanet;
+				type Finality = crate::chains::wococo_headers_to_betanet::WococoFinalityToBetanet;
 
 				$generic
 			},
-			RelayHeadersBridge::KusamaToAxia => {
-				type Source = relay_kusama_client::Kusama;
+			RelayHeadersBridge::AxiaTestToAxia => {
+				type Source = relay_axctest_client::AxiaTest;
 				type Target = relay_axia_client::Axia;
-				type Finality = crate::chains::kusama_headers_to_axia::KusamaFinalityToAxia;
+				type Finality = crate::chains::axctest_headers_to_axia::AxiaTestFinalityToAxia;
 
 				$generic
 			},
-			RelayHeadersBridge::AxiaToKusama => {
+			RelayHeadersBridge::AxiaToAxiaTest => {
 				type Source = relay_axia_client::Axia;
-				type Target = relay_kusama_client::Kusama;
-				type Finality = crate::chains::axia_headers_to_kusama::AxiaFinalityToKusama;
+				type Target = relay_axctest_client::AxiaTest;
+				type Finality = crate::chains::axia_headers_to_axctest::AxiaFinalityToAxiaTest;
 
 				$generic
 			},

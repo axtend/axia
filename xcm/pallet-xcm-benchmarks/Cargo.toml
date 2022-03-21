@@ -30,7 +30,7 @@ xcm = { path = ".." }
 # temp
 pallet-xcm = { path = "../pallet-xcm" }
 axia-runtime-common = { path = "../../runtime/common" }
-# westend-runtime = { path = "../../runtime/westend", features = ["runtime-benchmarks"] }
+# alphanet-runtime = { path = "../../runtime/alphanet", features = ["runtime-benchmarks"] }
 axia-primitives = { path = "../../primitives" }
 
 [features]

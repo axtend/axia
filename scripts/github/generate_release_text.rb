@@ -126,8 +126,8 @@ release_priority = Changelog.highest_priority_for_changes(client_changes)
 rustc_stable = ENV['RUSTC_STABLE']
 rustc_nightly = ENV['RUSTC_NIGHTLY']
 axia_runtime = get_runtime('axia', axia_path)
-kusama_runtime = get_runtime('kusama', axia_path)
-westend_runtime = get_runtime('westend', axia_path)
+axctest_runtime = get_runtime('axctest', axia_path)
+alphanet_runtime = get_runtime('alphanet', axia_path)
 
 # These json files should have been downloaded as part of the build-runtimes
 # github action
@@ -138,9 +138,9 @@ axia_json = JSON.parse(
   )
 )
 
-kusama_json = JSON.parse(
+axctest_json = JSON.parse(
   File.read(
-    "#{ENV['GITHUB_WORKSPACE']}/kusama-srtool-json/kusama_srtool_output.json"
+    "#{ENV['GITHUB_WORKSPACE']}/axctest-srtool-json/axctest_srtool_output.json"
   )
 )
 

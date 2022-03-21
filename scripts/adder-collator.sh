@@ -4,7 +4,7 @@
 
 set -e
 
-chainspec="rococo-local"
+chainspec="betanet-local"
 
 # disabled until we can actually successfully register the chain with axia-js-api
 # if ! command -v axia-js-api > /dev/null; then

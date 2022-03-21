@@ -62,9 +62,9 @@ fast-runtime = ["service/fast-runtime"]
 #
 # Validators require the native runtime currently
 axia-native = ["service/axia-native"]
-kusama-native = ["service/kusama-native"]
-westend-native = ["service/westend-native"]
-rococo-native = ["service/rococo-native"]
+axctest-native = ["service/axctest-native"]
+alphanet-native = ["service/alphanet-native"]
+betanet-native = ["service/betanet-native"]
 
 malus = ["full-node", "service/malus"]
 runtime-metrics = ["service/runtime-metrics", "axia-node-metrics/runtime-metrics"]

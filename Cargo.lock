@@ -553,10 +553,10 @@ dependencies = [
  "beefy-primitives",
  "frame-benchmarking",
  "frame-system-rpc-runtime-api",
- "kusama-runtime",
+ "axctest-runtime",
  "pallet-mmr-primitives",
  "pallet-transaction-payment-rpc-runtime-api",
- "rococo-runtime",
+ "betanet-runtime",
  "sc-client-api",
  "sc-consensus",
  "sc-executor",
@@ -573,7 +573,7 @@ dependencies = [
  "sp-session",
  "sp-storage",
  "sp-transaction-pool",
- "westend-runtime",
+ "alphanet-runtime",
 ]
 
 [[package]]
@@ -1256,7 +1256,7 @@ dependencies = [
  "axia-node-core-pvf",
  "axia-node-primitives",
  "env_logger",
- "kusama-runtime",
+ "axctest-runtime",
  "log",
  "quote",
  "thiserror",
@@ -1593,8 +1593,8 @@ dependencies = [
  "frame-system-rpc-runtime-api",
  "futures 0.3.21",
  "hex-literal",
- "kusama-runtime",
- "kusama-runtime-constants",
+ "axctest-runtime",
+ "axctest-runtime-constants",
  "kvdb",
  "kvdb-rocksdb",
  "log",
@@ -1604,8 +1604,8 @@ dependencies = [
  "pallet-mmr-primitives",
  "pallet-staking",
  "pallet-transaction-payment-rpc-runtime-api",
- "rococo-runtime",
- "rococo-runtime-constants",
+ "betanet-runtime",
+ "betanet-runtime-constants",
  "sc-authority-discovery",
  "sc-basic-authorship",
  "sc-block-builder",
@@ -1648,8 +1648,8 @@ dependencies = [
  "substrate-prometheus-endpoint",
  "thiserror",
  "tracing",
- "westend-runtime",
- "westend-runtime-constants",
+ "alphanet-runtime",
+ "alphanet-runtime-constants",
 ]
 
 [[package]]
@@ -1872,9 +1872,9 @@ dependencies = [
  "axia-runtime",
  "clap",
  "generate-bags",
- "kusama-runtime",
+ "axctest-runtime",
  "sp-io",
- "westend-runtime",
+ "alphanet-runtime",
 ]
 
 [[package]]
@@ -2231,7 +2231,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "bp-rococo"
+name = "bp-betanet"
 version = "0.1.0"
 dependencies = [
  "bp-axia-core",
@@ -2284,7 +2284,7 @@ version = "0.1.0"
 dependencies = [
  "bp-axia-core",
  "bp-messages",
- "bp-rococo",
+ "bp-betanet",
  "bp-runtime",
  "parity-scale-codec",
  "sp-api",
@@ -4686,7 +4686,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "kusama-runtime"
+name = "axctest-runtime"
 version = "0.9.17"
 dependencies = [
  "axia-primitives",
@@ -4703,7 +4703,7 @@ dependencies = [
  "frame-system-rpc-runtime-api",
  "frame-try-runtime",
  "hex-literal",
- "kusama-runtime-constants",
+ "axctest-runtime-constants",
  "log",
  "pallet-authority-discovery",
  "pallet-authorship",
@@ -4778,7 +4778,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "kusama-runtime-constants"
+name = "axctest-runtime-constants"
 version = "0.9.17"
 dependencies = [
  "axia-primitives",
@@ -7916,15 +7916,15 @@ dependencies = [
  "axia-runtime-constants",
  "clap",
  "frame-system",
- "kusama-runtime",
- "kusama-runtime-constants",
+ "axctest-runtime",
+ "axctest-runtime-constants",
  "log",
  "pallet-bags-list-remote-tests",
  "sp-core",
  "sp-tracing",
  "tokio",
- "westend-runtime",
- "westend-runtime-constants",
+ "alphanet-runtime",
+ "alphanet-runtime-constants",
 ]
 
 [[package]]
@@ -8031,7 +8031,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "rococo-runtime"
+name = "betanet-runtime"
 version = "0.9.17"
 dependencies = [
  "axia-allychain",
@@ -8040,7 +8040,7 @@ dependencies = [
  "axia-runtime-common",
  "beefy-primitives",
  "bp-messages",
- "bp-rococo",
+ "bp-betanet",
  "bp-runtime",
  "bp-wococo",
  "bridge-runtime-common",
@@ -8079,7 +8079,7 @@ dependencies = [
  "pallet-utility",
  "pallet-xcm",
  "parity-scale-codec",
- "rococo-runtime-constants",
+ "betanet-runtime-constants",
  "scale-info",
  "serde",
  "serde_derive",
@@ -8105,7 +8105,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "rococo-runtime-constants"
+name = "betanet-runtime-constants"
 version = "0.9.17"
 dependencies = [
  "axia-primitives",
@@ -10327,7 +10327,7 @@ dependencies = [
  "frame-support",
  "frame-system",
  "jsonrpsee 0.8.0",
- "kusama-runtime",
+ "axctest-runtime",
  "log",
  "pallet-balances",
  "pallet-election-provider-multi-phase",
@@ -10347,7 +10347,7 @@ dependencies = [
  "sub-tokens",
  "thiserror",
  "tokio",
- "westend-runtime",
+ "alphanet-runtime",
 ]
 
 [[package]]
@@ -11753,7 +11753,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "westend-runtime"
+name = "alphanet-runtime"
 version = "0.9.17"
 dependencies = [
  "axia-allychain",
@@ -11835,14 +11835,14 @@ dependencies = [
  "sp-version",
  "substrate-wasm-builder",
  "tiny-keccak",
- "westend-runtime-constants",
+ "alphanet-runtime-constants",
  "xcm",
  "xcm-builder",
  "xcm-executor",
 ]
 
 [[package]]
-name = "westend-runtime-constants"
+name = "alphanet-runtime-constants"
 version = "0.9.17"
 dependencies = [
  "axia-primitives",

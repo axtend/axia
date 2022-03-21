@@ -6,8 +6,8 @@
 
 runtimes=(
   axia
-  kusama
-  westend
+  axctest
+  alphanet
 )
 
 for runtime in "${runtimes[@]}"; do

@@ -7,7 +7,7 @@ Implementation of a <https://axia.network> node in Rust based on the Substrate f
 
 [substrate-repo]: https://github.com/paritytech/substrate
 
-This repo contains runtimes for the Axia, Kusama, and Westend networks. The README provides
+This repo contains runtimes for the Axia, AxiaTest, and Alphanet networks. The README provides
 information about installing the `axia` binary and developing on the codebase. For more
 specific guides, like how to be a validator, see the
 [Axia Wiki](https://wiki.axia.network/docs/getting-started).
@@ -126,7 +126,7 @@ If you want to reproduce other steps of CI process you can use the following
 
 ## Networks
 
-This repo supports runtimes for Axia, Kusama, and Westend.
+This repo supports runtimes for Axia, AxiaTest, and Alphanet.
 
 ### Connect to Axia Mainnet
 
@@ -140,36 +140,36 @@ You can see your node on [telemetry] (set a custom name with `--name "my custom 
 
 [telemetry]: https://telemetry.axia.io/#list/Axia
 
-### Connect to the "Kusama" Canary Network
+### Connect to the "AxiaTest" Canary Network
 
-Connect to the global Kusama canary network by running:
+Connect to the global AxiaTest canary network by running:
 
 ```bash
-./target/release/axia --chain=kusama
+./target/release/axia --chain=axctest
 ```
 
 You can see your node on [telemetry] (set a custom name with `--name "my custom name"`).
 
-[telemetry]: https://telemetry.axia.io/#list/Kusama
+[telemetry]: https://telemetry.axia.io/#list/AxiaTest
 
-### Connect to the Westend Testnet
+### Connect to the Alphanet Testnet
 
-Connect to the global Westend testnet by running:
+Connect to the global Alphanet testnet by running:
 
 ```bash
-./target/release/axia --chain=westend
+./target/release/axia --chain=alphanet
 ```
 
 You can see your node on [telemetry] (set a custom name with `--name "my custom name"`).
 
-[telemetry]: https://telemetry.axia.io/#list/Westend
+[telemetry]: https://telemetry.axia.io/#list/Alphanet
 
 ### Obtaining DOTs
 
-If you want to do anything on Axia, Kusama, or Westend, then you'll need to get an account and
+If you want to do anything on Axia, AxiaTest, or Alphanet, then you'll need to get an account and
 some DOT, KSM, or WND tokens, respectively. See the
 [claims instructions](https://claims.axia.network/) for Axia if you have DOTs to claim. For
-Westend's WND tokens, see the faucet
+Alphanet's WND tokens, see the faucet
 [instructions](https://wiki.axia.network/docs/learn-DOT#getting-westies) on the Wiki.
 
 ## Hacking on Axia

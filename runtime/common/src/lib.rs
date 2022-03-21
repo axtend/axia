@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Axia.  If not, see <http://www.gnu.org/licenses/>.
 
-//! Common runtime code for Axia and Kusama.
+//! Common runtime code for Axia and AxiaTest.
 
 #![cfg_attr(not(feature = "std"), no_std)]
 

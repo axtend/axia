@@ -85,17 +85,17 @@ pub struct RunCmd {
 	#[clap(flatten)]
 	pub base: sc_cli::RunCmd,
 
-	/// Force using Kusama native runtime.
-	#[clap(long = "force-kusama")]
-	pub force_kusama: bool,
+	/// Force using AxiaTest native runtime.
+	#[clap(long = "force-axctest")]
+	pub force_axctest: bool,
 
-	/// Force using Westend native runtime.
-	#[clap(long = "force-westend")]
-	pub force_westend: bool,
+	/// Force using Alphanet native runtime.
+	#[clap(long = "force-alphanet")]
+	pub force_alphanet: bool,
 
-	/// Force using Rococo native runtime.
-	#[clap(long = "force-rococo")]
-	pub force_rococo: bool,
+	/// Force using Betanet native runtime.
+	#[clap(long = "force-betanet")]
+	pub force_betanet: bool,
 
 	/// Setup a GRANDPA scheduled voting pause.
 	///
@@ -106,7 +106,7 @@ pub struct RunCmd {
 	#[clap(long = "grandpa-pause", number_of_values(2))]
 	pub grandpa_pause: Vec<u32>,
 
-	/// Enable the BEEFY gadget (only on Rococo or Wococo for now).
+	/// Enable the BEEFY gadget (only on Betanet or Wococo for now).
 	#[clap(long)]
 	pub beefy: bool,
 

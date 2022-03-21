@@ -23,7 +23,7 @@ log = "0.4.13"
 test-allychain-adder = { path = ".." }
 axia-primitives = { path = "../../../../primitives" }
 axia-cli = { path = "../../../../cli" }
-axia-service = { path = "../../../../node/service", features = ["rococo-native"] }
+axia-service = { path = "../../../../node/service", features = ["betanet-native"] }
 axia-node-primitives = { path = "../../../../node/primitives" }
 axia-node-subsystem = { path = "../../../../node/subsystem" }
 

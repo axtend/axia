@@ -91,16 +91,16 @@ impl SubstrateCli for Cli {
 	}
 
 	fn load_spec(&self, id: &str) -> std::result::Result<Box<dyn sc_service::ChainSpec>, String> {
-		let id = if id.is_empty() { "rococo" } else { id };
+		let id = if id.is_empty() { "betanet" } else { id };
 		Ok(match id {
-			"rococo-staging" =>
-				Box::new(axia_service::chain_spec::rococo_staging_testnet_config()?),
-			"rococo-local" =>
-				Box::new(axia_service::chain_spec::rococo_local_testnet_config()?),
-			"rococo" => Box::new(axia_service::chain_spec::rococo_config()?),
+			"betanet-staging" =>
+				Box::new(axia_service::chain_spec::betanet_staging_testnet_config()?),
+			"betanet-local" =>
+				Box::new(axia_service::chain_spec::betanet_local_testnet_config()?),
+			"betanet" => Box::new(axia_service::chain_spec::betanet_config()?),
 			path => {
 				let path = std::path::PathBuf::from(path);
-				Box::new(axia_service::RococoChainSpec::from_json_file(path)?)
+				Box::new(axia_service::BetanetChainSpec::from_json_file(path)?)
 			},
 		})
 	}
@@ -108,6 +108,6 @@ impl SubstrateCli for Cli {
 	fn native_runtime_version(
 		_spec: &Box<dyn axia_service::ChainSpec>,
 	) -> &'static RuntimeVersion {
-		&axia_service::rococo_runtime::VERSION
+		&axia_service::betanet_runtime::VERSION
 	}
 }

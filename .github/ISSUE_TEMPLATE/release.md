@@ -7,7 +7,7 @@ title: Axia {{ env.VERSION }} Release checklist
 
 This is the release checklist for Axia {{ env.VERSION }}. **All** following
 checks should be completed before publishing a new release of the
-Axia/Kusama/Westend runtime or client. The current release candidate can be
+Axia/AxiaTest/Alphanet runtime or client. The current release candidate can be
 checked out with `git checkout release-{{ env.VERSION }}`
 
 ### Runtime Releases
@@ -37,7 +37,7 @@ candidate branch or started an additional release candidate branch (rc-2, rc-3, 
 - [ ] Verify [Axia JS API](https://github.com/paritytech/axia/blob/master/doc/release-checklist.md#axia-js) are up to date with the latest
     runtime changes.
 - [ ] Check with the Signer's team to make sure metadata update QR are lined up
-- [ ] Push runtime upgrade to Westend and verify network stability.
+- [ ] Push runtime upgrade to Alphanet and verify network stability.
 
 ### All Releases
 

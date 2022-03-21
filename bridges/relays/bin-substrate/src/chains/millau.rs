@@ -37,7 +37,7 @@ use sp_version::RuntimeVersion;
 // 1:1, we'll be treating Rialto as BTC and Millau as wBTC (only in relayer).
 
 /// The identifier of token, which value is associated with Millau token value by relayer.
-pub(crate) const ASSOCIATED_TOKEN_ID: &str = crate::chains::kusama::TOKEN_ID;
+pub(crate) const ASSOCIATED_TOKEN_ID: &str = crate::chains::axctest::TOKEN_ID;
 
 impl CliEncodeCall for Millau {
 	fn max_extrinsic_size() -> u32 {

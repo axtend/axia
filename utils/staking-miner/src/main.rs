@@ -48,8 +48,8 @@ use sp_runtime::{traits::Block as BlockT, DeserializeOwned};
 
 pub(crate) enum AnyRuntime {
 	Axia,
-	Kusama,
-	Westend,
+	AxiaTest,
+	Alphanet,
 }
 
 pub(crate) static mut RUNTIME: AnyRuntime = AnyRuntime::Axia;
@@ -127,12 +127,12 @@ fn signed_ext_builder_axia(
 	)
 }
 
-fn signed_ext_builder_kusama(
+fn signed_ext_builder_axctest(
 	nonce: Index,
 	tip: Balance,
 	era: sp_runtime::generic::Era,
-) -> kusama_runtime_exports::SignedExtra {
-	use kusama_runtime_exports::Runtime;
+) -> axctest_runtime_exports::SignedExtra {
+	use axctest_runtime_exports::Runtime;
 	(
 		frame_system::CheckNonZeroSender::<Runtime>::new(),
 		frame_system::CheckSpecVersion::<Runtime>::new(),
@@ -145,12 +145,12 @@ fn signed_ext_builder_kusama(
 	)
 }
 
-fn signed_ext_builder_westend(
+fn signed_ext_builder_alphanet(
 	nonce: Index,
 	tip: Balance,
 	era: sp_runtime::generic::Era,
-) -> westend_runtime_exports::SignedExtra {
-	use westend_runtime_exports::Runtime;
+) -> alphanet_runtime_exports::SignedExtra {
+	use alphanet_runtime_exports::Runtime;
 	(
 		frame_system::CheckNonZeroSender::<Runtime>::new(),
 		frame_system::CheckSpecVersion::<Runtime>::new(),
@@ -164,8 +164,8 @@ fn signed_ext_builder_westend(
 }
 
 construct_runtime_prelude!(axia);
-construct_runtime_prelude!(kusama);
-construct_runtime_prelude!(westend);
+construct_runtime_prelude!(axctest);
+construct_runtime_prelude!(alphanet);
 
 // NOTE: this is no longer used extensively, most of the per-runtime stuff us delegated to
 // `construct_runtime_prelude` and macro's the import directly from it. A part of the code is also
@@ -183,14 +183,14 @@ macro_rules! any_runtime {
 					use $crate::axia_runtime_exports::*;
 					$($code)*
 				},
-				$crate::AnyRuntime::Kusama => {
+				$crate::AnyRuntime::AxiaTest => {
 					#[allow(unused)]
-					use $crate::kusama_runtime_exports::*;
+					use $crate::axctest_runtime_exports::*;
 					$($code)*
 				},
-				$crate::AnyRuntime::Westend => {
+				$crate::AnyRuntime::Alphanet => {
 					#[allow(unused)]
-					use $crate::westend_runtime_exports::*;
+					use $crate::alphanet_runtime_exports::*;
 					$($code)*
 				}
 			}
@@ -210,14 +210,14 @@ macro_rules! any_runtime_unit {
 					use $crate::axia_runtime_exports::*;
 					let _ = $($code)*;
 				},
-				$crate::AnyRuntime::Kusama => {
+				$crate::AnyRuntime::AxiaTest => {
 					#[allow(unused)]
-					use $crate::kusama_runtime_exports::*;
+					use $crate::axctest_runtime_exports::*;
 					let _ = $($code)*;
 				},
-				$crate::AnyRuntime::Westend => {
+				$crate::AnyRuntime::Alphanet => {
 					#[allow(unused)]
-					use $crate::westend_runtime_exports::*;
+					use $crate::alphanet_runtime_exports::*;
 					let _ = $($code)*;
 				}
 			}
@@ -559,19 +559,19 @@ async fn main() {
 				RUNTIME = AnyRuntime::Axia;
 			}
 		},
-		"kusama" | "kusama-dev" => {
+		"axctest" | "axctest-dev" => {
 			sp_core::crypto::set_default_ss58_version(
-				sp_core::crypto::Ss58AddressFormatRegistry::KusamaAccount.into(),
+				sp_core::crypto::Ss58AddressFormatRegistry::AxiaTestAccount.into(),
 			);
 			sub_tokens::dynamic::set_name("KSM");
 			sub_tokens::dynamic::set_decimal_points(1_000_000_000_000);
 			// safety: this program will always be single threaded, thus accessing global static is
 			// safe.
 			unsafe {
-				RUNTIME = AnyRuntime::Kusama;
+				RUNTIME = AnyRuntime::AxiaTest;
 			}
 		},
-		"westend" => {
+		"alphanet" => {
 			sp_core::crypto::set_default_ss58_version(
 				sp_core::crypto::Ss58AddressFormatRegistry::PolkadotAccount.into(),
 			);
@@ -580,7 +580,7 @@ async fn main() {
 			// safety: this program will always be single threaded, thus accessing global static is
 			// safe.
 			unsafe {
-				RUNTIME = AnyRuntime::Westend;
+				RUNTIME = AnyRuntime::Alphanet;
 			}
 		},
 		_ => {
@@ -635,11 +635,11 @@ mod tests {
 		let axia_version = any_runtime! { get_version::<Runtime>() };
 
 		unsafe {
-			RUNTIME = AnyRuntime::Kusama;
+			RUNTIME = AnyRuntime::AxiaTest;
 		}
-		let kusama_version = any_runtime! { get_version::<Runtime>() };
+		let axctest_version = any_runtime! { get_version::<Runtime>() };
 
 		assert_eq!(axia_version.spec_name, "axia".into());
-		assert_eq!(kusama_version.spec_name, "kusama".into());
+		assert_eq!(axctest_version.spec_name, "axctest".into());
 	}
 }

@@ -22,16 +22,16 @@
 
 use clap::{ArgEnum, Parser};
 use generate_bags::generate_thresholds;
-use kusama_runtime::Runtime as KusamaRuntime;
+use axctest_runtime::Runtime as AxiaTestRuntime;
 use axia_runtime::Runtime as AxiaRuntime;
 use std::path::{Path, PathBuf};
-use westend_runtime::Runtime as WestendRuntime;
+use alphanet_runtime::Runtime as AlphanetRuntime;
 
 #[derive(Clone, Debug, ArgEnum)]
 #[clap(rename_all = "PascalCase")]
 enum Runtime {
-	Westend,
-	Kusama,
+	Alphanet,
+	AxiaTest,
 	Axia,
 }
 
@@ -40,8 +40,8 @@ impl Runtime {
 		&self,
 	) -> Box<dyn FnOnce(usize, &Path, u128, u128) -> Result<(), std::io::Error>> {
 		match self {
-			Runtime::Westend => Box::new(generate_thresholds::<WestendRuntime>),
-			Runtime::Kusama => Box::new(generate_thresholds::<KusamaRuntime>),
+			Runtime::Alphanet => Box::new(generate_thresholds::<AlphanetRuntime>),
+			Runtime::AxiaTest => Box::new(generate_thresholds::<AxiaTestRuntime>),
 			Runtime::Axia => Box::new(generate_thresholds::<AxiaRuntime>),
 		}
 	}

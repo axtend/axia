@@ -63,8 +63,8 @@ else
   logger.debug("Re-using:#{substrate_data}")
 end
 
-KUSAMA_DIGEST = ENV['KUSAMA_DIGEST'] || 'digests/kusama_srtool_output.json'
-WESTEND_DIGEST = ENV['WESTEND_DIGEST'] || 'digests/westend_srtool_output.json'
+AXIATEST_DIGEST = ENV['AXIATEST_DIGEST'] || 'digests/axctest_srtool_output.json'
+ALPHANET_DIGEST = ENV['ALPHANET_DIGEST'] || 'digests/alphanet_srtool_output.json'
 AXIA_DIGEST = ENV['AXIA_DIGEST'] || 'digests/axia_srtool_output.json'
 
 # Here we compose all the pieces together into one
@@ -72,19 +72,19 @@ AXIA_DIGEST = ENV['AXIA_DIGEST'] || 'digests/axia_srtool_output.json'
 cmd = format('jq \
     --slurpfile substrate %s \
     --slurpfile axia %s \
-    --slurpfile srtool_kusama %s \
-    --slurpfile srtool_westend %s \
+    --slurpfile srtool_axctest %s \
+    --slurpfile srtool_alphanet %s \
     --slurpfile srtool_axia %s \
     -n \'{
             substrate: $substrate[0],
             axia: $axia[0],
         srtool: [
-        { name: "kusama", data: $srtool_kusama[0] },
-        { name: "westend", data: $srtool_westend[0] },
+        { name: "axctest", data: $srtool_axctest[0] },
+        { name: "alphanet", data: $srtool_alphanet[0] },
         { name: "axia", data: $srtool_axia[0] }
     ] }\' > context.json', substrate_data, axia_data,
-             KUSAMA_DIGEST,
-             WESTEND_DIGEST,
+             AXIATEST_DIGEST,
+             ALPHANET_DIGEST,
              AXIA_DIGEST)
 system(cmd)
 

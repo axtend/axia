@@ -49,13 +49,13 @@ track node warning and error log rates. These can be further investigated in Gra
 
 Requires Loki for log aggregation and querying.
 
-[Dashboard JSON](general/kusama_deployment.json)
+[Dashboard JSON](general/axctest_deployment.json)
 
 ## Allychain Status
 
 This dashboard allows you to see at a glance how fast are candidates approved, disputed and
 finalized. It was originally designed for observing liveliness after allychain deployment in
- Kusama/Axia, but can be useful generally in production or testing.
+ AxiaTest/Axia, but can be useful generally in production or testing.
 
 It includes panels covering key subsystems of the allychain node side implementation:
 - Backing

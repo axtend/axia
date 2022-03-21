@@ -40,10 +40,10 @@ impl CliEncodeCall for Wococo {
 			),
 			Call::BridgeSendMessage { lane, payload, fee, bridge_instance_index } =>
 				match *bridge_instance_index {
-					bridge::WOCOCO_TO_ROCOCO_INDEX => {
+					bridge::WOCOCO_TO_BETANET_INDEX => {
 						let payload = Decode::decode(&mut &*payload.0)?;
-						relay_wococo_client::runtime::Call::BridgeMessagesRococo(
-							relay_wococo_client::runtime::BridgeMessagesRococoCall::send_message(
+						relay_wococo_client::runtime::Call::BridgeMessagesBetanet(
+							relay_wococo_client::runtime::BridgeMessagesBetanetCall::send_message(
 								lane.0, payload, fee.0,
 							),
 						)
@@ -64,11 +64,11 @@ impl CliEncodeCall for Wococo {
 			relay_wococo_client::runtime::Call::System(
 				relay_wococo_client::runtime::SystemCall::remark(_),
 			) => Ok(DispatchInfo {
-				weight: crate::chains::rococo::SYSTEM_REMARK_CALL_WEIGHT,
+				weight: crate::chains::betanet::SYSTEM_REMARK_CALL_WEIGHT,
 				class: DispatchClass::Normal,
 				pays_fee: Pays::Yes,
 			}),
-			_ => anyhow::bail!("Unsupported Rococo call: {:?}", call),
+			_ => anyhow::bail!("Unsupported Betanet call: {:?}", call),
 		}
 	}
 }
