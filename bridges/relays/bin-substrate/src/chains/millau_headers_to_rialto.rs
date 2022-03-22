@@ -24,12 +24,12 @@ use relay_millau_client::{Millau, SyncHeader as MillauSyncHeader};
 use relay_rialto_client::{Rialto, SigningParams as RialtoSigningParams};
 use relay_substrate_client::{Client, IndexOf, TransactionSignScheme, UnsignedTransaction};
 use substrate_relay_helper::finality_pipeline::{
-	SubstrateFinalitySyncPipeline, SubstrateFinalityToSubstrate,
+	AxlibFinalitySyncPipeline, AxlibFinalityToAxlib,
 };
 
 /// Millau-to-Rialto finality sync pipeline.
 pub(crate) type FinalityPipelineMillauToRialto =
-	SubstrateFinalityToSubstrate<Millau, Rialto, RialtoSigningParams>;
+	AxlibFinalityToAxlib<Millau, Rialto, RialtoSigningParams>;
 
 #[derive(Clone, Debug)]
 pub(crate) struct MillauFinalityToRialto {
@@ -42,7 +42,7 @@ impl MillauFinalityToRialto {
 	}
 }
 
-impl SubstrateFinalitySyncPipeline for MillauFinalityToRialto {
+impl AxlibFinalitySyncPipeline for MillauFinalityToRialto {
 	type FinalitySyncPipeline = FinalityPipelineMillauToRialto;
 
 	const BEST_FINALIZED_SOURCE_HEADER_ID_AT_TARGET: &'static str =

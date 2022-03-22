@@ -44,8 +44,8 @@ the monitoring Compose file is _not_ optional, and must be included for bridge d
 
 ### Running and Updating Deployments
 We currently support two bridge deployments
-1. Rialto Substrate to Millau Substrate
-2. Alphanet Substrate to Millau Substrate
+1. Rialto Axlib to Millau Axlib
+2. Alphanet Axlib to Millau Axlib
 
 These bridges can be deployed using our [`./run.sh`](./run.sh) script.
 
@@ -82,13 +82,13 @@ not strictly required.
 Rialto authorities are named: `Alice`, `Bob`, `Charlie`, `Dave`, `Eve`.
 Millau authorities are named: `Alice`, `Bob`, `Charlie`, `Dave`, `Eve`.
 
-Both authorities and following accounts have enough funds (for test purposes) on corresponding Substrate chains:
+Both authorities and following accounts have enough funds (for test purposes) on corresponding Axlib chains:
 
 - on Rialto: `Ferdie`, `George`, `Harry`.
 - on Millau: `Ferdie`, `George`, `Harry`.
 
-Names of accounts on Substrate (Rialto and Millau) chains may be prefixed with `//` and used as
-seeds for the `sr25519` keys. This seed may also be used in the signer argument in Substrate relays.
+Names of accounts on Axlib (Rialto and Millau) chains may be prefixed with `//` and used as
+seeds for the `sr25519` keys. This seed may also be used in the signer argument in Axlib relays.
 Example:
 
 ```bash
@@ -214,7 +214,7 @@ security reasons it is not kept as part of version control. When deploying a net
 file should be correctly populated and kept in the appropriate [`bridges`](`./bridges`) deployment
 folder.
 
-The `UI_SUBSTRATE_PROVIDER` variable lets you define the url of the Substrate node that the user
+The `UI_SUBSTRATE_PROVIDER` variable lets you define the url of the Axlib node that the user
 interface will connect to. `UI_ETHEREUM_PROVIDER` is used only as a guidance for users to connect
 Metamask to the right Ethereum network. `UI_EXPECTED_ETHEREUM_NETWORK_ID`  is used by
 the user interface as a fail safe to prevent users from connecting their Metamask extension to an

@@ -31,7 +31,7 @@ use cumulus_client_service::{
 };
 use cumulus_primitives_core::ParaId;
 
-// Substrate Imports
+// Axlib Imports
 use sc_client_api::ExecutorProvider;
 use sc_executor::{NativeElseWasmExecutor, NativeExecutionDispatch};
 use sc_network::NetworkService;

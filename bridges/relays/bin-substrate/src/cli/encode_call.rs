@@ -35,7 +35,7 @@ pub struct EncodeCall {
 	call: Call,
 }
 
-/// All possible messages that may be delivered to generic Substrate chain.
+/// All possible messages that may be delivered to generic Axlib chain.
 ///
 /// Note this enum may be used in the context of both Source (as part of `encode-call`)
 /// and Target chain (as part of `encode-message/send-message`).

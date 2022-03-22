@@ -27,7 +27,7 @@ use axia_allychain::primitives::AccountIdConversion;
 use rialto_allychain_runtime::{Block, RuntimeApi};
 use sc_cli::{
 	ChainSpec, CliConfiguration, DefaultConfigurationValues, ImportParams, KeystoreParams,
-	NetworkParams, Result, RuntimeVersion, SharedParams, SubstrateCli,
+	NetworkParams, Result, RuntimeVersion, SharedParams, AxlibCli,
 };
 use sc_service::config::{BasePath, PrometheusConfig};
 use sp_core::hexdisplay::HexDisplay;
@@ -45,7 +45,7 @@ fn load_spec(
 	})
 }
 
-impl SubstrateCli for Cli {
+impl AxlibCli for Cli {
 	fn impl_name() -> String {
 		"Allychain Collator Template".into()
 	}
@@ -85,7 +85,7 @@ impl SubstrateCli for Cli {
 	}
 }
 
-impl SubstrateCli for RelayChainCli {
+impl AxlibCli for RelayChainCli {
 	fn impl_name() -> String {
 		"Allychain Collator Template".into()
 	}
@@ -191,7 +191,7 @@ pub fn run() -> Result<()> {
 					[RelayChainCli::executable_name()].iter().chain(cli.relaychain_args.iter()),
 				);
 
-				let axia_config = SubstrateCli::create_configuration(
+				let axia_config = AxlibCli::create_configuration(
 					&axia_cli,
 					&axia_cli,
 					config.tokio_handle.clone(),
@@ -282,7 +282,7 @@ pub fn run() -> Result<()> {
 					generate_genesis_block(&config.chain_spec).map_err(|e| format!("{:?}", e))?;
 				let genesis_state = format!("0x{:?}", HexDisplay::from(&block.header().encode()));
 
-				let axia_config = SubstrateCli::create_configuration(
+				let axia_config = AxlibCli::create_configuration(
 					&axia_cli,
 					&axia_cli,
 					config.tokio_handle.clone(),
@@ -361,7 +361,7 @@ impl CliConfiguration<Self> for RelayChainCli {
 		self.base.base.prometheus_config(default_listen_port)
 	}
 
-	fn init<C: SubstrateCli>(&self) -> Result<()> {
+	fn init<C: AxlibCli>(&self) -> Result<()> {
 		unreachable!("AxiaCli is never initialized; qed");
 	}
 

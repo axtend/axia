@@ -14,10 +14,10 @@
 // You should have received a copy of the GNU General Public License
 // along with Parity Bridges Common.  If not, see <http://www.gnu.org/licenses/>.
 
-//! Tools for supporting message lanes between two Substrate-based chains.
+//! Tools for supporting message lanes between two Axlib-based chains.
 
 use crate::{
-	messages_source::SubstrateMessagesProof, messages_target::SubstrateMessagesReceivingProof,
+	messages_source::AxlibMessagesProof, messages_target::AxlibMessagesReceivingProof,
 	on_demand_headers::OnDemandHeadersRelay,
 };
 
@@ -43,7 +43,7 @@ use sp_core::{storage::StorageKey, Bytes};
 use sp_runtime::FixedU128;
 use std::ops::RangeInclusive;
 
-/// Substrate <-> Substrate messages relay parameters.
+/// Axlib <-> Axlib messages relay parameters.
 pub struct MessagesRelayParams<SC: Chain, SS, TC: Chain, TS, Strategy: RelayStrategy> {
 	/// Messages source client.
 	pub source_client: Client<SC>,
@@ -71,9 +71,9 @@ pub struct MessagesRelayParams<SC: Chain, SS, TC: Chain, TS, Strategy: RelayStra
 	pub relay_strategy: Strategy,
 }
 
-/// Message sync pipeline for Substrate <-> Substrate relays.
+/// Message sync pipeline for Axlib <-> Axlib relays.
 #[async_trait]
-pub trait SubstrateMessageLane: 'static + Clone + Send + Sync {
+pub trait AxlibMessageLane: 'static + Clone + Send + Sync {
 	/// Underlying generic message lane.
 	type MessageLane: MessageLane;
 
@@ -145,21 +145,21 @@ pub trait SubstrateMessageLane: 'static + Clone + Send + Sync {
 	) -> Bytes;
 }
 
-/// Substrate-to-Substrate message lane.
+/// Axlib-to-Axlib message lane.
 #[derive(Debug)]
-pub struct SubstrateMessageLaneToSubstrate<
+pub struct AxlibMessageLaneToAxlib<
 	Source: Chain,
 	SourceSignParams,
 	Target: Chain,
 	TargetSignParams,
 > {
-	/// Client for the source Substrate chain.
+	/// Client for the source Axlib chain.
 	pub source_client: Client<Source>,
 	/// Parameters required to sign transactions for source chain.
 	pub source_sign: SourceSignParams,
 	/// Source transactions mortality.
 	pub source_transactions_mortality: Option<u32>,
-	/// Client for the target Substrate chain.
+	/// Client for the target Axlib chain.
 	pub target_client: Client<Target>,
 	/// Parameters required to sign transactions for target chain.
 	pub target_sign: TargetSignParams,
@@ -170,7 +170,7 @@ pub struct SubstrateMessageLaneToSubstrate<
 }
 
 impl<Source: Chain, SourceSignParams: Clone, Target: Chain, TargetSignParams: Clone> Clone
-	for SubstrateMessageLaneToSubstrate<Source, SourceSignParams, Target, TargetSignParams>
+	for AxlibMessageLaneToAxlib<Source, SourceSignParams, Target, TargetSignParams>
 {
 	fn clone(&self) -> Self {
 		Self {
@@ -186,7 +186,7 @@ impl<Source: Chain, SourceSignParams: Clone, Target: Chain, TargetSignParams: Cl
 }
 
 impl<Source: Chain, SourceSignParams, Target: Chain, TargetSignParams> MessageLane
-	for SubstrateMessageLaneToSubstrate<Source, SourceSignParams, Target, TargetSignParams>
+	for AxlibMessageLaneToAxlib<Source, SourceSignParams, Target, TargetSignParams>
 where
 	SourceSignParams: Clone + Send + Sync + 'static,
 	TargetSignParams: Clone + Send + Sync + 'static,
@@ -196,8 +196,8 @@ where
 	const SOURCE_NAME: &'static str = Source::NAME;
 	const TARGET_NAME: &'static str = Target::NAME;
 
-	type MessagesProof = SubstrateMessagesProof<Source>;
-	type MessagesReceivingProof = SubstrateMessagesReceivingProof<Target>;
+	type MessagesProof = AxlibMessagesProof<Source>;
+	type MessagesReceivingProof = AxlibMessagesReceivingProof<Target>;
 
 	type SourceChainBalance = Source::Balance;
 	type SourceHeaderNumber = BlockNumberOf<Source>;

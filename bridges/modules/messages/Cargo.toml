@@ -20,7 +20,7 @@ bp-message-dispatch = { path = "../../primitives/message-dispatch", default-feat
 bp-messages = { path = "../../primitives/messages", default-features = false }
 bp-runtime = { path = "../../primitives/runtime", default-features = false }
 
-# Substrate Dependencies
+# Axlib Dependencies
 
 frame-benchmarking = { git = "https://github.com/axtend/axlib", default-features = false, optional = true , branch = "axlib" }
 frame-support = { git = "https://github.com/axtend/axlib", default-features = false , branch = "axlib" }

@@ -36,23 +36,23 @@ use relay_substrate_client::{Chain, Client, IndexOf, TransactionSignScheme, Unsi
 use substrate_relay_helper::{
 	messages_lane::{
 		select_delivery_transaction_limits, MessagesRelayParams, StandaloneMessagesMetrics,
-		SubstrateMessageLane, SubstrateMessageLaneToSubstrate,
+		AxlibMessageLane, AxlibMessageLaneToAxlib,
 	},
-	messages_source::SubstrateMessagesSource,
-	messages_target::SubstrateMessagesTarget,
+	messages_source::AxlibMessagesSource,
+	messages_target::AxlibMessagesTarget,
 	STALL_TIMEOUT,
 };
 
 /// Rialto-to-Millau message lane.
 pub type MessageLaneRialtoMessagesToMillau =
-	SubstrateMessageLaneToSubstrate<Rialto, RialtoSigningParams, Millau, MillauSigningParams>;
+	AxlibMessageLaneToAxlib<Rialto, RialtoSigningParams, Millau, MillauSigningParams>;
 
 #[derive(Clone)]
 pub struct RialtoMessagesToMillau {
 	message_lane: MessageLaneRialtoMessagesToMillau,
 }
 
-impl SubstrateMessageLane for RialtoMessagesToMillau {
+impl AxlibMessageLane for RialtoMessagesToMillau {
 	type MessageLane = MessageLaneRialtoMessagesToMillau;
 
 	const OUTBOUND_LANE_MESSAGE_DETAILS_METHOD: &'static str =
@@ -166,10 +166,10 @@ impl SubstrateMessageLane for RialtoMessagesToMillau {
 }
 
 /// Rialto node as messages source.
-type RialtoSourceClient = SubstrateMessagesSource<RialtoMessagesToMillau>;
+type RialtoSourceClient = AxlibMessagesSource<RialtoMessagesToMillau>;
 
 /// Millau node as messages target.
-type MillauTargetClient = SubstrateMessagesTarget<RialtoMessagesToMillau>;
+type MillauTargetClient = AxlibMessagesTarget<RialtoMessagesToMillau>;
 
 /// Run Rialto-to-Millau messages sync.
 pub async fn run(
@@ -194,7 +194,7 @@ pub async fn run(
 	let source_client = params.source_client;
 	let target_client = params.target_client;
 	let lane = RialtoMessagesToMillau {
-		message_lane: SubstrateMessageLaneToSubstrate {
+		message_lane: AxlibMessageLaneToAxlib {
 			source_client: source_client.clone(),
 			source_sign: params.source_sign,
 			source_transactions_mortality: params.source_transactions_mortality,

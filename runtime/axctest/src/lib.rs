@@ -2971,7 +2971,7 @@ mod benches {
 		[runtime_allychains::initializer, Initializer]
 		[runtime_allychains::paras_inherent, ParaInherent]
 		[runtime_allychains::paras, Paras]
-		// Substrate
+		// Axlib
 		[pallet_balances, Balances]
 		[pallet_bags_list, BagsList]
 		[frame_benchmarking::baseline, Baseline::<Runtime>]

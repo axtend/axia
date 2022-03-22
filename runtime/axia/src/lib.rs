@@ -283,7 +283,7 @@ parameter_types! {
 }
 
 impl pallet_preimage::Config for Runtime {
-	type WeightInfo = pallet_preimage::weights::SubstrateWeight<Runtime>;
+	type WeightInfo = pallet_preimage::weights::AxlibWeight<Runtime>;
 	type Event = Event;
 	type Currency = Balances;
 	type ManagerOrigin = EnsureRoot<AccountId>;
@@ -1733,7 +1733,7 @@ mod benches {
 		[runtime_allychains::initializer, Initializer]
 		[runtime_allychains::paras, Paras]
 		[runtime_allychains::paras_inherent, ParaInherent]
-		// Substrate
+		// Axlib
 		[pallet_bags_list, BagsList]
 		[pallet_balances, Balances]
 		[frame_benchmarking::baseline, Baseline::<Runtime>]

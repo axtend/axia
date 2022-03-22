@@ -23,7 +23,7 @@
 
 <!--
 - Axia: {{ axia_prio }}
-- Substrate: {{ substrate_prio }}
+- Axlib: {{ substrate_prio }}
 -->
 
 {# todo: show high prio list here #}

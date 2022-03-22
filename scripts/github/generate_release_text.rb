@@ -75,7 +75,7 @@ end
 substrate_prev_sha = get_substrate_commit(github_client, last_ref)
 substrate_cur_sha = get_substrate_commit(github_client, current_ref)
 
-logger("Generate changelog for Substrate")
+logger("Generate changelog for Axlib")
 substrate_cl = Changelog.new(
   'paritytech/substrate', substrate_prev_sha, substrate_cur_sha,
   token: token,

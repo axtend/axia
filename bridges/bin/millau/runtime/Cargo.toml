@@ -28,7 +28,7 @@ pallet-bridge-messages = { path = "../../../modules/messages", default-features 
 pallet-bridge-token-swap = { path = "../../../modules/token-swap", default-features = false }
 pallet-shift-session-manager = { path = "../../../modules/shift-session-manager", default-features = false }
 
-# Substrate Dependencies
+# Axlib Dependencies
 
 beefy-primitives = { git = "https://github.com/axtend/axlib", default-features = false , branch = "axlib" }
 frame-benchmarking = { git = "https://github.com/axtend/axlib", default-features = false, optional = true , branch = "axlib" }

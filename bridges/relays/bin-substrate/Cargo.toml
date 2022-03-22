@@ -55,7 +55,7 @@ rialto-allychain-runtime = { path = "../../bin/rialto-allychain/runtime" }
 rialto-runtime = { path = "../../bin/rialto/runtime" }
 substrate-relay-helper = { path = "../lib-substrate-relay" }
 
-# Substrate Dependencies
+# Axlib Dependencies
 
 frame-support = { git = "https://github.com/axtend/axlib", branch = "axlib" }
 pallet-balances = { git = "https://github.com/axtend/axlib", branch = "axlib" }

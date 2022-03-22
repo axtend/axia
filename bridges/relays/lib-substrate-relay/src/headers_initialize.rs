@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Parity Bridges Common.  If not, see <http://www.gnu.org/licenses/>.
 
-//! Initialize Substrate -> Substrate headers bridge.
+//! Initialize Axlib -> Axlib headers bridge.
 //!
 //! Initialization is a transaction that calls `initialize()` function of the
 //! `pallet-bridge-grandpa` pallet. This transaction brings initial header

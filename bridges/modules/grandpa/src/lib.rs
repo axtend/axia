@@ -14,9 +14,9 @@
 // You should have received a copy of the GNU General Public License
 // along with Parity Bridges Common.  If not, see <http://www.gnu.org/licenses/>.
 
-//! Substrate GRANDPA Pallet
+//! Axlib GRANDPA Pallet
 //!
-//! This pallet is an on-chain GRANDPA light client for Substrate based chains.
+//! This pallet is an on-chain GRANDPA light client for Axlib based chains.
 //!
 //! This pallet achieves this by trustlessly verifying GRANDPA finality proofs on-chain. Once
 //! verified, finalized headers are stored in the pallet, thereby creating a sparse header chain.

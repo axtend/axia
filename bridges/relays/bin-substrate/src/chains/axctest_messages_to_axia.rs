@@ -35,23 +35,23 @@ use relay_substrate_client::{Chain, Client, TransactionSignScheme, UnsignedTrans
 use substrate_relay_helper::{
 	messages_lane::{
 		select_delivery_transaction_limits, MessagesRelayParams, StandaloneMessagesMetrics,
-		SubstrateMessageLane, SubstrateMessageLaneToSubstrate,
+		AxlibMessageLane, AxlibMessageLaneToAxlib,
 	},
-	messages_source::SubstrateMessagesSource,
-	messages_target::SubstrateMessagesTarget,
+	messages_source::AxlibMessagesSource,
+	messages_target::AxlibMessagesTarget,
 	STALL_TIMEOUT,
 };
 
 /// AxiaTest-to-Axia message lane.
 pub type MessageLaneAxiaTestMessagesToAxia =
-	SubstrateMessageLaneToSubstrate<AxiaTest, AxiaTestSigningParams, Axia, AxiaSigningParams>;
+	AxlibMessageLaneToAxlib<AxiaTest, AxiaTestSigningParams, Axia, AxiaSigningParams>;
 
 #[derive(Clone)]
 pub struct AxiaTestMessagesToAxia {
 	message_lane: MessageLaneAxiaTestMessagesToAxia,
 }
 
-impl SubstrateMessageLane for AxiaTestMessagesToAxia {
+impl AxlibMessageLane for AxiaTestMessagesToAxia {
 	type MessageLane = MessageLaneAxiaTestMessagesToAxia;
 
 	const OUTBOUND_LANE_MESSAGE_DETAILS_METHOD: &'static str =
@@ -168,10 +168,10 @@ impl SubstrateMessageLane for AxiaTestMessagesToAxia {
 }
 
 /// AxiaTest node as messages source.
-type AxiaTestSourceClient = SubstrateMessagesSource<AxiaTestMessagesToAxia>;
+type AxiaTestSourceClient = AxlibMessagesSource<AxiaTestMessagesToAxia>;
 
 /// Axia node as messages target.
-type AxiaTargetClient = SubstrateMessagesTarget<AxiaTestMessagesToAxia>;
+type AxiaTargetClient = AxlibMessagesTarget<AxiaTestMessagesToAxia>;
 
 /// Run AxiaTest-to-Axia messages sync.
 pub async fn run(
@@ -196,7 +196,7 @@ pub async fn run(
 	let source_client = params.source_client;
 	let target_client = params.target_client;
 	let lane = AxiaTestMessagesToAxia {
-		message_lane: SubstrateMessageLaneToSubstrate {
+		message_lane: AxlibMessageLaneToAxlib {
 			source_client: source_client.clone(),
 			source_sign: params.source_sign,
 			source_transactions_mortality: params.source_transactions_mortality,

@@ -15,7 +15,7 @@ relay-utils = { path = "../utils" }
 bp-millau = { path = "../../primitives/chain-millau" }
 millau-runtime = { path = "../../bin/millau/runtime" }
 
-# Substrate Dependencies
+# Axlib Dependencies
 
 frame-support = { git = "https://github.com/axtend/axlib", branch = "axlib" }
 frame-system = { git = "https://github.com/axtend/axlib", branch = "axlib" }

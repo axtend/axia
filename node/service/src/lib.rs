@@ -101,7 +101,7 @@ use sc_executor::NativeElseWasmExecutor;
 pub use sc_executor::NativeExecutionDispatch;
 pub use service::{
 	config::{DatabaseSource, PrometheusConfig},
-	ChainSpec, Configuration, Error as SubstrateServiceError, PruningMode, Role, RuntimeGenesis,
+	ChainSpec, Configuration, Error as AxlibServiceError, PruningMode, Role, RuntimeGenesis,
 	TFullBackend, TFullCallExecutor, TFullClient, TaskManager, TransactionPoolOptions,
 };
 pub use sp_api::{ApiRef, ConstructRuntimeApi, Core as CoreApi, ProvideRuntimeApi, StateBackend};
@@ -201,7 +201,7 @@ pub enum Error {
 	AddrFormatInvalid(#[from] std::net::AddrParseError),
 
 	#[error(transparent)]
-	Sub(#[from] SubstrateServiceError),
+	Sub(#[from] AxlibServiceError),
 
 	#[error(transparent)]
 	Blockchain(#[from] sp_blockchain::Error),
@@ -773,7 +773,7 @@ where
 
 	// Note: GrandPa is pushed before the Axia-specific protocols. This doesn't change
 	// anything in terms of behaviour, but makes the logs more consistent with the other
-	// Substrate nodes.
+	// Axlib nodes.
 	let grandpa_protocol_name = grandpa::protocol_standard_name(
 		&client.block_hash(0).ok().flatten().expect("Genesis block exists; qed"),
 		&config.chain_spec,

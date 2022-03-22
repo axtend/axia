@@ -25,7 +25,7 @@ use relay_substrate_client::{Client, IndexOf, TransactionSignScheme, UnsignedTra
 use relay_utils::metrics::MetricsParams;
 use relay_wococo_client::{SyncHeader as WococoSyncHeader, Wococo};
 use substrate_relay_helper::finality_pipeline::{
-	SubstrateFinalitySyncPipeline, SubstrateFinalityToSubstrate,
+	AxlibFinalitySyncPipeline, AxlibFinalityToAxlib,
 };
 
 /// Maximal saturating difference between `balance(now)` and `balance(now-24h)` to treat
@@ -37,7 +37,7 @@ pub(crate) const MAXIMAL_BALANCE_DECREASE_PER_DAY: bp_betanet::Balance = 1_500_0
 
 /// Wococo-to-Betanet finality sync pipeline.
 pub(crate) type FinalityPipelineWococoFinalityToBetanet =
-	SubstrateFinalityToSubstrate<Wococo, Betanet, BetanetSigningParams>;
+	AxlibFinalityToAxlib<Wococo, Betanet, BetanetSigningParams>;
 
 #[derive(Clone, Debug)]
 pub(crate) struct WococoFinalityToBetanet {
@@ -55,7 +55,7 @@ impl WococoFinalityToBetanet {
 	}
 }
 
-impl SubstrateFinalitySyncPipeline for WococoFinalityToBetanet {
+impl AxlibFinalitySyncPipeline for WococoFinalityToBetanet {
 	type FinalitySyncPipeline = FinalityPipelineWococoFinalityToBetanet;
 
 	const BEST_FINALIZED_SOURCE_HEADER_ID_AT_TARGET: &'static str =

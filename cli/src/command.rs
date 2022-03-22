@@ -17,7 +17,7 @@
 use crate::cli::{Cli, Subcommand};
 use futures::future::TryFutureExt;
 use log::info;
-use sc_cli::{Role, RuntimeVersion, SubstrateCli};
+use sc_cli::{Role, RuntimeVersion, AxlibCli};
 use service::{self, IdentifyVariant};
 use sp_core::crypto::Ss58AddressFormatRegistry;
 
@@ -39,7 +39,7 @@ fn get_exec_name() -> Option<String> {
 		.and_then(|s| s.into_string().ok())
 }
 
-impl SubstrateCli for Cli {
+impl AxlibCli for Cli {
 	fn impl_name() -> String {
 		"Parity Axia".into()
 	}
@@ -300,7 +300,7 @@ pub fn run() -> Result<()> {
 			Ok(runner.sync_run(|config| cmd.run(config.chain_spec, config.network))?)
 		},
 		Some(Subcommand::CheckBlock(cmd)) => {
-			let runner = cli.create_runner(cmd).map_err(Error::SubstrateCli)?;
+			let runner = cli.create_runner(cmd).map_err(Error::AxlibCli)?;
 			let chain_spec = &runner.config().chain_spec;
 
 			set_default_ss58_version(chain_spec);
@@ -308,7 +308,7 @@ pub fn run() -> Result<()> {
 			runner.async_run(|mut config| {
 				let (client, _, import_queue, task_manager) =
 					service::new_chain_ops(&mut config, None)?;
-				Ok((cmd.run(client, import_queue).map_err(Error::SubstrateCli), task_manager))
+				Ok((cmd.run(client, import_queue).map_err(Error::AxlibCli), task_manager))
 			})
 		},
 		Some(Subcommand::ExportBlocks(cmd)) => {
@@ -320,7 +320,7 @@ pub fn run() -> Result<()> {
 			Ok(runner.async_run(|mut config| {
 				let (client, _, _, task_manager) =
 					service::new_chain_ops(&mut config, None).map_err(Error::AxiaService)?;
-				Ok((cmd.run(client, config.database).map_err(Error::SubstrateCli), task_manager))
+				Ok((cmd.run(client, config.database).map_err(Error::AxlibCli), task_manager))
 			})?)
 		},
 		Some(Subcommand::ExportState(cmd)) => {
@@ -331,7 +331,7 @@ pub fn run() -> Result<()> {
 
 			Ok(runner.async_run(|mut config| {
 				let (client, _, _, task_manager) = service::new_chain_ops(&mut config, None)?;
-				Ok((cmd.run(client, config.chain_spec).map_err(Error::SubstrateCli), task_manager))
+				Ok((cmd.run(client, config.chain_spec).map_err(Error::AxlibCli), task_manager))
 			})?)
 		},
 		Some(Subcommand::ImportBlocks(cmd)) => {
@@ -343,7 +343,7 @@ pub fn run() -> Result<()> {
 			Ok(runner.async_run(|mut config| {
 				let (client, _, import_queue, task_manager) =
 					service::new_chain_ops(&mut config, None)?;
-				Ok((cmd.run(client, import_queue).map_err(Error::SubstrateCli), task_manager))
+				Ok((cmd.run(client, import_queue).map_err(Error::AxlibCli), task_manager))
 			})?)
 		},
 		Some(Subcommand::PurgeChain(cmd)) => {
@@ -358,7 +358,7 @@ pub fn run() -> Result<()> {
 
 			Ok(runner.async_run(|mut config| {
 				let (client, backend, _, task_manager) = service::new_chain_ops(&mut config, None)?;
-				Ok((cmd.run(client, backend).map_err(Error::SubstrateCli), task_manager))
+				Ok((cmd.run(client, backend).map_err(Error::AxlibCli), task_manager))
 			})?)
 		},
 		Some(Subcommand::PvfPrepareWorker(cmd)) => {
@@ -412,7 +412,7 @@ pub fn run() -> Result<()> {
 					cmd.run::<service::axctest_runtime::Block, service::AxiaTestExecutorDispatch>(
 						config,
 					)
-					.map_err(|e| Error::SubstrateCli(e))
+					.map_err(|e| Error::AxlibCli(e))
 				})?)
 			}
 
@@ -422,7 +422,7 @@ pub fn run() -> Result<()> {
 					cmd.run::<service::alphanet_runtime::Block, service::AlphanetExecutorDispatch>(
 						config,
 					)
-					.map_err(|e| Error::SubstrateCli(e))
+					.map_err(|e| Error::AxlibCli(e))
 				})?)
 			}
 
@@ -433,7 +433,7 @@ pub fn run() -> Result<()> {
 					cmd.run::<service::axia_runtime::Block, service::AxiaExecutorDispatch>(
 						config,
 					)
-					.map_err(|e| Error::SubstrateCli(e))
+					.map_err(|e| Error::AxlibCli(e))
 				})?)
 			}
 			#[cfg(not(feature = "axia-native"))]
@@ -456,7 +456,7 @@ pub fn run() -> Result<()> {
 			use sc_service::TaskManager;
 			let registry = &runner.config().prometheus_config.as_ref().map(|cfg| &cfg.registry);
 			let task_manager = TaskManager::new(runner.config().tokio_handle.clone(), *registry)
-				.map_err(|e| Error::SubstrateService(sc_service::Error::Prometheus(e)))?;
+				.map_err(|e| Error::AxlibService(sc_service::Error::Prometheus(e)))?;
 
 			ensure_dev(chain_spec).map_err(Error::Other)?;
 
@@ -467,7 +467,7 @@ pub fn run() -> Result<()> {
 						cmd.run::<service::axctest_runtime::Block, service::AxiaTestExecutorDispatch>(
 							config,
 						)
-						.map_err(Error::SubstrateCli),
+						.map_err(Error::AxlibCli),
 						task_manager,
 					))
 				})
@@ -480,7 +480,7 @@ pub fn run() -> Result<()> {
 						cmd.run::<service::alphanet_runtime::Block, service::AlphanetExecutorDispatch>(
 							config,
 						)
-						.map_err(Error::SubstrateCli),
+						.map_err(Error::AxlibCli),
 						task_manager,
 					))
 				})
@@ -493,7 +493,7 @@ pub fn run() -> Result<()> {
 						cmd.run::<service::axia_runtime::Block, service::AxiaExecutorDispatch>(
 							config,
 						)
-						.map_err(Error::SubstrateCli),
+						.map_err(Error::AxlibCli),
 						task_manager,
 					))
 				})

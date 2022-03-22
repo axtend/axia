@@ -15,7 +15,7 @@ bp-axia-core = { path = "../axia-core", default-features = false }
 bp-betanet = { path = "../chain-betanet", default-features = false }
 bp-runtime = { path = "../runtime", default-features = false }
 
-# Substrate Based Dependencies
+# Axlib Based Dependencies
 sp-api = { git = "https://github.com/axtend/axlib", default-features = false , branch = "axlib" }
 sp-runtime = { git = "https://github.com/axtend/axlib", default-features = false , branch = "axlib" }
 sp-std = { git = "https://github.com/axtend/axlib", default-features = false , branch = "axlib" }

@@ -2,7 +2,7 @@
 
 # THIS SCRIPT IS NOT INTENDED FOR USE IN PRODUCTION ENVIRONMENT
 #
-# This scripts periodically calls the Substrate relay binary to generate messages. These messages
+# This scripts periodically calls the Axlib relay binary to generate messages. These messages
 # are sent from the Rialto network to the Millau network.
 
 set -eu

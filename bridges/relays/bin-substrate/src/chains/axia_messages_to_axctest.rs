@@ -35,23 +35,23 @@ use relay_substrate_client::{Chain, Client, TransactionSignScheme, UnsignedTrans
 use substrate_relay_helper::{
 	messages_lane::{
 		select_delivery_transaction_limits, MessagesRelayParams, StandaloneMessagesMetrics,
-		SubstrateMessageLane, SubstrateMessageLaneToSubstrate,
+		AxlibMessageLane, AxlibMessageLaneToAxlib,
 	},
-	messages_source::SubstrateMessagesSource,
-	messages_target::SubstrateMessagesTarget,
+	messages_source::AxlibMessagesSource,
+	messages_target::AxlibMessagesTarget,
 	STALL_TIMEOUT,
 };
 
 /// Axia-to-AxiaTest message lane.
 pub type MessageLaneAxiaMessagesToAxiaTest =
-	SubstrateMessageLaneToSubstrate<Axia, AxiaSigningParams, AxiaTest, AxiaTestSigningParams>;
+	AxlibMessageLaneToAxlib<Axia, AxiaSigningParams, AxiaTest, AxiaTestSigningParams>;
 
 #[derive(Clone)]
 pub struct AxiaMessagesToAxiaTest {
 	message_lane: MessageLaneAxiaMessagesToAxiaTest,
 }
 
-impl SubstrateMessageLane for AxiaMessagesToAxiaTest {
+impl AxlibMessageLane for AxiaMessagesToAxiaTest {
 	type MessageLane = MessageLaneAxiaMessagesToAxiaTest;
 	const OUTBOUND_LANE_MESSAGE_DETAILS_METHOD: &'static str =
 		bp_axctest::TO_AXIATEST_MESSAGE_DETAILS_METHOD;
@@ -167,10 +167,10 @@ impl SubstrateMessageLane for AxiaMessagesToAxiaTest {
 }
 
 /// Axia node as messages source.
-type AxiaSourceClient = SubstrateMessagesSource<AxiaMessagesToAxiaTest>;
+type AxiaSourceClient = AxlibMessagesSource<AxiaMessagesToAxiaTest>;
 
 /// AxiaTest node as messages target.
-type AxiaTestTargetClient = SubstrateMessagesTarget<AxiaMessagesToAxiaTest>;
+type AxiaTestTargetClient = AxlibMessagesTarget<AxiaMessagesToAxiaTest>;
 
 /// Run Axia-to-AxiaTest messages sync.
 pub async fn run(
@@ -195,7 +195,7 @@ pub async fn run(
 	let source_client = params.source_client;
 	let target_client = params.target_client;
 	let lane = AxiaMessagesToAxiaTest {
-		message_lane: SubstrateMessageLaneToSubstrate {
+		message_lane: AxlibMessageLaneToAxlib {
 			source_client: source_client.clone(),
 			source_sign: params.source_sign,
 			source_transactions_mortality: params.source_transactions_mortality,

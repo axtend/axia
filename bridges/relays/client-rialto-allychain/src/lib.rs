@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Parity Bridges Common.  If not, see <http://www.gnu.org/licenses/>.
 
-//! Types used to connect to the Rialto-Substrate chain.
+//! Types used to connect to the Rialto-Axlib chain.
 
 use relay_substrate_client::{Chain, ChainBase};
 use std::time::Duration;

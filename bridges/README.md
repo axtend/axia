@@ -2,11 +2,11 @@
 
 This is a collection of components for building bridges.
 
-These components include Substrate pallets for syncing headers, passing arbitrary messages, as well
+These components include Axlib pallets for syncing headers, passing arbitrary messages, as well
 as libraries for building relayers to provide cross-chain communication capabilities.
 
 Three bridge nodes are also available. The nodes can be used to run test networks which bridge other
-Substrate chains.
+Axlib chains.
 
 🚧 The bridges are currently under construction - a hardhat is recommended beyond this point 🚧
 
@@ -57,16 +57,16 @@ docker run --rm -it -w /shellhere/parity-bridges-common \
 If you want to reproduce other steps of CI process you can use the following
 [guide](https://github.com/paritytech/scripts#reproduce-ci-locally).
 
-If you need more information about setting up your development environment Substrate's
+If you need more information about setting up your development environment Axlib's
 [Getting Started](https://substrate.dev/docs/en/knowledgebase/getting-started/) page is a good
 resource.
 
 ## High-Level Architecture
 
-This repo has support for bridging foreign chains together using a combination of Substrate pallets
+This repo has support for bridging foreign chains together using a combination of Axlib pallets
 and external processes called relayers. A bridge chain is one that is able to follow the consensus
 of a foreign chain independently. For example, consider the case below where we want to bridge two
-Substrate based chains.
+Axlib based chains.
 
 ```
 +---------------+                 +---------------+
@@ -97,13 +97,13 @@ Here's an overview of how the project is laid out. The main bits are the `node`,
 the `relays` which are used to pass messages between chains.
 
 ```
-├── bin             // Node and Runtime for the various Substrate chains
+├── bin             // Node and Runtime for the various Axlib chains
 │  └── ...
 ├── deployments     // Useful tools for deploying test networks
 │  └──  ...
 ├── diagrams        // Pretty pictures of the project architecture
 │  └──  ...
-├── modules         // Substrate Runtime Modules (a.k.a Pallets)
+├── modules         // Axlib Runtime Modules (a.k.a Pallets)
 │  ├── grandpa      // On-Chain GRANDPA Light Client
 │  ├── messages     // Cross Chain Message Passing
 │  ├── dispatch     // Target Chain Message Execution
@@ -138,7 +138,7 @@ cargo build -p substrate-relay
 
 ### Running a Dev network
 
-We will launch a dev network to demonstrate how to relay a message between two Substrate based
+We will launch a dev network to demonstrate how to relay a message between two Axlib based
 chains (named Rialto and Millau).
 
 To do this we will need two nodes, two relayers which will relay headers, and two relayers which
@@ -149,7 +149,7 @@ will relay messages.
 To run a simple dev network you can use the scripts located in the
 [`deployments/local-scripts` folder](./deployments/local-scripts).
 
-First, we must run the two Substrate nodes.
+First, we must run the two Axlib nodes.
 
 ```bash
 # In `parity-bridges-common` folder
@@ -164,8 +164,8 @@ After the nodes are up we can run the header relayers.
 ./deployments/local-scripts/relay-rialto-to-millau.sh
 ```
 
-At this point you should see the relayer submitting headers from the Millau Substrate chain to the
-Rialto Substrate chain.
+At this point you should see the relayer submitting headers from the Millau Axlib chain to the
+Rialto Axlib chain.
 
 ```
 # Header Relayer Logs
@@ -236,12 +236,12 @@ TRACE bridge Sent transaction to Millau node: 0x5e68...
 ## Community
 
 Main hangout for the community is [Element](https://element.io/) (formerly Riot). Element is a chat
-server like, for example, Discord. Most discussions around Axia and Substrate happen
+server like, for example, Discord. Most discussions around Axia and Axlib happen
 in various Element "rooms" (channels). So, joining Element might be a good idea, anyway.
 
 If you are interested in information exchange and development of Axia related bridges please
 feel free to join the [Axia Bridges](https://app.element.io/#/room/#bridges:web3.foundation)
 Element channel.
 
-The [Substrate Technical](https://app.element.io/#/room/#substrate-technical:matrix.org) Element
-channel is most suited for discussions regarding Substrate itself.
+The [Axlib Technical](https://app.element.io/#/room/#substrate-technical:matrix.org) Element
+channel is most suited for discussions regarding Axlib itself.

@@ -25,7 +25,7 @@ use bp_runtime::ChainId;
 use frame_support::weights::Weight;
 use sp_core::H256;
 use sp_runtime::{
-	testing::Header as SubstrateHeader,
+	testing::Header as AxlibHeader,
 	traits::{BlakeTwo256, IdentityLookup},
 	Perbill,
 };
@@ -76,7 +76,7 @@ impl frame_system::Config for TestRuntime {
 	type Hashing = BlakeTwo256;
 	type AccountId = AccountId;
 	type Lookup = IdentityLookup<Self::AccountId>;
-	type Header = SubstrateHeader;
+	type Header = AxlibHeader;
 	type Event = Event;
 	type BlockHashCount = BlockHashCount;
 	type Version = ();

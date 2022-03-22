@@ -20,13 +20,13 @@ pub enum Error {
 	AxiaService(#[from] service::Error),
 
 	#[error(transparent)]
-	SubstrateCli(#[from] sc_cli::Error),
+	AxlibCli(#[from] sc_cli::Error),
 
 	#[error(transparent)]
-	SubstrateService(#[from] sc_service::Error),
+	AxlibService(#[from] sc_service::Error),
 
 	#[error(transparent)]
-	SubstrateTracing(#[from] sc_tracing::logging::Error),
+	AxlibTracing(#[from] sc_tracing::logging::Error),
 
 	#[error(transparent)]
 	PerfCheck(#[from] axia_performance_test::PerfCheckError),

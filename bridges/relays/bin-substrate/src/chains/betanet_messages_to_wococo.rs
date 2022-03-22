@@ -35,23 +35,23 @@ use relay_wococo_client::{
 use substrate_relay_helper::{
 	messages_lane::{
 		select_delivery_transaction_limits, MessagesRelayParams, StandaloneMessagesMetrics,
-		SubstrateMessageLane, SubstrateMessageLaneToSubstrate,
+		AxlibMessageLane, AxlibMessageLaneToAxlib,
 	},
-	messages_source::SubstrateMessagesSource,
-	messages_target::SubstrateMessagesTarget,
+	messages_source::AxlibMessagesSource,
+	messages_target::AxlibMessagesTarget,
 	STALL_TIMEOUT,
 };
 
 /// Betanet-to-Wococo message lane.
 pub type MessageLaneBetanetMessagesToWococo =
-	SubstrateMessageLaneToSubstrate<Betanet, BetanetSigningParams, Wococo, WococoSigningParams>;
+	AxlibMessageLaneToAxlib<Betanet, BetanetSigningParams, Wococo, WococoSigningParams>;
 
 #[derive(Clone)]
 pub struct BetanetMessagesToWococo {
 	message_lane: MessageLaneBetanetMessagesToWococo,
 }
 
-impl SubstrateMessageLane for BetanetMessagesToWococo {
+impl AxlibMessageLane for BetanetMessagesToWococo {
 	type MessageLane = MessageLaneBetanetMessagesToWococo;
 
 	const OUTBOUND_LANE_MESSAGE_DETAILS_METHOD: &'static str =
@@ -166,10 +166,10 @@ impl SubstrateMessageLane for BetanetMessagesToWococo {
 }
 
 /// Betanet node as messages source.
-type BetanetSourceClient = SubstrateMessagesSource<BetanetMessagesToWococo>;
+type BetanetSourceClient = AxlibMessagesSource<BetanetMessagesToWococo>;
 
 /// Wococo node as messages target.
-type WococoTargetClient = SubstrateMessagesTarget<BetanetMessagesToWococo>;
+type WococoTargetClient = AxlibMessagesTarget<BetanetMessagesToWococo>;
 
 /// Run Betanet-to-Wococo messages sync.
 pub async fn run(
@@ -194,7 +194,7 @@ pub async fn run(
 	let source_client = params.source_client;
 	let target_client = params.target_client;
 	let lane = BetanetMessagesToWococo {
-		message_lane: SubstrateMessageLaneToSubstrate {
+		message_lane: AxlibMessageLaneToAxlib {
 			source_client: source_client.clone(),
 			source_sign: params.source_sign,
 			source_transactions_mortality: params.source_transactions_mortality,

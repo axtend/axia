@@ -14,7 +14,7 @@ relay-utils = { path = "../utils" }
 
 bp-alphanet = { path = "../../primitives/chain-alphanet" }
 
-# Substrate Dependencies
+# Axlib Dependencies
 
 sp-core = { git = "https://github.com/axtend/axlib", branch = "axlib" }
 sp-runtime = { git = "https://github.com/axtend/axlib", branch = "axlib" }

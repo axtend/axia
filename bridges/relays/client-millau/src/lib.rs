@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Parity Bridges Common.  If not, see <http://www.gnu.org/licenses/>.
 
-//! Types used to connect to the Millau-Substrate chain.
+//! Types used to connect to the Millau-Axlib chain.
 
 use codec::{Compact, Decode, Encode};
 use relay_substrate_client::{

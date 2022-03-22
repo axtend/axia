@@ -1,10 +1,10 @@
 # How to send messages
 
-The Substrate-to-Substrate relay comes with a command line interface (CLI) which is implemented
+The Axlib-to-Axlib relay comes with a command line interface (CLI) which is implemented
 by the `substrate-relay` binary.
 
 ```
-Substrate-to-Substrate relay
+Axlib-to-Axlib relay
 
 USAGE:
     substrate-relay <SUBCOMMAND>

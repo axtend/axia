@@ -25,12 +25,12 @@ use relay_substrate_client::{Client, IndexOf, TransactionSignScheme, UnsignedTra
 use relay_utils::metrics::MetricsParams;
 use relay_alphanet_client::{SyncHeader as AlphanetSyncHeader, Alphanet};
 use substrate_relay_helper::finality_pipeline::{
-	SubstrateFinalitySyncPipeline, SubstrateFinalityToSubstrate,
+	AxlibFinalitySyncPipeline, AxlibFinalityToAxlib,
 };
 
 /// Alphanet-to-Millau finality sync pipeline.
 pub(crate) type FinalityPipelineAlphanetFinalityToMillau =
-	SubstrateFinalityToSubstrate<Alphanet, Millau, MillauSigningParams>;
+	AxlibFinalityToAxlib<Alphanet, Millau, MillauSigningParams>;
 
 #[derive(Clone, Debug)]
 pub(crate) struct AlphanetFinalityToMillau {
@@ -48,7 +48,7 @@ impl AlphanetFinalityToMillau {
 	}
 }
 
-impl SubstrateFinalitySyncPipeline for AlphanetFinalityToMillau {
+impl AxlibFinalitySyncPipeline for AlphanetFinalityToMillau {
 	type FinalitySyncPipeline = FinalityPipelineAlphanetFinalityToMillau;
 
 	const BEST_FINALIZED_SOURCE_HEADER_ID_AT_TARGET: &'static str =

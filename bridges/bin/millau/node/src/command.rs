@@ -20,10 +20,10 @@ use crate::{
 	service::new_partial,
 };
 use millau_runtime::{Block, RuntimeApi};
-use sc_cli::{ChainSpec, RuntimeVersion, SubstrateCli};
+use sc_cli::{ChainSpec, RuntimeVersion, AxlibCli};
 use sc_service::PartialComponents;
 
-impl SubstrateCli for Cli {
+impl AxlibCli for Cli {
 	fn impl_name() -> String {
 		"Millau Bridge Node".into()
 	}

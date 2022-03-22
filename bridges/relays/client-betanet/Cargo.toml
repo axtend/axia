@@ -24,7 +24,7 @@ bp-wococo = { path = "../../primitives/chain-wococo" }
 pallet-bridge-dispatch = { path = "../../modules/dispatch" }
 pallet-bridge-messages = { path = "../../modules/messages" }
 
-# Substrate Dependencies
+# Axlib Dependencies
 
 frame-support = { git = "https://github.com/axtend/axlib", branch = "axlib" }
 sp-core = { git = "https://github.com/axtend/axlib", branch = "axlib" }

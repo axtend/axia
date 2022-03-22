@@ -1,6 +1,6 @@
 [package]
 name = "rialto-bridge-node"
-description = "Substrate node compatible with Rialto runtime"
+description = "Axlib node compatible with Rialto runtime"
 version = "0.1.0"
 authors = ["Parity Technologies <admin@parity.io>"]
 edition = "2018"
@@ -26,7 +26,7 @@ bp-rialto = { path = "../../../primitives/chain-rialto" }
 pallet-bridge-messages = { path = "../../../modules/messages" }
 rialto-runtime = { path = "../runtime" }
 
-# Substrate Dependencies
+# Axlib Dependencies
 
 beefy-gadget = { git = "https://github.com/axtend/axlib", branch = "axlib" }
 beefy-gadget-rpc = { git = "https://github.com/axtend/axlib", branch = "axlib" }

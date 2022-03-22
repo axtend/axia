@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# A Class to find Substrate references
+# A Class to find Axlib references
 class SubRef
   require 'octokit'
   require 'toml'

@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Parity Bridges Common.  If not, see <http://www.gnu.org/licenses/>.
 
-//! Default generic implementation of finality source for basic Substrate client.
+//! Default generic implementation of finality source for basic Axlib client.
 
 use crate::{
 	chain::{BlockWithJustification, Chain},
@@ -36,7 +36,7 @@ use std::{marker::PhantomData, pin::Pin};
 /// Shared updatable reference to the maximal header number that we want to sync from the source.
 pub type RequiredHeaderNumberRef<C> = Arc<Mutex<<C as bp_runtime::Chain>::BlockNumber>>;
 
-/// Substrate node as finality source.
+/// Axlib node as finality source.
 pub struct FinalitySource<C: Chain, P> {
 	client: Client<C>,
 	maximal_header_number: Option<RequiredHeaderNumberRef<C>>,

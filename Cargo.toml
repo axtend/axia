@@ -4,7 +4,7 @@ path = "src/main.rs"
 
 [package]
 name = "axia"
-description = "Implementation of a `https://axia.network` node in Rust based on the Substrate framework."
+description = "Implementation of a `https://axia.network` node in Rust based on the Axlib framework."
 license = "GPL-3.0-only"
 version = "0.9.17"
 authors = ["Parity Technologies <admin@parity.io>"]
@@ -147,7 +147,7 @@ runtime-metrics = [ "axia-cli/runtime-metrics" ]
 # Configuration for building a .deb package - for use with `cargo-deb`
 [package.metadata.deb]
 name = "axia"
-extended-description = "Implementation of a https://axia.network node in Rust based on the Substrate framework."
+extended-description = "Implementation of a https://axia.network node in Rust based on the Axlib framework."
 section = "misc"
 maintainer = "martin@parity.io"
 license-file = ["LICENSE", "0"]

@@ -44,9 +44,9 @@ pub fn parse_args() -> Command {
 	Command::from_args()
 }
 
-/// Substrate-to-Substrate bridge utilities.
+/// Axlib-to-Axlib bridge utilities.
 #[derive(StructOpt)]
-#[structopt(about = "Substrate-to-Substrate relay")]
+#[structopt(about = "Axlib-to-Axlib relay")]
 pub enum Command {
 	/// Start headers relay between two chains.
 	///
@@ -58,7 +58,7 @@ pub enum Command {
 	/// Ties up to `Messages` pallets on both chains and starts relaying messages.
 	/// Requires the header relay to be already running.
 	RelayMessages(relay_messages::RelayMessages),
-	/// Start headers and messages relay between two Substrate chains.
+	/// Start headers and messages relay between two Axlib chains.
 	///
 	/// This high-level relay internally starts four low-level relays: two `RelayHeaders`
 	/// and two `RelayMessages` relays. Headers are only relayed when they are required by
@@ -501,7 +501,7 @@ macro_rules! declare_chain_options {
 			}
 
 			impl [<$chain ConnectionParams>] {
-				/// Convert connection params into Substrate client.
+				/// Convert connection params into Axlib client.
 				pub async fn to_client<Chain: CliChain>(
 					&self,
 				) -> anyhow::Result<relay_substrate_client::Client<Chain>> {

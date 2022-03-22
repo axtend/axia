@@ -18,7 +18,7 @@ use structopt::StructOpt;
 use strum::{EnumString, EnumVariantNames, VariantNames};
 
 use relay_utils::metrics::{GlobalMetrics, StandaloneMetric};
-use substrate_relay_helper::finality_pipeline::SubstrateFinalitySyncPipeline;
+use substrate_relay_helper::finality_pipeline::AxlibFinalitySyncPipeline;
 
 use crate::cli::{
 	PrometheusParams, SourceConnectionParams, TargetConnectionParams, TargetSigningParams,

@@ -30,7 +30,7 @@ Some connections are long-lived, some are just for a single request.
 
 #### Custom libp2p sub-protocols
 
-Axia allychains involve many distinct networking protocols. Ideally, we'd be able to spawn each of these as a separate futures task which communicates via channel with other protocols or node code as necessary. This requires changes in Substrate and libp2p.
+Axia allychains involve many distinct networking protocols. Ideally, we'd be able to spawn each of these as a separate futures task which communicates via channel with other protocols or node code as necessary. This requires changes in Axlib and libp2p.
 
 ---
 ### Assignment

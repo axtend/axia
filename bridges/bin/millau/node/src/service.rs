@@ -20,7 +20,7 @@
 // =====================================================================================
 // =====================================================================================
 // UPDATE GUIDE:
-// 1) replace everything with node-template/src/service.rs contents (found in main Substrate repo);
+// 1) replace everything with node-template/src/service.rs contents (found in main Axlib repo);
 // 2) from old code keep `rpc_extensions_builder` - we use our own custom RPCs;
 // 3) from old code keep the Beefy gadget;
 // 4) fix compilation errors;
@@ -48,7 +48,7 @@ impl sc_executor::NativeExecutionDispatch for ExecutorDispatch {
 	/// Only enable the benchmarking host functions when we actually want to benchmark.
 	#[cfg(feature = "runtime-benchmarks")]
 	type ExtendHostFunctions = frame_benchmarking::benchmarking::HostFunctions;
-	/// Otherwise we only use the default Substrate host functions.
+	/// Otherwise we only use the default Axlib host functions.
 	#[cfg(not(feature = "runtime-benchmarks"))]
 	type ExtendHostFunctions = ();
 

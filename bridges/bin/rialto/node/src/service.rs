@@ -408,7 +408,7 @@ where
 
 	// Note: GrandPa is pushed before the Axia-specific protocols. This doesn't change
 	// anything in terms of behaviour, but makes the logs more consistent with the other
-	// Substrate nodes.
+	// Axlib nodes.
 	config.network.extra_sets.push(sc_finality_grandpa::grandpa_peers_set_config());
 
 	config.network.extra_sets.push(beefy_gadget::beefy_peers_set_config());

@@ -35,23 +35,23 @@ use relay_wococo_client::{
 use substrate_relay_helper::{
 	messages_lane::{
 		select_delivery_transaction_limits, MessagesRelayParams, StandaloneMessagesMetrics,
-		SubstrateMessageLane, SubstrateMessageLaneToSubstrate,
+		AxlibMessageLane, AxlibMessageLaneToAxlib,
 	},
-	messages_source::SubstrateMessagesSource,
-	messages_target::SubstrateMessagesTarget,
+	messages_source::AxlibMessagesSource,
+	messages_target::AxlibMessagesTarget,
 	STALL_TIMEOUT,
 };
 
 /// Wococo-to-Betanet message lane.
 pub type MessageLaneWococoMessagesToBetanet =
-	SubstrateMessageLaneToSubstrate<Wococo, WococoSigningParams, Betanet, BetanetSigningParams>;
+	AxlibMessageLaneToAxlib<Wococo, WococoSigningParams, Betanet, BetanetSigningParams>;
 
 #[derive(Clone)]
 pub struct WococoMessagesToBetanet {
 	message_lane: MessageLaneWococoMessagesToBetanet,
 }
 
-impl SubstrateMessageLane for WococoMessagesToBetanet {
+impl AxlibMessageLane for WococoMessagesToBetanet {
 	type MessageLane = MessageLaneWococoMessagesToBetanet;
 	const OUTBOUND_LANE_MESSAGE_DETAILS_METHOD: &'static str =
 		bp_betanet::TO_BETANET_MESSAGE_DETAILS_METHOD;
@@ -165,10 +165,10 @@ impl SubstrateMessageLane for WococoMessagesToBetanet {
 }
 
 /// Wococo node as messages source.
-type WococoSourceClient = SubstrateMessagesSource<WococoMessagesToBetanet>;
+type WococoSourceClient = AxlibMessagesSource<WococoMessagesToBetanet>;
 
 /// Betanet node as messages target.
-type BetanetTargetClient = SubstrateMessagesTarget<WococoMessagesToBetanet>;
+type BetanetTargetClient = AxlibMessagesTarget<WococoMessagesToBetanet>;
 
 /// Run Wococo-to-Betanet messages sync.
 pub async fn run(
@@ -193,7 +193,7 @@ pub async fn run(
 	let source_client = params.source_client;
 	let target_client = params.target_client;
 	let lane = WococoMessagesToBetanet {
-		message_lane: SubstrateMessageLaneToSubstrate {
+		message_lane: AxlibMessageLaneToAxlib {
 			source_client: source_client.clone(),
 			source_sign: params.source_sign,
 			source_transactions_mortality: params.source_transactions_mortality,

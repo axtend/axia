@@ -25,7 +25,7 @@ use relay_axia_client::{Axia, SigningParams as AxiaSigningParams};
 use relay_substrate_client::{Client, TransactionSignScheme, UnsignedTransaction};
 use relay_utils::metrics::MetricsParams;
 use substrate_relay_helper::finality_pipeline::{
-	SubstrateFinalitySyncPipeline, SubstrateFinalityToSubstrate,
+	AxlibFinalitySyncPipeline, AxlibFinalityToAxlib,
 };
 
 /// Maximal saturating difference between `balance(now)` and `balance(now-24h)` to treat
@@ -37,7 +37,7 @@ pub(crate) const MAXIMAL_BALANCE_DECREASE_PER_DAY: bp_axia::Balance = 30_000_000
 
 /// AxiaTest-to-Axia finality sync pipeline.
 pub(crate) type FinalityPipelineAxiaTestFinalityToAxia =
-	SubstrateFinalityToSubstrate<AxiaTest, Axia, AxiaSigningParams>;
+	AxlibFinalityToAxlib<AxiaTest, Axia, AxiaSigningParams>;
 
 #[derive(Clone, Debug)]
 pub(crate) struct AxiaTestFinalityToAxia {
@@ -55,7 +55,7 @@ impl AxiaTestFinalityToAxia {
 	}
 }
 
-impl SubstrateFinalitySyncPipeline for AxiaTestFinalityToAxia {
+impl AxlibFinalitySyncPipeline for AxiaTestFinalityToAxia {
 	type FinalitySyncPipeline = FinalityPipelineAxiaTestFinalityToAxia;
 
 	const BEST_FINALIZED_SOURCE_HEADER_ID_AT_TARGET: &'static str =

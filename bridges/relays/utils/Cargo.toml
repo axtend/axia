@@ -26,6 +26,6 @@ thiserror = "1.0.26"
 
 bp-runtime = { path = "../../primitives/runtime" }
 
-# Substrate dependencies
+# Axlib dependencies
 
 substrate-prometheus-endpoint = { git = "https://github.com/axtend/axlib", branch = "axlib" }

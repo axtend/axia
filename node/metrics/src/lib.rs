@@ -43,7 +43,7 @@ pub fn logger_hook() -> impl FnOnce(&mut sc_cli::LoggerBuilder, &sc_service::Con
 
 /// This module reexports Prometheus types and defines the [`Metrics`] trait.
 pub mod metrics {
-	/// Reexport Substrate Prometheus types.
+	/// Reexport Axlib Prometheus types.
 	pub use substrate_prometheus_endpoint as prometheus;
 
 	/// Subsystem- or job-specific Prometheus metrics.

@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Parity Bridges Common.  If not, see <http://www.gnu.org/licenses/>.
 
-//! Substrate node RPC errors.
+//! Axlib node RPC errors.
 
 use jsonrpsee_ws_client::types::Error as RpcError;
 use relay_utils::MaybeConnectionError;
@@ -22,11 +22,11 @@ use sc_rpc_api::system::Health;
 use sp_runtime::transaction_validity::TransactionValidityError;
 use thiserror::Error;
 
-/// Result type used by Substrate client.
+/// Result type used by Axlib client.
 pub type Result<T> = std::result::Result<T, Error>;
 
 /// Errors that can occur only when interacting with
-/// a Substrate node through RPC.
+/// a Axlib node through RPC.
 #[derive(Error, Debug)]
 pub enum Error {
 	/// IO error.
@@ -39,8 +39,8 @@ pub enum Error {
 	/// The response from the server could not be SCALE decoded.
 	#[error("Response parse failed: {0}")]
 	ResponseParseFailed(#[from] codec::Error),
-	/// The Substrate bridge pallet has not yet been initialized.
-	#[error("The Substrate bridge pallet has not been initialized yet.")]
+	/// The Axlib bridge pallet has not yet been initialized.
+	#[error("The Axlib bridge pallet has not been initialized yet.")]
 	UninitializedBridgePallet,
 	/// Account does not exist on the chain.
 	#[error("Account does not exist on the chain.")]
@@ -49,13 +49,13 @@ pub enum Error {
 	#[error("Mandatory :code: entry is missing from runtime storage.")]
 	MissingMandatoryCodeEntry,
 	/// The client we're connected to is not synced, so we can't rely on its state.
-	#[error("Substrate client is not synced {0}.")]
+	#[error("Axlib client is not synced {0}.")]
 	ClientNotSynced(Health),
 	/// An error has happened when we have tried to parse storage proof.
 	#[error("Error when parsing storage proof: {0:?}.")]
 	StorageProofError(bp_runtime::StorageProofError),
-	/// The Substrate transaction is invalid.
-	#[error("Substrate transaction is invalid: {0:?}")]
+	/// The Axlib transaction is invalid.
+	#[error("Axlib transaction is invalid: {0:?}")]
 	TransactionInvalid(#[from] TransactionValidityError),
 	/// Custom logic error.
 	#[error("{0}")]

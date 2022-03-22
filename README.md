@@ -1,9 +1,9 @@
 # Axia
 
-Implementation of a <https://axia.network> node in Rust based on the Substrate framework.
+Implementation of a <https://axia.network> node in Rust based on the Axlib framework.
 
 > **NOTE:** In 2018, we split our implementation of "Axia" from its development framework
-> "Substrate". See the [Substrate][substrate-repo] repo for git history prior to 2018.
+> "Axlib". See the [Axlib][substrate-repo] repo for git history prior to 2018.
 
 [substrate-repo]: https://github.com/paritytech/substrate
 

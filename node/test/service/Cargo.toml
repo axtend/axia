@@ -26,7 +26,7 @@ axia-test-runtime = { path = "../../../runtime/test-runtime" }
 test-runtime-constants = { path = "../../../runtime/test-runtime/constants" }
 axia-runtime-allychains = { path = "../../../runtime/allychains" }
 
-# Substrate dependencies
+# Axlib dependencies
 sp-authority-discovery = { git = "https://github.com/axtend/axlib", branch = "axlib" }
 sc-authority-discovery = { git = "https://github.com/axtend/axlib", branch = "axlib" }
 babe = { package = "sc-consensus-babe", git = "https://github.com/axtend/axlib", branch = "axlib" }

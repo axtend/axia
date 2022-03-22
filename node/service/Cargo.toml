@@ -5,7 +5,7 @@ authors = ["Parity Technologies <admin@parity.io>"]
 edition = "2018"
 
 [dependencies]
-# Substrate Client
+# Axlib Client
 sc-authority-discovery = { git = "https://github.com/axtend/axlib", branch = "axlib" }
 babe = { package = "sc-consensus-babe", git = "https://github.com/axtend/axlib", branch = "axlib" }
 beefy-primitives = { git = "https://github.com/axtend/axlib", branch = "axlib" }
@@ -28,7 +28,7 @@ sc-offchain = { git = "https://github.com/axtend/axlib", branch = "axlib" }
 service = { package = "sc-service", git = "https://github.com/axtend/axlib", default-features = false , branch = "axlib" }
 telemetry = { package = "sc-telemetry", git = "https://github.com/axtend/axlib", branch = "axlib" }
 
-# Substrate Primitives
+# Axlib Primitives
 sp-authority-discovery = { git = "https://github.com/axtend/axlib", branch = "axlib" }
 consensus_common = { package = "sp-consensus", git = "https://github.com/axtend/axlib", branch = "axlib" }
 grandpa_primitives = { package = "sp-finality-grandpa", git = "https://github.com/axtend/axlib", branch = "axlib" }
@@ -49,14 +49,14 @@ sp-timestamp = { git = "https://github.com/axtend/axlib", branch = "axlib" }
 sp-consensus-babe = { git = "https://github.com/axtend/axlib", branch = "axlib" }
 sp-state-machine = { git = "https://github.com/axtend/axlib", branch = "axlib" }
 
-# Substrate Pallets
+# Axlib Pallets
 pallet-babe = { git = "https://github.com/axtend/axlib", branch = "axlib" }
 pallet-im-online = { git = "https://github.com/axtend/axlib", branch = "axlib" }
 pallet-staking = { git = "https://github.com/axtend/axlib", branch = "axlib" }
 pallet-transaction-payment-rpc-runtime-api = { git = "https://github.com/axtend/axlib", branch = "axlib" }
 pallet-mmr-primitives = { git = "https://github.com/axtend/axlib", branch = "axlib" }
 
-# Substrate Other
+# Axlib Other
 frame-system-rpc-runtime-api = { git = "https://github.com/axtend/axlib", branch = "axlib" }
 prometheus-endpoint = { package = "substrate-prometheus-endpoint", git = "https://github.com/axtend/axlib", branch = "axlib" }
 

@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# One-liner to update between Substrate releases
+# One-liner to update between Axlib releases
 # Usage: ./update_substrate.sh 2.0.0-rc6 2.0.0
 set -xeu
 

@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Parity Bridges Common.  If not, see <http://www.gnu.org/licenses/>.
 
-//! Types used to connect to the Betanet-Substrate chain.
+//! Types used to connect to the Betanet-Axlib chain.
 
 use codec::Encode;
 use relay_substrate_client::{

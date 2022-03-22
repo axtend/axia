@@ -14,7 +14,7 @@ relay-utils = { path = "../utils" }
 bp-rialto = { path = "../../primitives/chain-rialto" }
 rialto-allychain-runtime = { path = "../../bin/rialto-allychain/runtime" }
 
-# Substrate Dependencies
+# Axlib Dependencies
 
 frame-system = { git = "https://github.com/axtend/axlib", branch = "axlib" }
 frame-support = { git = "https://github.com/axtend/axlib", branch = "axlib" }

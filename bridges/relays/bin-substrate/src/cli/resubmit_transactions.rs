@@ -19,7 +19,7 @@ use crate::cli::{Balance, TargetConnectionParams, TargetSigningParams};
 use codec::{Decode, Encode};
 use num_traits::{One, Zero};
 use relay_substrate_client::{
-	BlockWithJustification, Chain, Client, Error as SubstrateError, HeaderOf, TransactionSignScheme,
+	BlockWithJustification, Chain, Client, Error as AxlibError, HeaderOf, TransactionSignScheme,
 };
 use relay_utils::FailedClient;
 use sp_core::Bytes;
@@ -152,7 +152,7 @@ impl PrioritySelectionStrategy {
 		&self,
 		client: &Client<C>,
 		context: &Context<C>,
-	) -> Result<Option<TransactionPriority>, SubstrateError> {
+	) -> Result<Option<TransactionPriority>, AxlibError> {
 		match *self {
 			PrioritySelectionStrategy::MakeItBestTransaction =>
 				read_previous_block_best_priority::<C, S>(client, context).await,
@@ -239,7 +239,7 @@ async fn run_loop_iteration<C: Chain, S: TransactionSignScheme<Chain = C>>(
 	client: Client<C>,
 	key_pair: S::AccountKeyPair,
 	mut context: Context<C>,
-) -> Result<Context<C>, SubstrateError> {
+) -> Result<Context<C>, AxlibError> {
 	// correct best header is required for all other actions
 	context.best_header = client.best_header().await?;
 
@@ -313,11 +313,11 @@ async fn run_loop_iteration<C: Chain, S: TransactionSignScheme<Chain = C>>(
 async fn lookup_signer_transaction<C: Chain, S: TransactionSignScheme<Chain = C>>(
 	client: &Client<C>,
 	key_pair: &S::AccountKeyPair,
-) -> Result<Option<S::SignedTransaction>, SubstrateError> {
+) -> Result<Option<S::SignedTransaction>, AxlibError> {
 	let pending_transactions = client.pending_extrinsics().await?;
 	for pending_transaction in pending_transactions {
 		let pending_transaction = S::SignedTransaction::decode(&mut &pending_transaction.0[..])
-			.map_err(SubstrateError::ResponseParseFailed)?;
+			.map_err(AxlibError::ResponseParseFailed)?;
 		if !S::is_signed_by(key_pair, &pending_transaction) {
 			continue
 		}
@@ -332,7 +332,7 @@ async fn lookup_signer_transaction<C: Chain, S: TransactionSignScheme<Chain = C>
 async fn read_previous_block_best_priority<C: Chain, S: TransactionSignScheme<Chain = C>>(
 	client: &Client<C>,
 	context: &Context<C>,
-) -> Result<Option<TransactionPriority>, SubstrateError> {
+) -> Result<Option<TransactionPriority>, AxlibError> {
 	let best_block = client.get_block(Some(context.best_header.hash())).await?;
 	let best_transaction = best_block
 		.extrinsics()
@@ -354,7 +354,7 @@ async fn read_previous_block_best_priority<C: Chain, S: TransactionSignScheme<Ch
 async fn select_priority_from_queue<C: Chain, S: TransactionSignScheme<Chain = C>>(
 	client: &Client<C>,
 	context: &Context<C>,
-) -> Result<Option<TransactionPriority>, SubstrateError> {
+) -> Result<Option<TransactionPriority>, AxlibError> {
 	// select transaction from the queue
 	let queued_transactions = client.pending_extrinsics().await?;
 	let selected_transaction = match select_transaction_from_queue(queued_transactions, context) {
@@ -363,7 +363,7 @@ async fn select_priority_from_queue<C: Chain, S: TransactionSignScheme<Chain = C
 	};
 
 	let selected_transaction = S::SignedTransaction::decode(&mut &selected_transaction[..])
-		.map_err(SubstrateError::ResponseParseFailed)?;
+		.map_err(AxlibError::ResponseParseFailed)?;
 	let target_priority = client
 		.validate_transaction(context.best_header.hash(), selected_transaction)
 		.await??
@@ -403,11 +403,11 @@ async fn update_transaction_tip<C: Chain, S: TransactionSignScheme<Chain = C>>(
 	tip_step: C::Balance,
 	tip_limit: C::Balance,
 	target_priority: TransactionPriority,
-) -> Result<(bool, S::SignedTransaction), SubstrateError> {
+) -> Result<(bool, S::SignedTransaction), AxlibError> {
 	let stx = format!("{:?}", tx);
 	let mut current_priority = client.validate_transaction(at_block, tx.clone()).await??.priority;
 	let mut unsigned_tx = S::parse_transaction(tx).ok_or_else(|| {
-		SubstrateError::Custom(format!("Failed to parse {} transaction {}", C::NAME, stx,))
+		AxlibError::Custom(format!("Failed to parse {} transaction {}", C::NAME, stx,))
 	})?;
 	let old_tip = unsigned_tx.tip;
 

@@ -2,9 +2,9 @@
 
 # Check for any changes in any runtime directories (e.g., ^runtime/axia) as
 # well as directories common to all runtimes (e.g., ^runtime/common). If there
-# are no changes, check if the Substrate git SHA in Cargo.lock has been
+# are no changes, check if the Axlib git SHA in Cargo.lock has been
 # changed. If so, pull the repo and verify if {spec,impl}_versions have been
-# altered since the previous Substrate version used.
+# altered since the previous Axlib version used.
 #
 # If there were changes to any runtimes or common dirs, we iterate over each
 # runtime (defined in the $runtimes() array), and check if {spec,impl}_version

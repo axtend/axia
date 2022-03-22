@@ -29,7 +29,7 @@ use strum::{EnumString, EnumVariantNames, VariantNames};
 use frame_support::dispatch::GetDispatchInfo;
 use relay_substrate_client::{
 	AccountIdOf, AccountPublicOf, BalanceOf, BlockNumberOf, CallOf, Chain, ChainWithBalances,
-	Client, Error as SubstrateError, HashOf, SignatureOf, Subscription, TransactionSignScheme,
+	Client, Error as AxlibError, HashOf, SignatureOf, Subscription, TransactionSignScheme,
 	TransactionStatusOf, UnsignedTransaction,
 };
 use sp_core::{blake2_256, storage::StorageKey, Bytes, Pair, H256, U256};
@@ -561,7 +561,7 @@ async fn read_account_balance<C: ChainWithBalances>(
 ) -> anyhow::Result<Option<BalanceOf<C>>> {
 	match client.free_native_balance(account.clone()).await {
 		Ok(balance) => Ok(Some(balance)),
-		Err(SubstrateError::AccountDoesNotExist) => Ok(None),
+		Err(AxlibError::AccountDoesNotExist) => Ok(None),
 		Err(error) => Err(anyhow::format_err!(
 			"Failed to read balance of {} account {:?}: {:?}",
 			C::NAME,

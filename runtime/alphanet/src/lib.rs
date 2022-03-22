@@ -1147,7 +1147,7 @@ mod benches {
 		[runtime_allychains::initializer, Initializer]
 		[runtime_allychains::paras, Paras]
 		[runtime_allychains::paras_inherent, ParaInherent]
-		// Substrate
+		// Axlib
 		[pallet_bags_list, BagsList]
 		[pallet_balances, Balances]
 		[pallet_election_provider_multi_phase, ElectionProviderMultiPhase]

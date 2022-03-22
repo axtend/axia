@@ -22,7 +22,7 @@ pallet-bridge-dispatch = { path = "../../modules/dispatch", default-features = f
 pallet-bridge-grandpa = { path = "../../modules/grandpa", default-features = false }
 pallet-bridge-messages = { path = "../../modules/messages", default-features = false }
 
-# Substrate dependencies
+# Axlib dependencies
 
 frame-support = { git = "https://github.com/axtend/axlib", default-features = false , branch = "axlib" }
 pallet-transaction-payment = { git = "https://github.com/axtend/axlib", default-features = false , branch = "axlib" }
