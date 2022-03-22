@@ -55,7 +55,7 @@ use std::{
 	path::PathBuf,
 	sync::Arc,
 };
-use substrate_test_client::{
+use axlib_test_client::{
 	BlockchainEventsExt, RpcHandlersExt, RpcTransactionError, RpcTransactionOutput,
 };
 

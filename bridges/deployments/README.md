@@ -92,7 +92,7 @@ seeds for the `sr25519` keys. This seed may also be used in the signer argument 
 Example:
 
 ```bash
-./substrate-relay relay-headers rialto-to-millau \
+./axlib-relay relay-headers rialto-to-millau \
 	--source-host rialto-node-alice \
 	--source-port 9944 \
 	--target-host millau-node-alice \
@@ -182,7 +182,7 @@ Here are the arguments currently supported:
   - `PROJECT`: Project to build withing bridges repo. Can be one of:
     - `rialto-bridge-node`
     - `millau-bridge-node`
-    - `substrate-relay`
+    - `axlib-relay`
 
 ### GitHub Actions
 We have a nightly job which runs and publishes Docker images for the different nodes and relayers to

@@ -16,5 +16,5 @@ axia-node-jaeger = { path = "../jaeger" }
 axia-overseer-gen = { path = "../overseer/overseer-gen" }
 sc-network = { git = "https://github.com/axtend/axlib", branch = "axlib" }
 smallvec = "1.6.1"
-substrate-prometheus-endpoint = { git = "https://github.com/axtend/axlib", branch = "axlib" }
+axlib-prometheus-endpoint = { git = "https://github.com/axtend/axlib", branch = "axlib" }
 thiserror = "1.0.30"

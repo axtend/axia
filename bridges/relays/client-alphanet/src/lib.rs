@@ -16,7 +16,7 @@
 
 //! Types used to connect to the Alphanet chain.
 
-use relay_substrate_client::{Chain, ChainBase, ChainWithBalances};
+use relay_axlib_client::{Chain, ChainBase, ChainWithBalances};
 use sp_core::storage::StorageKey;
 use std::time::Duration;
 
@@ -24,7 +24,7 @@ use std::time::Duration;
 pub type HeaderId = relay_utils::HeaderId<bp_alphanet::Hash, bp_alphanet::BlockNumber>;
 
 /// Alphanet header type used in headers sync.
-pub type SyncHeader = relay_substrate_client::SyncHeader<bp_alphanet::Header>;
+pub type SyncHeader = relay_axlib_client::SyncHeader<bp_alphanet::Header>;
 
 /// Alphanet chain definition
 #[derive(Debug, Clone, Copy)]

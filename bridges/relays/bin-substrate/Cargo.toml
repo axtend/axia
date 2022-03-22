@@ -1,5 +1,5 @@
 [package]
-name = "substrate-relay"
+name = "axlib-relay"
 version = "0.1.0"
 authors = ["Parity Technologies <admin@parity.io>"]
 edition = "2018"
@@ -48,12 +48,12 @@ relay-rialto-client = { path = "../client-rialto" }
 relay-rialto-allychain-client = { path = "../client-rialto-allychain" }
 relay-betanet-client = { path = "../client-betanet" }
 relay-wococo-client = { path = "../client-wococo" }
-relay-substrate-client = { path = "../client-substrate" }
+relay-axlib-client = { path = "../client-substrate" }
 relay-utils = { path = "../utils" }
 relay-alphanet-client = { path = "../client-alphanet" }
 rialto-allychain-runtime = { path = "../../bin/rialto-allychain/runtime" }
 rialto-runtime = { path = "../../bin/rialto/runtime" }
-substrate-relay-helper = { path = "../lib-substrate-relay" }
+axlib-relay-helper = { path = "../lib-axlib-relay" }
 
 # Axlib Dependencies
 

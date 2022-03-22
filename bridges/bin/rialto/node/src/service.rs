@@ -40,7 +40,7 @@ use sp_api::{ConstructRuntimeApi, HeaderT};
 use sp_consensus::SelectChain;
 use sp_runtime::traits::Block as BlockT;
 use std::{sync::Arc, time::Duration};
-use substrate_prometheus_endpoint::Registry;
+use axlib_prometheus_endpoint::Registry;
 
 pub use axia_overseer::Handle;
 pub use axia_primitives::v1::AllychainHost;
@@ -90,7 +90,7 @@ pub enum Error {
 	Overseer(#[from] axia_overseer::SubsystemError),
 
 	#[error(transparent)]
-	Prometheus(#[from] substrate_prometheus_endpoint::PrometheusError),
+	Prometheus(#[from] axlib_prometheus_endpoint::PrometheusError),
 
 	#[error("Authorities require the real overseer implementation")]
 	AuthoritiesRequireRealOverseer,
@@ -257,7 +257,7 @@ where
 		      -> Result<jsonrpc_core::IoHandler<sc_service::RpcMetadata>, sc_service::Error> {
 			use pallet_transaction_payment_rpc::{TransactionPayment, TransactionPaymentApi};
 			use sc_finality_grandpa_rpc::{GrandpaApi, GrandpaRpcHandler};
-			use substrate_frame_rpc_system::{FullSystem, SystemApi};
+			use axlib_frame_rpc_system::{FullSystem, SystemApi};
 
 			let backend = backend.clone();
 			let client = client.clone();

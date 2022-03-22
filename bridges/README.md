@@ -58,7 +58,7 @@ If you want to reproduce other steps of CI process you can use the following
 [guide](https://github.com/paritytech/scripts#reproduce-ci-locally).
 
 If you need more information about setting up your development environment Axlib's
-[Getting Started](https://substrate.dev/docs/en/knowledgebase/getting-started/) page is a good
+[Getting Started](https://axlib.dev/docs/en/knowledgebase/getting-started/) page is a good
 resource.
 
 ## High-Level Architecture
@@ -133,7 +133,7 @@ First you'll need to build the bridge nodes and relay. This can be done as follo
 # In `parity-bridges-common` folder
 cargo build -p rialto-bridge-node
 cargo build -p millau-bridge-node
-cargo build -p substrate-relay
+cargo build -p axlib-relay
 ```
 
 ### Running a Dev network
@@ -243,5 +243,5 @@ If you are interested in information exchange and development of Axia related br
 feel free to join the [Axia Bridges](https://app.element.io/#/room/#bridges:web3.foundation)
 Element channel.
 
-The [Axlib Technical](https://app.element.io/#/room/#substrate-technical:matrix.org) Element
+The [Axlib Technical](https://app.element.io/#/room/#axlib-technical:matrix.org) Element
 channel is most suited for discussions regarding Axlib itself.

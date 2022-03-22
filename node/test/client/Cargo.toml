@@ -14,7 +14,7 @@ axia-primitives = { path = "../../../primitives" }
 axia-node-subsystem = { path = "../../subsystem" }
 
 # Axlib dependencies
-substrate-test-client = { git = "https://github.com/axtend/axlib", branch = "axlib" }
+axlib-test-client = { git = "https://github.com/axtend/axlib", branch = "axlib" }
 sc-service = { git = "https://github.com/axtend/axlib", branch = "axlib" }
 sc-block-builder = { git = "https://github.com/axtend/axlib", branch = "axlib" }
 sc-consensus = { git = "https://github.com/axtend/axlib", branch = "axlib" }

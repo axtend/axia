@@ -17,7 +17,7 @@
 //! Types used to connect to the Millau-Axlib chain.
 
 use codec::{Compact, Decode, Encode};
-use relay_substrate_client::{
+use relay_axlib_client::{
 	BalanceOf, Chain, ChainBase, ChainWithBalances, IndexOf, TransactionEraOf,
 	TransactionSignScheme, UnsignedTransaction,
 };
@@ -137,4 +137,4 @@ impl TransactionSignScheme for Millau {
 pub type SigningParams = sp_core::sr25519::Pair;
 
 /// Millau header type used in headers sync.
-pub type SyncHeader = relay_substrate_client::SyncHeader<millau_runtime::Header>;
+pub type SyncHeader = relay_axlib_client::SyncHeader<millau_runtime::Header>;

@@ -17,7 +17,7 @@
 //! Types used to connect to the Wococo-Axlib chain.
 
 use codec::Encode;
-use relay_substrate_client::{
+use relay_axlib_client::{
 	Chain, ChainBase, ChainWithBalances, TransactionEraOf, TransactionSignScheme,
 	UnsignedTransaction,
 };
@@ -31,7 +31,7 @@ pub mod runtime;
 pub type HeaderId = relay_utils::HeaderId<bp_wococo::Hash, bp_wococo::BlockNumber>;
 
 /// Wococo header type used in headers sync.
-pub type SyncHeader = relay_substrate_client::SyncHeader<bp_wococo::Header>;
+pub type SyncHeader = relay_axlib_client::SyncHeader<bp_wococo::Header>;
 
 /// Wococo chain definition
 #[derive(Debug, Clone, Copy)]

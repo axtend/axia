@@ -3,7 +3,7 @@
 version: '3.5'
 services:
   relay-headers-alphanet-to-millau:
-    image: paritytech/substrate-relay
+    image: paritytech/axlib-relay
     entrypoint: /entrypoints/relay-headers-alphanet-to-millau-entrypoint.sh
     volumes:
       - ./bridges/alphanet-millau/entrypoints:/entrypoints

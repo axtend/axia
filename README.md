@@ -3,9 +3,9 @@
 Implementation of a <https://axia.network> node in Rust based on the Axlib framework.
 
 > **NOTE:** In 2018, we split our implementation of "Axia" from its development framework
-> "Axlib". See the [Axlib][substrate-repo] repo for git history prior to 2018.
+> "Axlib". See the [Axlib][axlib-repo] repo for git history prior to 2018.
 
-[substrate-repo]: https://github.com/paritytech/substrate
+[axlib-repo]: https://github.com/paritytech/substrate
 
 This repo contains runtimes for the Axia, AxiaTest, and Alphanet networks. The README provides
 information about installing the `axia` binary and developing on the codebase. For more

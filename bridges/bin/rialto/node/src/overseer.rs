@@ -45,7 +45,7 @@ use sp_blockchain::HeaderBackend;
 use sp_consensus_babe::BabeApi;
 use sp_core::traits::SpawnNamed;
 use std::sync::Arc;
-use substrate_prometheus_endpoint::Registry;
+use axlib_prometheus_endpoint::Registry;
 
 pub use axia_approval_distribution::ApprovalDistribution as ApprovalDistributionSubsystem;
 pub use axia_availability_bitfield_distribution::BitfieldDistribution as BitfieldDistributionSubsystem;

@@ -1,5 +1,5 @@
 [package]
-name = "substrate-relay-helper"
+name = "axlib-relay-helper"
 version = "0.1.0"
 authors = ["Parity Technologies <admin@parity.io>"]
 edition = "2018"
@@ -25,7 +25,7 @@ finality-grandpa = { version = "0.14.0" }
 finality-relay = { path = "../finality" }
 relay-utils = { path = "../utils" }
 messages-relay = { path = "../messages" }
-relay-substrate-client = { path = "../client-substrate" }
+relay-axlib-client = { path = "../client-substrate" }
 
 pallet-bridge-messages = { path = "../../modules/messages" }
 

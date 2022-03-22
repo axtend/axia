@@ -58,7 +58,7 @@ pallet-mmr-primitives = { git = "https://github.com/axtend/axlib", branch = "axl
 
 # Axlib Other
 frame-system-rpc-runtime-api = { git = "https://github.com/axtend/axlib", branch = "axlib" }
-prometheus-endpoint = { package = "substrate-prometheus-endpoint", git = "https://github.com/axtend/axlib", branch = "axlib" }
+prometheus-endpoint = { package = "axlib-prometheus-endpoint", git = "https://github.com/axtend/axlib", branch = "axlib" }
 
 # External Crates
 futures = "0.3.21"

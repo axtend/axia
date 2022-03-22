@@ -22,9 +22,9 @@ use sp_core::{Bytes, Pair};
 use bp_header_chain::justification::GrandpaJustification;
 use relay_axctest_client::{AxiaTest, SyncHeader as AxiaTestSyncHeader};
 use relay_axia_client::{Axia, SigningParams as AxiaSigningParams};
-use relay_substrate_client::{Client, TransactionSignScheme, UnsignedTransaction};
+use relay_axlib_client::{Client, TransactionSignScheme, UnsignedTransaction};
 use relay_utils::metrics::MetricsParams;
-use substrate_relay_helper::finality_pipeline::{
+use axlib_relay_helper::finality_pipeline::{
 	AxlibFinalitySyncPipeline, AxlibFinalityToAxlib,
 };
 
@@ -68,11 +68,11 @@ impl AxlibFinalitySyncPipeline for AxiaTestFinalityToAxia {
 	}
 
 	fn start_relay_guards(&self) {
-		relay_substrate_client::guard::abort_on_spec_version_change(
+		relay_axlib_client::guard::abort_on_spec_version_change(
 			self.finality_pipeline.target_client.clone(),
 			bp_axia::VERSION.spec_version,
 		);
-		relay_substrate_client::guard::abort_when_account_balance_decreased(
+		relay_axlib_client::guard::abort_when_account_balance_decreased(
 			self.finality_pipeline.target_client.clone(),
 			self.transactions_author(),
 			MAXIMAL_BALANCE_DECREASE_PER_DAY,

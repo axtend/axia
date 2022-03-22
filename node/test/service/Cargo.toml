@@ -55,12 +55,12 @@ sp-core = { git = "https://github.com/axtend/axlib", branch = "axlib" }
 sp-keyring = { git = "https://github.com/axtend/axlib", branch = "axlib" }
 sp-runtime = { git = "https://github.com/axtend/axlib", branch = "axlib" }
 sp-state-machine = { git = "https://github.com/axtend/axlib", branch = "axlib" }
-substrate-test-client = { git = "https://github.com/axtend/axlib", branch = "axlib" }
+axlib-test-client = { git = "https://github.com/axtend/axlib", branch = "axlib" }
 
 [dev-dependencies]
 pallet-balances = { git = "https://github.com/axtend/axlib", default-features = false , branch = "axlib" }
 serde_json = "1.0.78"
-substrate-test-utils = { git = "https://github.com/axtend/axlib", branch = "axlib" }
+axlib-test-utils = { git = "https://github.com/axtend/axlib", branch = "axlib" }
 tokio = { version = "1.15", features = ["macros"] }
 
 [features]

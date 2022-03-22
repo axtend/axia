@@ -24,7 +24,7 @@ USER user
 
 WORKDIR /home/user
 
-ARG PROJECT=substrate-relay
+ARG PROJECT=axlib-relay
 
 COPY --chown=user:user ./${PROJECT} ./
 COPY --chown=user:user ./bridge-entrypoint.sh ./

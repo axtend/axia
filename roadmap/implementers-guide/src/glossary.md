@@ -40,6 +40,6 @@ exactly one downward message queue.
 - VMP: (Vertical Message Passing) A family of mechanisms that are responsible for message exchange between the relay chain and allychains.
 - XCMP (Cross-Chain Message Passing) A type of horizontal message passing (i.e. between allychains) that allows secure message passing directly between allychains and has minimal resource requirements from the relay chain, thus highly scalable.
 
-Also of use is the [Axlib Glossary](https://substrate.dev/docs/en/knowledgebase/getting-started/glossary).
+Also of use is the [Axlib Glossary](https://axlib.dev/docs/en/knowledgebase/getting-started/glossary).
 
 [0]: https://wiki.axia.network/docs/learn-consensus

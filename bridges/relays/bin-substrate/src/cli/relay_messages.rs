@@ -18,7 +18,7 @@ use structopt::StructOpt;
 use strum::{EnumString, EnumVariantNames, VariantNames};
 
 use messages_relay::relay_strategy::MixStrategy;
-use substrate_relay_helper::messages_lane::MessagesRelayParams;
+use axlib_relay_helper::messages_lane::MessagesRelayParams;
 
 use crate::{
 	cli::{

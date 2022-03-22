@@ -32,7 +32,7 @@ use std::{
 	collections::hash_map::HashMap,
 	sync::{Arc, Mutex, MutexGuard},
 };
-use substrate_prometheus_endpoint::{
+use axlib_prometheus_endpoint::{
 	register, Counter, CounterVec, Opts, PrometheusError, Registry, U64,
 };
 mod allychain;

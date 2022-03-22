@@ -17,7 +17,7 @@
 //! Types used to connect to the Axia chain.
 
 use codec::Encode;
-use relay_substrate_client::{
+use relay_axlib_client::{
 	Chain, ChainBase, ChainWithBalances, TransactionEraOf, TransactionSignScheme,
 	UnsignedTransaction,
 };
@@ -118,7 +118,7 @@ impl TransactionSignScheme for Axia {
 }
 
 /// Axia header type used in headers sync.
-pub type SyncHeader = relay_substrate_client::SyncHeader<bp_axia::Header>;
+pub type SyncHeader = relay_axlib_client::SyncHeader<bp_axia::Header>;
 
 /// Axia signing params.
 pub type SigningParams = sp_core::sr25519::Pair;

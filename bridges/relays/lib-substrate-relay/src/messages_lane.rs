@@ -29,7 +29,7 @@ use messages_relay::{
 	message_lane::{MessageLane, SourceHeaderIdOf, TargetHeaderIdOf},
 	relay_strategy::RelayStrategy,
 };
-use relay_substrate_client::{
+use relay_axlib_client::{
 	metrics::{FloatStorageValueMetric, StorageProofOverheadMetric},
 	BlockNumberOf, Chain, Client, HashOf,
 };

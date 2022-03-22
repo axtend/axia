@@ -25,7 +25,7 @@ use bp_message_dispatch::{CallOrigin, MessagePayload};
 use bp_runtime::BalanceOf;
 use codec::Encode;
 use frame_support::weights::Weight;
-use relay_substrate_client::{Chain, TransactionSignScheme, UnsignedTransaction};
+use relay_axlib_client::{Chain, TransactionSignScheme, UnsignedTransaction};
 use sp_core::{Bytes, Pair};
 use sp_runtime::{traits::IdentifyAccount, AccountId32, MultiSignature, MultiSigner};
 use std::fmt::Debug;
@@ -184,7 +184,7 @@ impl SendMessage {
 					Source::sign_transaction(
 						source_genesis_hash,
 						&source_sign,
-						relay_substrate_client::TransactionEra::immortal(),
+						relay_axlib_client::TransactionEra::immortal(),
 						UnsignedTransaction::new(send_message_call.clone(), 0),
 					)
 					.encode(),
@@ -195,7 +195,7 @@ impl SendMessage {
 					let signed_source_call = Source::sign_transaction(
 						source_genesis_hash,
 						&source_sign,
-						relay_substrate_client::TransactionEra::immortal(),
+						relay_axlib_client::TransactionEra::immortal(),
 						UnsignedTransaction::new(send_message_call, transaction_nonce),
 					)
 					.encode();

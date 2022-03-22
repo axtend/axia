@@ -17,7 +17,7 @@
 //! Types used to connect to the Betanet-Axlib chain.
 
 use codec::Encode;
-use relay_substrate_client::{
+use relay_axlib_client::{
 	Chain, ChainBase, ChainWithBalances, TransactionEraOf, TransactionSignScheme,
 	UnsignedTransaction,
 };
@@ -31,7 +31,7 @@ pub mod runtime;
 pub type HeaderId = relay_utils::HeaderId<bp_betanet::Hash, bp_betanet::BlockNumber>;
 
 /// Betanet header type used in headers sync.
-pub type SyncHeader = relay_substrate_client::SyncHeader<bp_betanet::Header>;
+pub type SyncHeader = relay_axlib_client::SyncHeader<bp_betanet::Header>;
 
 /// Betanet chain definition
 #[derive(Debug, Clone, Copy)]

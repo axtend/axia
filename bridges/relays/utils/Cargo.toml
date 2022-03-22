@@ -28,4 +28,4 @@ bp-runtime = { path = "../../primitives/runtime" }
 
 # Axlib dependencies
 
-substrate-prometheus-endpoint = { git = "https://github.com/axtend/axlib", branch = "axlib" }
+axlib-prometheus-endpoint = { git = "https://github.com/axtend/axlib", branch = "axlib" }

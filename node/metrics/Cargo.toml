@@ -16,7 +16,7 @@ metered-channel = { path = "../metered-channel" }
 sc-service = { git = "https://github.com/axtend/axlib", branch = "axlib" }
 sc-cli = { git = "https://github.com/axtend/axlib", branch = "axlib" }
 
-substrate-prometheus-endpoint = { git = "https://github.com/axtend/axlib", branch = "axlib" }
+axlib-prometheus-endpoint = { git = "https://github.com/axtend/axlib", branch = "axlib" }
 sc-tracing = { git = "https://github.com/axtend/axlib", branch = "axlib" }
 codec = { package = "parity-scale-codec", version = "2.2.0" }
 primitives = { package = "axia-primitives", path = "../../primitives/" }
@@ -30,7 +30,7 @@ tempfile = "3.2.0"
 hyper = { version = "0.14.17", default-features = false, features = ["http1", "tcp"] }
 tokio = "1.13"
 axia-test-service = { path = "../test/service", features=["runtime-metrics"]}
-substrate-test-utils = { git = "https://github.com/axtend/axlib", branch = "axlib" }
+axlib-test-utils = { git = "https://github.com/axtend/axlib", branch = "axlib" }
 sc-service = { git = "https://github.com/axtend/axlib", branch = "axlib" }
 sp-keyring = { git = "https://github.com/axtend/axlib", branch = "axlib" }
 sc-client-api = { git = "https://github.com/axtend/axlib", branch = "axlib" }

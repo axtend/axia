@@ -18,7 +18,7 @@ use crate::{
 	cli::{bridge::FullBridge, AccountId},
 	select_full_bridge,
 };
-use relay_substrate_client::Chain;
+use relay_axlib_client::Chain;
 use structopt::StructOpt;
 use strum::VariantNames;
 

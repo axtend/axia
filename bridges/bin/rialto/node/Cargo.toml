@@ -5,7 +5,7 @@ version = "0.1.0"
 authors = ["Parity Technologies <admin@parity.io>"]
 edition = "2018"
 build = "build.rs"
-homepage = "https://substrate.dev"
+homepage = "https://axlib.dev"
 repository = "https://github.com/paritytech/parity-bridges-common/"
 license = "GPL-3.0-or-later WITH Classpath-exception-2.0"
 
@@ -72,8 +72,8 @@ sp-session = { git = "https://github.com/axtend/axlib", branch = "axlib" }
 sp-transaction-pool = { git = "https://github.com/axtend/axlib", branch = "axlib" }
 sp-runtime = { git = "https://github.com/axtend/axlib", branch = "axlib" }
 sp-timestamp = { git = "https://github.com/axtend/axlib", branch = "axlib" }
-substrate-frame-rpc-system = { git = "https://github.com/axtend/axlib", branch = "axlib" }
-substrate-prometheus-endpoint = { git = "https://github.com/axtend/axlib", branch = "axlib" }
+axlib-frame-rpc-system = { git = "https://github.com/axtend/axlib", branch = "axlib" }
+axlib-prometheus-endpoint = { git = "https://github.com/axtend/axlib", branch = "axlib" }
 
 # Axia Dependencies
 
@@ -110,7 +110,7 @@ axia-runtime-allychains = { git = "https://github.com/paritytech/axia", branch =
 axia-statement-distribution = { git = "https://github.com/paritytech/axia", branch = "master" }
 
 [build-dependencies]
-substrate-build-script-utils = { git = "https://github.com/axtend/axlib", branch = "axlib" }
+axlib-build-script-utils = { git = "https://github.com/axtend/axlib", branch = "axlib" }
 frame-benchmarking-cli = { git = "https://github.com/axtend/axlib", branch = "axlib" }
 
 [features]

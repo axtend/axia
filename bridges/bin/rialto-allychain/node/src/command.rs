@@ -69,7 +69,7 @@ impl AxlibCli for Cli {
 	}
 
 	fn support_url() -> String {
-		"https://github.com/substrate-developer-hub/substrate-allychain-template/issues/new".into()
+		"https://github.com/axlib-developer-hub/axlib-allychain-template/issues/new".into()
 	}
 
 	fn copyright_start_year() -> i32 {
@@ -107,7 +107,7 @@ impl AxlibCli for RelayChainCli {
 	}
 
 	fn support_url() -> String {
-		"https://github.com/substrate-developer-hub/substrate-allychain-template/issues/new".into()
+		"https://github.com/axlib-developer-hub/axlib-allychain-template/issues/new".into()
 	}
 
 	fn copyright_start_year() -> i32 {

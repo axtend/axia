@@ -22,8 +22,8 @@ use sp_core::{Bytes, Pair};
 use bp_header_chain::justification::GrandpaJustification;
 use relay_millau_client::{Millau, SyncHeader as MillauSyncHeader};
 use relay_rialto_client::{Rialto, SigningParams as RialtoSigningParams};
-use relay_substrate_client::{Client, IndexOf, TransactionSignScheme, UnsignedTransaction};
-use substrate_relay_helper::finality_pipeline::{
+use relay_axlib_client::{Client, IndexOf, TransactionSignScheme, UnsignedTransaction};
+use axlib_relay_helper::finality_pipeline::{
 	AxlibFinalitySyncPipeline, AxlibFinalityToAxlib,
 };
 

@@ -1,10 +1,10 @@
 # Builds images used by the bridge.
 #
 # In particular, it can be used to build Axlib nodes and bridge relayers. The binary that gets
-# built can be specified with the `PROJECT` build-arg. For example, to build the `substrate-relay`
+# built can be specified with the `PROJECT` build-arg. For example, to build the `axlib-relay`
 # you would do the following:
 #
-# `docker build . -t local/substrate-relay --build-arg=PROJECT=substrate-relay`
+# `docker build . -t local/axlib-relay --build-arg=PROJECT=axlib-relay`
 #
 # See the `deployments/README.md` for all the available `PROJECT` values.
 
@@ -13,7 +13,7 @@ WORKDIR /parity-bridges-common
 
 COPY . .
 
-ARG PROJECT=substrate-relay
+ARG PROJECT=axlib-relay
 RUN cargo build --release --verbose -p ${PROJECT} && \
     strip ./target/release/${PROJECT}
 
@@ -42,7 +42,7 @@ USER user
 
 WORKDIR /home/user
 
-ARG PROJECT=substrate-relay
+ARG PROJECT=axlib-relay
 
 COPY --chown=user:user --from=builder /parity-bridges-common/target/release/${PROJECT} ./
 COPY --chown=user:user --from=builder /parity-bridges-common/deployments/local-scripts/bridge-entrypoint.sh ./

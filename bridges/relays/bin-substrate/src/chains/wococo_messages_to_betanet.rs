@@ -28,11 +28,11 @@ use messages_relay::{message_lane::MessageLane, relay_strategy::MixStrategy};
 use relay_betanet_client::{
 	HeaderId as BetanetHeaderId, Betanet, SigningParams as BetanetSigningParams,
 };
-use relay_substrate_client::{Chain, Client, IndexOf, TransactionSignScheme, UnsignedTransaction};
+use relay_axlib_client::{Chain, Client, IndexOf, TransactionSignScheme, UnsignedTransaction};
 use relay_wococo_client::{
 	HeaderId as WococoHeaderId, SigningParams as WococoSigningParams, Wococo,
 };
-use substrate_relay_helper::{
+use axlib_relay_helper::{
 	messages_lane::{
 		select_delivery_transaction_limits, MessagesRelayParams, StandaloneMessagesMetrics,
 		AxlibMessageLane, AxlibMessageLaneToAxlib,
@@ -103,7 +103,7 @@ impl AxlibMessageLane for WococoMessagesToBetanet {
 		let transaction = Wococo::sign_transaction(
 			genesis_hash,
 			&self.message_lane.source_sign,
-			relay_substrate_client::TransactionEra::new(
+			relay_axlib_client::TransactionEra::new(
 				best_block_id,
 				self.message_lane.source_transactions_mortality,
 			),
@@ -147,7 +147,7 @@ impl AxlibMessageLane for WococoMessagesToBetanet {
 		let transaction = Betanet::sign_transaction(
 			genesis_hash,
 			&self.message_lane.target_sign,
-			relay_substrate_client::TransactionEra::new(
+			relay_axlib_client::TransactionEra::new(
 				best_block_id,
 				self.message_lane.target_transactions_mortality,
 			),
@@ -180,7 +180,7 @@ pub async fn run(
 		MixStrategy,
 	>,
 ) -> anyhow::Result<()> {
-	let stall_timeout = relay_substrate_client::bidirectional_transaction_stall_timeout(
+	let stall_timeout = relay_axlib_client::bidirectional_transaction_stall_timeout(
 		params.source_transactions_mortality,
 		params.target_transactions_mortality,
 		Wococo::AVERAGE_BLOCK_INTERVAL,
@@ -283,7 +283,7 @@ pub(crate) fn standalone_metrics(
 	source_client: Client<Wococo>,
 	target_client: Client<Betanet>,
 ) -> anyhow::Result<StandaloneMessagesMetrics<Wococo, Betanet>> {
-	substrate_relay_helper::messages_lane::standalone_metrics(
+	axlib_relay_helper::messages_lane::standalone_metrics(
 		source_client,
 		target_client,
 		None,

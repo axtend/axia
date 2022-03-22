@@ -16,7 +16,7 @@
 
 //! Types used to connect to the Rialto-Axlib chain.
 
-use relay_substrate_client::{Chain, ChainBase};
+use relay_axlib_client::{Chain, ChainBase};
 use std::time::Duration;
 
 /// Rialto header id.

@@ -31,8 +31,8 @@ use relay_axctest_client::{
 use relay_axia_client::{
 	HeaderId as AxiaHeaderId, Axia, SigningParams as AxiaSigningParams,
 };
-use relay_substrate_client::{Chain, Client, TransactionSignScheme, UnsignedTransaction};
-use substrate_relay_helper::{
+use relay_axlib_client::{Chain, Client, TransactionSignScheme, UnsignedTransaction};
+use axlib_relay_helper::{
 	messages_lane::{
 		select_delivery_transaction_limits, MessagesRelayParams, StandaloneMessagesMetrics,
 		AxlibMessageLane, AxlibMessageLaneToAxlib,
@@ -105,7 +105,7 @@ impl AxlibMessageLane for AxiaMessagesToAxiaTest {
 		let transaction = Axia::sign_transaction(
 			genesis_hash,
 			&self.message_lane.source_sign,
-			relay_substrate_client::TransactionEra::new(
+			relay_axlib_client::TransactionEra::new(
 				best_block_id,
 				self.message_lane.source_transactions_mortality,
 			),
@@ -149,7 +149,7 @@ impl AxlibMessageLane for AxiaMessagesToAxiaTest {
 		let transaction = AxiaTest::sign_transaction(
 			genesis_hash,
 			&self.message_lane.target_sign,
-			relay_substrate_client::TransactionEra::new(
+			relay_axlib_client::TransactionEra::new(
 				best_block_id,
 				self.message_lane.target_transactions_mortality,
 			),
@@ -182,7 +182,7 @@ pub async fn run(
 		MixStrategy,
 	>,
 ) -> anyhow::Result<()> {
-	let stall_timeout = relay_substrate_client::bidirectional_transaction_stall_timeout(
+	let stall_timeout = relay_axlib_client::bidirectional_transaction_stall_timeout(
 		params.source_transactions_mortality,
 		params.target_transactions_mortality,
 		Axia::AVERAGE_BLOCK_INTERVAL,
@@ -285,7 +285,7 @@ pub(crate) fn standalone_metrics(
 	source_client: Client<Axia>,
 	target_client: Client<AxiaTest>,
 ) -> anyhow::Result<StandaloneMessagesMetrics<Axia, AxiaTest>> {
-	substrate_relay_helper::messages_lane::standalone_metrics(
+	axlib_relay_helper::messages_lane::standalone_metrics(
 		source_client,
 		target_client,
 		Some(crate::chains::axia::TOKEN_ID),
@@ -309,7 +309,7 @@ pub(crate) async fn update_axctest_to_axia_conversion_rate(
 				Axia::sign_transaction(
 					genesis_hash,
 					&signer,
-					relay_substrate_client::TransactionEra::immortal(),
+					relay_axlib_client::TransactionEra::immortal(),
 					UnsignedTransaction::new(
 						relay_axia_client::runtime::Call::BridgeAxiaTestMessages(
 							relay_axia_client::runtime::BridgeAxiaTestMessagesCall::update_pallet_parameter(

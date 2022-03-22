@@ -36,7 +36,7 @@ sc-tracing = { git = "https://github.com/axtend/axlib", optional = true , branch
 sp-trie = { git = "https://github.com/axtend/axlib", default-features = false , branch = "axlib" }
 
 [build-dependencies]
-substrate-build-script-utils = { git = "https://github.com/axtend/axlib", branch = "axlib" }
+axlib-build-script-utils = { git = "https://github.com/axtend/axlib", branch = "axlib" }
 
 [features]
 default = ["wasmtime", "db", "cli", "full-node", "trie-memory-tracker", "axia-native"]

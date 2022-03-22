@@ -28,19 +28,19 @@ output = ARGV[2] || 'release-notes.md'
 ENV['REF1'] = axia_ref1
 ENV['REF2'] = axia_ref2
 
-substrate_ref1 = gh_axia.get_dependency_reference(axia_ref1, 'sp-io')
-substrate_ref2 = gh_axia.get_dependency_reference(axia_ref2, 'sp-io')
+axlib_ref1 = gh_axia.get_dependency_reference(axia_ref1, 'sp-io')
+axlib_ref2 = gh_axia.get_dependency_reference(axia_ref2, 'sp-io')
 
 logger.debug("Axia from:   #{axia_ref1}")
 logger.debug("Axia to:     #{axia_ref2}")
 
-logger.debug("Axlib from:  #{substrate_ref1}")
-logger.debug("Axlib to:    #{substrate_ref2}")
+logger.debug("Axlib from:  #{axlib_ref1}")
+logger.debug("Axlib to:    #{axlib_ref2}")
 
-substrate_data = 'substrate.json'
+axlib_data = 'substrate.json'
 axia_data = 'axia.json'
 
-logger.debug("Using SUBSTRATE: #{substrate_data}")
+logger.debug("Using SUBSTRATE: #{axlib_data}")
 logger.debug("Using AXIA:  #{axia_data}")
 
 logger.warn('NO_CACHE set') if ENV['NO_CACHE']
@@ -54,13 +54,13 @@ else
   logger.debug("Re-using:#{axia_data}")
 end
 
-if ENV['NO_CACHE'] || !File.file?(substrate_data)
-  logger.debug(format('Fetching data for Axlib into %s', substrate_data))
+if ENV['NO_CACHE'] || !File.file?(axlib_data)
+  logger.debug(format('Fetching data for Axlib into %s', axlib_data))
   cmd = format('changelogerator %<owner>s/%<repo>s -f %<from>s -t %<to>s > %<output>s',
-               { owner: owner, repo: 'substrate', from: substrate_ref1, to: substrate_ref2, output: substrate_data })
+               { owner: owner, repo: 'substrate', from: axlib_ref1, to: axlib_ref2, output: axlib_data })
   system(cmd)
 else
-  logger.debug("Re-using:#{substrate_data}")
+  logger.debug("Re-using:#{axlib_data}")
 end
 
 AXIATEST_DIGEST = ENV['AXIATEST_DIGEST'] || 'digests/axctest_srtool_output.json'
@@ -82,7 +82,7 @@ cmd = format('jq \
         { name: "axctest", data: $srtool_axctest[0] },
         { name: "alphanet", data: $srtool_alphanet[0] },
         { name: "axia", data: $srtool_axia[0] }
-    ] }\' > context.json', substrate_data, axia_data,
+    ] }\' > context.json', axlib_data, axia_data,
              AXIATEST_DIGEST,
              ALPHANET_DIGEST,
              AXIA_DIGEST)

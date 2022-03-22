@@ -630,7 +630,7 @@ mod tests {
 	use frame_support::{assert_err, assert_noop, assert_ok, weights::PostDispatchInfo};
 	use sp_runtime::{Digest, DigestItem, DispatchError};
 
-	fn initialize_substrate_bridge() {
+	fn initialize_axlib_bridge() {
 		assert_ok!(init_with_origin(Origin::root()));
 	}
 
@@ -730,7 +730,7 @@ mod tests {
 	#[test]
 	fn init_can_only_initialize_pallet_once() {
 		run_test(|| {
-			initialize_substrate_bridge();
+			initialize_axlib_bridge();
 			assert_noop!(
 				init_with_origin(Origin::root()),
 				<Error<TestRuntime>>::AlreadyInitialized
@@ -799,7 +799,7 @@ mod tests {
 	#[test]
 	fn pallet_rejects_transactions_if_halted() {
 		run_test(|| {
-			initialize_substrate_bridge();
+			initialize_axlib_bridge();
 
 			assert_ok!(Pallet::<TestRuntime>::set_operational(Origin::root(), false));
 			assert_noop!(submit_finality_proof(1), Error::<TestRuntime>::Halted);
@@ -819,7 +819,7 @@ mod tests {
 	#[test]
 	fn succesfully_imports_header_with_valid_finality() {
 		run_test(|| {
-			initialize_substrate_bridge();
+			initialize_axlib_bridge();
 			assert_ok!(
 				submit_finality_proof(1),
 				PostDispatchInfo {
@@ -837,7 +837,7 @@ mod tests {
 	#[test]
 	fn rejects_justification_that_skips_authority_set_transition() {
 		run_test(|| {
-			initialize_substrate_bridge();
+			initialize_axlib_bridge();
 
 			let header = test_header(1);
 
@@ -859,7 +859,7 @@ mod tests {
 	#[test]
 	fn does_not_import_header_with_invalid_finality_proof() {
 		run_test(|| {
-			initialize_substrate_bridge();
+			initialize_axlib_bridge();
 
 			let header = test_header(1);
 			let mut justification = make_default_justification(&header);
@@ -908,7 +908,7 @@ mod tests {
 	#[test]
 	fn importing_header_ensures_that_chain_is_extended() {
 		run_test(|| {
-			initialize_substrate_bridge();
+			initialize_axlib_bridge();
 
 			assert_ok!(submit_finality_proof(4));
 			assert_err!(submit_finality_proof(3), Error::<TestRuntime>::OldHeader);
@@ -919,7 +919,7 @@ mod tests {
 	#[test]
 	fn importing_header_enacts_new_authority_set() {
 		run_test(|| {
-			initialize_substrate_bridge();
+			initialize_axlib_bridge();
 
 			let next_set_id = 2;
 			let next_authorities = vec![(ALICE.into(), 1), (BOB.into(), 1)];
@@ -960,7 +960,7 @@ mod tests {
 	#[test]
 	fn importing_header_rejects_header_with_scheduled_change_delay() {
 		run_test(|| {
-			initialize_substrate_bridge();
+			initialize_axlib_bridge();
 
 			// Need to update the header digest to indicate that our header signals an authority set
 			// change. However, the change doesn't happen until the next block.
@@ -985,7 +985,7 @@ mod tests {
 	#[test]
 	fn importing_header_rejects_header_with_forced_changes() {
 		run_test(|| {
-			initialize_substrate_bridge();
+			initialize_axlib_bridge();
 
 			// Need to update the header digest to indicate that it signals a forced authority set
 			// change.
@@ -1043,7 +1043,7 @@ mod tests {
 	#[test]
 	fn rate_limiter_disallows_imports_once_limit_is_hit_in_single_block() {
 		run_test(|| {
-			initialize_substrate_bridge();
+			initialize_axlib_bridge();
 
 			assert_ok!(submit_finality_proof(1));
 			assert_ok!(submit_finality_proof(2));
@@ -1066,7 +1066,7 @@ mod tests {
 				)
 			};
 
-			initialize_substrate_bridge();
+			initialize_axlib_bridge();
 
 			for _ in 0..<TestRuntime as Config>::MaxRequests::get() + 1 {
 				// Notice that the error here *isn't* `TooManyRequests`
@@ -1083,7 +1083,7 @@ mod tests {
 	#[test]
 	fn rate_limiter_allows_request_after_new_block_has_started() {
 		run_test(|| {
-			initialize_substrate_bridge();
+			initialize_axlib_bridge();
 			assert_ok!(submit_finality_proof(1));
 			assert_ok!(submit_finality_proof(2));
 
@@ -1095,7 +1095,7 @@ mod tests {
 	#[test]
 	fn rate_limiter_disallows_imports_once_limit_is_hit_across_different_blocks() {
 		run_test(|| {
-			initialize_substrate_bridge();
+			initialize_axlib_bridge();
 			assert_ok!(submit_finality_proof(1));
 			assert_ok!(submit_finality_proof(2));
 
@@ -1108,7 +1108,7 @@ mod tests {
 	#[test]
 	fn rate_limiter_allows_max_requests_after_long_time_with_no_activity() {
 		run_test(|| {
-			initialize_substrate_bridge();
+			initialize_axlib_bridge();
 			assert_ok!(submit_finality_proof(1));
 			assert_ok!(submit_finality_proof(2));
 
@@ -1124,7 +1124,7 @@ mod tests {
 	#[test]
 	fn should_prune_headers_over_headers_to_keep_parameter() {
 		run_test(|| {
-			initialize_substrate_bridge();
+			initialize_axlib_bridge();
 			assert_ok!(submit_finality_proof(1));
 			let first_header = Pallet::<TestRuntime>::best_finalized();
 			next_block();

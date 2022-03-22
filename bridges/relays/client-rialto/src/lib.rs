@@ -17,7 +17,7 @@
 //! Types used to connect to the Rialto-Axlib chain.
 
 use codec::{Compact, Decode, Encode};
-use relay_substrate_client::{
+use relay_axlib_client::{
 	BalanceOf, Chain, ChainBase, ChainWithBalances, IndexOf, TransactionEraOf,
 	TransactionSignScheme, UnsignedTransaction,
 };
@@ -135,4 +135,4 @@ impl TransactionSignScheme for Rialto {
 pub type SigningParams = sp_core::sr25519::Pair;
 
 /// Rialto header type used in headers sync.
-pub type SyncHeader = relay_substrate_client::SyncHeader<rialto_runtime::Header>;
+pub type SyncHeader = relay_axlib_client::SyncHeader<rialto_runtime::Header>;

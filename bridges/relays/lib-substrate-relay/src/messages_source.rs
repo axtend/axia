@@ -38,7 +38,7 @@ use messages_relay::{
 	},
 };
 use num_traits::{Bounded, Zero};
-use relay_substrate_client::{
+use relay_axlib_client::{
 	BalanceOf, BlockNumberOf, Chain, Client, Error as AxlibError, HashOf, HeaderIdOf, HeaderOf,
 	IndexOf,
 };

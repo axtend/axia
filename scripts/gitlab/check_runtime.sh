@@ -91,7 +91,7 @@ new substrate commit id      ${SUBSTRATE_NEW_REF}
 EOT
 
   # okay so now need to fetch the substrate repository and check whether spec_version or impl_version has changed there
-  SUBSTRATE_CLONE_DIR="$(mktemp -t -d substrate-XXXXXX)"
+  SUBSTRATE_CLONE_DIR="$(mktemp -t -d axlib-XXXXXX)"
   trap 'rm -rf "${SUBSTRATE_CLONE_DIR}"' INT QUIT TERM ABRT EXIT
 
   git clone --depth="${GIT_DEPTH:-100}" --no-tags \

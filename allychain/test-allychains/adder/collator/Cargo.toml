@@ -40,7 +40,7 @@ axia-node-core-pvf = { path = "../../../../node/core/pvf" }
 axia-allychain = { path = "../../.." }
 axia-test-service = { path = "../../../../node/test/service" }
 
-substrate-test-utils = { git = "https://github.com/axtend/axlib", branch = "axlib" }
+axlib-test-utils = { git = "https://github.com/axtend/axlib", branch = "axlib" }
 sc-service = { git = "https://github.com/axtend/axlib", branch = "axlib" }
 sp-keyring = { git = "https://github.com/axtend/axlib", branch = "axlib" }
 

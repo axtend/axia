@@ -44,9 +44,9 @@ use relay_utils::metrics::{MetricsParams, StandaloneMetric};
 pub(crate) fn add_axia_axctest_price_metrics<T: finality_relay::FinalitySyncPipeline>(
 	params: MetricsParams,
 ) -> anyhow::Result<MetricsParams> {
-	substrate_relay_helper::helpers::token_price_metric(axia::TOKEN_ID)?
+	axlib_relay_helper::helpers::token_price_metric(axia::TOKEN_ID)?
 		.register_and_spawn(&params.registry)?;
-	substrate_relay_helper::helpers::token_price_metric(axctest::TOKEN_ID)?
+	axlib_relay_helper::helpers::token_price_metric(axctest::TOKEN_ID)?
 		.register_and_spawn(&params.registry)?;
 	Ok(params)
 }
@@ -59,7 +59,7 @@ mod tests {
 	use frame_support::dispatch::GetDispatchInfo;
 	use relay_millau_client::Millau;
 	use relay_rialto_client::Rialto;
-	use relay_substrate_client::{TransactionSignScheme, UnsignedTransaction};
+	use relay_axlib_client::{TransactionSignScheme, UnsignedTransaction};
 	use sp_core::Pair;
 	use sp_runtime::traits::{IdentifyAccount, Verify};
 
@@ -218,7 +218,7 @@ mod tests {
 		let rialto_tx = Rialto::sign_transaction(
 			Default::default(),
 			&sp_keyring::AccountKeyring::Alice.pair(),
-			relay_substrate_client::TransactionEra::immortal(),
+			relay_axlib_client::TransactionEra::immortal(),
 			UnsignedTransaction::new(rialto_call.clone(), 0),
 		);
 		let extra_bytes_in_transaction = rialto_tx.encode().len() - rialto_call.encode().len();
@@ -237,7 +237,7 @@ mod tests {
 		let millau_tx = Millau::sign_transaction(
 			Default::default(),
 			&sp_keyring::AccountKeyring::Alice.pair(),
-			relay_substrate_client::TransactionEra::immortal(),
+			relay_axlib_client::TransactionEra::immortal(),
 			UnsignedTransaction::new(millau_call.clone(), 0),
 		);
 		let extra_bytes_in_transaction = millau_tx.encode().len() - millau_call.encode().len();
