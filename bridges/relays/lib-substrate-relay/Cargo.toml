@@ -25,7 +25,7 @@ finality-grandpa = { version = "0.14.0" }
 finality-relay = { path = "../finality" }
 relay-utils = { path = "../utils" }
 messages-relay = { path = "../messages" }
-relay-axlib-client = { path = "../client-substrate" }
+relay-axlib-client = { path = "../client-axlib" }
 
 pallet-bridge-messages = { path = "../../modules/messages" }
 

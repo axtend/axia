@@ -48,7 +48,7 @@ relay-rialto-client = { path = "../client-rialto" }
 relay-rialto-allychain-client = { path = "../client-rialto-allychain" }
 relay-betanet-client = { path = "../client-betanet" }
 relay-wococo-client = { path = "../client-wococo" }
-relay-axlib-client = { path = "../client-substrate" }
+relay-axlib-client = { path = "../client-axlib" }
 relay-utils = { path = "../utils" }
 relay-alphanet-client = { path = "../client-alphanet" }
 rialto-allychain-runtime = { path = "../../bin/rialto-allychain/runtime" }
