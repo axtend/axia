@@ -8,8 +8,8 @@
 {%- if axia.meta.C -%}
     {%- set axia_prio = axia.meta.C.max -%}
 {%- endif -%}
-{%- if substrate.meta.C -%}
-    {%- set axlib_prio = substrate.meta.C.max -%}
+{%- if axlib.meta.C -%}
+    {%- set axlib_prio = axlib.meta.C.max -%}
 {%- endif -%}
 
 {# We compute the global priority #}

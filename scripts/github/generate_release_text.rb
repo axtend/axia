@@ -58,7 +58,7 @@ axia_cl = Changelog.new(
   'paritytech/axia', last_ref, current_ref, token: token
 )
 
-# Gets the substrate commit hash used for a given axia ref
+# Gets the axlib commit hash used for a given axia ref
 def get_axlib_commit(client, ref)
   cargo = TOML::Parser.new(
     Base64.decode64(
@@ -77,7 +77,7 @@ axlib_cur_sha = get_axlib_commit(github_client, current_ref)
 
 logger("Generate changelog for Axlib")
 axlib_cl = Changelog.new(
-  'paritytech/substrate', axlib_prev_sha, axlib_cur_sha,
+  'paritytech/axlib', axlib_prev_sha, axlib_cur_sha,
   token: token,
   prefix: true
 )

@@ -20,9 +20,9 @@ automated and require no human action.
 1. To initiate the release process:
   1. branch master off to a release candidate branch:
   - `git checkout master; git pull; git checkout -b release-v0.8.26`
-  2. In the [substrate](https://github.com/paritytech/substrate) repo, check out the commit used by axia (this can be found using the following command in the *axia* repo: `grep 'paritytech/substrate' Cargo.lock | grep -E '[0-9a-f]{40}' | sort | uniq `
-  3. Branch off this **substrate** commit into its own branch: `git branch -b axia-v0.8.26; git push origin refs/heads/axia-v0.8.26`
-  4. In the **axia** repository, use [diener](https://github.com/bkchr/diener/) to switch to this branch: `diener update --branch "axia-v0.8.26" --substrate`. Update Cargo.lock (to do this, you can run `cargo build` and then ctrl+c once it finishes fetching and begins compiling)
+  2. In the [axlib](https://github.com/paritytech/axlib) repo, check out the commit used by axia (this can be found using the following command in the *axia* repo: `grep 'paritytech/axlib' Cargo.lock | grep -E '[0-9a-f]{40}' | sort | uniq `
+  3. Branch off this **axlib** commit into its own branch: `git branch -b axia-v0.8.26; git push origin refs/heads/axia-v0.8.26`
+  4. In the **axia** repository, use [diener](https://github.com/bkchr/diener/) to switch to this branch: `diener update --branch "axia-v0.8.26" --axlib`. Update Cargo.lock (to do this, you can run `cargo build` and then ctrl+c once it finishes fetching and begins compiling)
   5. Push the **axia** `release-v0.8.26` branch to Github: `git push origin refs/heads/release-v0.8.26`
 2. NOACTION: The current HEAD of the release-candidate branch is tagged `v0.8.26-rc1`
 3. NOACTION: A draft release and runtime WASMs are created for this
@@ -41,7 +41,7 @@ automated and require no human action.
   candidate
   4. Depending on the cherry-picked changes, it may be necessary to perform some
   or all of the manual tests again.
-  5. If there are **substrate** changes required, these should be cherry-picked to the substrate `axia-v0.8.26` branch and pushed, and the version of substrate used in **axia** updated using `cargo update -p sp-io`
+  5. If there are **axlib** changes required, these should be cherry-picked to the axlib `axia-v0.8.26` branch and pushed, and the version of axlib used in **axia** updated using `cargo update -p sp-io`
 7. Once happy with the release-candidate, tag the current top commit in the release candidate branch and push to Github: `git tag -s -m 'v0.8.26' v0.8.26; git push --tags`
 9. NOACTION: The HEAD of the `release` branch will be tagged with `v0.8.26`,
   and a final draft release will be created on Github.

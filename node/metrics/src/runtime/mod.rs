@@ -18,7 +18,7 @@
 //!
 //! A runtime metric provider implementation that builds on top of Axlib wasm
 //! tracing support. This requires that the custom profiler (`TraceHandler`) to be
-//! registered in substrate via a `logger_hook()`. Events emitted from runtime are
+//! registered in axlib via a `logger_hook()`. Events emitted from runtime are
 //! then captured/processed by the `TraceHandler` implementation.
 
 #![cfg(feature = "runtime-metrics")]

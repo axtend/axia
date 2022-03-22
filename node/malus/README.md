@@ -48,7 +48,7 @@ This will also teardown the namespace after completion.
 ## Container Image Building Note
 
 In order to build the container image you need to have the latest changes from
-axia and substrate master branches.
+axia and axlib master branches.
 
 ```sh
 pwd # run this from the current dir

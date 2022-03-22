@@ -214,7 +214,7 @@ security reasons it is not kept as part of version control. When deploying a net
 file should be correctly populated and kept in the appropriate [`bridges`](`./bridges`) deployment
 folder.
 
-The `UI_SUBSTRATE_PROVIDER` variable lets you define the url of the Axlib node that the user
+The `UI_AXLIB_PROVIDER` variable lets you define the url of the Axlib node that the user
 interface will connect to. `UI_ETHEREUM_PROVIDER` is used only as a guidance for users to connect
 Metamask to the right Ethereum network. `UI_EXPECTED_ETHEREUM_NETWORK_ID`  is used by
 the user interface as a fail safe to prevent users from connecting their Metamask extension to an
@@ -226,7 +226,7 @@ GRAFANA_SERVER_ROOT_URL=%(protocol)s://%(domain)s:%(http_port)s/
 GRAFANA_SERVER_DOMAIN=server.domain.io
 MATRIX_ACCESS_TOKEN="access-token"
 WITH_PROXY=1 # Optional
-UI_SUBSTRATE_PROVIDER=ws://localhost:9944
+UI_AXLIB_PROVIDER=ws://localhost:9944
 UI_ETHEREUM_PROVIDER=http://localhost:8545
 UI_EXPECTED_ETHEREUM_NETWORK_ID=105
 ```

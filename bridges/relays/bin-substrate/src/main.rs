@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Parity Bridges Common.  If not, see <http://www.gnu.org/licenses/>.
 
-//! Axlib-to-substrate relay entrypoint.
+//! Axlib-to-axlib relay entrypoint.
 
 #![warn(missing_docs)]
 

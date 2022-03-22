@@ -32,7 +32,7 @@ axia-node-metrics = { path = "../node/metrics" }
 sc-tracing = { git = "https://github.com/axtend/axlib", optional = true , branch = "axlib" }
 
 # this crate is used only to enable `trie-memory-tracker` feature
-# see https://github.com/paritytech/substrate/pull/6745
+# see https://github.com/paritytech/axlib/pull/6745
 sp-trie = { git = "https://github.com/axtend/axlib", default-features = false , branch = "axlib" }
 
 [build-dependencies]

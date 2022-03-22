@@ -5,7 +5,7 @@ Implementation of a <https://axia.network> node in Rust based on the Axlib frame
 > **NOTE:** In 2018, we split our implementation of "Axia" from its development framework
 > "Axlib". See the [Axlib][axlib-repo] repo for git history prior to 2018.
 
-[axlib-repo]: https://github.com/paritytech/substrate
+[axlib-repo]: https://github.com/paritytech/axlib
 
 This repo contains runtimes for the Axia, AxiaTest, and Alphanet networks. The README provides
 information about installing the `axia` binary and developing on the codebase. For more
@@ -179,7 +179,7 @@ Rust and the support software installed. This script will install or update Rust
 required dependencies (this may take up to 30 minutes on Mac machines):
 
 ```bash
-curl https://getsubstrate.io -sSf | bash -s -- --fast
+curl https://getaxlib.io -sSf | bash -s -- --fast
 ```
 
 Then, grab the Axia source code:

@@ -37,10 +37,10 @@ logger.debug("Axia to:     #{axia_ref2}")
 logger.debug("Axlib from:  #{axlib_ref1}")
 logger.debug("Axlib to:    #{axlib_ref2}")
 
-axlib_data = 'substrate.json'
+axlib_data = 'axlib.json'
 axia_data = 'axia.json'
 
-logger.debug("Using SUBSTRATE: #{axlib_data}")
+logger.debug("Using AXLIB: #{axlib_data}")
 logger.debug("Using AXIA:  #{axia_data}")
 
 logger.warn('NO_CACHE set') if ENV['NO_CACHE']
@@ -57,7 +57,7 @@ end
 if ENV['NO_CACHE'] || !File.file?(axlib_data)
   logger.debug(format('Fetching data for Axlib into %s', axlib_data))
   cmd = format('changelogerator %<owner>s/%<repo>s -f %<from>s -t %<to>s > %<output>s',
-               { owner: owner, repo: 'substrate', from: axlib_ref1, to: axlib_ref2, output: axlib_data })
+               { owner: owner, repo: 'axlib', from: axlib_ref1, to: axlib_ref2, output: axlib_data })
   system(cmd)
 else
   logger.debug("Re-using:#{axlib_data}")
@@ -70,13 +70,13 @@ AXIA_DIGEST = ENV['AXIA_DIGEST'] || 'digests/axia_srtool_output.json'
 # Here we compose all the pieces together into one
 # single big json file.
 cmd = format('jq \
-    --slurpfile substrate %s \
+    --slurpfile axlib %s \
     --slurpfile axia %s \
     --slurpfile srtool_axctest %s \
     --slurpfile srtool_alphanet %s \
     --slurpfile srtool_axia %s \
     -n \'{
-            substrate: $substrate[0],
+            axlib: $axlib[0],
             axia: $axia[0],
         srtool: [
         { name: "axctest", data: $srtool_axctest[0] },

@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Axia.  If not, see <http://www.gnu.org/licenses/>.
 
-//! Axia service. Specialized wrapper over substrate service.
+//! Axia service. Specialized wrapper over axlib service.
 
 #![deny(unused_results)]
 
@@ -1125,7 +1125,7 @@ where
 	}
 
 	let config = grandpa::Config {
-		// FIXME substrate#1578 make this available through chainspec
+		// FIXME axlib#1578 make this available through chainspec
 		gossip_duration: Duration::from_millis(1000),
 		justification_period: 512,
 		name: Some(name),
@@ -1139,7 +1139,7 @@ where
 	let enable_grandpa = !disable_grandpa;
 	if enable_grandpa {
 		// start the full GRANDPA voter
-		// NOTE: unlike in substrate we are currently running the full
+		// NOTE: unlike in axlib we are currently running the full
 		// GRANDPA voter protocol for all full nodes (regardless of whether
 		// they're validators or not). at this point the full voter should
 		// provide better guarantees of block and vote data availability than
