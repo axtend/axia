@@ -549,7 +549,7 @@ async fn main() {
 	match chain.to_lowercase().as_str() {
 		"axia" | "development" => {
 			sp_core::crypto::set_default_ss58_version(
-				sp_core::crypto::Ss58AddressFormatRegistry::PolkadotAccount.into(),
+				sp_core::crypto::Ss58AddressFormatRegistry::AxiaAccount.into(),
 			);
 			sub_tokens::dynamic::set_name("AXC");
 			sub_tokens::dynamic::set_decimal_points(10_000_000_000);
@@ -573,7 +573,7 @@ async fn main() {
 		},
 		"alphanet" => {
 			sp_core::crypto::set_default_ss58_version(
-				sp_core::crypto::Ss58AddressFormatRegistry::PolkadotAccount.into(),
+				sp_core::crypto::Ss58AddressFormatRegistry::AxiaAccount.into(),
 			);
 			sub_tokens::dynamic::set_name("WND");
 			sub_tokens::dynamic::set_decimal_points(1_000_000_000_000);
