@@ -58,7 +58,7 @@ pub mod fee {
 		WeightToFeeCoefficient, WeightToFeeCoefficients, WeightToFeePolynomial,
 	};
 	use primitives::v0::Balance;
-	use runtime_common::ExtrinsicBaseWeight;
+	use runtime_common::{ExtrinsicBaseWeight,MAXIMUM_BLOCK_WEIGHT};
 	use smallvec::smallvec;
 	pub use sp_runtime::Perbill;
 
@@ -80,7 +80,8 @@ pub mod fee {
 		type Balance = Balance;
 		fn polynomial() -> WeightToFeeCoefficients<Self::Balance> {
 			// in Axia, extrinsic base weight (smallest non-zero weight) is mapped to 1/10 CENT:
-			let p = super::currency::CENTS;
+			// let p = super::currency::CENTS;
+			let p = 0;
 			let q = 10 * Balance::from(ExtrinsicBaseWeight::get());
 			smallvec![WeightToFeeCoefficient {
 				degree: 1,

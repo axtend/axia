@@ -12,3 +12,4 @@ axia.*
 .DS_Store
 .cargo
 .env
+builds/
