@@ -193,11 +193,11 @@ impl AxlibCli for Cli {
 
 fn set_default_ss58_version(spec: &Box<dyn service::ChainSpec>) {
 	let ss58_version = if spec.is_axctest() {
-		Ss58AddressFormatRegistry::KusamaAccount
+		Ss58AddressFormatRegistry::AxiaTestAccount
 	} else if spec.is_alphanet() {
-		Ss58AddressFormatRegistry::SubstrateAccount
+		Ss58AddressFormatRegistry::AxlibAccount
 	} else {
-		Ss58AddressFormatRegistry::PolkadotAccount
+		Ss58AddressFormatRegistry::AxiaAccount
 	}
 	.into();
 
