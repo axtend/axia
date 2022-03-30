@@ -1,4 +1,4 @@
-// Copyright 2019-2020 Parity Technologies (UK) Ltd.
+// Copyright 2019-2020 Axia Technologies (UK) Ltd.
 // This file is part of Axia.
 
 // Axia is free software: you can redistribute it and/or modify
@@ -33,5 +33,5 @@ pub unsafe fn load_params(params: *const u8, len: usize) -> crate::primitives::V
 /// of the vector.
 #[cfg(not(feature = "std"))]
 pub fn write_result(result: &crate::primitives::ValidationResult) -> u64 {
-	sp_core::to_axlib_wasm_fn_return_value(&result)
+	sp_core::to_substrate_wasm_fn_return_value(&result)
 }

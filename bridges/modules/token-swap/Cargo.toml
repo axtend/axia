@@ -1,8 +1,8 @@
 [package]
 name = "pallet-bridge-token-swap"
-description = "An Axlib pallet that allows parties on different chains (bridged using messages pallet) to swap their tokens"
+description = "An Substrate pallet that allows parties on different chains (bridged using messages pallet) to swap their tokens"
 version = "0.1.0"
-authors = ["Parity Technologies <admin@parity.io>"]
+authors = ["Axia Technologies <admin@axia.io>"]
 edition = "2018"
 license = "GPL-3.0-or-later WITH Classpath-exception-2.0"
 
@@ -21,7 +21,7 @@ bp-token-swap = { path = "../../primitives/token-swap", default-features = false
 pallet-bridge-dispatch = { path = "../dispatch", default-features = false }
 pallet-bridge-messages = { path = "../messages", default-features = false }
 
-# Axlib Dependencies
+# Substrate Dependencies
 
 frame-benchmarking = { git = "https://github.com/axtend/axlib", default-features = false, optional = true , branch = "axlib" }
 frame-support = { git = "https://github.com/axtend/axlib", default-features = false , branch = "axlib" }

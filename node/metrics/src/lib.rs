@@ -1,4 +1,4 @@
-// Copyright 2017-2020 Parity Technologies (UK) Ltd.
+// Copyright 2017-2020 Axia Technologies (UK) Ltd.
 // This file is part of Axia.
 
 // Axia is free software: you can redistribute it and/or modify
@@ -43,8 +43,8 @@ pub fn logger_hook() -> impl FnOnce(&mut sc_cli::LoggerBuilder, &sc_service::Con
 
 /// This module reexports Prometheus types and defines the [`Metrics`] trait.
 pub mod metrics {
-	/// Reexport Axlib Prometheus types.
-	pub use axlib_prometheus_endpoint as prometheus;
+	/// Reexport Substrate Prometheus types.
+	pub use substrate_prometheus_endpoint as prometheus;
 
 	/// Subsystem- or job-specific Prometheus metrics.
 	///

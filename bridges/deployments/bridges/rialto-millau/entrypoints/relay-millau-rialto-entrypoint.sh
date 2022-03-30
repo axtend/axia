@@ -5,14 +5,14 @@ sleep 60
 curl -v http://millau-node-alice:9933/health
 curl -v http://rialto-node-alice:9933/health
 
-/home/user/axlib-relay init-bridge millau-to-rialto \
+/home/user/substrate-relay init-bridge millau-to-rialto \
 	--source-host millau-node-alice \
 	--source-port 9944 \
 	--target-host rialto-node-alice \
 	--target-port 9944 \
 	--target-signer //Alice
 
-/home/user/axlib-relay init-bridge rialto-to-millau \
+/home/user/substrate-relay init-bridge rialto-to-millau \
 	--source-host rialto-node-alice \
 	--source-port 9944 \
 	--target-host millau-node-alice \
@@ -22,7 +22,7 @@ curl -v http://rialto-node-alice:9933/health
 # Give chain a little bit of time to process initialization transaction
 sleep 6
 
-/home/user/axlib-relay relay-headers-and-messages millau-rialto \
+/home/user/substrate-relay relay-headers-and-messages millau-rialto \
 	--millau-host millau-node-alice \
 	--millau-port 9944 \
 	--millau-signer //Charlie \

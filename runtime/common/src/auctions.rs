@@ -1,4 +1,4 @@
-// Copyright 2019-2020 Parity Technologies (UK) Ltd.
+// Copyright 2019-2020 Axia Technologies (UK) Ltd.
 // This file is part of Axia.
 
 // Axia is free software: you can redistribute it and/or modify
@@ -197,13 +197,13 @@ pub mod pallet {
 
 	#[pallet::extra_constants]
 	impl<T: Config> Pallet<T> {
-		//TODO: rename to snake case after https://github.com/paritytech/axlib/issues/8826 fixed.
+		//TODO: rename to snake case after https://github.com/axiatech/substrate/issues/8826 fixed.
 		#[allow(non_snake_case)]
 		fn SlotRangeCount() -> u32 {
 			SlotRange::SLOT_RANGE_COUNT as u32
 		}
 
-		//TODO: rename to snake case after https://github.com/paritytech/axlib/issues/8826 fixed.
+		//TODO: rename to snake case after https://github.com/axiatech/substrate/issues/8826 fixed.
 		#[allow(non_snake_case)]
 		fn LeasePeriodsPerSlot() -> u32 {
 			SlotRange::LEASE_PERIODS_PER_SLOT as u32

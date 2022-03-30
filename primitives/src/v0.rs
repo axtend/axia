@@ -1,4 +1,4 @@
-// Copyright 2017-2020 Parity Technologies (UK) Ltd.
+// Copyright 2017-2020 Axia Technologies (UK) Ltd.
 // This file is part of Axia.
 
 // Axia is free software: you can redistribute it and/or modify
@@ -111,7 +111,7 @@ impl MallocSizeOf for ValidatorId {
 #[cfg_attr(feature = "std", derive(Serialize, Deserialize, Hash, MallocSizeOf))]
 pub struct ValidatorIndex(pub u32);
 
-// We should really get https://github.com/paritytech/axia/issues/2403 going ..
+// We should really get https://github.com/axiatech/axia/issues/2403 going ..
 impl From<u32> for ValidatorIndex {
 	fn from(n: u32) -> Self {
 		ValidatorIndex(n)
@@ -385,7 +385,7 @@ impl PartialOrd for CandidateReceipt {
 impl Ord for CandidateReceipt {
 	fn cmp(&self, other: &Self) -> Ordering {
 		// TODO: compare signatures or something more sane
-		// https://github.com/paritytech/axia/issues/222
+		// https://github.com/axiatech/axia/issues/222
 		self.allychain_index
 			.cmp(&other.allychain_index)
 			.then_with(|| self.head_data.cmp(&other.head_data))
@@ -534,7 +534,7 @@ impl PartialOrd for AbridgedCandidateReceipt {
 impl Ord for AbridgedCandidateReceipt {
 	fn cmp(&self, other: &Self) -> Ordering {
 		// TODO: compare signatures or something more sane
-		// https://github.com/paritytech/axia/issues/222
+		// https://github.com/axiatech/axia/issues/222
 		self.allychain_index
 			.cmp(&other.allychain_index)
 			.then_with(|| self.head_data.cmp(&other.head_data))

@@ -1,4 +1,4 @@
-// Copyright 2017-2020 Parity Technologies (UK) Ltd.
+// Copyright 2017-2020 Axia Technologies (UK) Ltd.
 // This file is part of Axia.
 
 // Axia is free software: you can redistribute it and/or modify
@@ -109,7 +109,7 @@ include!(concat!(env!("OUT_DIR"), "/wasm_binary.rs"));
 /// Runtime version (Alphanet).
 pub const VERSION: RuntimeVersion = RuntimeVersion {
 	spec_name: create_runtime_str!("alphanet"),
-	impl_name: create_runtime_str!("parity-alphanet"),
+	impl_name: create_runtime_str!("axia-alphanet"),
 	authoring_version: 2,
 	spec_version: 9170,
 	impl_version: 0,
@@ -1147,7 +1147,7 @@ mod benches {
 		[runtime_allychains::initializer, Initializer]
 		[runtime_allychains::paras, Paras]
 		[runtime_allychains::paras_inherent, ParaInherent]
-		// Axlib
+		// Substrate
 		[pallet_bags_list, BagsList]
 		[pallet_balances, Balances]
 		[pallet_election_provider_multi_phase, ElectionProviderMultiPhase]

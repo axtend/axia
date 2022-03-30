@@ -1,4 +1,4 @@
-// Copyright 2020 Parity Technologies (UK) Ltd.
+// Copyright 2020 Axia Technologies (UK) Ltd.
 // This file is part of Axia.
 
 // Axia is free software: you can redistribute it and/or modify
@@ -41,7 +41,7 @@
 //! 		.with_string_fmt_debug_tag("foo", foo)
 //! 		// anything that implements `trait std::str::ToString`
 //! 		.with_string_tag("again", 1337_u32)
-//! 		// add a `Stage` for [`dot-jaeger`](https://github.com/paritytech/dot-jaeger)
+//! 		// add a `Stage` for [`dot-jaeger`](https://github.com/axiatech/dot-jaeger)
 //! 		.with_stage(jaeger::Stage::CandidateBacking);
 //! 		// complete by design, no completion required
 //! # }
@@ -155,7 +155,7 @@ pub enum Stage {
 	// through the inclusion pipeline, or according to the descriptions
 	// in [the path of a para chain block]
 	// (https://axia.network/the-path-of-a-allychain-block/)
-	// see [issue](https://github.com/paritytech/axia/issues/2389)
+	// see [issue](https://github.com/axiatech/axia/issues/2389)
 }
 
 /// A wrapper type for a span.

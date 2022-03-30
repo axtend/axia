@@ -1,24 +1,24 @@
-// Copyright 2019-2021 Parity Technologies (UK) Ltd.
-// This file is part of Parity Bridges Common.
+// Copyright 2019-2021 Axia Technologies (UK) Ltd.
+// This file is part of Axia Bridges Common.
 
-// Parity Bridges Common is free software: you can redistribute it and/or modify
+// Axia Bridges Common is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Parity Bridges Common is distributed in the hope that it will be useful,
+// Axia Bridges Common is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Parity Bridges Common.  If not, see <http://www.gnu.org/licenses/>.
+// along with Axia Bridges Common.  If not, see <http://www.gnu.org/licenses/>.
 
-//! Axlib node client.
+//! Substrate node client.
 
 use crate::{
 	chain::{Chain, ChainWithBalances, TransactionStatusOf},
-	rpc::Axlib,
+	rpc::Substrate,
 	ConnectionParams, Error, HashOf, HeaderIdOf, Result,
 };
 
@@ -60,7 +60,7 @@ pub struct Subscription<T>(Mutex<futures::channel::mpsc::Receiver<Option<T>>>);
 /// Opaque GRANDPA authorities set.
 pub type OpaqueGrandpaAuthoritiesSet = Vec<u8>;
 
-/// Axlib client type.
+/// Substrate client type.
 ///
 /// Cloning `Client` is a cheap operation.
 pub struct Client<C: Chain> {
@@ -68,7 +68,7 @@ pub struct Client<C: Chain> {
 	tokio: Arc<tokio::runtime::Runtime>,
 	/// Client connection params.
 	params: ConnectionParams,
-	/// Axlib RPC client.
+	/// Substrate RPC client.
 	client: Arc<RpcClient>,
 	/// Genesis block hash.
 	genesis_hash: HashOf<C>,
@@ -110,9 +110,9 @@ impl<C: Chain> std::fmt::Debug for Client<C> {
 }
 
 impl<C: Chain> Client<C> {
-	/// Returns client that is able to call RPCs on Axlib node over websocket connection.
+	/// Returns client that is able to call RPCs on Substrate node over websocket connection.
 	///
-	/// This function will keep connecting to given Axlib node until connection is established
+	/// This function will keep connecting to given Substrate node until connection is established
 	/// and is functional. If attempt fail, it will wait for `RECONNECT_DELAY` and retry again.
 	pub async fn new(params: ConnectionParams) -> Self {
 		loop {
@@ -131,7 +131,7 @@ impl<C: Chain> Client<C> {
 		}
 	}
 
-	/// Try to connect to Axlib node over websocket. Returns Axlib RPC client if connection
+	/// Try to connect to Substrate node over websocket. Returns Substrate RPC client if connection
 	/// has been established or error otherwise.
 	pub async fn try_connect(params: ConnectionParams) -> Result<Self> {
 		let (tokio, client) = Self::build_client(params.clone()).await?;
@@ -140,7 +140,7 @@ impl<C: Chain> Client<C> {
 		let genesis_hash_client = client.clone();
 		let genesis_hash = tokio
 			.spawn(async move {
-				Axlib::<C>::chain_get_block_hash(&*genesis_hash_client, number).await
+				Substrate::<C>::chain_get_block_hash(&*genesis_hash_client, number).await
 			})
 			.await??;
 
@@ -181,7 +181,7 @@ impl<C: Chain> Client<C> {
 	/// Returns true if client is connected to at least one peer and is in synced state.
 	pub async fn ensure_synced(&self) -> Result<()> {
 		self.jsonrpsee_execute(|client| async move {
-			let health = Axlib::<C>::system_health(&*client).await?;
+			let health = Substrate::<C>::system_health(&*client).await?;
 			let is_synced = !health.is_syncing && (!health.should_have_peers || health.peers > 0);
 			if is_synced {
 				Ok(())
@@ -200,7 +200,7 @@ impl<C: Chain> Client<C> {
 	/// Return hash of the best finalized block.
 	pub async fn best_finalized_header_hash(&self) -> Result<C::Hash> {
 		self.jsonrpsee_execute(|client| async move {
-			Ok(Axlib::<C>::chain_get_finalized_head(&*client).await?)
+			Ok(Substrate::<C>::chain_get_finalized_head(&*client).await?)
 		})
 		.await
 	}
@@ -210,45 +210,45 @@ impl<C: Chain> Client<C> {
 		Ok(*self.header_by_hash(self.best_finalized_header_hash().await?).await?.number())
 	}
 
-	/// Returns the best Axlib header.
+	/// Returns the best Substrate header.
 	pub async fn best_header(&self) -> Result<C::Header>
 	where
 		C::Header: DeserializeOwned,
 	{
 		self.jsonrpsee_execute(|client| async move {
-			Ok(Axlib::<C>::chain_get_header(&*client, None).await?)
+			Ok(Substrate::<C>::chain_get_header(&*client, None).await?)
 		})
 		.await
 	}
 
-	/// Get a Axlib block from its hash.
+	/// Get a Substrate block from its hash.
 	pub async fn get_block(&self, block_hash: Option<C::Hash>) -> Result<C::SignedBlock> {
 		self.jsonrpsee_execute(move |client| async move {
-			Ok(Axlib::<C>::chain_get_block(&*client, block_hash).await?)
+			Ok(Substrate::<C>::chain_get_block(&*client, block_hash).await?)
 		})
 		.await
 	}
 
-	/// Get a Axlib header by its hash.
+	/// Get a Substrate header by its hash.
 	pub async fn header_by_hash(&self, block_hash: C::Hash) -> Result<C::Header>
 	where
 		C::Header: DeserializeOwned,
 	{
 		self.jsonrpsee_execute(move |client| async move {
-			Ok(Axlib::<C>::chain_get_header(&*client, block_hash).await?)
+			Ok(Substrate::<C>::chain_get_header(&*client, block_hash).await?)
 		})
 		.await
 	}
 
-	/// Get a Axlib block hash by its number.
+	/// Get a Substrate block hash by its number.
 	pub async fn block_hash_by_number(&self, number: C::BlockNumber) -> Result<C::Hash> {
 		self.jsonrpsee_execute(move |client| async move {
-			Ok(Axlib::<C>::chain_get_block_hash(&*client, number).await?)
+			Ok(Substrate::<C>::chain_get_block_hash(&*client, number).await?)
 		})
 		.await
 	}
 
-	/// Get a Axlib header by its number.
+	/// Get a Substrate header by its number.
 	pub async fn header_by_number(&self, block_number: C::BlockNumber) -> Result<C::Header>
 	where
 		C::Header: DeserializeOwned,
@@ -261,7 +261,7 @@ impl<C: Chain> Client<C> {
 	/// Return runtime version.
 	pub async fn runtime_version(&self) -> Result<RuntimeVersion> {
 		self.jsonrpsee_execute(move |client| async move {
-			Ok(Axlib::<C>::state_runtime_version(&*client).await?)
+			Ok(Substrate::<C>::state_runtime_version(&*client).await?)
 		})
 		.await
 	}
@@ -287,7 +287,7 @@ impl<C: Chain> Client<C> {
 		block_hash: Option<C::Hash>,
 	) -> Result<Option<StorageData>> {
 		self.jsonrpsee_execute(move |client| async move {
-			Ok(Axlib::<C>::state_get_storage(&*client, storage_key, block_hash).await?)
+			Ok(Substrate::<C>::state_get_storage(&*client, storage_key, block_hash).await?)
 		})
 		.await
 	}
@@ -300,7 +300,7 @@ impl<C: Chain> Client<C> {
 		self.jsonrpsee_execute(move |client| async move {
 			let storage_key = C::account_info_storage_key(&account);
 			let encoded_account_data =
-				Axlib::<C>::state_get_storage(&*client, storage_key, None)
+				Substrate::<C>::state_get_storage(&*client, storage_key, None)
 					.await?
 					.ok_or(Error::AccountDoesNotExist)?;
 			let decoded_account_data = AccountInfo::<C::Index, AccountData<C::Balance>>::decode(
@@ -312,12 +312,12 @@ impl<C: Chain> Client<C> {
 		.await
 	}
 
-	/// Get the nonce of the given Axlib account.
+	/// Get the nonce of the given Substrate account.
 	///
 	/// Note: It's the caller's responsibility to make sure `account` is a valid SS58 address.
 	pub async fn next_account_index(&self, account: C::AccountId) -> Result<C::Index> {
 		self.jsonrpsee_execute(move |client| async move {
-			Ok(Axlib::<C>::system_account_next_index(&*client, account).await?)
+			Ok(Substrate::<C>::system_account_next_index(&*client, account).await?)
 		})
 		.await
 	}
@@ -327,8 +327,8 @@ impl<C: Chain> Client<C> {
 	/// Note: The given transaction needs to be SCALE encoded beforehand.
 	pub async fn submit_unsigned_extrinsic(&self, transaction: Bytes) -> Result<C::Hash> {
 		self.jsonrpsee_execute(move |client| async move {
-			let tx_hash = Axlib::<C>::author_submit_extrinsic(&*client, transaction).await?;
-			log::trace!(target: "bridge", "Sent transaction to Axlib node: {:?}", tx_hash);
+			let tx_hash = Substrate::<C>::author_submit_extrinsic(&*client, transaction).await?;
+			log::trace!(target: "bridge", "Sent transaction to Substrate node: {:?}", tx_hash);
 			Ok(tx_hash)
 		})
 		.await
@@ -352,7 +352,7 @@ impl<C: Chain> Client<C> {
 		let best_header_id = HeaderId(*best_header.number(), best_header.hash());
 		self.jsonrpsee_execute(move |client| async move {
 			let extrinsic = prepare_extrinsic(best_header_id, transaction_nonce);
-			let tx_hash = Axlib::<C>::author_submit_extrinsic(&*client, extrinsic).await?;
+			let tx_hash = Substrate::<C>::author_submit_extrinsic(&*client, extrinsic).await?;
 			log::trace!(target: "bridge", "Sent transaction to {} node: {:?}", C::NAME, tx_hash);
 			Ok(tx_hash)
 		})
@@ -399,7 +399,7 @@ impl<C: Chain> Client<C> {
 	/// Returns pending extrinsics from transaction pool.
 	pub async fn pending_extrinsics(&self) -> Result<Vec<Bytes>> {
 		self.jsonrpsee_execute(move |client| async move {
-			Ok(Axlib::<C>::author_pending_extrinsics(&*client).await?)
+			Ok(Substrate::<C>::author_pending_extrinsics(&*client).await?)
 		})
 		.await
 	}
@@ -415,7 +415,7 @@ impl<C: Chain> Client<C> {
 			let data = Bytes((TransactionSource::External, transaction, at_block).encode());
 
 			let encoded_response =
-				Axlib::<C>::state_call(&*client, call, data, Some(at_block)).await?;
+				Substrate::<C>::state_call(&*client, call, data, Some(at_block)).await?;
 			let validity = TransactionValidity::decode(&mut &encoded_response.0[..])
 				.map_err(Error::ResponseParseFailed)?;
 
@@ -431,7 +431,7 @@ impl<C: Chain> Client<C> {
 	) -> Result<InclusionFee<C::Balance>> {
 		self.jsonrpsee_execute(move |client| async move {
 			let fee_details =
-				Axlib::<C>::payment_query_fee_details(&*client, transaction, None).await?;
+				Substrate::<C>::payment_query_fee_details(&*client, transaction, None).await?;
 			let inclusion_fee = fee_details
 				.inclusion_fee
 				.map(|inclusion_fee| InclusionFee {
@@ -464,7 +464,7 @@ impl<C: Chain> Client<C> {
 			let data = Bytes(Vec::new());
 
 			let encoded_response =
-				Axlib::<C>::state_call(&*client, call, data, Some(block)).await?;
+				Substrate::<C>::state_call(&*client, call, data, Some(block)).await?;
 			let authority_list = encoded_response.0;
 
 			Ok(authority_list)
@@ -480,7 +480,7 @@ impl<C: Chain> Client<C> {
 		at_block: Option<C::Hash>,
 	) -> Result<Bytes> {
 		self.jsonrpsee_execute(move |client| async move {
-			Axlib::<C>::state_call(&*client, method, data, at_block)
+			Substrate::<C>::state_call(&*client, method, data, at_block)
 				.await
 				.map_err(Into::into)
 		})
@@ -494,7 +494,7 @@ impl<C: Chain> Client<C> {
 		at_block: C::Hash,
 	) -> Result<StorageProof> {
 		self.jsonrpsee_execute(move |client| async move {
-			Axlib::<C>::state_prove_storage(&*client, keys, Some(at_block))
+			Substrate::<C>::state_prove_storage(&*client, keys, Some(at_block))
 				.await
 				.map(|proof| StorageProof::new(proof.proof.into_iter().map(|b| b.0).collect()))
 				.map_err(Into::into)

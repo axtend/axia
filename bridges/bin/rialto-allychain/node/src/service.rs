@@ -1,18 +1,18 @@
-// Copyright 2020-2021 Parity Technologies (UK) Ltd.
-// This file is part of Parity Bridges Common.
+// Copyright 2020-2021 Axia Technologies (UK) Ltd.
+// This file is part of Axia Bridges Common.
 
-// Parity Bridges Common is free software: you can redistribute it and/or modify
+// Axia Bridges Common is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Parity Bridges Common is distributed in the hope that it will be useful,
+// Axia Bridges Common is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Parity Bridges Common.  If not, see <http://www.gnu.org/licenses/>.
+// along with Axia Bridges Common.  If not, see <http://www.gnu.org/licenses/>.
 
 // std
 use std::sync::Arc;
@@ -31,7 +31,7 @@ use cumulus_client_service::{
 };
 use cumulus_primitives_core::ParaId;
 
-// Axlib Imports
+// Substrate Imports
 use sc_client_api::ExecutorProvider;
 use sc_executor::{NativeElseWasmExecutor, NativeExecutionDispatch};
 use sc_network::NetworkService;
@@ -41,7 +41,7 @@ use sp_api::ConstructRuntimeApi;
 use sp_consensus::SlotData;
 use sp_keystore::SyncCryptoStorePtr;
 use sp_runtime::traits::BlakeTwo256;
-use axlib_prometheus_endpoint::Registry;
+use substrate_prometheus_endpoint::Registry;
 
 // Runtime type overrides
 type BlockNumber = u32;

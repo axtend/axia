@@ -1,7 +1,7 @@
 [package]
-name = "relay-axlib-client"
+name = "relay-substrate-client"
 version = "0.1.0"
-authors = ["Parity Technologies <admin@parity.io>"]
+authors = ["Axia Technologies <admin@axia.io>"]
 edition = "2018"
 license = "GPL-3.0-or-later WITH Classpath-exception-2.0"
 
@@ -24,7 +24,7 @@ bp-runtime = { path = "../../primitives/runtime" }
 finality-relay = { path = "../finality" }
 relay-utils = { path = "../utils" }
 
-# Axlib Dependencies
+# Substrate Dependencies
 
 frame-support = { git = "https://github.com/axtend/axlib", branch = "axlib" }
 frame-system = { git = "https://github.com/axtend/axlib", branch = "axlib" }

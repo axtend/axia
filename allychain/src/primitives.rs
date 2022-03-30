@@ -1,4 +1,4 @@
-// Copyright 2020 Parity Technologies (UK) Ltd.
+// Copyright 2020 Axia Technologies (UK) Ltd.
 // This file is part of Axia.
 
 // Axia is free software: you can redistribute it and/or modify
@@ -408,7 +408,7 @@ impl XcmpMessageHandler for () {
 }
 
 /// Validation parameters for evaluating the allychain validity function.
-// TODO: balance downloads (https://github.com/paritytech/axia/issues/220)
+// TODO: balance downloads (https://github.com/axiatech/axia/issues/220)
 #[derive(PartialEq, Eq, Decode, Clone)]
 #[cfg_attr(feature = "std", derive(Debug, Encode))]
 pub struct ValidationParams {
@@ -423,7 +423,7 @@ pub struct ValidationParams {
 }
 
 /// The result of allychain validation.
-// TODO: balance uploads (https://github.com/paritytech/axia/issues/220)
+// TODO: balance uploads (https://github.com/axiatech/axia/issues/220)
 #[derive(PartialEq, Eq, Clone, Encode)]
 #[cfg_attr(feature = "std", derive(Debug, Decode))]
 pub struct ValidationResult {

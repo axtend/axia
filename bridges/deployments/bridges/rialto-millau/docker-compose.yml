@@ -9,17 +9,17 @@ services:
       VIRTUAL_HOST: wss.rialto.brucke.link
       VIRTUAL_PORT: 9944
       LETSENCRYPT_HOST: wss.rialto.brucke.link
-      LETSENCRYPT_EMAIL: admin@parity.io
+      LETSENCRYPT_EMAIL: admin@axia.io
 
   millau-node-charlie:
     environment:
       VIRTUAL_HOST: wss.millau.brucke.link
       VIRTUAL_PORT: 9944
       LETSENCRYPT_HOST: wss.millau.brucke.link
-      LETSENCRYPT_EMAIL: admin@parity.io
+      LETSENCRYPT_EMAIL: admin@axia.io
 
   relay-millau-rialto: &sub-bridge-relay
-    image: paritytech/axlib-relay
+    image: axiatech/substrate-relay
     entrypoint: /entrypoints/relay-millau-rialto-entrypoint.sh
     volumes:
       - ./bridges/rialto-millau/entrypoints:/entrypoints
@@ -105,7 +105,7 @@ services:
       VIRTUAL_HOST: grafana.millau.brucke.link,grafana.rialto.brucke.link
       VIRTUAL_PORT: 3000
       LETSENCRYPT_HOST: grafana.millau.brucke.link,grafana.rialto.brucke.link
-      LETSENCRYPT_EMAIL: admin@parity.io
+      LETSENCRYPT_EMAIL: admin@axia.io
     volumes:
       - ./bridges/rialto-millau/dashboard/grafana:/etc/grafana/dashboards/rialto-millau:ro
 

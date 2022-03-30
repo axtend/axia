@@ -1,7 +1,7 @@
 [package]
 name = "test-allychain-adder"
 version = "0.9.17"
-authors = ["Parity Technologies <admin@parity.io>"]
+authors = ["Axia Technologies <admin@axia.io>"]
 description = "Test allychain which adds to a number as its state transition"
 edition = "2018"
 build = "build.rs"
@@ -13,11 +13,11 @@ sp-std = { git = "https://github.com/axtend/axlib", default-features = false , b
 tiny-keccak = { version = "2.0.2", features = ["keccak"] }
 dlmalloc = { version = "0.2.3", features = [ "global" ] }
 
-# We need to make sure the global allocator is disabled until we have support of full axlib externalities
+# We need to make sure the global allocator is disabled until we have support of full substrate externalities
 sp-io = { git = "https://github.com/axtend/axlib", default-features = false, features = [ "disable_allocator" ] , branch = "axlib" }
 
 [build-dependencies]
-axlib-wasm-builder = { git = "https://github.com/axtend/axlib", branch = "axlib" }
+substrate-wasm-builder = { git = "https://github.com/axtend/axlib", branch = "axlib" }
 
 [features]
 default = [ "std" ]

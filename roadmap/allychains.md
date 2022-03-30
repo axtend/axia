@@ -30,7 +30,7 @@ Some connections are long-lived, some are just for a single request.
 
 #### Custom libp2p sub-protocols
 
-Axia allychains involve many distinct networking protocols. Ideally, we'd be able to spawn each of these as a separate futures task which communicates via channel with other protocols or node code as necessary. This requires changes in Axlib and libp2p.
+Axia allychains involve many distinct networking protocols. Ideally, we'd be able to spawn each of these as a separate futures task which communicates via channel with other protocols or node code as necessary. This requires changes in Substrate and libp2p.
 
 ---
 ### Assignment
@@ -96,7 +96,7 @@ The main event loop of a collator node:
 ### Cross-chain Messaging
 
 https://hackmd.io/ILoQltEISP697oMYe4HbrA?view
-https://github.com/paritytech/axia/issues/597
+https://github.com/axiatech/axia/issues/597
 
 The biggest sub-project of the allychains roadmap - how messages are sent between allychains. This involves the state-machine ordering of incoming messages, protocols for fetching those messages, and node logic for persisting the messages.
 
@@ -138,7 +138,7 @@ Every channel's state is described by a Message Queue Chain (MQC) which is a has
 
 It is the responsibility of the full nodes of the _sending_ para to maintain all links of the MQC up to and including the link where `b` is less than the watermark of the _receiving_ para.
 
-Full nodes of the para will be aware of the head of all MQCs for its channels because they are produced by execution of the block. This will take collaboration with the Cumulus team (https://github.com/paritytech/cumulus) on APIs.
+Full nodes of the para will be aware of the head of all MQCs for its channels because they are produced by execution of the block. This will take collaboration with the Cumulus team (https://github.com/axiatech/cumulus) on APIs.
 
 We will need a network where collators of paras can discover and fetch the relevant portion of the MQC incoming from all channels.
 

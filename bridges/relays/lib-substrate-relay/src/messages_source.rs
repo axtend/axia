@@ -1,25 +1,25 @@
-// Copyright 2019-2021 Parity Technologies (UK) Ltd.
-// This file is part of Parity Bridges Common.
+// Copyright 2019-2021 Axia Technologies (UK) Ltd.
+// This file is part of Axia Bridges Common.
 
-// Parity Bridges Common is free software: you can redistribute it and/or modify
+// Axia Bridges Common is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Parity Bridges Common is distributed in the hope that it will be useful,
+// Axia Bridges Common is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Parity Bridges Common.  If not, see <http://www.gnu.org/licenses/>.
+// along with Axia Bridges Common.  If not, see <http://www.gnu.org/licenses/>.
 
-//! Axlib client as Axlib messages source. The chain we connect to should have
+//! Substrate client as Substrate messages source. The chain we connect to should have
 //! runtime that implements `<BridgedChainName>HeaderApi` to allow bridging with
 //! <BridgedName> chain.
 
 use crate::{
-	messages_lane::AxlibMessageLane, messages_target::AxlibMessagesReceivingProof,
+	messages_lane::SubstrateMessageLane, messages_target::SubstrateMessagesReceivingProof,
 	on_demand_headers::OnDemandHeadersRelay,
 };
 
@@ -38,8 +38,8 @@ use messages_relay::{
 	},
 };
 use num_traits::{Bounded, Zero};
-use relay_axlib_client::{
-	BalanceOf, BlockNumberOf, Chain, Client, Error as AxlibError, HashOf, HeaderIdOf, HeaderOf,
+use relay_substrate_client::{
+	BalanceOf, BlockNumberOf, Chain, Client, Error as SubstrateError, HashOf, HeaderIdOf, HeaderOf,
 	IndexOf,
 };
 use relay_utils::{relay_loop::Client as RelayClient, BlockNumberBase, HeaderId};
@@ -50,32 +50,32 @@ use sp_runtime::{
 };
 use std::ops::RangeInclusive;
 
-/// Intermediate message proof returned by the source Axlib node. Includes everything
+/// Intermediate message proof returned by the source Substrate node. Includes everything
 /// required to submit to the target node: cumulative dispatch weight of bundled messages and
 /// the proof itself.
-pub type AxlibMessagesProof<C> = (Weight, FromBridgedChainMessagesProof<HashOf<C>>);
+pub type SubstrateMessagesProof<C> = (Weight, FromBridgedChainMessagesProof<HashOf<C>>);
 
-/// Axlib client as Axlib messages source.
-pub struct AxlibMessagesSource<P: AxlibMessageLane> {
+/// Substrate client as Substrate messages source.
+pub struct SubstrateMessagesSource<P: SubstrateMessageLane> {
 	client: Client<P::SourceChain>,
 	lane: P,
 	lane_id: LaneId,
 	target_to_source_headers_relay: Option<OnDemandHeadersRelay<P::TargetChain>>,
 }
 
-impl<P: AxlibMessageLane> AxlibMessagesSource<P> {
-	/// Create new Axlib headers source.
+impl<P: SubstrateMessageLane> SubstrateMessagesSource<P> {
+	/// Create new Substrate headers source.
 	pub fn new(
 		client: Client<P::SourceChain>,
 		lane: P,
 		lane_id: LaneId,
 		target_to_source_headers_relay: Option<OnDemandHeadersRelay<P::TargetChain>>,
 	) -> Self {
-		AxlibMessagesSource { client, lane, lane_id, target_to_source_headers_relay }
+		SubstrateMessagesSource { client, lane, lane_id, target_to_source_headers_relay }
 	}
 }
 
-impl<P: AxlibMessageLane> Clone for AxlibMessagesSource<P> {
+impl<P: SubstrateMessageLane> Clone for SubstrateMessagesSource<P> {
 	fn clone(&self) -> Self {
 		Self {
 			client: self.client.clone(),
@@ -87,18 +87,18 @@ impl<P: AxlibMessageLane> Clone for AxlibMessagesSource<P> {
 }
 
 #[async_trait]
-impl<P: AxlibMessageLane> RelayClient for AxlibMessagesSource<P> {
-	type Error = AxlibError;
+impl<P: SubstrateMessageLane> RelayClient for SubstrateMessagesSource<P> {
+	type Error = SubstrateError;
 
-	async fn reconnect(&mut self) -> Result<(), AxlibError> {
+	async fn reconnect(&mut self) -> Result<(), SubstrateError> {
 		self.client.reconnect().await
 	}
 }
 
 #[async_trait]
-impl<P> SourceClient<P::MessageLane> for AxlibMessagesSource<P>
+impl<P> SourceClient<P::MessageLane> for SubstrateMessagesSource<P>
 where
-	P: AxlibMessageLane,
+	P: SubstrateMessageLane,
 	P::SourceChain: Chain<
 		Hash = <P::MessageLane as MessageLane>::SourceHeaderHash,
 		BlockNumber = <P::MessageLane as MessageLane>::SourceHeaderNumber,
@@ -115,14 +115,14 @@ where
 	>,
 
 	P::MessageLane: MessageLane<
-		MessagesProof = AxlibMessagesProof<P::SourceChain>,
-		MessagesReceivingProof = AxlibMessagesReceivingProof<P::TargetChain>,
+		MessagesProof = SubstrateMessagesProof<P::SourceChain>,
+		MessagesReceivingProof = SubstrateMessagesReceivingProof<P::TargetChain>,
 	>,
 	<P::MessageLane as MessageLane>::TargetHeaderNumber: Decode,
 	<P::MessageLane as MessageLane>::TargetHeaderHash: Decode,
 	<P::MessageLane as MessageLane>::SourceChainBalance: AtLeast32BitUnsigned,
 {
-	async fn state(&self) -> Result<SourceClientState<P::MessageLane>, AxlibError> {
+	async fn state(&self) -> Result<SourceClientState<P::MessageLane>, SubstrateError> {
 		// we can't continue to deliver confirmations if source node is out of sync, because
 		// it may have already received confirmations that we're going to deliver
 		self.client.ensure_synced().await?;
@@ -138,7 +138,7 @@ where
 	async fn latest_generated_nonce(
 		&self,
 		id: SourceHeaderIdOf<P::MessageLane>,
-	) -> Result<(SourceHeaderIdOf<P::MessageLane>, MessageNonce), AxlibError> {
+	) -> Result<(SourceHeaderIdOf<P::MessageLane>, MessageNonce), SubstrateError> {
 		let encoded_response = self
 			.client
 			.state_call(
@@ -148,14 +148,14 @@ where
 			)
 			.await?;
 		let latest_generated_nonce: MessageNonce = Decode::decode(&mut &encoded_response.0[..])
-			.map_err(AxlibError::ResponseParseFailed)?;
+			.map_err(SubstrateError::ResponseParseFailed)?;
 		Ok((id, latest_generated_nonce))
 	}
 
 	async fn latest_confirmed_received_nonce(
 		&self,
 		id: SourceHeaderIdOf<P::MessageLane>,
-	) -> Result<(SourceHeaderIdOf<P::MessageLane>, MessageNonce), AxlibError> {
+	) -> Result<(SourceHeaderIdOf<P::MessageLane>, MessageNonce), SubstrateError> {
 		let encoded_response = self
 			.client
 			.state_call(
@@ -165,7 +165,7 @@ where
 			)
 			.await?;
 		let latest_received_nonce: MessageNonce = Decode::decode(&mut &encoded_response.0[..])
-			.map_err(AxlibError::ResponseParseFailed)?;
+			.map_err(SubstrateError::ResponseParseFailed)?;
 		Ok((id, latest_received_nonce))
 	}
 
@@ -175,7 +175,7 @@ where
 		nonces: RangeInclusive<MessageNonce>,
 	) -> Result<
 		MessageDetailsMap<<P::MessageLane as MessageLane>::SourceChainBalance>,
-		AxlibError,
+		SubstrateError,
 	> {
 		let encoded_response = self
 			.client
@@ -188,7 +188,7 @@ where
 
 		make_message_details_map::<P::SourceChain>(
 			Decode::decode(&mut &encoded_response.0[..])
-				.map_err(AxlibError::ResponseParseFailed)?,
+				.map_err(SubstrateError::ResponseParseFailed)?,
 			nonces,
 		)
 	}
@@ -204,7 +204,7 @@ where
 			RangeInclusive<MessageNonce>,
 			<P::MessageLane as MessageLane>::MessagesProof,
 		),
-		AxlibError,
+		SubstrateError,
 	> {
 		let mut storage_keys =
 			Vec::with_capacity(nonces.end().saturating_sub(*nonces.start()) as usize + 1);
@@ -240,7 +240,7 @@ where
 		&self,
 		generated_at_block: TargetHeaderIdOf<P::MessageLane>,
 		proof: <P::MessageLane as MessageLane>::MessagesReceivingProof,
-	) -> Result<(), AxlibError> {
+	) -> Result<(), SubstrateError> {
 		let lane = self.lane.clone();
 		self.client
 			.submit_signed_extrinsic(
@@ -285,7 +285,7 @@ where
 /// We don't care about proof actually being the valid proof, because its validity doesn't
 /// affect the call weight - we only care about its size.
 fn prepare_dummy_messages_delivery_proof<SC: Chain, TC: Chain>(
-) -> AxlibMessagesReceivingProof<TC> {
+) -> SubstrateMessagesReceivingProof<TC> {
 	let single_message_confirmation_size = bp_messages::InboundLaneData::<()>::encoded_size_hint(
 		SC::MAXIMAL_ENCODED_ACCOUNT_ID_SIZE,
 		1,
@@ -317,7 +317,7 @@ pub async fn read_client_state<SelfChain, BridgedHeaderHash, BridgedHeaderNumber
 	best_finalized_header_id_method_name: &str,
 ) -> Result<
 	ClientState<HeaderIdOf<SelfChain>, HeaderId<BridgedHeaderHash, BridgedHeaderNumber>>,
-	AxlibError,
+	SubstrateError,
 >
 where
 	SelfChain: Chain,
@@ -348,7 +348,7 @@ where
 		.await?;
 	let decoded_best_finalized_peer_on_self: (BridgedHeaderNumber, BridgedHeaderHash) =
 		Decode::decode(&mut &encoded_best_finalized_peer_on_self.0[..])
-			.map_err(AxlibError::ResponseParseFailed)?;
+			.map_err(SubstrateError::ResponseParseFailed)?;
 	let peer_on_self_best_finalized_id =
 		HeaderId(decoded_best_finalized_peer_on_self.0, decoded_best_finalized_peer_on_self.1);
 
@@ -362,9 +362,9 @@ where
 fn make_message_details_map<C: Chain>(
 	weights: Vec<bp_messages::MessageDetails<C::Balance>>,
 	nonces: RangeInclusive<MessageNonce>,
-) -> Result<MessageDetailsMap<C::Balance>, AxlibError> {
+) -> Result<MessageDetailsMap<C::Balance>, SubstrateError> {
 	let make_missing_nonce_error = |expected_nonce| {
-		Err(AxlibError::Custom(format!(
+		Err(SubstrateError::Custom(format!(
 			"Missing nonce {} in message_details call result. Expected all nonces from {:?}",
 			expected_nonce, nonces,
 		)))
@@ -521,7 +521,7 @@ mod tests {
 		message_details_from_rpc.remove(1);
 		assert!(matches!(
 			make_message_details_map::<Wococo>(message_details_from_rpc, 1..=3,),
-			Err(AxlibError::Custom(_))
+			Err(SubstrateError::Custom(_))
 		));
 	}
 
@@ -529,7 +529,7 @@ mod tests {
 	fn make_message_details_map_fails_if_tail_messages_are_missing() {
 		assert!(matches!(
 			make_message_details_map::<Wococo>(message_details_from_rpc(1..=2), 1..=3,),
-			Err(AxlibError::Custom(_))
+			Err(SubstrateError::Custom(_))
 		));
 	}
 
@@ -537,7 +537,7 @@ mod tests {
 	fn make_message_details_map_fails_if_all_messages_are_missing() {
 		assert!(matches!(
 			make_message_details_map::<Wococo>(vec![], 1..=3),
-			Err(AxlibError::Custom(_))
+			Err(SubstrateError::Custom(_))
 		));
 	}
 

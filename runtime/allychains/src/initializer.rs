@@ -1,4 +1,4 @@
-// Copyright 2020 Parity Technologies (UK) Ltd.
+// Copyright 2020 Axia Technologies (UK) Ltd.
 // This file is part of Axia.
 
 // Axia is free software: you can redistribute it and/or modify
@@ -228,7 +228,7 @@ impl<T: Config> Pallet<T> {
 		let random_seed = {
 			let mut buf = [0u8; 32];
 			// TODO: audit usage of randomness API
-			// https://github.com/paritytech/axia/issues/2601
+			// https://github.com/axiatech/axia/issues/2601
 			let (random_hash, _) = T::Randomness::random(&b"paras"[..]);
 			let len = sp_std::cmp::min(32, random_hash.as_ref().len());
 			buf[..len].copy_from_slice(&random_hash.as_ref()[..len]);

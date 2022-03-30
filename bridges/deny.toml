@@ -55,13 +55,13 @@ ignore = [
     "RUSTSEC-2020-0077",
     # Comes from time: 'stweb' (will be fixed in upcoming time 0.3)
     "RUSTSEC-2020-0056",
-    # net2 (origin: Axlib RPC crates)
+    # net2 (origin: Substrate RPC crates)
     "RUSTSEC-2020-0016",
-    # Wasmtime (origin: Axlib executor crates)
+    # Wasmtime (origin: Substrate executor crates)
     "RUSTSEC-2021-0110",
-    # time (origin: Axlib RPC + benchmarking crates)
+    # time (origin: Substrate RPC + benchmarking crates)
     "RUSTSEC-2020-0071",
-    # chrono (origin: Axlib benchmarking + cli + ...)
+    # chrono (origin: Substrate benchmarking + cli + ...)
     "RUSTSEC-2020-0159",
 ]
 # Threshold for security vulnerabilities, any vulnerability with a CVSS score

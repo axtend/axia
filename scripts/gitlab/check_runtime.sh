@@ -2,9 +2,9 @@
 
 # Check for any changes in any runtime directories (e.g., ^runtime/axia) as
 # well as directories common to all runtimes (e.g., ^runtime/common). If there
-# are no changes, check if the Axlib git SHA in Cargo.lock has been
+# are no changes, check if the Substrate git SHA in Cargo.lock has been
 # changed. If so, pull the repo and verify if {spec,impl}_versions have been
-# altered since the previous Axlib version used.
+# altered since the previous Substrate version used.
 #
 # If there were changes to any runtimes or common dirs, we iterate over each
 # runtime (defined in the $runtimes() array), and check if {spec,impl}_version
@@ -16,7 +16,7 @@ set -e # fail on any error
 #shellcheck source=../common/lib.sh
 . "$(dirname "${0}")/../common/lib.sh"
 
-AXLIB_REPO="https://github.com/purestake/axlib"
+AXLIB_REPO="https://github.com/purestake/substrate"
 AXLIB_REPO_CARGO="git\+${AXLIB_REPO}"
 AXLIB_VERSIONS_FILE="bin/node/runtime/src/lib.rs"
 
@@ -51,7 +51,7 @@ function join_by { local d=$1; shift; echo -n "$1"; shift; printf "%s" "${@/#/$d
 boldprint "check if the wasm sources changed since ${LATEST_TAG}"
 if ! has_runtime_changes "${LATEST_TAG}" "${CI_COMMIT_SHA}"; then
   boldprint "no changes to any runtime source code detected"
-  # continue checking if Cargo.lock was updated with a new axlib reference
+  # continue checking if Cargo.lock was updated with a new substrate reference
   # and if that change includes a {spec|impl}_version update.
 
   AXLIB_REFS_CHANGED="$(
@@ -59,14 +59,14 @@ if ! has_runtime_changes "${LATEST_TAG}" "${CI_COMMIT_SHA}"; then
     | sed -n -r "s~^[\+\-]source = \"${AXLIB_REPO_CARGO}#([a-f0-9]+)\".*$~\1~p" | sort -u | wc -l
   )"
 
-  # check Cargo.lock for axlib ref change
+  # check Cargo.lock for substrate ref change
   case "${AXLIB_REFS_CHANGED}" in
     (0)
-      boldprint "axlib refs not changed in Cargo.lock"
+      boldprint "substrate refs not changed in Cargo.lock"
       exit 0
       ;;
     (2)
-      boldprint "axlib refs updated since ${LATEST_TAG}"
+      boldprint "substrate refs updated since ${LATEST_TAG}"
       ;;
     (*)
       boldprint "check unsupported: more than one commit targeted in repo ${AXLIB_REPO_CARGO}"
@@ -86,12 +86,12 @@ if ! has_runtime_changes "${LATEST_TAG}" "${CI_COMMIT_SHA}"; then
 
 
   boldcat <<EOT
-previous axlib commit id ${AXLIB_PREV_REF}
-new axlib commit id      ${AXLIB_NEW_REF}
+previous substrate commit id ${AXLIB_PREV_REF}
+new substrate commit id      ${AXLIB_NEW_REF}
 EOT
 
-  # okay so now need to fetch the axlib repository and check whether spec_version or impl_version has changed there
-  AXLIB_CLONE_DIR="$(mktemp -t -d axlib-XXXXXX)"
+  # okay so now need to fetch the substrate repository and check whether spec_version or impl_version has changed there
+  AXLIB_CLONE_DIR="$(mktemp -t -d substrate-XXXXXX)"
   trap 'rm -rf "${AXLIB_CLONE_DIR}"' INT QUIT TERM ABRT EXIT
 
   git clone --depth="${GIT_DEPTH:-100}" --no-tags \
@@ -103,7 +103,7 @@ EOT
     | grep -E '^[\+\-][[:space:]]+(spec|impl)_version: +([0-9]+),$' || exit 0
 
   boldcat <<EOT
-spec_version or or impl_version have changed in axlib after updating Cargo.lock
+spec_version or or impl_version have changed in substrate after updating Cargo.lock
 please make sure versions are bumped in axia accordingly
 EOT
 
@@ -186,7 +186,7 @@ done
 
 if [ ${#failed_runtime_checks} -gt 0 ]; then
   boldcat <<EOT
-wasm source files changed or the spec version in the axlib reference in
+wasm source files changed or the spec version in the substrate reference in
 the Cargo.lock but not the spec/impl version. If changes made do not alter
 logic, just bump 'impl_version'. If they do change logic, bump
 'spec_version'.

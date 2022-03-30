@@ -1,9 +1,9 @@
 # Staking Miner
 
-Axlib chains validators compute a basic solution for the NPoS election. The optimization of the solution is computing-intensive and can be delegated to the `staking-miner`. The `staking-miner` does not act as validator and focuses solely on the optimization of the solution.
+Substrate chains validators compute a basic solution for the NPoS election. The optimization of the solution is computing-intensive and can be delegated to the `staking-miner`. The `staking-miner` does not act as validator and focuses solely on the optimization of the solution.
 
-The staking miner connects to a specified chain and keeps listening to new Signed phase of the [pallet-election-provider-multi-phase](https://crates.parity.io/pallet_election_provider_multi_phase/index.html) in order to submit solutions to the NPoS election. When the correct time comes, it computes its solution and submit it to the chain.
-The default miner algorithm is [sequential-phragmen](https://crates.parity.io/sp_npos_elections/phragmen/fn.seq_phragmen_core.html)] with a configurable number of balancing iterations that improve the score.
+The staking miner connects to a specified chain and keeps listening to new Signed phase of the [pallet-election-provider-multi-phase](https://crates.axia.io/pallet_election_provider_multi_phase/index.html) in order to submit solutions to the NPoS election. When the correct time comes, it computes its solution and submit it to the chain.
+The default miner algorithm is [sequential-phragmen](https://crates.axia.io/sp_npos_elections/phragmen/fn.seq_phragmen_core.html)] with a configurable number of balancing iterations that improve the score.
 
 Running the staking-miner requires passing the seed of a funded account in order to pay the fees for the transactions that will be sent. The same account's balance is used to reserve deposits as well. The best solution in each round is rewarded. All correct solutions will get their bond back. Any invalid solution will lose their bond.
 

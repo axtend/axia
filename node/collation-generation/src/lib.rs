@@ -1,4 +1,4 @@
-// Copyright 2020 Parity Technologies (UK) Ltd.
+// Copyright 2020 Axia Technologies (UK) Ltd.
 // This file is part of Axia.
 
 // Axia is free software: you can redistribute it and/or modify
@@ -206,7 +206,7 @@ async fn handle_new_activations<Context: SubsystemContext>(
 				CoreState::Scheduled(scheduled_core) =>
 					(scheduled_core, OccupiedCoreAssumption::Free),
 				CoreState::Occupied(_occupied_core) => {
-					// TODO: https://github.com/paritytech/axia/issues/1573
+					// TODO: https://github.com/axiatech/axia/issues/1573
 					tracing::trace!(
 						target: LOG_TARGET,
 						core_idx = %core_idx,

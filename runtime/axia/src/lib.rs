@@ -1,4 +1,4 @@
-// Copyright 2017-2020 Parity Technologies (UK) Ltd.
+// Copyright 2017-2020 Axia Technologies (UK) Ltd.
 // This file is part of Axia.
 
 // Axia is free software: you can redistribute it and/or modify
@@ -112,7 +112,7 @@ include!(concat!(env!("OUT_DIR"), "/wasm_binary.rs"));
 /// Runtime version (Axia).
 pub const VERSION: RuntimeVersion = RuntimeVersion {
 	spec_name: create_runtime_str!("axia"),
-	impl_name: create_runtime_str!("parity-axia"),
+	impl_name: create_runtime_str!("axia-axia"),
 	authoring_version: 0,
 	spec_version: 9170,
 	impl_version: 0,
@@ -283,7 +283,7 @@ parameter_types! {
 }
 
 impl pallet_preimage::Config for Runtime {
-	type WeightInfo = pallet_preimage::weights::AxlibWeight<Runtime>;
+	type WeightInfo = pallet_preimage::weights::SubstrateWeight<Runtime>;
 	type Event = Event;
 	type Currency = Balances;
 	type ManagerOrigin = EnsureRoot<AccountId>;
@@ -391,7 +391,7 @@ parameter_types! {
 	pub const UncleGenerations: u32 = 0;
 }
 
-// TODO: axlib#2986 implement this properly
+// TODO: substrate#2986 implement this properly
 impl pallet_authorship::Config for Runtime {
 	type FindAuthor = pallet_session::FindAccountFromAuthorIndex<Self, Babe>;
 	type UncleGenerations = UncleGenerations;
@@ -1464,7 +1464,7 @@ pub type SignedPayload = generic::SignedPayload<Call, SignedExtra>;
 
 /// A migration struct to fix some deposits in the council election pallet.
 ///
-/// See more details here: https://github.com/paritytech/axia/issues/4160
+/// See more details here: https://github.com/axiatech/axia/issues/4160
 pub struct FixCouncilDepositMigration;
 
 impl FixCouncilDepositMigration {
@@ -1733,7 +1733,7 @@ mod benches {
 		[runtime_allychains::initializer, Initializer]
 		[runtime_allychains::paras, Paras]
 		[runtime_allychains::paras_inherent, ParaInherent]
-		// Axlib
+		// Substrate
 		[pallet_bags_list, BagsList]
 		[pallet_balances, Balances]
 		[frame_benchmarking::baseline, Baseline::<Runtime>]

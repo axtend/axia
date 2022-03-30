@@ -1,7 +1,7 @@
 [package]
 name = "axia-node-subsystem-types"
 version = "0.9.17"
-authors = ["Parity Technologies <admin@parity.io>"]
+authors = ["Axia Technologies <admin@axia.io>"]
 edition = "2018"
 description = "Subsystem traits and message definitions"
 
@@ -16,5 +16,5 @@ axia-node-jaeger = { path = "../jaeger" }
 axia-overseer-gen = { path = "../overseer/overseer-gen" }
 sc-network = { git = "https://github.com/axtend/axlib", branch = "axlib" }
 smallvec = "1.6.1"
-axlib-prometheus-endpoint = { git = "https://github.com/axtend/axlib", branch = "axlib" }
+substrate-prometheus-endpoint = { git = "https://github.com/axtend/axlib", branch = "axlib" }
 thiserror = "1.0.30"

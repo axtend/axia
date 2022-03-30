@@ -24,13 +24,13 @@ variables:
   GIT_STRATEGY:                    fetch
   GIT_DEPTH:                       100
   CI_SERVER_NAME:                  "GitLab CI"
-  CI_IMAGE:                        "paritytech/ci-linux:production"
+  CI_IMAGE:                        "axiatech/ci-linux:production"
   DOCKER_OS:                       "debian:stretch"
   ARCH:                            "x86_64"
-  ZOMBIENET_IMAGE:                 "docker.io/paritytech/zombienet:v1.2.3"
-  VAULT_SERVER_URL:                "https://vault.parity-mgmt-vault.parity.io"
-  VAULT_AUTH_PATH:                 "gitlab-parity-io-jwt"
-  VAULT_AUTH_ROLE:                 "cicd_gitlab_parity_${CI_PROJECT_NAME}"
+  ZOMBIENET_IMAGE:                 "docker.io/axiatech/zombienet:v1.2.3"
+  VAULT_SERVER_URL:                "https://vault.axia-mgmt-vault.axia.io"
+  VAULT_AUTH_PATH:                 "gitlab-axia-io-jwt"
+  VAULT_AUTH_ROLE:                 "cicd_gitlab_axia_${CI_PROJECT_NAME}"
   PIPELINE_SCRIPTS_TAG:            "v0.4"
 
 default:
@@ -53,7 +53,7 @@ default:
       - api_failure
   interruptible:                   true
   tags:
-    - kubernetes-parity-build
+    - kubernetes-axia-build
 
 .docker-env:                       &docker-env
   image:                           "${CI_IMAGE}"
@@ -112,10 +112,10 @@ default:
       vault:                       cicd/gitlab/$CI_PROJECT_PATH/AWS_SECRET_ACCESS_KEY@kv
       file:                        false
     GITHUB_PR_TOKEN:
-      vault:                       cicd/gitlab/parity/GITHUB_PR_TOKEN@kv
+      vault:                       cicd/gitlab/axia/GITHUB_PR_TOKEN@kv
       file:                        false
     GITHUB_TOKEN:
-      vault:                       cicd/gitlab/parity/GITHUB_TOKEN@kv
+      vault:                       cicd/gitlab/axia/GITHUB_TOKEN@kv
       file:                        false
     GITHUB_USER:
       vault:                       cicd/gitlab/$CI_PROJECT_PATH/GITHUB_USER@kv
@@ -132,11 +132,11 @@ default:
     MATRIX_ROOM_ID:
       vault:                       cicd/gitlab/$CI_PROJECT_PATH/MATRIX_ROOM_ID@kv
       file:                        false
-    PARITYPR_USER:
-      vault:                       cicd/gitlab/$CI_PROJECT_PATH/PARITYPR_USER@kv
+    AXIAPR_USER:
+      vault:                       cicd/gitlab/$CI_PROJECT_PATH/AXIAPR_USER@kv
       file:                        false
-    PARITYPR_PASS:
-      vault:                       cicd/gitlab/$CI_PROJECT_PATH/PARITYPR_PASS@kv
+    AXIAPR_PASS:
+      vault:                       cicd/gitlab/$CI_PROJECT_PATH/AXIAPR_PASS@kv
       file:                        false
     PIPELINE_TOKEN:
       vault:                       cicd/gitlab/$CI_PROJECT_PATH/PIPELINE_TOKEN@kv
@@ -150,12 +150,12 @@ default:
 
 check-runtime:
   stage:                           test
-  image:                           paritytech/tools:latest
+  image:                           axiatech/tools:latest
   <<:                              *kubernetes-env
   <<:                              *test-refs
   variables:
-    GITLAB_API:                    "https://gitlab.parity.io/api/v4"
-    GITHUB_API_PROJECT:            "parity%2Finfrastructure%2Fgithub-api"
+    GITLAB_API:                    "https://gitlab.axia.io/api/v4"
+    GITHUB_API_PROJECT:            "axia%2Finfrastructure%2Fgithub-api"
   script:
     - ./scripts/gitlab/check_runtime.sh
   allow_failure:                   true
@@ -302,9 +302,9 @@ build-malus:
     - git clone
         --depth=1
         "--branch=$PIPELINE_SCRIPTS_TAG"
-        https://github.com/paritytech/pipeline-scripts
+        https://github.com/axiatech/pipeline-scripts
     - ./pipeline-scripts/check_dependent_project.sh
-        paritytech
+        axiatech
         axia
         --axia
         "$DEPENDENT_REPO"
@@ -329,7 +329,7 @@ check-transaction-versions:
     - apt-get -y update; apt-get -y install jq lsof
     - npm install --ignore-scripts -g @axia/metadata-cmp
     # Set git config
-    - git config remote.origin.url "https://github.com/paritytech/axia.git"
+    - git config remote.origin.url "https://github.com/axiatech/axia.git"
     - git fetch origin release
   script:
     - scripts/gitlab/check_extrinsics_ordering.sh
@@ -371,8 +371,8 @@ build-rustdoc:
   image:                           quay.io/buildah/stable
   variables:                       &image-variables
     GIT_STRATEGY:                  none
-    DOCKER_USER:                   ${PARITYPR_USER}
-    DOCKER_PASS:                   ${PARITYPR_PASS}
+    DOCKER_USER:                   ${AXIAPR_USER}
+    DOCKER_PASS:                   ${AXIAPR_PASS}
   before_script:                   &check-versions
     - test -s ./artifacts/VERSION || exit 1
     - test -s ./artifacts/EXTRATAG || exit 1
@@ -407,7 +407,7 @@ publish-axia-image:
     <<:                            *image-variables
     # scripts/dockerfiles/axia_injected_debug.Dockerfile
     DOCKERFILE:                    dockerfiles/axia_injected_debug.Dockerfile
-    IMAGE_NAME:                    docker.io/paritypr/synth-wave
+    IMAGE_NAME:                    docker.io/axiapr/synth-wave
   rules:
     # Don't run on releases - this is handled by the Github Action here:
     # .github/workflows/publish-docker-release.yml
@@ -440,7 +440,7 @@ publish-adder-collator-image:
     <<:                            *image-variables
     # scripts/dockerfiles/collator_injected.Dockerfile
     DOCKERFILE:                    dockerfiles/collator_injected.Dockerfile
-    IMAGE_NAME:                    docker.io/paritypr/colander
+    IMAGE_NAME:                    docker.io/axiapr/colander
   needs:
     - job:                         build-adder-collator
       artifacts:                   true
@@ -463,7 +463,7 @@ publish-malus-image:
     <<:                            *image-variables
     # scripts/dockerfiles/malus_injected.Dockerfile
     DOCKERFILE:                    dockerfiles/malus_injected.Dockerfile
-    IMAGE_NAME:                    docker.io/paritypr/malus
+    IMAGE_NAME:                    docker.io/axiapr/malus
   needs:
     - job:                         build-malus
       artifacts:                   true
@@ -511,7 +511,7 @@ publish-s3-release:                &publish-s3
       artifacts:                   true
   <<:                              *kubernetes-env
   <<:                              *vault-secrets
-  image:                           paritytech/awscli:latest
+  image:                           axiatech/awscli:latest
   variables:
     GIT_STRATEGY:                  none
     PREFIX:                        "builds/axia/${ARCH}-${DOCKER_OS}"
@@ -523,9 +523,9 @@ publish-s3-release:                &publish-s3
   before_script:
     - *check-versions
   script:
-    - echo "uploading objects to https://releases.parity.io/${PREFIX}/${VERSION}"
+    - echo "uploading objects to https://releases.axia.io/${PREFIX}/${VERSION}"
     - aws s3 sync --acl public-read ./artifacts/ s3://${AWS_BUCKET}/${PREFIX}/${VERSION}/
-    - echo "update objects at https://releases.parity.io/${PREFIX}/${EXTRATAG}"
+    - echo "update objects at https://releases.axia.io/${PREFIX}/${EXTRATAG}"
     - find ./artifacts -type f | while read file; do
         name="${file#./artifacts/}";
         aws s3api copy-object
@@ -537,8 +537,8 @@ publish-s3-release:                &publish-s3
       |
       |  axia binary paths:
       |
-      |  - https://releases.parity.io/${PREFIX}/${EXTRATAG}/axia
-      |  - https://releases.parity.io/${PREFIX}/${VERSION}/axia
+      |  - https://releases.axia.io/${PREFIX}/${EXTRATAG}/axia
+      |  - https://releases.axia.io/${PREFIX}/${VERSION}/axia
       |
       EOM
   after_script:
@@ -549,7 +549,7 @@ publish-rustdoc:
   stage:                           publish
   <<:                              *kubernetes-env
   <<:                              *vault-secrets
-  image:                           paritytech/tools:latest
+  image:                           axiatech/tools:latest
   variables:
     GIT_DEPTH:                     100
   rules:
@@ -569,9 +569,9 @@ publish-rustdoc:
     - mkdir ~/.ssh && touch ~/.ssh/known_hosts
     - ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
     # Set git config
-    - git config user.email "devops-team@parity.io"
+    - git config user.email "devops-team@axia.io"
     - git config user.name "${GITHUB_USER}"
-    - git config remote.origin.url "git@github.com:/paritytech/${CI_PROJECT_NAME}.git"
+    - git config remote.origin.url "git@github.com:/axiatech/${CI_PROJECT_NAME}.git"
     - git config remote.origin.fetch "+refs/heads/*:refs/remotes/origin/*"
     - git fetch origin gh-pages
     # Save README and docs
@@ -590,20 +590,20 @@ publish-rustdoc:
     - git commit -m "Updated docs for ${CI_COMMIT_REF_NAME}" ||
         echo "___Nothing to commit___"
     - git push origin gh-pages --force
-    - echo "___Rustdoc was successfully published to https://paritytech.github.io/axia/___"
+    - echo "___Rustdoc was successfully published to https://axiatech.github.io/axia/___"
   after_script:
     - rm -rf .git/ ./*
 
 #### stage:                        deploy
 
-deploy-parity-testnet:
+deploy-axia-testnet:
   stage:                           deploy
   <<:                              *publish-refs
   variables:
     AXIA_CI_COMMIT_NAME:       "${CI_COMMIT_REF_NAME}"
     AXIA_CI_COMMIT_REF:        "${CI_COMMIT_SHORT_SHA}"
   allow_failure:                   true
-  trigger:                         "parity/infrastructure/parity-testnet"
+  trigger:                         "axia/infrastructure/axia-testnet"
 
 zombienet-tests-allychains-smoke-test:
   stage:                           deploy
@@ -615,7 +615,7 @@ zombienet-tests-allychains-smoke-test:
     - job:                         publish-malus-image
     - job:                         publish-adder-collator-image
   variables:
-    GH_DIR:                        "https://github.com/paritytech/axia/tree/${CI_COMMIT_SHORT_SHA}/zombienet_tests/allychains"
+    GH_DIR:                        "https://github.com/axiatech/axia/tree/${CI_COMMIT_SHORT_SHA}/zombienet_tests/allychains"
   before_script:
     - echo "Zombie-net Tests Config"
     - echo "${ZOMBIENET_IMAGE}"
@@ -625,7 +625,7 @@ zombienet-tests-allychains-smoke-test:
     - export DEBUG=zombie,zombie::network-node
     - export ZOMBIENET_INTEGRATION_TEST_IMAGE=${ALLYCHAINS_IMAGE_NAME}:${ALLYCHAINS_IMAGE_TAG}
     - export MALUS_IMAGE=${MALUS_IMAGE_NAME}:${MALUS_IMAGE_TAG}
-    - export COL_IMAGE="docker.io/paritypr/colander:4519" # The collator image is fixed
+    - export COL_IMAGE="docker.io/axiapr/colander:4519" # The collator image is fixed
   script:
     - /home/nonroot/zombie-net/scripts/run-test-env-manager.sh
         --github-remote-dir="${GH_DIR}"
@@ -645,7 +645,7 @@ zombienet-tests-malus-dispute-valid:
     - job:                         publish-malus-image
     - job:                         publish-adder-collator-image
   variables:
-    GH_DIR:                        "https://github.com/paritytech/axia/tree/${CI_COMMIT_SHORT_SHA}/node/malus/integrationtests"
+    GH_DIR:                        "https://github.com/axiatech/axia/tree/${CI_COMMIT_SHORT_SHA}/node/malus/integrationtests"
   before_script:
     - echo "Zombie-net Tests Config"
     - echo "${ZOMBIENET_IMAGE_NAME}"

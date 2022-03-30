@@ -1,4 +1,4 @@
-// Copyright 2020-2021 Parity Technologies (UK) Ltd.
+// Copyright 2020-2021 Axia Technologies (UK) Ltd.
 // This file is part of Axia.
 
 // Axia is free software: you can redistribute it and/or modify
@@ -30,7 +30,7 @@ use parity_scale_codec::{self, Decode, Encode};
 /// - A (normal, layer-1) block chain, e.g. the Bitcoin mainnet or a allychain.
 /// - A layer-0 super-chain, e.g. the Axia Relay chain.
 /// - A layer-2 smart contract, e.g. an ERC-20 on Ethereum.
-/// - A logical functional component of a chain, e.g. a single instance of a pallet on a Frame-based Axlib chain.
+/// - A logical functional component of a chain, e.g. a single instance of a pallet on a Frame-based Substrate chain.
 /// - An account.
 ///
 /// A `MultiLocation` is a *relative identifier*, meaning that it can only be used to define the relative path

@@ -1,11 +1,11 @@
 # Axia
 
-Implementation of a <https://axia.network> node in Rust based on the Axlib framework.
+Implementation of a <https://axia.network> node in Rust based on the Substrate framework.
 
 > **NOTE:** In 2018, we split our implementation of "Axia" from its development framework
-> "Axlib". See the [Axlib][axlib-repo] repo for git history prior to 2018.
+> "Substrate". See the [Substrate][substrate-repo] repo for git history prior to 2018.
 
-[axlib-repo]: https://github.com/paritytech/axlib
+[substrate-repo]: https://github.com/axiatech/substrate
 
 This repo contains runtimes for the Axia, AxiaTest, and Alphanet networks. The README provides
 information about installing the `axia` binary and developing on the codebase. For more
@@ -16,7 +16,7 @@ specific guides, like how to be a validator, see the
 
 If you just wish to run a Axia node without compiling it yourself, you may
 either run the latest binary from our
-[releases](https://github.com/paritytech/axia/releases) page, or install
+[releases](https://github.com/axiatech/axia/releases) page, or install
 Axia from one of our package repositories.
 
 Installation from the Debian or rpm repositories will create a `systemd`
@@ -34,15 +34,15 @@ Currently supports Debian 10 (Buster) and Ubuntu 20.04 (Focal), and
 derivatives. Run the following commands as the `root` user.
 
 ```bash
-# Import the security@parity.io GPG key
+# Import the security@axia.io GPG key
 gpg --recv-keys --keyserver hkps://keys.mailvelope.com 9D4B2B6EB8F97156D19669A9FF0812D491B96798
-gpg --export 9D4B2B6EB8F97156D19669A9FF0812D491B96798 > /usr/share/keyrings/parity.gpg
-# Add the Parity repository and update the package index
-echo 'deb [signed-by=/usr/share/keyrings/parity.gpg] https://releases.parity.io/deb release main' > /etc/apt/sources.list.d/parity.list
+gpg --export 9D4B2B6EB8F97156D19669A9FF0812D491B96798 > /usr/share/keyrings/axia.gpg
+# Add the Axia repository and update the package index
+echo 'deb [signed-by=/usr/share/keyrings/axia.gpg] https://releases.axia.io/deb release main' > /etc/apt/sources.list.d/axia.list
 apt update
-# Install the `parity-keyring` package - This will ensure the GPG key
+# Install the `axia-keyring` package - This will ensure the GPG key
 # used by APT remains up-to-date
-apt install parity-keyring
+apt install axia-keyring
 # Install axia
 apt install axia
 
@@ -56,7 +56,7 @@ Currently supports Fedora 32 and CentOS 8, and derivatives.
 # Install dnf-plugins-core (This might already be installed)
 dnf install dnf-plugins-core
 # Add the repository and enable it
-dnf config-manager --add-repo https://releases.parity.io/rpm/axia.repo
+dnf config-manager --add-repo https://releases.axia.io/rpm/axia.repo
 dnf config-manager --set-enabled axia
 # Install axia (You may have to confirm the import of the GPG key, which
 # should have the following fingerprint: 9D4B2B6EB8F97156D19669A9FF0812D491B96798)
@@ -73,7 +73,7 @@ below this section.
 If you want to install Axia in your PATH, you can do so with with:
 
 ```bash
-cargo install --git https://github.com/paritytech/axia --tag <version> axia --locked
+cargo install --git https://github.com/axiatech/axia --tag <version> axia --locked
 ```
 
 ### Build from Source
@@ -111,18 +111,18 @@ Note that compilation is a memory intensive process. We recommend having 4 GiB o
 #### Build from Source with Docker
 
 You can also build from source using 
-[Parity CI docker image](https://github.com/paritytech/scripts/tree/master/dockerfiles/ci-linux):
+[Axia CI docker image](https://github.com/axiatech/scripts/tree/master/dockerfiles/ci-linux):
 
 ```bash
 git checkout <latest tagged release>
 docker run --rm -it -w /shellhere/axia \
                     -v $(pwd):/shellhere/axia \
-                    paritytech/ci-linux:production cargo build --release
+                    axiatech/ci-linux:production cargo build --release
 sudo chown -R $(id -u):$(id -g) target/
 ```
 
 If you want to reproduce other steps of CI process you can use the following 
-[guide](https://github.com/paritytech/scripts#gitlab-ci-for-building-docker-images).
+[guide](https://github.com/axiatech/scripts#gitlab-ci-for-building-docker-images).
 
 ## Networks
 
@@ -179,13 +179,13 @@ Rust and the support software installed. This script will install or update Rust
 required dependencies (this may take up to 30 minutes on Mac machines):
 
 ```bash
-curl https://getaxlib.io -sSf | bash -s -- --fast
+curl https://getsubstrate.io -sSf | bash -s -- --fast
 ```
 
 Then, grab the Axia source code:
 
 ```bash
-git clone https://github.com/paritytech/axia.git
+git clone https://github.com/axiatech/axia.git
 cd axia
 ```
 

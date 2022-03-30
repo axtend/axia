@@ -1,4 +1,4 @@
-// Copyright 2020 Parity Technologies (UK) Ltd.
+// Copyright 2020 Axia Technologies (UK) Ltd.
 // This file is part of Axia.
 
 // Axia is free software: you can redistribute it and/or modify
@@ -110,7 +110,7 @@ pub struct HostConfiguration<BlockNumber> {
 	/// [`validation_upgrade_delay`] many blocks back and still find the new code in the storage by
 	/// hash.
 	///
-	/// [#4601]: https://github.com/paritytech/axia/issues/4601
+	/// [#4601]: https://github.com/axiatech/axia/issues/4601
 	pub validation_upgrade_delay: BlockNumber,
 
 	/**

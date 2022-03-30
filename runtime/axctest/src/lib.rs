@@ -1,4 +1,4 @@
-// Copyright 2017-2020 Parity Technologies (UK) Ltd.
+// Copyright 2017-2020 Axia Technologies (UK) Ltd.
 // This file is part of Axia.
 
 // Axia is free software: you can redistribute it and/or modify
@@ -113,7 +113,7 @@ include!(concat!(env!("OUT_DIR"), "/wasm_binary.rs"));
 /// Runtime version (AxiaTest).
 pub const VERSION: RuntimeVersion = RuntimeVersion {
 	spec_name: create_runtime_str!("axctest"),
-	impl_name: create_runtime_str!("parity-axctest"),
+	impl_name: create_runtime_str!("axia-axctest"),
 	authoring_version: 2,
 	spec_version: 9170,
 	impl_version: 0,
@@ -2895,7 +2895,7 @@ impl RefundNickPalletDeposit {
 impl OnRuntimeUpgrade for RefundNickPalletDeposit {
 	fn on_runtime_upgrade() -> frame_support::weights::Weight {
 		if VERSION.spec_version == 9150 {
-			log::info!(target: "runtime::axctest", "executing the refund migration of https://github.com/paritytech/axia/pull/4656");
+			log::info!(target: "runtime::axctest", "executing the refund migration of https://github.com/axiatech/axia/pull/4656");
 			Self::execute(false)
 		} else {
 			log::warn!(target: "runtime::axctest", "RefundNickPalletDeposit should be removed");
@@ -2971,7 +2971,7 @@ mod benches {
 		[runtime_allychains::initializer, Initializer]
 		[runtime_allychains::paras_inherent, ParaInherent]
 		[runtime_allychains::paras, Paras]
-		// Axlib
+		// Substrate
 		[pallet_balances, Balances]
 		[pallet_bags_list, BagsList]
 		[frame_benchmarking::baseline, Baseline::<Runtime>]

@@ -1,4 +1,4 @@
-// Copyright 2017-2020 Parity Technologies (UK) Ltd.
+// Copyright 2017-2020 Axia Technologies (UK) Ltd.
 // This file is part of Axia.
 
 // Axia is free software: you can redistribute it and/or modify
@@ -94,7 +94,7 @@ include!(concat!(env!("OUT_DIR"), "/wasm_binary.rs"));
 /// Runtime version (Test).
 pub const VERSION: RuntimeVersion = RuntimeVersion {
 	spec_name: create_runtime_str!("axia-test-runtime"),
-	impl_name: create_runtime_str!("parity-axia-test-runtime"),
+	impl_name: create_runtime_str!("axia-axia-test-runtime"),
 	authoring_version: 2,
 	spec_version: 1056,
 	impl_version: 0,

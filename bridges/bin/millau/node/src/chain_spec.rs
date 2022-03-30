@@ -1,18 +1,18 @@
-// Copyright 2019-2021 Parity Technologies (UK) Ltd.
-// This file is part of Parity Bridges Common.
+// Copyright 2019-2021 Axia Technologies (UK) Ltd.
+// This file is part of Axia Bridges Common.
 
-// Parity Bridges Common is free software: you can redistribute it and/or modify
+// Axia Bridges Common is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Parity Bridges Common is distributed in the hope that it will be useful,
+// Axia Bridges Common is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Parity Bridges Common.  If not, see <http://www.gnu.org/licenses/>.
+// along with Axia Bridges Common.  If not, see <http://www.gnu.org/licenses/>.
 
 use beefy_primitives::crypto::AuthorityId as BeefyId;
 use bp_millau::derive_account_from_rialto_id;
@@ -26,7 +26,7 @@ use sp_core::{sr25519, Pair, Public};
 use sp_finality_grandpa::AuthorityId as GrandpaId;
 use sp_runtime::traits::{IdentifyAccount, Verify};
 
-/// Specialized `ChainSpec`. This is a specialization of the general Axlib ChainSpec type.
+/// Specialized `ChainSpec`. This is a specialization of the general Substrate ChainSpec type.
 pub type ChainSpec = sc_service::GenericChainSpec<GenesisConfig>;
 
 /// The chain specification option. This is expected to come in from the CLI and

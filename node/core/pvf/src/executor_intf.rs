@@ -1,4 +1,4 @@
-// Copyright 2021 Parity Technologies (UK) Ltd.
+// Copyright 2021 Axia Technologies (UK) Ltd.
 // This file is part of Axia.
 
 // Axia is free software: you can redistribute it and/or modify
@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Axia.  If not, see <http://www.gnu.org/licenses/>.
 
-//! Interface to the Axlib Executor
+//! Interface to the Substrate Executor
 
 use sc_executor_common::{
 	runtime_blob::RuntimeBlob,
@@ -27,7 +27,7 @@ use std::any::{Any, TypeId};
 const CONFIG: Config = Config {
 	// Memory configuration
 	//
-	// When Axlib Runtime is instantiated, a number of wasm pages are mounted for the Axlib
+	// When Substrate Runtime is instantiated, a number of wasm pages are mounted for the Substrate
 	// Runtime instance. The number of pages is specified by `heap_pages`.
 	//
 	// Besides `heap_pages` linear memory requests an initial number of pages. Those pages are

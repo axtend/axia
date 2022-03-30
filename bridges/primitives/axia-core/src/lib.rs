@@ -1,18 +1,18 @@
-// Copyright 2019-2021 Parity Technologies (UK) Ltd.
-// This file is part of Parity Bridges Common.
+// Copyright 2019-2021 Axia Technologies (UK) Ltd.
+// This file is part of Axia Bridges Common.
 
-// Parity Bridges Common is free software: you can redistribute it and/or modify
+// Axia Bridges Common is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Parity Bridges Common is distributed in the hope that it will be useful,
+// Axia Bridges Common is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Parity Bridges Common.  If not, see <http://www.gnu.org/licenses/>.
+// along with Axia Bridges Common.  If not, see <http://www.gnu.org/licenses/>.
 
 #![cfg_attr(not(feature = "std"), no_std)]
 
@@ -39,7 +39,7 @@ use sp_runtime::{
 };
 use sp_std::prelude::Vec;
 
-// Re-export's to avoid extra axlib dependencies in chain-specific crates.
+// Re-export's to avoid extra substrate dependencies in chain-specific crates.
 pub use frame_support::{weights::constants::ExtrinsicBaseWeight, Parameter};
 pub use sp_runtime::{traits::Convert, Perbill};
 
@@ -130,7 +130,7 @@ pub fn max_extrinsic_size() -> u32 {
 	*BlockLength::get().max.get(DispatchClass::Normal)
 }
 
-// TODO [#78] may need to be updated after https://github.com/paritytech/parity-bridges-common/issues/78
+// TODO [#78] may need to be updated after https://github.com/axiatech/axia-bridges-common/issues/78
 /// Maximal number of messages in single delivery transaction.
 pub const MAX_MESSAGES_IN_DELIVERY_TRANSACTION: MessageNonce = 128;
 
@@ -386,8 +386,8 @@ impl Convert<sp_core::H256, AccountId> for AccountIdConverter {
 
 /// Return a storage key for account data.
 ///
-/// This is based on FRAME storage-generation code from Axlib:
-/// [link](https://github.com/paritytech/axlib/blob/c939ceba381b6313462d47334f775e128ea4e95d/frame/support/src/storage/generator/map.rs#L74)
+/// This is based on FRAME storage-generation code from Substrate:
+/// [link](https://github.com/axiatech/substrate/blob/c939ceba381b6313462d47334f775e128ea4e95d/frame/support/src/storage/generator/map.rs#L74)
 /// The equivalent command to invoke in case full `Runtime` is known is this:
 /// `let key = frame_system::Account::<Runtime>::storage_map_final_key(&account_id);`
 pub fn account_info_storage_key(id: &AccountId) -> Vec<u8> {

@@ -5,7 +5,7 @@
 version: '3.5'
 services:
   rialto-allychain-collator-alice: &rialto-allychain-collator
-    image: paritytech/rialto-allychain-collator
+    image: axiatech/rialto-allychain-collator
     entrypoint: >
       /home/user/rialto-allychain-collator
       --alice
@@ -25,7 +25,7 @@ services:
     volumes:
       - rialto-share:/rialto-share:z
     environment:
-      RUST_LOG: runtime=trace,rpc=trace,txpool=trace,allychain=trace,parity_ws=trace
+      RUST_LOG: runtime=trace,rpc=trace,txpool=trace,allychain=trace,axia_ws=trace
     depends_on:
       - rialto-chainspec-exporter
     ports:
@@ -77,7 +77,7 @@ services:
       - "20644:9944"
 
   rialto-allychain-registrar:
-    image: paritytech/axlib-relay
+    image: axiatech/substrate-relay
     entrypoint: /entrypoints/rialto-allychain-registrar-entrypoint.sh
     volumes:
       - ./networks/entrypoints:/entrypoints

@@ -1,18 +1,18 @@
-// Copyright 2019-2021 Parity Technologies (UK) Ltd.
-// This file is part of Parity Bridges Common.
+// Copyright 2019-2021 Axia Technologies (UK) Ltd.
+// This file is part of Axia Bridges Common.
 
-// Parity Bridges Common is free software: you can redistribute it and/or modify
+// Axia Bridges Common is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Parity Bridges Common is distributed in the hope that it will be useful,
+// Axia Bridges Common is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Parity Bridges Common.  If not, see <http://www.gnu.org/licenses/>.
+// along with Axia Bridges Common.  If not, see <http://www.gnu.org/licenses/>.
 
 use bp_runtime::{Chain as ChainBase, HashOf, TransactionEraOf};
 use codec::{Codec, Encode};
@@ -28,7 +28,7 @@ use sp_runtime::{
 };
 use std::{fmt::Debug, time::Duration};
 
-/// Axlib-based chain from minimal relay-client point of view.
+/// Substrate-based chain from minimal relay-client point of view.
 pub trait Chain: ChainBase + Clone {
 	/// Chain name.
 	const NAME: &'static str;
@@ -58,7 +58,7 @@ pub type WeightToFeeOf<C> = <C as Chain>::WeightToFee;
 /// Transaction status of the chain.
 pub type TransactionStatusOf<C> = TransactionStatus<HashOf<C>, HashOf<C>>;
 
-/// Axlib-based chain with `frame_system::Config::AccountData` set to
+/// Substrate-based chain with `frame_system::Config::AccountData` set to
 /// the `pallet_balances::AccountData<Balance>`.
 pub trait ChainWithBalances: Chain {
 	/// Return runtime storage key for getting `frame_system::AccountInfo` of given account.
@@ -102,7 +102,7 @@ impl<C: Chain> UnsignedTransaction<C> {
 	}
 }
 
-/// Axlib-based chain transactions signing scheme.
+/// Substrate-based chain transactions signing scheme.
 pub trait TransactionSignScheme {
 	/// Chain that this scheme is to be used.
 	type Chain: Chain;

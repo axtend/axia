@@ -1,4 +1,4 @@
-// Copyright 2021 Parity Technologies (UK) Ltd.
+// Copyright 2021 Axia Technologies (UK) Ltd.
 // This file is part of Axia.
 
 // Axia is free software: you can redistribute it and/or modify
@@ -214,7 +214,7 @@ struct PeerRelayParentKnowledge {
 	/// How many large statements this peer already sent us.
 	///
 	/// Flood protection for large statements is rather hard and as soon as we get
-	/// `https://github.com/paritytech/axia/issues/2979` implemented also no longer necessary.
+	/// `https://github.com/axiatech/axia/issues/2979` implemented also no longer necessary.
 	/// Reason: We keep messages around until we fetched the payload, but if a node makes up
 	/// statements and never provides the data, we will keep it around for the slot duration. Not
 	/// even signature checking would help, as the sender, if a validator, can just sign arbitrary

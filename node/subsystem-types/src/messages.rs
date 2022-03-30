@@ -1,4 +1,4 @@
-// Copyright 2017-2020 Parity Technologies (UK) Ltd.
+// Copyright 2017-2020 Axia Technologies (UK) Ltd.
 // This file is part of Axia.
 
 // Axia is free software: you can redistribute it and/or modify
@@ -346,7 +346,7 @@ pub enum NetworkBridgeMessage {
 	/// NOTE: Messages will be processed in order.
 	SendCollationMessages(Vec<(Vec<PeerId>, protocol_v1::CollationProtocol)>),
 
-	/// Send requests via axlib request/response.
+	/// Send requests via substrate request/response.
 	/// Second parameter, tells what to do if we are not yet connected to the peer.
 	SendRequests(Vec<Requests>, IfDisconnected),
 

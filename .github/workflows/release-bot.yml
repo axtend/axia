@@ -12,17 +12,17 @@ jobs:
           - name: '#AxiaTestValidatorLounge:axia.builders'
             room: '!LhjZccBOqFNYKLdmbb:axia.builders'
             pre-releases: false
-          - name: '#axctest-announcements:matrix.parity.io'
-            room: '!FMwxpQnYhRCNDRsYGI:matrix.parity.io'
+          - name: '#axctest-announcements:matrix.axia.io'
+            room: '!FMwxpQnYhRCNDRsYGI:matrix.axia.io'
             pre-release: false
           - name: '#axiavalidatorlounge:web3.foundation'
-            room: '!NZrbtteFeqYKCUGQtr:matrix.parity.io'
+            room: '!NZrbtteFeqYKCUGQtr:matrix.axia.io'
             pre-release: false
-          - name: '#axia-announcements:matrix.parity.io'
-            room: '!UqHPWiCBGZWxrmYBkF:matrix.parity.io'
+          - name: '#axia-announcements:matrix.axia.io'
+            room: '!UqHPWiCBGZWxrmYBkF:matrix.axia.io'
             pre-release: false
           - name: Internal release-notes channel
-            room: '!NTogofoetwjbTwOoPi:matrix.parity.io'
+            room: '!NTogofoetwjbTwOoPi:matrix.axia.io'
             pre-release: true
 
     runs-on: ubuntu-latest
@@ -33,5 +33,5 @@ jobs:
         with:
           room_id: ${{ matrix.channel.room }}
           access_token: ${{ secrets.MATRIX_ACCESS_TOKEN }}
-          server: "matrix.parity.io"
+          server: "matrix.axia.io"
           message: "***Axia ${{github.event.release.tag_name}} has been released!***<br/>${{github.event.release.html_url}}<br/><br/>${{github.event.release.body}}<br/>"

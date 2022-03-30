@@ -1,4 +1,4 @@
-// Copyright 2020 Parity Technologies (UK) Ltd.
+// Copyright 2020 Axia Technologies (UK) Ltd.
 // This file is part of Axia.
 
 // Axia is free software: you can redistribute it and/or modify
@@ -95,7 +95,7 @@ const ACTIVITY_POLL: Duration = Duration::from_millis(10);
 
 // How often to poll collation responses.
 // This is a hack that should be removed in a refactoring.
-// See https://github.com/paritytech/axia/issues/4182
+// See https://github.com/axiatech/axia/issues/4182
 const CHECK_COLLATIONS_POLL: Duration = Duration::from_millis(5);
 
 #[derive(Clone, Default)]
@@ -1390,7 +1390,7 @@ async fn poll_collation_response(
 					"Request timed out"
 				);
 				// For now we don't want to change reputation on timeout, to mitigate issues like
-				// this: https://github.com/paritytech/axia/issues/4617
+				// this: https://github.com/axiatech/axia/issues/4617
 				CollationFetchResult::Error(None)
 			},
 			Err(RequestError::NetworkError(err)) => {

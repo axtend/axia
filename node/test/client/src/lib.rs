@@ -1,4 +1,4 @@
-// Copyright 2020 Parity Technologies (UK) Ltd.
+// Copyright 2020 Axia Technologies (UK) Ltd.
 // This file is part of Axia.
 
 // Axia is free software: you can redistribute it and/or modify
@@ -31,7 +31,7 @@ pub use axia_test_service::{
 	construct_extrinsic, construct_transfer_extrinsic, Client, FullBackend,
 	AxiaTestExecutorDispatch,
 };
-pub use axlib_test_client::*;
+pub use substrate_test_client::*;
 
 /// Test client executor.
 pub type Executor = client::LocalCallExecutor<
@@ -42,7 +42,7 @@ pub type Executor = client::LocalCallExecutor<
 
 /// Test client builder for Axia.
 pub type TestClientBuilder =
-	axlib_test_client::TestClientBuilder<Block, Executor, FullBackend, GenesisParameters>;
+	substrate_test_client::TestClientBuilder<Block, Executor, FullBackend, GenesisParameters>;
 
 /// `LongestChain` type for the test runtime/client.
 pub type LongestChain = sc_consensus::LongestChain<FullBackend, Block>;
@@ -51,7 +51,7 @@ pub type LongestChain = sc_consensus::LongestChain<FullBackend, Block>;
 #[derive(Default)]
 pub struct GenesisParameters;
 
-impl axlib_test_client::GenesisInit for GenesisParameters {
+impl substrate_test_client::GenesisInit for GenesisParameters {
 	fn genesis_storage(&self) -> Storage {
 		axia_test_service::chain_spec::axia_local_testnet_genesis()
 			.build_storage()

@@ -1,14 +1,14 @@
 [package]
 name = "axia-allychain"
 version = "0.9.17"
-authors = ["Parity Technologies <admin@parity.io>"]
+authors = ["Axia Technologies <admin@axia.io>"]
 description = "Types and utilities for creating and working with allychains"
 edition = "2018"
 
 [dependencies]
 # note: special care is taken to avoid inclusion of `sp-io` externals when compiling
 # this crate for WASM. This is critical to avoid forcing all allychain WASM into implementing
-# various unnecessary Axlib-specific endpoints.
+# various unnecessary Substrate-specific endpoints.
 parity-scale-codec = { version = "2.0.0", default-features = false, features = [ "derive" ] }
 parity-util-mem = { version = "0.10.0", default-features = false, optional = true }
 scale-info = { version = "1.0", default-features = false, features = ["derive"] }

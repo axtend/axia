@@ -7,14 +7,14 @@ ARG AXIA_VERSION
 ARG AXIA_GPGKEY=9D4B2B6EB8F97156D19669A9FF0812D491B96798
 ARG GPG_KEYSERVER="hkps://keys.mailvelope.com"
 
-LABEL io.parity.image.authors="devops-team@parity.io" \
-	io.parity.image.vendor="Parity Technologies" \
-	io.parity.image.title="parity/axia" \
-	io.parity.image.description="Axia: a platform for web3. This is the official Parity image with an injected binary." \
-	io.parity.image.source="https://github.com/paritytech/axia/blob/${VCS_REF}/scripts/dockerfiles/axia_injected_release.Dockerfile" \
-	io.parity.image.revision="${VCS_REF}" \
-	io.parity.image.created="${BUILD_DATE}" \
-	io.parity.image.documentation="https://github.com/paritytech/axia/"
+LABEL io.axia.image.authors="devops-team@axia.io" \
+	io.axia.image.vendor="Axia Technologies" \
+	io.axia.image.title="axia/axia" \
+	io.axia.image.description="Axia: a platform for web3. This is the official Axia image with an injected binary." \
+	io.axia.image.source="https://github.com/axiatech/axia/blob/${VCS_REF}/scripts/dockerfiles/axia_injected_release.Dockerfile" \
+	io.axia.image.revision="${VCS_REF}" \
+	io.axia.image.created="${BUILD_DATE}" \
+	io.axia.image.documentation="https://github.com/axiatech/axia/"
 
 # show backtraces
 ENV RUST_BACKTRACE 1
@@ -28,8 +28,8 @@ RUN apt-get update && \
 	useradd -m -u 1000 -U -s /bin/sh -d /axia axia && \
 # add repo's gpg keys and install the published axia binary
 	gpg --recv-keys --keyserver ${GPG_KEYSERVER} ${AXIA_GPGKEY} && \
-	gpg --export ${AXIA_GPGKEY} > /usr/share/keyrings/parity.gpg && \
-	echo 'deb [signed-by=/usr/share/keyrings/parity.gpg] https://releases.parity.io/deb release main' > /etc/apt/sources.list.d/parity.list && \
+	gpg --export ${AXIA_GPGKEY} > /usr/share/keyrings/axia.gpg && \
+	echo 'deb [signed-by=/usr/share/keyrings/axia.gpg] https://releases.axia.io/deb release main' > /etc/apt/sources.list.d/axia.list && \
 	apt-get update && \
 	apt-get install -y --no-install-recommends axia=${AXIA_VERSION#?} && \
 # apt cleanup

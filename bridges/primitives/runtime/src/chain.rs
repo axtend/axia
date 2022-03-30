@@ -1,18 +1,18 @@
-// Copyright 2019-2021 Parity Technologies (UK) Ltd.
-// This file is part of Parity Bridges Common.
+// Copyright 2019-2021 Axia Technologies (UK) Ltd.
+// This file is part of Axia Bridges Common.
 
-// Parity Bridges Common is free software: you can redistribute it and/or modify
+// Axia Bridges Common is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Parity Bridges Common is distributed in the hope that it will be useful,
+// Axia Bridges Common is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Parity Bridges Common.  If not, see <http://www.gnu.org/licenses/>.
+// along with Axia Bridges Common.  If not, see <http://www.gnu.org/licenses/>.
 
 use frame_support::Parameter;
 use num_traits::{AsPrimitive, Bounded, CheckedSub, SaturatingAdd, Zero};
@@ -25,15 +25,15 @@ use sp_runtime::{
 };
 use sp_std::{convert::TryFrom, fmt::Debug, hash::Hash, str::FromStr};
 
-/// Minimal Axlib-based chain representation that may be used from no_std environment.
+/// Minimal Substrate-based chain representation that may be used from no_std environment.
 pub trait Chain: Send + Sync + 'static {
-	/// A type that fulfills the abstract idea of what a Axlib block number is.
+	/// A type that fulfills the abstract idea of what a Substrate block number is.
 	// Constraits come from the associated Number type of `sp_runtime::traits::Header`
 	// See here for more info:
-	// https://crates.parity.io/sp_runtime/traits/trait.Header.html#associatedtype.Number
+	// https://crates.axia.io/sp_runtime/traits/trait.Header.html#associatedtype.Number
 	//
 	// Note that the `AsPrimitive<usize>` trait is required by the GRANDPA justification
-	// verifier, and is not usually part of a Axlib Header's Number type.
+	// verifier, and is not usually part of a Substrate Header's Number type.
 	type BlockNumber: Parameter
 		+ Member
 		+ MaybeSerializeDeserialize
@@ -50,10 +50,10 @@ pub trait Chain: Send + Sync + 'static {
 		// `sp_runtime::generic::Era` requires block number -> `u64` conversion.
 		+ Into<u64>;
 
-	/// A type that fulfills the abstract idea of what a Axlib hash is.
+	/// A type that fulfills the abstract idea of what a Substrate hash is.
 	// Constraits come from the associated Hash type of `sp_runtime::traits::Header`
 	// See here for more info:
-	// https://crates.parity.io/sp_runtime/traits/trait.Header.html#associatedtype.Hash
+	// https://crates.axia.io/sp_runtime/traits/trait.Header.html#associatedtype.Hash
 	type Hash: Parameter
 		+ Member
 		+ MaybeSerializeDeserialize
@@ -67,16 +67,16 @@ pub trait Chain: Send + Sync + 'static {
 		+ AsMut<[u8]>
 		+ MaybeMallocSizeOf;
 
-	/// A type that fulfills the abstract idea of what a Axlib hasher (a type
+	/// A type that fulfills the abstract idea of what a Substrate hasher (a type
 	/// that produces hashes) is.
 	// Constraits come from the associated Hashing type of `sp_runtime::traits::Header`
 	// See here for more info:
-	// https://crates.parity.io/sp_runtime/traits/trait.Header.html#associatedtype.Hashing
+	// https://crates.axia.io/sp_runtime/traits/trait.Header.html#associatedtype.Hashing
 	type Hasher: HashT<Output = Self::Hash>;
 
-	/// A type that fulfills the abstract idea of what a Axlib header is.
+	/// A type that fulfills the abstract idea of what a Substrate header is.
 	// See here for more info:
-	// https://crates.parity.io/sp_runtime/traits/trait.Header.html
+	// https://crates.axia.io/sp_runtime/traits/trait.Header.html
 	type Header: Parameter
 		+ HeaderT<Number = Self::BlockNumber, Hash = Self::Hash>
 		+ MaybeSerializeDeserialize;

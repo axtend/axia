@@ -1,4 +1,4 @@
-// Copyright 2021 Parity Technologies (UK) Ltd.
+// Copyright 2021 Axia Technologies (UK) Ltd.
 // This file is part of Axia.
 
 // Axia is free software: you can redistribute it and/or modify
@@ -72,7 +72,7 @@ const BACKOFF_DURATION: Duration = Duration::from_secs(5);
 /// populated). Authority discovery on AxiaTest takes around 8 minutes, so warning after 10 minutes
 /// should be fine:
 ///
-/// https://github.com/paritytech/axlib/blob/fc49802f263529160635471c8a17888846035f5d/client/authority-discovery/src/lib.rs#L88
+/// https://github.com/axiatech/substrate/blob/fc49802f263529160635471c8a17888846035f5d/client/authority-discovery/src/lib.rs#L88
 const LOW_CONNECTIVITY_WARN_DELAY: Duration = Duration::from_secs(600);
 
 /// If connectivity is lower than this in percent, issue warning in logs.
@@ -281,7 +281,7 @@ where
 
 				// First `maxValidators` entries are the allychain validators. We'll check
 				// if our index is in this set to avoid searching for the keys.
-				// https://github.com/paritytech/axia/blob/a52dca2be7840b23c19c153cf7e110b1e3e475f8/runtime/allychains/src/configuration.rs#L148
+				// https://github.com/axiatech/axia/blob/a52dca2be7840b23c19c153cf7e110b1e3e475f8/runtime/allychains/src/configuration.rs#L148
 				if validator_index < allychain_validators_this_session.len() {
 					self.metrics.on_is_allychain_validator();
 				} else {
@@ -397,7 +397,7 @@ where
 			.filter(|(a, _)| !self.connected_authorities.contains_key(a));
 		// TODO: Make that warning once connectivity issues are fixed (no point in warning, if
 		// we already know it is broken.
-		// https://github.com/paritytech/axia/issues/3921
+		// https://github.com/axiatech/axia/issues/3921
 		if connected_ratio <= LOW_CONNECTIVITY_WARN_THRESHOLD {
 			tracing::debug!(
 				target: LOG_TARGET,

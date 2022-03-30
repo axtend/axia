@@ -1,5 +1,5 @@
 [package]
-authors = ["Parity Technologies <admin@parity.io>"]
+authors = ["Axia Technologies <admin@axia.io>"]
 name = "xcm-procedural"
 version = "0.1.0"
 edition = "2018"

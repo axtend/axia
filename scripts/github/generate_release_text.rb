@@ -55,11 +55,11 @@ logger("Last ref: " + last_ref)
 
 logger("Generate changelog for Axia")
 axia_cl = Changelog.new(
-  'paritytech/axia', last_ref, current_ref, token: token
+  'axiatech/axia', last_ref, current_ref, token: token
 )
 
-# Gets the axlib commit hash used for a given axia ref
-def get_axlib_commit(client, ref)
+# Gets the substrate commit hash used for a given axia ref
+def get_substrate_commit(client, ref)
   cargo = TOML::Parser.new(
     Base64.decode64(
       client.contents(
@@ -72,18 +72,18 @@ def get_axlib_commit(client, ref)
   cargo['package'].find { |p| p['name'] == 'sc-cli' }['source'].split('#').last
 end
 
-axlib_prev_sha = get_axlib_commit(github_client, last_ref)
-axlib_cur_sha = get_axlib_commit(github_client, current_ref)
+substrate_prev_sha = get_substrate_commit(github_client, last_ref)
+substrate_cur_sha = get_substrate_commit(github_client, current_ref)
 
-logger("Generate changelog for Axlib")
-axlib_cl = Changelog.new(
-  'paritytech/axlib', axlib_prev_sha, axlib_cur_sha,
+logger("Generate changelog for Substrate")
+substrate_cl = Changelog.new(
+  'axiatech/substrate', substrate_prev_sha, substrate_cur_sha,
   token: token,
   prefix: true
 )
 
 # Combine all changes into a single array and filter out companions
-all_changes = (axia_cl.changes + axlib_cl.changes).reject do |c|
+all_changes = (axia_cl.changes + substrate_cl.changes).reject do |c|
   c[:title] =~ /[Cc]ompanion/
 end
 

@@ -1,7 +1,7 @@
 %define debug_package %{nil}
 
 Name: axia
-Summary: Implementation of a https://axia.network node in Rust based on the Axlib framework.
+Summary: Implementation of a https://axia.network node in Rust based on the Substrate framework.
 Version: @@VERSION@@
 Release: @@RELEASE@@%{?dist}
 License: GPLv3

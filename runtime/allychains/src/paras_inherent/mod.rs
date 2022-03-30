@@ -1,4 +1,4 @@
-// Copyright 2020 Parity Technologies (UK) Ltd.
+// Copyright 2020 Axia Technologies (UK) Ltd.
 // This file is part of Axia.
 
 // Axia is free software: you can redistribute it and/or modify
@@ -212,7 +212,7 @@ pub mod pallet {
 			let inherent_data = Self::create_inherent_inner(data)?;
 			// Sanity check: session changes can invalidate an inherent,
 			// and we _really_ don't want that to happen.
-			// See <https://github.com/paritytech/axia/issues/1327>
+			// See <https://github.com/axiatech/axia/issues/1327>
 
 			// Calling `Self::enter` here is a safe-guard, to avoid any discrepancy between on-chain checks
 			// (`enter`) and the off-chain checks by the block author (this function). Once we are confident

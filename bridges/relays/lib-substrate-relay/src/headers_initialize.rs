@@ -1,20 +1,20 @@
-// Copyright 2019-2021 Parity Technologies (UK) Ltd.
-// This file is part of Parity Bridges Common.
+// Copyright 2019-2021 Axia Technologies (UK) Ltd.
+// This file is part of Axia Bridges Common.
 
-// Parity Bridges Common is free software: you can redistribute it and/or modify
+// Axia Bridges Common is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Parity Bridges Common is distributed in the hope that it will be useful,
+// Axia Bridges Common is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Parity Bridges Common.  If not, see <http://www.gnu.org/licenses/>.
+// along with Axia Bridges Common.  If not, see <http://www.gnu.org/licenses/>.
 
-//! Initialize Axlib -> Axlib headers bridge.
+//! Initialize Substrate -> Substrate headers bridge.
 //!
 //! Initialization is a transaction that calls `initialize()` function of the
 //! `pallet-bridge-grandpa` pallet. This transaction brings initial header
@@ -31,7 +31,7 @@ use bp_header_chain::{
 use codec::Decode;
 use finality_grandpa::voter_set::VoterSet;
 use num_traits::{One, Zero};
-use relay_axlib_client::{Chain, Client};
+use relay_substrate_client::{Chain, Client};
 use sp_core::Bytes;
 use sp_finality_grandpa::AuthorityList as GrandpaAuthoritiesSet;
 use sp_runtime::traits::Header as HeaderT;

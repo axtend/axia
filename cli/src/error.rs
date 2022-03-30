@@ -1,4 +1,4 @@
-// Copyright 2017-2021 Parity Technologies (UK) Ltd.
+// Copyright 2017-2021 Axia Technologies (UK) Ltd.
 // This file is part of Axia.
 
 // Axia is free software: you can redistribute it and/or modify
@@ -20,13 +20,13 @@ pub enum Error {
 	AxiaService(#[from] service::Error),
 
 	#[error(transparent)]
-	AxlibCli(#[from] sc_cli::Error),
+	SubstrateCli(#[from] sc_cli::Error),
 
 	#[error(transparent)]
-	AxlibService(#[from] sc_service::Error),
+	SubstrateService(#[from] sc_service::Error),
 
 	#[error(transparent)]
-	AxlibTracing(#[from] sc_tracing::logging::Error),
+	SubstrateTracing(#[from] sc_tracing::logging::Error),
 
 	#[error(transparent)]
 	PerfCheck(#[from] axia_performance_test::PerfCheckError),

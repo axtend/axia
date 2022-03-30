@@ -1,12 +1,12 @@
-// Copyright 2020 Parity Technologies (UK) Ltd.
+// Copyright 2020 Axia Technologies (UK) Ltd.
 // This file is part of Cumulus.
 
-// Axlib is free software: you can redistribute it and/or modify
+// Substrate is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Axlib is distributed in the hope that it will be useful,
+// Substrate is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
@@ -17,7 +17,7 @@
 //! # XCM Version 2
 //! Version 2 of the Cross-Consensus Message format data structures. The comprehensive list of
 //! changes can be found in
-//! [this PR description](https://github.com/paritytech/axia/pull/3629#issue-968428279).
+//! [this PR description](https://github.com/axiatech/axia/pull/3629#issue-968428279).
 //!
 //! ## Changes to be aware of
 //! The biggest change here is the restructuring of XCM messages: instead of having `Order` and

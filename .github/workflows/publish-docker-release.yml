@@ -32,8 +32,8 @@ jobs:
           push: true
           file: scripts/dockerfiles/axia_injected_release.Dockerfile
           tags: |
-            parity/axia:latest
-            parity/axia:${{ github.event.release.tag_name }}
+            axia/axia:latest
+            axia/axia:${{ github.event.release.tag_name }}
           build-args: |
             AXIA_VERSION=${{ github.event.release.tag_name }}
             VCS_REF=${{ github.ref }}

@@ -1,4 +1,4 @@
-// Copyright 2021 Parity Technologies (UK) Ltd.
+// Copyright 2021 Axia Technologies (UK) Ltd.
 // This file is part of Axia.
 
 // Axia is free software: you can redistribute it and/or modify
@@ -220,7 +220,7 @@ pub trait DisputesHandler<BlockNumber: Ord> {
 	) -> Result<(), ()> {
 		// TODO: Consider trade-of to avoid `O(n * log(n))` average lookups of `included_state`
 		// TODO: instead make a single pass and store the values lazily.
-		// TODO: https://github.com/paritytech/axia/issues/4527
+		// TODO: https://github.com/axiatech/axia/issues/4527
 		let n = statement_sets.len();
 
 		statement_sets.sort_by(dispute_ordering_compare::<Self, BlockNumber>);
@@ -865,7 +865,7 @@ impl<T: Config> Pallet<T> {
 				<Disputes<T>>::remove_prefix(to_prune, None);
 
 				// This is larger, and will be extracted to the `shared` pallet for more proper pruning.
-				// TODO: https://github.com/paritytech/axia/issues/3469
+				// TODO: https://github.com/axiatech/axia/issues/3469
 				<Included<T>>::remove_prefix(to_prune, None);
 				SpamSlots::<T>::remove(to_prune);
 			}

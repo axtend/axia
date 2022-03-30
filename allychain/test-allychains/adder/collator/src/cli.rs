@@ -1,4 +1,4 @@
-// Copyright 2017-2020 Parity Technologies (UK) Ltd.
+// Copyright 2017-2020 Axia Technologies (UK) Ltd.
 // This file is part of Axia.
 
 // Axia is free software: you can redistribute it and/or modify
@@ -17,7 +17,7 @@
 //! Axia CLI library.
 
 use clap::Parser;
-use sc_cli::{RuntimeVersion, AxlibCli};
+use sc_cli::{RuntimeVersion, SubstrateCli};
 
 /// Sub-commands supported by the collator.
 #[derive(Debug, Parser)]
@@ -61,9 +61,9 @@ pub struct Cli {
 	pub run: RunCmd,
 }
 
-impl AxlibCli for Cli {
+impl SubstrateCli for Cli {
 	fn impl_name() -> String {
-		"Parity Axia".into()
+		"Axia Axia".into()
 	}
 
 	fn impl_version() -> String {
@@ -79,7 +79,7 @@ impl AxlibCli for Cli {
 	}
 
 	fn support_url() -> String {
-		"https://github.com/paritytech/axia/issues/new".into()
+		"https://github.com/axiatech/axia/issues/new".into()
 	}
 
 	fn copyright_start_year() -> i32 {

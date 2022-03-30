@@ -1,4 +1,4 @@
-// Copyright 2021 Parity Technologies (UK) Ltd.
+// Copyright 2021 Axia Technologies (UK) Ltd.
 // This file is part of Axia.
 
 // Axia is free software: you can redistribute it and/or modify
@@ -49,7 +49,7 @@ pub(crate) fn impl_dispatch(info: &OverseerInfo) -> TokenStream {
 						extern_msg
 							// focuses on a `NetworkBridgeEvent< protocol_v1::* >`
 							// TODO do not require this to be hardcoded, either externalize or ...
-							// https://github.com/paritytech/axia/issues/3427
+							// https://github.com/axiatech/axia/issues/3427
 							.focus()
 							.ok()
 							.map(|event| {

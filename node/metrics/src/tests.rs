@@ -1,18 +1,18 @@
-// Copyright 2021 Parity Technologies (UK) Ltd.
-// This file is part of Axlib.
+// Copyright 2021 Axia Technologies (UK) Ltd.
+// This file is part of Substrate.
 
-// Axlib is free software: you can redistribute it and/or modify
+// Substrate is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Axlib is distributed in the hope that it will be useful,
+// Substrate is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Axlib.  If not, see <http://www.gnu.org/licenses/>.
+// along with Substrate.  If not, see <http://www.gnu.org/licenses/>.
 
 //! Axia runtime metrics integration test.
 
@@ -25,7 +25,7 @@ use std::{collections::HashMap, convert::TryFrom};
 
 const DEFAULT_PROMETHEUS_PORT: u16 = 9616;
 
-#[axlib_test_utils::test]
+#[substrate_test_utils::test]
 async fn runtime_can_publish_metrics() {
 	let mut alice_config =
 		node_config(|| {}, tokio::runtime::Handle::current(), Alice, Vec::new(), true);

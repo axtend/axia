@@ -10,7 +10,7 @@ jobs:
   get-rust-versions:
     runs-on: ubuntu-latest
     container:
-      image: paritytech/ci-linux:production
+      image: axiatech/ci-linux:production
     outputs:
       rustc-stable: ${{ steps.get-rust-versions.outputs.stable }}
       rustc-nightly: ${{ steps.get-rust-versions.outputs.nightly }}
@@ -43,7 +43,7 @@ jobs:
         uses: chevdor/srtool-actions@v0.3.0
         with:
           # This is the default with chevdor/srtool-actions@v0.3.0 but we make it clear
-          image: paritytech/srtool
+          image: axiatech/srtool
           chain: ${{ matrix.runtime }}
 
       - name: Store srtool digest to disk
@@ -188,4 +188,4 @@ jobs:
           room_id: ${{ secrets.INTERNAL_AXIA_MATRIX_ROOM_ID }}
           access_token: ${{ secrets.MATRIX_ACCESS_TOKEN }}
           message: "**New version of axia tagged**: ${{ github.ref }}<br/>Draft release created: ${{ needs.publish-draft-release.outputs.release_url }}"
-          server: "matrix.parity.io"
+          server: "matrix.axia.io"

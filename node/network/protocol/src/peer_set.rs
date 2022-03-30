@@ -1,4 +1,4 @@
-// Copyright 2021 Parity Technologies (UK) Ltd.
+// Copyright 2021 Axia Technologies (UK) Ltd.
 // This file is part of Axia.
 
 // Axia is free software: you can redistribute it and/or modify
@@ -96,7 +96,7 @@ impl PeerSet {
 		}
 	}
 
-	/// Convert a peer set into a protocol name as understood by Axlib.
+	/// Convert a peer set into a protocol name as understood by Substrate.
 	pub fn into_protocol_name(self) -> Cow<'static, str> {
 		self.get_protocol_name_static().into()
 	}

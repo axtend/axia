@@ -2,20 +2,20 @@
 ## Global Priority
 
 {%- set axia_prio = 0 -%}
-{%- set axlib_prio = 0 -%}
+{%- set substrate_prio = 0 -%}
 
 {# We fetch the various priorities #}
 {%- if axia.meta.C -%}
     {%- set axia_prio = axia.meta.C.max -%}
 {%- endif -%}
-{%- if axlib.meta.C -%}
-    {%- set axlib_prio = axlib.meta.C.max -%}
+{%- if substrate.meta.C -%}
+    {%- set substrate_prio = substrate.meta.C.max -%}
 {%- endif -%}
 
 {# We compute the global priority #}
 {%- set global_prio = axia_prio -%}
-{%- if axlib_prio > global_prio -%}
-    {%- set global_prio = axlib_prio -%}
+{%- if substrate_prio > global_prio -%}
+    {%- set global_prio = substrate_prio -%}
 {%- endif -%}
 
 {# We show the result #}
@@ -23,7 +23,7 @@
 
 <!--
 - Axia: {{ axia_prio }}
-- Axlib: {{ axlib_prio }}
+- Substrate: {{ substrate_prio }}
 -->
 
 {# todo: show high prio list here #}

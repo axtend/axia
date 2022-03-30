@@ -1,4 +1,4 @@
-// Copyright 2020 Parity Technologies (UK) Ltd.
+// Copyright 2020 Axia Technologies (UK) Ltd.
 // This file is part of Axia.
 
 // Axia is free software: you can redistribute it and/or modify
@@ -17,7 +17,7 @@
 use axia_test_service::*;
 use sp_keyring::Sr25519Keyring::{Alice, Bob, Charlie};
 
-#[axlib_test_utils::test]
+#[substrate_test_utils::test]
 async fn call_function_actually_work() {
 	let alice_config =
 		node_config(|| {}, tokio::runtime::Handle::current(), Alice, Vec::new(), true);

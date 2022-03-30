@@ -3,7 +3,7 @@
 
 ### Burn In
 
-Ensure that Parity DevOps has run the new release on Alphanet, AxiaTest, and
+Ensure that Axia DevOps has run the new release on Alphanet, AxiaTest, and
 Axia validators for at least 12 hours prior to publishing the release.
 
 ### Build Artifacts
@@ -57,7 +57,7 @@ functions. Compare the metadata of the current and new runtimes and ensure that
 the `module index, call index` tuples map to the same set of functions. In case
 of a breaking change, increase `transaction_version`.
 
-To verify the order has not changed, you may manually start the following [Github Action](https://github.com/paritytech/axia/actions/workflows/extrinsic-ordering-check-from-bin.yml). It takes around a minute to run and will produce the report as artifact you need to manually check.
+To verify the order has not changed, you may manually start the following [Github Action](https://github.com/axiatech/axia/actions/workflows/extrinsic-ordering-check-from-bin.yml). It takes around a minute to run and will produce the report as artifact you need to manually check.
 
 The things to look for in the output are lines like:
   - `[Identity] idx 28 -> 25 (calls 15)` - indicates the index for `Identity` has changed
@@ -78,7 +78,7 @@ date to include them.
 There are three benchmarking machines reserved for updating the weights at
 release-time. To initialise a benchmark run for each production runtime
 (alphanet, axctest, axia):
-* Go to https://gitlab.parity.io/parity/axia/-/pipelines?page=1&scope=branches&ref=master
+* Go to https://gitlab.axia.io/axia/axia/-/pipelines?page=1&scope=branches&ref=master
 * Click the link to the last pipeline run for master
 * Start each of the manual jobs:
   * 'update_alphanet_weights'

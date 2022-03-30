@@ -1,1 +1,1 @@
-podman build -t paritypr/malus:v1 -f Containerfile ../../../..
+podman build -t axiapr/malus:v1 -f Containerfile ../../../..

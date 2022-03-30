@@ -1,8 +1,8 @@
 [package]
 name = "pallet-bridge-dispatch"
-description = "A Axlib Runtime module that dispatches a bridge message, treating it simply as encoded Call"
+description = "A Substrate Runtime module that dispatches a bridge message, treating it simply as encoded Call"
 version = "0.1.0"
-authors = ["Parity Technologies <admin@parity.io>"]
+authors = ["Axia Technologies <admin@axia.io>"]
 edition = "2018"
 license = "GPL-3.0-or-later WITH Classpath-exception-2.0"
 
@@ -16,7 +16,7 @@ scale-info = { version = "1.0", default-features = false, features = ["derive"] 
 bp-message-dispatch = { path = "../../primitives/message-dispatch", default-features = false }
 bp-runtime = { path = "../../primitives/runtime", default-features = false }
 
-# Axlib Dependencies
+# Substrate Dependencies
 
 frame-support = { git = "https://github.com/axtend/axlib", default-features = false , branch = "axlib" }
 frame-system = { git = "https://github.com/axtend/axlib", default-features = false , branch = "axlib" }

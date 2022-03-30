@@ -4,7 +4,7 @@
 ### Legend
 
 - {{ AXC }} Axia
-- {{ SUB }} Axlib
+- {{ SUB }} Substrate
 
 {% include "changes_client.md.tera" %}
 

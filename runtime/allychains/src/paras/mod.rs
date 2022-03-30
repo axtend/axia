@@ -1,4 +1,4 @@
-// Copyright 2020 Parity Technologies (UK) Ltd.
+// Copyright 2020 Axia Technologies (UK) Ltd.
 // This file is part of Axia.
 
 // Axia is free software: you can redistribute it and/or modify
@@ -1554,7 +1554,7 @@ impl<T: Config> Pallet<T> {
 		//
 		// This is only an intermediate solution and should be fixed in foreseable future.
 		//
-		// [soaking issue]: https://github.com/paritytech/axia/issues/3918
+		// [soaking issue]: https://github.com/axiatech/axia/issues/3918
 		let validation_code =
 			mem::replace(&mut genesis_data.validation_code, ValidationCode(Vec::new()));
 		UpcomingParasGenesis::<T>::insert(&id, genesis_data);

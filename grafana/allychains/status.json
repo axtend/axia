@@ -1767,8 +1767,8 @@
       {
         "current": {
           "selected": false,
-          "text": "prometheus.parity-mgmt",
-          "value": "prometheus.parity-mgmt"
+          "text": "prometheus.axia-mgmt",
+          "value": "prometheus.axia-mgmt"
         },
         "hide": 0,
         "includeAll": false,

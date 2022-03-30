@@ -21,7 +21,7 @@ RUN export PATH="$PATH:$HOME/.cargo/bin" && \
     rustup default stable
 
 COPY axia/  /usr/src/axia-malus/axia/
-COPY axlib/  /usr/src/axia-malus/axlib/
+COPY substrate/  /usr/src/axia-malus/substrate/
 
 WORKDIR /usr/src/axia-malus/axia
 
@@ -76,7 +76,7 @@ WORKDIR /usr/src/axia-malus
 # it will be cached from the second build onwards
 RUN cargo install cargo-chef
 COPY axia/  /usr/src/axia-malus/axia/
-COPY axlib/  /usr/src/axia-malus/axlib/
+COPY substrate/  /usr/src/axia-malus/substrate/
 WORKDIR /usr/src/axia-malus/axia
 RUN cargo chef prepare  --recipe-path recipe.json
 
@@ -104,7 +104,7 @@ RUN cargo chef cook --release --recipe-path recipe.json
 FROM rust:1.54.0 as builder
 WORKDIR /usr/src/axia-malus
 COPY axia/  /usr/src/axia-malus/axia/
-COPY axlib/  /usr/src/axia-malus/axlib/
+COPY substrate/  /usr/src/axia-malus/substrate/
 # Copy over the cached dependencies
 WORKDIR /usr/src/axia-malus/axia
 COPY --from=cacher /usr/src/axia-malus/axia/target target

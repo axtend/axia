@@ -1,4 +1,4 @@
-// Copyright 2021 Parity Technologies (UK) Ltd.
+// Copyright 2021 Axia Technologies (UK) Ltd.
 // This file is part of Axia.
 
 // Axia is free software: you can redistribute it and/or modify
@@ -16,9 +16,9 @@
 
 //! Runtime Metrics helpers.
 //!
-//! A runtime metric provider implementation that builds on top of Axlib wasm
+//! A runtime metric provider implementation that builds on top of Substrate wasm
 //! tracing support. This requires that the custom profiler (`TraceHandler`) to be
-//! registered in axlib via a `logger_hook()`. Events emitted from runtime are
+//! registered in substrate via a `logger_hook()`. Events emitted from runtime are
 //! then captured/processed by the `TraceHandler` implementation.
 
 #![cfg(feature = "runtime-metrics")]
@@ -32,7 +32,7 @@ use std::{
 	collections::hash_map::HashMap,
 	sync::{Arc, Mutex, MutexGuard},
 };
-use axlib_prometheus_endpoint::{
+use substrate_prometheus_endpoint::{
 	register, Counter, CounterVec, Opts, PrometheusError, Registry, U64,
 };
 mod allychain;

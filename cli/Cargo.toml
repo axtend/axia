@@ -1,7 +1,7 @@
 [package]
 name = "axia-cli"
 version = "0.9.17"
-authors = ["Parity Technologies <admin@parity.io>"]
+authors = ["Axia Technologies <admin@axia.io>"]
 description = "Axia Relay-chain Client Node"
 edition = "2018"
 
@@ -32,11 +32,11 @@ axia-node-metrics = { path = "../node/metrics" }
 sc-tracing = { git = "https://github.com/axtend/axlib", optional = true , branch = "axlib" }
 
 # this crate is used only to enable `trie-memory-tracker` feature
-# see https://github.com/paritytech/axlib/pull/6745
+# see https://github.com/axiatech/substrate/pull/6745
 sp-trie = { git = "https://github.com/axtend/axlib", default-features = false , branch = "axlib" }
 
 [build-dependencies]
-axlib-build-script-utils = { git = "https://github.com/axtend/axlib", branch = "axlib" }
+substrate-build-script-utils = { git = "https://github.com/axtend/axlib", branch = "axlib" }
 
 [features]
 default = ["wasmtime", "db", "cli", "full-node", "trie-memory-tracker", "axia-native"]

@@ -1,26 +1,26 @@
-// Copyright 2019-2021 Parity Technologies (UK) Ltd.
-// This file is part of Parity Bridges Common.
+// Copyright 2019-2021 Axia Technologies (UK) Ltd.
+// This file is part of Axia Bridges Common.
 
-// Parity Bridges Common is free software: you can redistribute it and/or modify
+// Axia Bridges Common is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Parity Bridges Common is distributed in the hope that it will be useful,
+// Axia Bridges Common is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Parity Bridges Common.  If not, see <http://www.gnu.org/licenses/>.
+// along with Axia Bridges Common.  If not, see <http://www.gnu.org/licenses/>.
 
-//! Service and ServiceFactory implementation. Specialized wrapper over axlib service.
+//! Service and ServiceFactory implementation. Specialized wrapper over substrate service.
 
 // =====================================================================================
 // =====================================================================================
 // =====================================================================================
 // UPDATE GUIDE:
-// 1) replace everything with node-template/src/service.rs contents (found in main Axlib repo);
+// 1) replace everything with node-template/src/service.rs contents (found in main Substrate repo);
 // 2) from old code keep `rpc_extensions_builder` - we use our own custom RPCs;
 // 3) from old code keep the Beefy gadget;
 // 4) fix compilation errors;
@@ -48,7 +48,7 @@ impl sc_executor::NativeExecutionDispatch for ExecutorDispatch {
 	/// Only enable the benchmarking host functions when we actually want to benchmark.
 	#[cfg(feature = "runtime-benchmarks")]
 	type ExtendHostFunctions = frame_benchmarking::benchmarking::HostFunctions;
-	/// Otherwise we only use the default Axlib host functions.
+	/// Otherwise we only use the default Substrate host functions.
 	#[cfg(not(feature = "runtime-benchmarks"))]
 	type ExtendHostFunctions = ();
 
@@ -254,7 +254,7 @@ pub fn new_full(mut config: Configuration) -> Result<TaskManager, ServiceError> 
 		use pallet_transaction_payment_rpc::{TransactionPayment, TransactionPaymentApi};
 		use sc_finality_grandpa_rpc::{GrandpaApi, GrandpaRpcHandler};
 		use sc_rpc::DenyUnsafe;
-		use axlib_frame_rpc_system::{FullSystem, SystemApi};
+		use substrate_frame_rpc_system::{FullSystem, SystemApi};
 
 		let backend = backend.clone();
 		let client = client.clone();

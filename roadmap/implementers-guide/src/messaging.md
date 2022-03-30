@@ -94,7 +94,7 @@ Since not all messages are required to be processed by the receiver's candidate,
 messages are supplied (i.e. preimages), rest are provided as hashes.
 
 Further details can be found at the official repository for the
-[Cross-Consensus Message Format (XCM)](https://github.com/paritytech/xcm-format/blob/master/README.md), as well as
+[Cross-Consensus Message Format (XCM)](https://github.com/axiatech/xcm-format/blob/master/README.md), as well as
 at the [W3F research website](https://research.web3.foundation/en/latest/axia/XCMP.html) and
 [this blogpost](https://medium.com/web3foundation/axias-messaging-scheme-b1ec560908b7).
 

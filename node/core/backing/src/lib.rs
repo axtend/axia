@@ -1,4 +1,4 @@
-// Copyright 2020-2021 Parity Technologies (UK) Ltd.
+// Copyright 2020-2021 Axia Technologies (UK) Ltd.
 // This file is part of Axia.
 
 // Axia is free software: you can redistribute it and/or modify
@@ -192,12 +192,12 @@ struct AttestingData {
 
 /// How many votes we need to consider a candidate backed.
 fn minimum_votes(n_validators: usize) -> usize {
-	// Runtime change going live, see: https://github.com/paritytech/axia/pull/4437
+	// Runtime change going live, see: https://github.com/axiatech/axia/pull/4437
 	let old_runtime_value = n_validators / 2 + 1;
 	let new_runtime_value = std::cmp::min(2, n_validators);
 
 	// Until new runtime is live everywhere and we don't yet have
-	// https://github.com/paritytech/axia/issues/4576, we want to err on the higher value for
+	// https://github.com/axiatech/axia/issues/4576, we want to err on the higher value for
 	// secured block production:
 	std::cmp::max(old_runtime_value, new_runtime_value)
 }

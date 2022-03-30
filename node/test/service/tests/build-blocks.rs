@@ -1,4 +1,4 @@
-// Copyright 2020 Parity Technologies (UK) Ltd.
+// Copyright 2020 Axia Technologies (UK) Ltd.
 // This file is part of Axia.
 
 // Axia is free software: you can redistribute it and/or modify
@@ -18,7 +18,7 @@ use futures::{future, pin_mut, select, FutureExt};
 use axia_test_service::*;
 use sp_keyring::Sr25519Keyring;
 
-#[axlib_test_utils::test]
+#[substrate_test_utils::test]
 async fn ensure_test_service_build_blocks() {
 	let mut builder = sc_cli::LoggerBuilder::new("");
 	builder.with_colors(false);

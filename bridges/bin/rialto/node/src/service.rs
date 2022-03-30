@@ -1,18 +1,18 @@
-// Copyright 2019-2021 Parity Technologies (UK) Ltd.
-// This file is part of Parity Bridges Common.
+// Copyright 2019-2021 Axia Technologies (UK) Ltd.
+// This file is part of Axia Bridges Common.
 
-// Parity Bridges Common is free software: you can redistribute it and/or modify
+// Axia Bridges Common is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Parity Bridges Common is distributed in the hope that it will be useful,
+// Axia Bridges Common is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Parity Bridges Common.  If not, see <http://www.gnu.org/licenses/>.
+// along with Axia Bridges Common.  If not, see <http://www.gnu.org/licenses/>.
 
 //! Rialto chain node service.
 //!
@@ -40,7 +40,7 @@ use sp_api::{ConstructRuntimeApi, HeaderT};
 use sp_consensus::SelectChain;
 use sp_runtime::traits::Block as BlockT;
 use std::{sync::Arc, time::Duration};
-use axlib_prometheus_endpoint::Registry;
+use substrate_prometheus_endpoint::Registry;
 
 pub use axia_overseer::Handle;
 pub use axia_primitives::v1::AllychainHost;
@@ -90,7 +90,7 @@ pub enum Error {
 	Overseer(#[from] axia_overseer::SubsystemError),
 
 	#[error(transparent)]
-	Prometheus(#[from] axlib_prometheus_endpoint::PrometheusError),
+	Prometheus(#[from] substrate_prometheus_endpoint::PrometheusError),
 
 	#[error("Authorities require the real overseer implementation")]
 	AuthoritiesRequireRealOverseer,
@@ -257,7 +257,7 @@ where
 		      -> Result<jsonrpc_core::IoHandler<sc_service::RpcMetadata>, sc_service::Error> {
 			use pallet_transaction_payment_rpc::{TransactionPayment, TransactionPaymentApi};
 			use sc_finality_grandpa_rpc::{GrandpaApi, GrandpaRpcHandler};
-			use axlib_frame_rpc_system::{FullSystem, SystemApi};
+			use substrate_frame_rpc_system::{FullSystem, SystemApi};
 
 			let backend = backend.clone();
 			let client = client.clone();
@@ -408,7 +408,7 @@ where
 
 	// Note: GrandPa is pushed before the Axia-specific protocols. This doesn't change
 	// anything in terms of behaviour, but makes the logs more consistent with the other
-	// Axlib nodes.
+	// Substrate nodes.
 	config.network.extra_sets.push(sc_finality_grandpa::grandpa_peers_set_config());
 
 	config.network.extra_sets.push(beefy_gadget::beefy_peers_set_config());
@@ -704,7 +704,7 @@ where
 	);
 
 	let config = sc_finality_grandpa::Config {
-		// FIXME axlib#1578 make this available through chainspec
+		// FIXME substrate#1578 make this available through chainspec
 		gossip_duration: Duration::from_millis(1000),
 		justification_period: 512,
 		name: Some(name),
@@ -717,7 +717,7 @@ where
 	let enable_grandpa = !disable_grandpa;
 	if enable_grandpa {
 		// start the full GRANDPA voter
-		// NOTE: unlike in axlib we are currently running the full
+		// NOTE: unlike in substrate we are currently running the full
 		// GRANDPA voter protocol for all full nodes (regardless of whether
 		// they're validators or not). at this point the full voter should
 		// provide better guarantees of block and vote data availability than

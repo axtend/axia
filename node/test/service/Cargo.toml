@@ -1,7 +1,7 @@
 [package]
 name = "axia-test-service"
 version = "0.9.17"
-authors = ["Parity Technologies <admin@parity.io>"]
+authors = ["Axia Technologies <admin@axia.io>"]
 edition = "2018"
 
 [dependencies]
@@ -26,7 +26,7 @@ axia-test-runtime = { path = "../../../runtime/test-runtime" }
 test-runtime-constants = { path = "../../../runtime/test-runtime/constants" }
 axia-runtime-allychains = { path = "../../../runtime/allychains" }
 
-# Axlib dependencies
+# Substrate dependencies
 sp-authority-discovery = { git = "https://github.com/axtend/axlib", branch = "axlib" }
 sc-authority-discovery = { git = "https://github.com/axtend/axlib", branch = "axlib" }
 babe = { package = "sc-consensus-babe", git = "https://github.com/axtend/axlib", branch = "axlib" }
@@ -55,12 +55,12 @@ sp-core = { git = "https://github.com/axtend/axlib", branch = "axlib" }
 sp-keyring = { git = "https://github.com/axtend/axlib", branch = "axlib" }
 sp-runtime = { git = "https://github.com/axtend/axlib", branch = "axlib" }
 sp-state-machine = { git = "https://github.com/axtend/axlib", branch = "axlib" }
-axlib-test-client = { git = "https://github.com/axtend/axlib", branch = "axlib" }
+substrate-test-client = { git = "https://github.com/axtend/axlib", branch = "axlib" }
 
 [dev-dependencies]
 pallet-balances = { git = "https://github.com/axtend/axlib", default-features = false , branch = "axlib" }
 serde_json = "1.0.78"
-axlib-test-utils = { git = "https://github.com/axtend/axlib", branch = "axlib" }
+substrate-test-utils = { git = "https://github.com/axtend/axlib", branch = "axlib" }
 tokio = { version = "1.15", features = ["macros"] }
 
 [features]

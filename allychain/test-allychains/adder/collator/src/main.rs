@@ -1,4 +1,4 @@
-// Copyright 2020 Parity Technologies (UK) Ltd.
+// Copyright 2020 Axia Technologies (UK) Ltd.
 // This file is part of Axia.
 
 // Axia is free software: you can redistribute it and/or modify
@@ -20,7 +20,7 @@ use axia_cli::{Error, Result};
 use axia_node_primitives::CollationGenerationConfig;
 use axia_node_subsystem::messages::{CollationGenerationMessage, CollatorProtocolMessage};
 use axia_primitives::v1::Id as ParaId;
-use sc_cli::{Error as AxlibCliError, Role, AxlibCli};
+use sc_cli::{Error as SubstrateCliError, Role, SubstrateCli};
 use sp_core::hexdisplay::HexDisplay;
 use test_allychain_adder_collator::Collator;
 
@@ -48,7 +48,7 @@ fn main() -> Result<()> {
 		},
 		None => {
 			let runner = cli.create_runner(&cli.run.base).map_err(|e| {
-				AxlibCliError::Application(
+				SubstrateCliError::Application(
 					Box::new(e) as Box<(dyn 'static + Send + Sync + std::error::Error)>
 				)
 			})?;

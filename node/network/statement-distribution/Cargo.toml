@@ -1,7 +1,7 @@
 [package]
 name = "axia-statement-distribution"
 version = "0.9.17"
-authors = ["Parity Technologies <admin@parity.io>"]
+authors = ["Axia Technologies <admin@axia.io>"]
 description = "Statement Distribution Subsystem"
 edition = "2018"
 

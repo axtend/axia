@@ -1,4 +1,4 @@
-// Copyright 2021 Parity Technologies (UK) Ltd.
+// Copyright 2021 Axia Technologies (UK) Ltd.
 // This file is part of Axia.
 
 // Axia is free software: you can redistribute it and/or modify
@@ -237,7 +237,7 @@ impl Protocol {
 		}
 	}
 
-	/// Get the protocol name of this protocol, as understood by axlib networking.
+	/// Get the protocol name of this protocol, as understood by substrate networking.
 	pub fn into_protocol_name(self) -> Cow<'static, str> {
 		self.get_protocol_name_static().into()
 	}

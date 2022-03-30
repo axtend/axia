@@ -1,4 +1,4 @@
-// Copyright 2020 Parity Technologies (UK) Ltd.
+// Copyright 2020 Axia Technologies (UK) Ltd.
 // This file is part of Axia.
 
 // Axia is free software: you can redistribute it and/or modify
@@ -613,7 +613,7 @@ impl State {
 				AssignmentCheckResult::AcceptedDuplicate => {
 					// "duplicate" assignments aren't necessarily equal.
 					// There is more than one way each validator can be assigned to each core.
-					// cf. https://github.com/paritytech/axia/pull/2160#discussion_r557628699
+					// cf. https://github.com/axiatech/axia/pull/2160#discussion_r557628699
 					if let Some(peer_knowledge) = entry.known_by.get_mut(&peer_id) {
 						peer_knowledge.received.insert(fingerprint);
 					}

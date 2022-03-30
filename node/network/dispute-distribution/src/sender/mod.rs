@@ -1,4 +1,4 @@
-// Copyright 2021 Parity Technologies (UK) Ltd.
+// Copyright 2021 Axia Technologies (UK) Ltd.
 // This file is part of Axia.
 
 // Axia is free software: you can redistribute it and/or modify
@@ -194,7 +194,7 @@ impl DisputeSender {
 		// storage. We will iterate `active_sessions` to find a suitable head. We assume that there is at
 		// least one active head which, by `session_index`, is at least as recent as the `dispute` passed in.
 		// We need to avoid picking an older one from a session that might not yet exist in storage.
-		// Related to <https://github.com/paritytech/axia/issues/4730> .
+		// Related to <https://github.com/axiatech/axia/issues/4730> .
 		let ref_head = self
 			.active_sessions
 			.iter()

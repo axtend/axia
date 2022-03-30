@@ -1,4 +1,4 @@
-// Copyright 2020 Parity Technologies (UK) Ltd.
+// Copyright 2020 Axia Technologies (UK) Ltd.
 // This file is part of Axia.
 
 // Axia is free software: you can redistribute it and/or modify
@@ -98,7 +98,7 @@ include!(concat!(env!("OUT_DIR"), "/wasm_binary.rs"));
 /// Runtime version (Betanet).
 pub const VERSION: RuntimeVersion = RuntimeVersion {
 	spec_name: create_runtime_str!("betanet"),
-	impl_name: create_runtime_str!("parity-betanet-v2.0"),
+	impl_name: create_runtime_str!("axia-betanet-v2.0"),
 	authoring_version: 0,
 	spec_version: 9140,
 	impl_version: 0,

@@ -1,48 +1,48 @@
-// Copyright 2019-2021 Parity Technologies (UK) Ltd.
-// This file is part of Parity Bridges Common.
+// Copyright 2019-2021 Axia Technologies (UK) Ltd.
+// This file is part of Axia Bridges Common.
 
-// Parity Bridges Common is free software: you can redistribute it and/or modify
+// Axia Bridges Common is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Parity Bridges Common is distributed in the hope that it will be useful,
+// Axia Bridges Common is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Parity Bridges Common.  If not, see <http://www.gnu.org/licenses/>.
+// along with Axia Bridges Common.  If not, see <http://www.gnu.org/licenses/>.
 
-//! Axlib client as Axlib finality proof target. The chain we connect to should have
+//! Substrate client as Substrate finality proof target. The chain we connect to should have
 //! runtime that implements `<BridgedChainName>FinalityApi` to allow bridging with
 //! <BridgedName> chain.
 
-use crate::finality_pipeline::AxlibFinalitySyncPipeline;
+use crate::finality_pipeline::SubstrateFinalitySyncPipeline;
 
 use async_trait::async_trait;
 use codec::Decode;
 use finality_relay::{FinalitySyncPipeline, TargetClient};
-use relay_axlib_client::{Chain, Client, Error as AxlibError};
+use relay_substrate_client::{Chain, Client, Error as SubstrateError};
 use relay_utils::relay_loop::Client as RelayClient;
 
-/// Axlib client as Axlib finality target.
-pub struct AxlibFinalityTarget<C: Chain, P> {
+/// Substrate client as Substrate finality target.
+pub struct SubstrateFinalityTarget<C: Chain, P> {
 	client: Client<C>,
 	pipeline: P,
 	transactions_mortality: Option<u32>,
 }
 
-impl<C: Chain, P> AxlibFinalityTarget<C, P> {
-	/// Create new Axlib headers target.
+impl<C: Chain, P> SubstrateFinalityTarget<C, P> {
+	/// Create new Substrate headers target.
 	pub fn new(client: Client<C>, pipeline: P, transactions_mortality: Option<u32>) -> Self {
-		AxlibFinalityTarget { client, pipeline, transactions_mortality }
+		SubstrateFinalityTarget { client, pipeline, transactions_mortality }
 	}
 }
 
-impl<C: Chain, P: AxlibFinalitySyncPipeline> Clone for AxlibFinalityTarget<C, P> {
+impl<C: Chain, P: SubstrateFinalitySyncPipeline> Clone for SubstrateFinalityTarget<C, P> {
 	fn clone(&self) -> Self {
-		AxlibFinalityTarget {
+		SubstrateFinalityTarget {
 			client: self.client.clone(),
 			pipeline: self.pipeline.clone(),
 			transactions_mortality: self.transactions_mortality,
@@ -51,25 +51,25 @@ impl<C: Chain, P: AxlibFinalitySyncPipeline> Clone for AxlibFinalityTarget<C, P>
 }
 
 #[async_trait]
-impl<C: Chain, P: AxlibFinalitySyncPipeline> RelayClient for AxlibFinalityTarget<C, P> {
-	type Error = AxlibError;
+impl<C: Chain, P: SubstrateFinalitySyncPipeline> RelayClient for SubstrateFinalityTarget<C, P> {
+	type Error = SubstrateError;
 
-	async fn reconnect(&mut self) -> Result<(), AxlibError> {
+	async fn reconnect(&mut self) -> Result<(), SubstrateError> {
 		self.client.reconnect().await
 	}
 }
 
 #[async_trait]
-impl<C, P> TargetClient<P::FinalitySyncPipeline> for AxlibFinalityTarget<C, P>
+impl<C, P> TargetClient<P::FinalitySyncPipeline> for SubstrateFinalityTarget<C, P>
 where
 	C: Chain,
-	P: AxlibFinalitySyncPipeline<TargetChain = C>,
+	P: SubstrateFinalitySyncPipeline<TargetChain = C>,
 	<P::FinalitySyncPipeline as FinalitySyncPipeline>::Number: Decode,
 	<P::FinalitySyncPipeline as FinalitySyncPipeline>::Hash: Decode,
 {
 	async fn best_finalized_source_block_number(
 		&self,
-	) -> Result<<P::FinalitySyncPipeline as FinalitySyncPipeline>::Number, AxlibError> {
+	) -> Result<<P::FinalitySyncPipeline as FinalitySyncPipeline>::Number, SubstrateError> {
 		// we can't continue to relay finality if target node is out of sync, because
 		// it may have already received (some of) headers that we're going to relay
 		self.client.ensure_synced().await?;
@@ -88,7 +88,7 @@ where
 		&self,
 		header: <P::FinalitySyncPipeline as FinalitySyncPipeline>::Header,
 		proof: <P::FinalitySyncPipeline as FinalitySyncPipeline>::FinalityProof,
-	) -> Result<(), AxlibError> {
+	) -> Result<(), SubstrateError> {
 		let transactions_author = self.pipeline.transactions_author();
 		let pipeline = self.pipeline.clone();
 		let transactions_mortality = self.transactions_mortality;
@@ -97,7 +97,7 @@ where
 				transactions_author,
 				move |best_block_id, transaction_nonce| {
 					pipeline.make_submit_finality_proof_transaction(
-						relay_axlib_client::TransactionEra::new(
+						relay_substrate_client::TransactionEra::new(
 							best_block_id,
 							transactions_mortality,
 						),

@@ -1,20 +1,20 @@
-// Copyright 2019-2021 Parity Technologies (UK) Ltd.
-// This file is part of Parity Bridges Common.
+// Copyright 2019-2021 Axia Technologies (UK) Ltd.
+// This file is part of Axia Bridges Common.
 
-// Parity Bridges Common is free software: you can redistribute it and/or modify
+// Axia Bridges Common is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Parity Bridges Common is distributed in the hope that it will be useful,
+// Axia Bridges Common is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Parity Bridges Common.  If not, see <http://www.gnu.org/licenses/>.
+// along with Axia Bridges Common.  If not, see <http://www.gnu.org/licenses/>.
 
-//! The most generic Axlib node RPC interface.
+//! The most generic Substrate node RPC interface.
 
 use crate::chain::Chain;
 
@@ -28,7 +28,7 @@ use sp_rpc::number::NumberOrHex;
 use sp_version::RuntimeVersion;
 
 jsonrpsee_proc_macros::rpc_client_api! {
-	pub(crate) Axlib<C: Chain> {
+	pub(crate) Substrate<C: Chain> {
 		#[rpc(method = "system_health", positional_params)]
 		fn system_health() -> Health;
 		#[rpc(method = "chain_getHeader", positional_params)]

@@ -1,4 +1,4 @@
-// Copyright 2020-2021 Parity Technologies (UK) Ltd.
+// Copyright 2020-2021 Axia Technologies (UK) Ltd.
 // This file is part of Axia.
 
 // Axia is free software: you can redistribute it and/or modify
@@ -32,7 +32,7 @@ use scale_info::TypeInfo;
 /// - A layer-0 super-chain, e.g. the Axia Relay chain.
 /// - A layer-2 smart contract, e.g. an ERC-20 on Ethereum.
 /// - A logical functional component of a chain, e.g. a single instance of a pallet on a Frame-based
-///   Axlib chain.
+///   Substrate chain.
 /// - An account.
 ///
 /// A `MultiLocation` is a *relative identifier*, meaning that it can only be used to define the
@@ -329,7 +329,7 @@ impl MultiLocation {
 	///
 	/// Does not modify `self` in case of overflow.
 	pub fn reanchor(&mut self, target: &MultiLocation, ancestry: &MultiLocation) -> Result<(), ()> {
-		// TODO: https://github.com/paritytech/axia/issues/4489 Optimize this.
+		// TODO: https://github.com/axiatech/axia/issues/4489 Optimize this.
 
 		// 1. Use our `ancestry` to figure out how the `target` would address us.
 		let inverted_target = ancestry.inverted(target)?;

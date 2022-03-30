@@ -1,12 +1,12 @@
 [package]
 name = "rialto-bridge-node"
-description = "Axlib node compatible with Rialto runtime"
+description = "Substrate node compatible with Rialto runtime"
 version = "0.1.0"
-authors = ["Parity Technologies <admin@parity.io>"]
+authors = ["Axia Technologies <admin@axia.io>"]
 edition = "2018"
 build = "build.rs"
-homepage = "https://axlib.dev"
-repository = "https://github.com/paritytech/parity-bridges-common/"
+homepage = "https://substrate.dev"
+repository = "https://github.com/axiatech/axia-bridges-common/"
 license = "GPL-3.0-or-later WITH Classpath-exception-2.0"
 
 [dependencies]
@@ -26,7 +26,7 @@ bp-rialto = { path = "../../../primitives/chain-rialto" }
 pallet-bridge-messages = { path = "../../../modules/messages" }
 rialto-runtime = { path = "../runtime" }
 
-# Axlib Dependencies
+# Substrate Dependencies
 
 beefy-gadget = { git = "https://github.com/axtend/axlib", branch = "axlib" }
 beefy-gadget-rpc = { git = "https://github.com/axtend/axlib", branch = "axlib" }
@@ -72,45 +72,45 @@ sp-session = { git = "https://github.com/axtend/axlib", branch = "axlib" }
 sp-transaction-pool = { git = "https://github.com/axtend/axlib", branch = "axlib" }
 sp-runtime = { git = "https://github.com/axtend/axlib", branch = "axlib" }
 sp-timestamp = { git = "https://github.com/axtend/axlib", branch = "axlib" }
-axlib-frame-rpc-system = { git = "https://github.com/axtend/axlib", branch = "axlib" }
-axlib-prometheus-endpoint = { git = "https://github.com/axtend/axlib", branch = "axlib" }
+substrate-frame-rpc-system = { git = "https://github.com/axtend/axlib", branch = "axlib" }
+substrate-prometheus-endpoint = { git = "https://github.com/axtend/axlib", branch = "axlib" }
 
 # Axia Dependencies
 
-axia-client = { git = "https://github.com/paritytech/axia", branch = "master" }
+axia-client = { git = "https://github.com/axiatech/axia", branch = "master" }
 
 # Axia (allychain) Dependencies
 
-axia-approval-distribution = { git = "https://github.com/paritytech/axia", branch = "master" }
-axia-availability-bitfield-distribution = { git = "https://github.com/paritytech/axia", branch = "master" }
-axia-availability-distribution = { git = "https://github.com/paritytech/axia", branch = "master" }
-axia-availability-recovery = { git = "https://github.com/paritytech/axia", branch = "master" }
-axia-collator-protocol = { git = "https://github.com/paritytech/axia", branch = "master" }
-axia-dispute-distribution = { git = "https://github.com/paritytech/axia", branch = "master" }
-axia-gossip-support = { git = "https://github.com/paritytech/axia", branch = "master" }
-axia-network-bridge = { git = "https://github.com/paritytech/axia", branch = "master" }
-axia-node-collation-generation = { git = "https://github.com/paritytech/axia", branch = "master" }
-axia-node-core-approval-voting = { git = "https://github.com/paritytech/axia", branch = "master" }
-axia-node-core-av-store = { git = "https://github.com/paritytech/axia", branch = "master" }
-axia-node-core-backing = { git = "https://github.com/paritytech/axia", branch = "master" }
-axia-node-core-bitfield-signing = { git = "https://github.com/paritytech/axia", branch = "master" }
-axia-node-core-candidate-validation = { git = "https://github.com/paritytech/axia", branch = "master" }
-axia-node-core-chain-api = { git = "https://github.com/paritytech/axia", branch = "master" }
-axia-node-core-chain-selection = { git = "https://github.com/paritytech/axia", branch = "master" }
-axia-node-core-allychains-inherent = { git = "https://github.com/paritytech/axia", branch = "master" }
-axia-node-core-provisioner = { git = "https://github.com/paritytech/axia", branch = "master" }
-axia-node-core-pvf = { git = "https://github.com/paritytech/axia", branch = "master" }
-axia-node-core-runtime-api = { git = "https://github.com/paritytech/axia", branch = "master" }
-axia-node-core-dispute-coordinator = { git = "https://github.com/paritytech/axia", branch = "master" }
-axia-node-network-protocol = { git = "https://github.com/paritytech/axia", branch = "master" }
-axia-node-subsystem-util = { git = "https://github.com/paritytech/axia", branch = "master" }
-axia-overseer = { git = "https://github.com/paritytech/axia", branch = "master" }
-axia-primitives = { git = "https://github.com/paritytech/axia", branch = "master" }
-axia-runtime-allychains = { git = "https://github.com/paritytech/axia", branch = "master" }
-axia-statement-distribution = { git = "https://github.com/paritytech/axia", branch = "master" }
+axia-approval-distribution = { git = "https://github.com/axiatech/axia", branch = "master" }
+axia-availability-bitfield-distribution = { git = "https://github.com/axiatech/axia", branch = "master" }
+axia-availability-distribution = { git = "https://github.com/axiatech/axia", branch = "master" }
+axia-availability-recovery = { git = "https://github.com/axiatech/axia", branch = "master" }
+axia-collator-protocol = { git = "https://github.com/axiatech/axia", branch = "master" }
+axia-dispute-distribution = { git = "https://github.com/axiatech/axia", branch = "master" }
+axia-gossip-support = { git = "https://github.com/axiatech/axia", branch = "master" }
+axia-network-bridge = { git = "https://github.com/axiatech/axia", branch = "master" }
+axia-node-collation-generation = { git = "https://github.com/axiatech/axia", branch = "master" }
+axia-node-core-approval-voting = { git = "https://github.com/axiatech/axia", branch = "master" }
+axia-node-core-av-store = { git = "https://github.com/axiatech/axia", branch = "master" }
+axia-node-core-backing = { git = "https://github.com/axiatech/axia", branch = "master" }
+axia-node-core-bitfield-signing = { git = "https://github.com/axiatech/axia", branch = "master" }
+axia-node-core-candidate-validation = { git = "https://github.com/axiatech/axia", branch = "master" }
+axia-node-core-chain-api = { git = "https://github.com/axiatech/axia", branch = "master" }
+axia-node-core-chain-selection = { git = "https://github.com/axiatech/axia", branch = "master" }
+axia-node-core-allychains-inherent = { git = "https://github.com/axiatech/axia", branch = "master" }
+axia-node-core-provisioner = { git = "https://github.com/axiatech/axia", branch = "master" }
+axia-node-core-pvf = { git = "https://github.com/axiatech/axia", branch = "master" }
+axia-node-core-runtime-api = { git = "https://github.com/axiatech/axia", branch = "master" }
+axia-node-core-dispute-coordinator = { git = "https://github.com/axiatech/axia", branch = "master" }
+axia-node-network-protocol = { git = "https://github.com/axiatech/axia", branch = "master" }
+axia-node-subsystem-util = { git = "https://github.com/axiatech/axia", branch = "master" }
+axia-overseer = { git = "https://github.com/axiatech/axia", branch = "master" }
+axia-primitives = { git = "https://github.com/axiatech/axia", branch = "master" }
+axia-runtime-allychains = { git = "https://github.com/axiatech/axia", branch = "master" }
+axia-statement-distribution = { git = "https://github.com/axiatech/axia", branch = "master" }
 
 [build-dependencies]
-axlib-build-script-utils = { git = "https://github.com/axtend/axlib", branch = "axlib" }
+substrate-build-script-utils = { git = "https://github.com/axtend/axlib", branch = "axlib" }
 frame-benchmarking-cli = { git = "https://github.com/axtend/axlib", branch = "axlib" }
 
 [features]

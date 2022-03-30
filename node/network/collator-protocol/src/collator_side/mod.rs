@@ -1,4 +1,4 @@
-// Copyright 2020 Parity Technologies (UK) Ltd.
+// Copyright 2020 Axia Technologies (UK) Ltd.
 // This file is part of Axia.
 
 // Axia is free software: you can redistribute it and/or modify
@@ -66,7 +66,7 @@ const COST_APPARENT_FLOOD: Rep =
 ///
 /// This is to protect from a single slow validator preventing collations from happening.
 ///
-/// For considerations on this value, see: https://github.com/paritytech/axia/issues/4386
+/// For considerations on this value, see: https://github.com/axiatech/axia/issues/4386
 const MAX_UNSHARED_UPLOAD_TIME: Duration = Duration::from_millis(150);
 
 #[derive(Clone, Default)]

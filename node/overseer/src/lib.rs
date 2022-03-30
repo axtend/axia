@@ -1,4 +1,4 @@
-// Copyright 2020 Parity Technologies (UK) Ltd.
+// Copyright 2020 Axia Technologies (UK) Ltd.
 // This file is part of Axia.
 
 // Axia is free software: you can redistribute it and/or modify
@@ -236,7 +236,7 @@ impl From<FinalityNotification<Block>> for BlockInfo {
 }
 
 /// An event from outside the overseer scope, such
-/// as the axlib framework or user interaction.
+/// as the substrate framework or user interaction.
 pub enum Event {
 	/// A new block was imported.
 	BlockImported(BlockInfo),

@@ -1,26 +1,26 @@
-// Copyright 2019-2021 Parity Technologies (UK) Ltd.
-// This file is part of Parity Bridges Common.
+// Copyright 2019-2021 Axia Technologies (UK) Ltd.
+// This file is part of Axia Bridges Common.
 
-// Parity Bridges Common is free software: you can redistribute it and/or modify
+// Axia Bridges Common is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Parity Bridges Common is distributed in the hope that it will be useful,
+// Axia Bridges Common is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Parity Bridges Common.  If not, see <http://www.gnu.org/licenses/>.
+// along with Axia Bridges Common.  If not, see <http://www.gnu.org/licenses/>.
 
-//! Axlib client as Axlib messages target. The chain we connect to should have
+//! Substrate client as Substrate messages target. The chain we connect to should have
 //! runtime that implements `<BridgedChainName>HeaderApi` to allow bridging with
 //! <BridgedName> chain.
 
 use crate::{
-	messages_lane::{StandaloneMessagesMetrics, AxlibMessageLane},
-	messages_source::{read_client_state, AxlibMessagesProof},
+	messages_lane::{StandaloneMessagesMetrics, SubstrateMessageLane},
+	messages_source::{read_client_state, SubstrateMessagesProof},
 	on_demand_headers::OnDemandHeadersRelay,
 };
 
@@ -37,8 +37,8 @@ use messages_relay::{
 	message_lane_loop::{TargetClient, TargetClientState},
 };
 use num_traits::{Bounded, Zero};
-use relay_axlib_client::{
-	BalanceOf, BlockNumberOf, Chain, Client, Error as AxlibError, HashOf, HeaderOf, IndexOf,
+use relay_substrate_client::{
+	BalanceOf, BlockNumberOf, Chain, Client, Error as SubstrateError, HashOf, HeaderOf, IndexOf,
 	WeightToFeeOf,
 };
 use relay_utils::{relay_loop::Client as RelayClient, BlockNumberBase, HeaderId};
@@ -46,12 +46,12 @@ use sp_core::Bytes;
 use sp_runtime::{traits::Saturating, DeserializeOwned, FixedPointNumber, FixedU128};
 use std::{convert::TryFrom, ops::RangeInclusive};
 
-/// Message receiving proof returned by the target Axlib node.
-pub type AxlibMessagesReceivingProof<C> =
+/// Message receiving proof returned by the target Substrate node.
+pub type SubstrateMessagesReceivingProof<C> =
 	(UnrewardedRelayersState, FromBridgedChainMessagesDeliveryProof<HashOf<C>>);
 
-/// Axlib client as Axlib messages target.
-pub struct AxlibMessagesTarget<P: AxlibMessageLane> {
+/// Substrate client as Substrate messages target.
+pub struct SubstrateMessagesTarget<P: SubstrateMessageLane> {
 	client: Client<P::TargetChain>,
 	lane: P,
 	lane_id: LaneId,
@@ -59,8 +59,8 @@ pub struct AxlibMessagesTarget<P: AxlibMessageLane> {
 	source_to_target_headers_relay: Option<OnDemandHeadersRelay<P::SourceChain>>,
 }
 
-impl<P: AxlibMessageLane> AxlibMessagesTarget<P> {
-	/// Create new Axlib headers target.
+impl<P: SubstrateMessageLane> SubstrateMessagesTarget<P> {
+	/// Create new Substrate headers target.
 	pub fn new(
 		client: Client<P::TargetChain>,
 		lane: P,
@@ -68,7 +68,7 @@ impl<P: AxlibMessageLane> AxlibMessagesTarget<P> {
 		metric_values: StandaloneMessagesMetrics<P::SourceChain, P::TargetChain>,
 		source_to_target_headers_relay: Option<OnDemandHeadersRelay<P::SourceChain>>,
 	) -> Self {
-		AxlibMessagesTarget {
+		SubstrateMessagesTarget {
 			client,
 			lane,
 			lane_id,
@@ -78,7 +78,7 @@ impl<P: AxlibMessageLane> AxlibMessagesTarget<P> {
 	}
 }
 
-impl<P: AxlibMessageLane> Clone for AxlibMessagesTarget<P> {
+impl<P: SubstrateMessageLane> Clone for SubstrateMessagesTarget<P> {
 	fn clone(&self) -> Self {
 		Self {
 			client: self.client.clone(),
@@ -91,18 +91,18 @@ impl<P: AxlibMessageLane> Clone for AxlibMessagesTarget<P> {
 }
 
 #[async_trait]
-impl<P: AxlibMessageLane> RelayClient for AxlibMessagesTarget<P> {
-	type Error = AxlibError;
+impl<P: SubstrateMessageLane> RelayClient for SubstrateMessagesTarget<P> {
+	type Error = SubstrateError;
 
-	async fn reconnect(&mut self) -> Result<(), AxlibError> {
+	async fn reconnect(&mut self) -> Result<(), SubstrateError> {
 		self.client.reconnect().await
 	}
 }
 
 #[async_trait]
-impl<P> TargetClient<P::MessageLane> for AxlibMessagesTarget<P>
+impl<P> TargetClient<P::MessageLane> for SubstrateMessagesTarget<P>
 where
-	P: AxlibMessageLane,
+	P: SubstrateMessageLane,
 	P::SourceChain: Chain<
 		Hash = <P::MessageLane as MessageLane>::SourceHeaderHash,
 		BlockNumber = <P::MessageLane as MessageLane>::SourceHeaderNumber,
@@ -119,13 +119,13 @@ where
 	HeaderOf<P::TargetChain>: DeserializeOwned,
 	BlockNumberOf<P::TargetChain>: BlockNumberBase,
 	P::MessageLane: MessageLane<
-		MessagesProof = AxlibMessagesProof<P::SourceChain>,
-		MessagesReceivingProof = AxlibMessagesReceivingProof<P::TargetChain>,
+		MessagesProof = SubstrateMessagesProof<P::SourceChain>,
+		MessagesReceivingProof = SubstrateMessagesReceivingProof<P::TargetChain>,
 	>,
 	<P::MessageLane as MessageLane>::SourceHeaderNumber: Decode,
 	<P::MessageLane as MessageLane>::SourceHeaderHash: Decode,
 {
-	async fn state(&self) -> Result<TargetClientState<P::MessageLane>, AxlibError> {
+	async fn state(&self) -> Result<TargetClientState<P::MessageLane>, SubstrateError> {
 		// we can't continue to deliver messages if target node is out of sync, because
 		// it may have already received (some of) messages that we're going to deliver
 		self.client.ensure_synced().await?;
@@ -141,7 +141,7 @@ where
 	async fn latest_received_nonce(
 		&self,
 		id: TargetHeaderIdOf<P::MessageLane>,
-	) -> Result<(TargetHeaderIdOf<P::MessageLane>, MessageNonce), AxlibError> {
+	) -> Result<(TargetHeaderIdOf<P::MessageLane>, MessageNonce), SubstrateError> {
 		let encoded_response = self
 			.client
 			.state_call(
@@ -151,14 +151,14 @@ where
 			)
 			.await?;
 		let latest_received_nonce: MessageNonce = Decode::decode(&mut &encoded_response.0[..])
-			.map_err(AxlibError::ResponseParseFailed)?;
+			.map_err(SubstrateError::ResponseParseFailed)?;
 		Ok((id, latest_received_nonce))
 	}
 
 	async fn latest_confirmed_received_nonce(
 		&self,
 		id: TargetHeaderIdOf<P::MessageLane>,
-	) -> Result<(TargetHeaderIdOf<P::MessageLane>, MessageNonce), AxlibError> {
+	) -> Result<(TargetHeaderIdOf<P::MessageLane>, MessageNonce), SubstrateError> {
 		let encoded_response = self
 			.client
 			.state_call(
@@ -168,14 +168,14 @@ where
 			)
 			.await?;
 		let latest_received_nonce: MessageNonce = Decode::decode(&mut &encoded_response.0[..])
-			.map_err(AxlibError::ResponseParseFailed)?;
+			.map_err(SubstrateError::ResponseParseFailed)?;
 		Ok((id, latest_received_nonce))
 	}
 
 	async fn unrewarded_relayers_state(
 		&self,
 		id: TargetHeaderIdOf<P::MessageLane>,
-	) -> Result<(TargetHeaderIdOf<P::MessageLane>, UnrewardedRelayersState), AxlibError> {
+	) -> Result<(TargetHeaderIdOf<P::MessageLane>, UnrewardedRelayersState), SubstrateError> {
 		let encoded_response = self
 			.client
 			.state_call(
@@ -186,7 +186,7 @@ where
 			.await?;
 		let unrewarded_relayers_state: UnrewardedRelayersState =
 			Decode::decode(&mut &encoded_response.0[..])
-				.map_err(AxlibError::ResponseParseFailed)?;
+				.map_err(SubstrateError::ResponseParseFailed)?;
 		Ok((id, unrewarded_relayers_state))
 	}
 
@@ -195,7 +195,7 @@ where
 		id: TargetHeaderIdOf<P::MessageLane>,
 	) -> Result<
 		(TargetHeaderIdOf<P::MessageLane>, <P::MessageLane as MessageLane>::MessagesReceivingProof),
-		AxlibError,
+		SubstrateError,
 	> {
 		let (id, relayers_state) = self.unrewarded_relayers_state(id).await?;
 		let inbound_data_key = pallet_bridge_messages::storage_keys::inbound_lane_data_key(
@@ -221,7 +221,7 @@ where
 		generated_at_header: SourceHeaderIdOf<P::MessageLane>,
 		nonces: RangeInclusive<MessageNonce>,
 		proof: <P::MessageLane as MessageLane>::MessagesProof,
-	) -> Result<RangeInclusive<MessageNonce>, AxlibError> {
+	) -> Result<RangeInclusive<MessageNonce>, SubstrateError> {
 		let lane = self.lane.clone();
 		let nonces_clone = nonces.clone();
 		self.client
@@ -253,10 +253,10 @@ where
 		total_prepaid_nonces: MessageNonce,
 		total_dispatch_weight: Weight,
 		total_size: u32,
-	) -> Result<<P::MessageLane as MessageLane>::SourceChainBalance, AxlibError> {
+	) -> Result<<P::MessageLane as MessageLane>::SourceChainBalance, SubstrateError> {
 		let conversion_rate =
 			self.metric_values.target_to_source_conversion_rate().await.ok_or_else(|| {
-				AxlibError::Custom(format!(
+				SubstrateError::Custom(format!(
 					"Failed to compute conversion rate from {} to {}",
 					P::TargetChain::NAME,
 					P::SourceChain::NAME,
@@ -367,7 +367,7 @@ fn prepare_dummy_messages_proof<SC: Chain>(
 	nonces: RangeInclusive<MessageNonce>,
 	total_dispatch_weight: Weight,
 	total_size: u32,
-) -> AxlibMessagesProof<SC> {
+) -> SubstrateMessagesProof<SC> {
 	(
 		total_dispatch_weight,
 		FromBridgedChainMessagesProof {
@@ -425,7 +425,7 @@ fn compute_fee_multiplier<C: Chain>(
 
 /// Compute fee that will be refunded to the relayer because dispatch of `total_prepaid_nonces`
 /// messages has been paid at the source chain.
-fn compute_prepaid_messages_refund<P: AxlibMessageLane>(
+fn compute_prepaid_messages_refund<P: SubstrateMessageLane>(
 	total_prepaid_nonces: MessageNonce,
 	fee_multiplier: FixedU128,
 ) -> BalanceOf<P::TargetChain> {
@@ -441,10 +441,10 @@ mod tests {
 	use relay_wococo_client::{SigningParams as WococoSigningParams, Wococo};
 
 	#[derive(Clone)]
-	struct TestAxlibMessageLane;
+	struct TestSubstrateMessageLane;
 
-	impl AxlibMessageLane for TestAxlibMessageLane {
-		type MessageLane = crate::messages_lane::AxlibMessageLaneToAxlib<
+	impl SubstrateMessageLane for TestSubstrateMessageLane {
+		type MessageLane = crate::messages_lane::SubstrateMessageLaneToSubstrate<
 			Betanet,
 			BetanetSigningParams,
 			Wococo,
@@ -556,10 +556,10 @@ mod tests {
 	#[test]
 	fn compute_prepaid_messages_refund_returns_sane_results() {
 		assert!(
-			compute_prepaid_messages_refund::<TestAxlibMessageLane>(
+			compute_prepaid_messages_refund::<TestSubstrateMessageLane>(
 				10,
 				FixedU128::saturating_from_rational(110, 100),
-			) > (10 * TestAxlibMessageLane::PAY_INBOUND_DISPATCH_FEE_WEIGHT_AT_TARGET_CHAIN)
+			) > (10 * TestSubstrateMessageLane::PAY_INBOUND_DISPATCH_FEE_WEIGHT_AT_TARGET_CHAIN)
 				.into()
 		);
 	}

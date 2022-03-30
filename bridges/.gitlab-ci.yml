@@ -15,7 +15,7 @@ variables:                         &default-vars
   GIT_DEPTH:                       100
   CARGO_INCREMENTAL:               0
   ARCH:                            "x86_64"
-  CI_IMAGE:                        "paritytech/bridges-ci:staging"
+  CI_IMAGE:                        "axiatech/bridges-ci:staging"
   RUST_BACKTRACE:                  full
 
 default:
@@ -31,7 +31,7 @@ default:
 
 .kubernetes-build:                 &kubernetes-build
   tags:
-    - kubernetes-parity-build
+    - kubernetes-axia-build
   interruptible:                   true
 
 .docker-env:                       &docker-env
@@ -204,8 +204,8 @@ build:
     - mv -v ./target/release/rialto-allychain-collator ./artifacts/
     - strip ./target/release/millau-bridge-node
     - mv -v ./target/release/millau-bridge-node ./artifacts/
-    - strip ./target/release/axlib-relay
-    - mv -v ./target/release/axlib-relay ./artifacts/
+    - strip ./target/release/substrate-relay
+    - mv -v ./target/release/substrate-relay ./artifacts/
     - mv -v ./deployments/local-scripts/bridge-entrypoint.sh ./artifacts/
     - mv -v ./ci.Dockerfile ./artifacts/
 
@@ -227,10 +227,10 @@ build-nightly:
   variables:                       &image-variables
     GIT_STRATEGY:                  none
     DOCKERFILE:                    ci.Dockerfile
-    IMAGE_NAME:                    docker.io/paritytech/$CI_JOB_NAME
-    VAULT_SERVER_URL:              "https://vault.parity-mgmt-vault.parity.io"
-    VAULT_AUTH_PATH:               "gitlab-parity-io-jwt"
-    VAULT_AUTH_ROLE:               "cicd_gitlab_parity_${CI_PROJECT_NAME}"
+    IMAGE_NAME:                    docker.io/axiatech/$CI_JOB_NAME
+    VAULT_SERVER_URL:              "https://vault.axia-mgmt-vault.axia.io"
+    VAULT_AUTH_PATH:               "gitlab-axia-io-jwt"
+    VAULT_AUTH_ROLE:               "cicd_gitlab_axia_${CI_PROJECT_NAME}"
   needs:
     - job:                         build
       artifacts:                   true
@@ -243,10 +243,10 @@ build-nightly:
     - echo "Effective tags = ${VERSION} sha-${CI_COMMIT_SHORT_SHA} latest"
   secrets:
       DOCKER_HUB_USER:
-        vault:                     cicd/gitlab/parity/DOCKER_HUB_USER@kv
+        vault:                     cicd/gitlab/axia/DOCKER_HUB_USER@kv
         file:                      false
       DOCKER_HUB_PASS:
-        vault:                     cicd/gitlab/parity/DOCKER_HUB_PASS@kv
+        vault:                     cicd/gitlab/axia/DOCKER_HUB_PASS@kv
         file:                      false
   script:
     - test "${DOCKER_HUB_USER}" -a "${DOCKER_HUB_PASS}" ||
@@ -284,7 +284,7 @@ millau-bridge-node:
   stage:                           publish
   <<:                              *build-push-image
 
-axlib-relay:
+substrate-relay:
   stage:                           publish
   <<:                              *build-push-image
 

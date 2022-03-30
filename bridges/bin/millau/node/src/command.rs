@@ -1,18 +1,18 @@
-// Copyright 2019-2021 Parity Technologies (UK) Ltd.
-// This file is part of Parity Bridges Common.
+// Copyright 2019-2021 Axia Technologies (UK) Ltd.
+// This file is part of Axia Bridges Common.
 
-// Parity Bridges Common is free software: you can redistribute it and/or modify
+// Axia Bridges Common is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Parity Bridges Common is distributed in the hope that it will be useful,
+// Axia Bridges Common is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Parity Bridges Common.  If not, see <http://www.gnu.org/licenses/>.
+// along with Axia Bridges Common.  If not, see <http://www.gnu.org/licenses/>.
 
 use crate::{
 	cli::{Cli, Subcommand},
@@ -20,10 +20,10 @@ use crate::{
 	service::new_partial,
 };
 use millau_runtime::{Block, RuntimeApi};
-use sc_cli::{ChainSpec, RuntimeVersion, AxlibCli};
+use sc_cli::{ChainSpec, RuntimeVersion, SubstrateCli};
 use sc_service::PartialComponents;
 
-impl AxlibCli for Cli {
+impl SubstrateCli for Cli {
 	fn impl_name() -> String {
 		"Millau Bridge Node".into()
 	}
@@ -37,11 +37,11 @@ impl AxlibCli for Cli {
 	}
 
 	fn author() -> String {
-		"Parity Technologies".into()
+		"Axia Technologies".into()
 	}
 
 	fn support_url() -> String {
-		"https://github.com/paritytech/parity-bridges-common/".into()
+		"https://github.com/axiatech/axia-bridges-common/".into()
 	}
 
 	fn copyright_start_year() -> i32 {

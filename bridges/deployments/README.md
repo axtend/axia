@@ -3,7 +3,7 @@
 ## Requirements
 Make sure to install `docker` and `docker-compose` to be able to run and test bridge deployments. If
 for whatever reason you can't or don't want to use Docker, you can find some scripts for running the
-bridge [here](https://github.com/svyatonik/parity-bridges-common.test).
+bridge [here](https://github.com/svyatonik/axia-bridges-common.test).
 
 ## Networks
 One of the building blocks we use for our deployments are _networks_. A network is a collection of
@@ -44,8 +44,8 @@ the monitoring Compose file is _not_ optional, and must be included for bridge d
 
 ### Running and Updating Deployments
 We currently support two bridge deployments
-1. Rialto Axlib to Millau Axlib
-2. Alphanet Axlib to Millau Axlib
+1. Rialto Substrate to Millau Substrate
+2. Alphanet Substrate to Millau Substrate
 
 These bridges can be deployed using our [`./run.sh`](./run.sh) script.
 
@@ -82,17 +82,17 @@ not strictly required.
 Rialto authorities are named: `Alice`, `Bob`, `Charlie`, `Dave`, `Eve`.
 Millau authorities are named: `Alice`, `Bob`, `Charlie`, `Dave`, `Eve`.
 
-Both authorities and following accounts have enough funds (for test purposes) on corresponding Axlib chains:
+Both authorities and following accounts have enough funds (for test purposes) on corresponding Substrate chains:
 
 - on Rialto: `Ferdie`, `George`, `Harry`.
 - on Millau: `Ferdie`, `George`, `Harry`.
 
-Names of accounts on Axlib (Rialto and Millau) chains may be prefixed with `//` and used as
-seeds for the `sr25519` keys. This seed may also be used in the signer argument in Axlib relays.
+Names of accounts on Substrate (Rialto and Millau) chains may be prefixed with `//` and used as
+seeds for the `sr25519` keys. This seed may also be used in the signer argument in Substrate relays.
 Example:
 
 ```bash
-./axlib-relay relay-headers rialto-to-millau \
+./substrate-relay relay-headers rialto-to-millau \
 	--source-host rialto-node-alice \
 	--source-port 9944 \
 	--target-host millau-node-alice \
@@ -182,11 +182,11 @@ Here are the arguments currently supported:
   - `PROJECT`: Project to build withing bridges repo. Can be one of:
     - `rialto-bridge-node`
     - `millau-bridge-node`
-    - `axlib-relay`
+    - `substrate-relay`
 
 ### GitHub Actions
 We have a nightly job which runs and publishes Docker images for the different nodes and relayers to
-the [ParityTech Docker Hub](https://hub.docker.com/u/paritytech) organization. These images are used
+the [AxiaTech Docker Hub](https://hub.docker.com/u/axiatech) organization. These images are used
 for our ephemeral (temporary) test networks. Additionally, any time a tag in the form of `v*` is
 pushed to GitHub the publishing job is run. This will build all the components (nodes, relayers) and
 publish them.
@@ -214,7 +214,7 @@ security reasons it is not kept as part of version control. When deploying a net
 file should be correctly populated and kept in the appropriate [`bridges`](`./bridges`) deployment
 folder.
 
-The `UI_AXLIB_PROVIDER` variable lets you define the url of the Axlib node that the user
+The `UI_AXLIB_PROVIDER` variable lets you define the url of the Substrate node that the user
 interface will connect to. `UI_ETHEREUM_PROVIDER` is used only as a guidance for users to connect
 Metamask to the right Ethereum network. `UI_EXPECTED_ETHEREUM_NETWORK_ID`  is used by
 the user interface as a fail safe to prevent users from connecting their Metamask extension to an
@@ -233,7 +233,7 @@ UI_EXPECTED_ETHEREUM_NETWORK_ID=105
 
 ### UI
 
-Use [wss://rialto.bridges.test-installations.parity.io/](https://axia.js.org/apps/)
+Use [wss://rialto.bridges.test-installations.axia.io/](https://axia.js.org/apps/)
 as a custom endpoint for [https://axia.js.org/apps/](https://axia.js.org/apps/).
 
 ### Axia.js UI

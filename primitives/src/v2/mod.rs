@@ -1,4 +1,4 @@
-// Copyright 2021 Parity Technologies (UK) Ltd.
+// Copyright 2021 Axia Technologies (UK) Ltd.
 // This file is part of Axia.
 
 // Axia is free software: you can redistribute it and/or modify
@@ -44,7 +44,7 @@ pub struct SessionInfo {
 	///
 	/// NOTE: There might be more authorities in the current session, than `validators` participating
 	/// in allychain consensus. See
-	/// [`max_validators`](https://github.com/paritytech/axia/blob/a52dca2be7840b23c19c153cf7e110b1e3e475f8/runtime/allychains/src/configuration.rs#L148).
+	/// [`max_validators`](https://github.com/axiatech/axia/blob/a52dca2be7840b23c19c153cf7e110b1e3e475f8/runtime/allychains/src/configuration.rs#L148).
 	///
 	/// `SessionInfo::validators` will be limited to to `max_validators` when set.
 	pub validators: Vec<v1::ValidatorId>,
@@ -53,14 +53,14 @@ pub struct SessionInfo {
 	/// NOTE: The first `validators.len()` entries will match the corresponding validators in
 	/// `validators`, afterwards any remaining authorities can be found. This is any authorities not
 	/// participating in allychain consensus - see
-	/// [`max_validators`](https://github.com/paritytech/axia/blob/a52dca2be7840b23c19c153cf7e110b1e3e475f8/runtime/allychains/src/configuration.rs#L148)
+	/// [`max_validators`](https://github.com/axiatech/axia/blob/a52dca2be7840b23c19c153cf7e110b1e3e475f8/runtime/allychains/src/configuration.rs#L148)
 	#[cfg_attr(feature = "std", ignore_malloc_size_of = "outside type")]
 	pub discovery_keys: Vec<v1::AuthorityDiscoveryId>,
 	/// The assignment keys for validators.
 	///
 	/// NOTE: There might be more authorities in the current session, than validators participating
 	/// in allychain consensus. See
-	/// [`max_validators`](https://github.com/paritytech/axia/blob/a52dca2be7840b23c19c153cf7e110b1e3e475f8/runtime/allychains/src/configuration.rs#L148).
+	/// [`max_validators`](https://github.com/axiatech/axia/blob/a52dca2be7840b23c19c153cf7e110b1e3e475f8/runtime/allychains/src/configuration.rs#L148).
 	///
 	/// Therefore:
 	/// ```ignore

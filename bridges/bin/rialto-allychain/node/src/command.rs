@@ -1,18 +1,18 @@
-// Copyright 2020-2021 Parity Technologies (UK) Ltd.
-// This file is part of Parity Bridges Common.
+// Copyright 2020-2021 Axia Technologies (UK) Ltd.
+// This file is part of Axia Bridges Common.
 
-// Parity Bridges Common is free software: you can redistribute it and/or modify
+// Axia Bridges Common is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Parity Bridges Common is distributed in the hope that it will be useful,
+// Axia Bridges Common is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Parity Bridges Common.  If not, see <http://www.gnu.org/licenses/>.
+// along with Axia Bridges Common.  If not, see <http://www.gnu.org/licenses/>.
 
 use crate::{
 	chain_spec,
@@ -27,7 +27,7 @@ use axia_allychain::primitives::AccountIdConversion;
 use rialto_allychain_runtime::{Block, RuntimeApi};
 use sc_cli::{
 	ChainSpec, CliConfiguration, DefaultConfigurationValues, ImportParams, KeystoreParams,
-	NetworkParams, Result, RuntimeVersion, SharedParams, AxlibCli,
+	NetworkParams, Result, RuntimeVersion, SharedParams, SubstrateCli,
 };
 use sc_service::config::{BasePath, PrometheusConfig};
 use sp_core::hexdisplay::HexDisplay;
@@ -45,7 +45,7 @@ fn load_spec(
 	})
 }
 
-impl AxlibCli for Cli {
+impl SubstrateCli for Cli {
 	fn impl_name() -> String {
 		"Allychain Collator Template".into()
 	}
@@ -69,7 +69,7 @@ impl AxlibCli for Cli {
 	}
 
 	fn support_url() -> String {
-		"https://github.com/axlib-developer-hub/axlib-allychain-template/issues/new".into()
+		"https://github.com/substrate-developer-hub/substrate-allychain-template/issues/new".into()
 	}
 
 	fn copyright_start_year() -> i32 {
@@ -85,7 +85,7 @@ impl AxlibCli for Cli {
 	}
 }
 
-impl AxlibCli for RelayChainCli {
+impl SubstrateCli for RelayChainCli {
 	fn impl_name() -> String {
 		"Allychain Collator Template".into()
 	}
@@ -107,7 +107,7 @@ impl AxlibCli for RelayChainCli {
 	}
 
 	fn support_url() -> String {
-		"https://github.com/axlib-developer-hub/axlib-allychain-template/issues/new".into()
+		"https://github.com/substrate-developer-hub/substrate-allychain-template/issues/new".into()
 	}
 
 	fn copyright_start_year() -> i32 {
@@ -191,7 +191,7 @@ pub fn run() -> Result<()> {
 					[RelayChainCli::executable_name()].iter().chain(cli.relaychain_args.iter()),
 				);
 
-				let axia_config = AxlibCli::create_configuration(
+				let axia_config = SubstrateCli::create_configuration(
 					&axia_cli,
 					&axia_cli,
 					config.tokio_handle.clone(),
@@ -282,7 +282,7 @@ pub fn run() -> Result<()> {
 					generate_genesis_block(&config.chain_spec).map_err(|e| format!("{:?}", e))?;
 				let genesis_state = format!("0x{:?}", HexDisplay::from(&block.header().encode()));
 
-				let axia_config = AxlibCli::create_configuration(
+				let axia_config = SubstrateCli::create_configuration(
 					&axia_cli,
 					&axia_cli,
 					config.tokio_handle.clone(),
@@ -361,7 +361,7 @@ impl CliConfiguration<Self> for RelayChainCli {
 		self.base.base.prometheus_config(default_listen_port)
 	}
 
-	fn init<C: AxlibCli>(&self) -> Result<()> {
+	fn init<C: SubstrateCli>(&self) -> Result<()> {
 		unreachable!("AxiaCli is never initialized; qed");
 	}
 

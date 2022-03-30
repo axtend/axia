@@ -1,4 +1,4 @@
-// Copyright 2020 Parity Technologies (UK) Ltd.
+// Copyright 2020 Axia Technologies (UK) Ltd.
 // This file is part of Axia.
 
 // Axia is free software: you can redistribute it and/or modify
@@ -174,7 +174,7 @@ pub fn canonicalize(
 
 	// due to the fork pruning, this range actually might go too far above where our actual highest block is,
 	// if a relatively short fork is canonicalized.
-	// TODO https://github.com/paritytech/axia/issues/3389
+	// TODO https://github.com/axiatech/axia/issues/3389
 	let new_range = StoredBlockRange(canon_number + 1, std::cmp::max(range.1, canon_number + 2));
 
 	overlay_db.write_stored_block_range(new_range);

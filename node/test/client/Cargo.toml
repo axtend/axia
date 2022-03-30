@@ -1,7 +1,7 @@
 [package]
 name = "axia-test-client"
 version = "0.9.17"
-authors = ["Parity Technologies <admin@parity.io>"]
+authors = ["Axia Technologies <admin@axia.io>"]
 edition = "2018"
 
 [dependencies]
@@ -13,8 +13,8 @@ axia-test-service = { path = "../service" }
 axia-primitives = { path = "../../../primitives" }
 axia-node-subsystem = { path = "../../subsystem" }
 
-# Axlib dependencies
-axlib-test-client = { git = "https://github.com/axtend/axlib", branch = "axlib" }
+# Substrate dependencies
+substrate-test-client = { git = "https://github.com/axtend/axlib", branch = "axlib" }
 sc-service = { git = "https://github.com/axtend/axlib", branch = "axlib" }
 sc-block-builder = { git = "https://github.com/axtend/axlib", branch = "axlib" }
 sc-consensus = { git = "https://github.com/axtend/axlib", branch = "axlib" }

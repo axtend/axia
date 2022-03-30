@@ -1,4 +1,4 @@
-// Copyright 2017-2021 Parity Technologies (UK) Ltd.
+// Copyright 2017-2021 Axia Technologies (UK) Ltd.
 // This file is part of Axia.
 
 // Axia is free software: you can redistribute it and/or modify
@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Axia.  If not, see <http://www.gnu.org/licenses/>.
 
-//! Axia service. Specialized wrapper over axlib service.
+//! Axia service. Specialized wrapper over substrate service.
 
 #![deny(unused_results)]
 
@@ -101,7 +101,7 @@ use sc_executor::NativeElseWasmExecutor;
 pub use sc_executor::NativeExecutionDispatch;
 pub use service::{
 	config::{DatabaseSource, PrometheusConfig},
-	ChainSpec, Configuration, Error as AxlibServiceError, PruningMode, Role, RuntimeGenesis,
+	ChainSpec, Configuration, Error as SubstrateServiceError, PruningMode, Role, RuntimeGenesis,
 	TFullBackend, TFullCallExecutor, TFullClient, TaskManager, TransactionPoolOptions,
 };
 pub use sp_api::{ApiRef, ConstructRuntimeApi, Core as CoreApi, ProvideRuntimeApi, StateBackend};
@@ -201,7 +201,7 @@ pub enum Error {
 	AddrFormatInvalid(#[from] std::net::AddrParseError),
 
 	#[error(transparent)]
-	Sub(#[from] AxlibServiceError),
+	Sub(#[from] SubstrateServiceError),
 
 	#[error(transparent)]
 	Blockchain(#[from] sp_blockchain::Error),
@@ -773,7 +773,7 @@ where
 
 	// Note: GrandPa is pushed before the Axia-specific protocols. This doesn't change
 	// anything in terms of behaviour, but makes the logs more consistent with the other
-	// Axlib nodes.
+	// Substrate nodes.
 	let grandpa_protocol_name = grandpa::protocol_standard_name(
 		&client.block_hash(0).ok().flatten().expect("Genesis block exists; qed"),
 		&config.chain_spec,
@@ -1125,7 +1125,7 @@ where
 	}
 
 	let config = grandpa::Config {
-		// FIXME axlib#1578 make this available through chainspec
+		// FIXME substrate#1578 make this available through chainspec
 		gossip_duration: Duration::from_millis(1000),
 		justification_period: 512,
 		name: Some(name),
@@ -1139,7 +1139,7 @@ where
 	let enable_grandpa = !disable_grandpa;
 	if enable_grandpa {
 		// start the full GRANDPA voter
-		// NOTE: unlike in axlib we are currently running the full
+		// NOTE: unlike in substrate we are currently running the full
 		// GRANDPA voter protocol for all full nodes (regardless of whether
 		// they're validators or not). at this point the full voter should
 		// provide better guarantees of block and vote data availability than

@@ -1,4 +1,4 @@
-// Copyright 2020 Parity Technologies (UK) Ltd.
+// Copyright 2020 Axia Technologies (UK) Ltd.
 // This file is part of Axia.
 
 // Axia is free software: you can redistribute it and/or modify
@@ -20,7 +20,7 @@
 const PUPPET_EXE: &str = env!("CARGO_BIN_EXE_adder_collator_puppet_worker");
 
 // If this test is failing, make sure to run all tests with the `real-overseer` feature being enabled.
-#[axlib_test_utils::test]
+#[substrate_test_utils::test]
 async fn collating_using_adder_collator() {
 	use axia_primitives::v1::Id as ParaId;
 	use sp_keyring::AccountKeyring::*;

@@ -1,4 +1,4 @@
-// Copyright 2020 Parity Technologies (UK) Ltd.
+// Copyright 2020 Axia Technologies (UK) Ltd.
 // This file is part of Axia.
 
 // Axia is free software: you can redistribute it and/or modify
@@ -170,9 +170,9 @@ impl<H> Default for ProcessedCandidates<H> {
 /// Number of backing votes we need for a valid backing.
 pub fn minimum_backing_votes(n_validators: usize) -> usize {
 	// For considerations on this value see:
-	// https://github.com/paritytech/axia/pull/1656#issuecomment-999734650
+	// https://github.com/axiatech/axia/pull/1656#issuecomment-999734650
 	// and
-	// https://github.com/paritytech/axia/issues/4386
+	// https://github.com/axiatech/axia/issues/4386
 	sp_std::cmp::min(n_validators, 2)
 }
 

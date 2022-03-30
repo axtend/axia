@@ -1,4 +1,4 @@
-// Copyright 2020 Parity Technologies (UK) Ltd.
+// Copyright 2020 Axia Technologies (UK) Ltd.
 // This file is part of Axia.
 
 // Axia is free software: you can redistribute it and/or modify
@@ -110,7 +110,7 @@ impl<Source: TryFrom<Dest> + Clone, Dest: TryFrom<Source> + Clone> Convert<Sourc
 	}
 }
 
-/// Implementation of `Convert<_, Vec<u8>>` using the parity scale codec.
+/// Implementation of `Convert<_, Vec<u8>>` using the axia scale codec.
 pub struct Encoded;
 impl<T: Clone + Encode + Decode> Convert<T, Vec<u8>> for Encoded {
 	fn convert_ref(value: impl Borrow<T>) -> Result<Vec<u8>, ()> {
@@ -121,7 +121,7 @@ impl<T: Clone + Encode + Decode> Convert<T, Vec<u8>> for Encoded {
 	}
 }
 
-/// Implementation of `Convert<Vec<u8>, _>` using the parity scale codec.
+/// Implementation of `Convert<Vec<u8>, _>` using the axia scale codec.
 pub struct Decoded;
 impl<T: Clone + Encode + Decode> Convert<Vec<u8>, T> for Decoded {
 	fn convert_ref(bytes: impl Borrow<Vec<u8>>) -> Result<T, ()> {

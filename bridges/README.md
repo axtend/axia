@@ -1,12 +1,12 @@
-# Parity Bridges Common
+# Axia Bridges Common
 
 This is a collection of components for building bridges.
 
-These components include Axlib pallets for syncing headers, passing arbitrary messages, as well
+These components include Substrate pallets for syncing headers, passing arbitrary messages, as well
 as libraries for building relayers to provide cross-chain communication capabilities.
 
 Three bridge nodes are also available. The nodes can be used to run test networks which bridge other
-Axlib chains.
+Substrate chains.
 
 🚧 The bridges are currently under construction - a hardhat is recommended beyond this point 🚧
 
@@ -32,41 +32,41 @@ rustup target add wasm32-unknown-unknown --toolchain nightly
 Once this is configured you can build and test the repo as follows:
 
 ```
-git clone https://github.com/paritytech/parity-bridges-common.git
-cd parity-bridges-common
+git clone https://github.com/axiatech/axia-bridges-common.git
+cd axia-bridges-common
 cargo build --all
 cargo test --all
 ```
 
 Also you can build the repo with
-[Parity CI Docker image](https://github.com/paritytech/scripts/tree/master/dockerfiles/bridges-ci):
+[Axia CI Docker image](https://github.com/axiatech/scripts/tree/master/dockerfiles/bridges-ci):
 
 ```bash
-docker pull paritytech/bridges-ci:production
+docker pull axiatech/bridges-ci:production
 mkdir ~/cache
 chown 1000:1000 ~/cache #processes in the container runs as "nonroot" user with UID 1000
-docker run --rm -it -w /shellhere/parity-bridges-common \
+docker run --rm -it -w /shellhere/axia-bridges-common \
                     -v /home/$(whoami)/cache/:/cache/    \
-                    -v "$(pwd)":/shellhere/parity-bridges-common \
+                    -v "$(pwd)":/shellhere/axia-bridges-common \
                     -e CARGO_HOME=/cache/cargo/ \
                     -e SCCACHE_DIR=/cache/sccache/ \
-                    -e CARGO_TARGET_DIR=/cache/target/  paritytech/bridges-ci:production cargo build --all
+                    -e CARGO_TARGET_DIR=/cache/target/  axiatech/bridges-ci:production cargo build --all
 #artifacts can be found in ~/cache/target
 ```
 
 If you want to reproduce other steps of CI process you can use the following
-[guide](https://github.com/paritytech/scripts#reproduce-ci-locally).
+[guide](https://github.com/axiatech/scripts#reproduce-ci-locally).
 
-If you need more information about setting up your development environment Axlib's
-[Getting Started](https://axlib.dev/docs/en/knowledgebase/getting-started/) page is a good
+If you need more information about setting up your development environment Substrate's
+[Getting Started](https://substrate.dev/docs/en/knowledgebase/getting-started/) page is a good
 resource.
 
 ## High-Level Architecture
 
-This repo has support for bridging foreign chains together using a combination of Axlib pallets
+This repo has support for bridging foreign chains together using a combination of Substrate pallets
 and external processes called relayers. A bridge chain is one that is able to follow the consensus
 of a foreign chain independently. For example, consider the case below where we want to bridge two
-Axlib based chains.
+Substrate based chains.
 
 ```
 +---------------+                 +---------------+
@@ -97,13 +97,13 @@ Here's an overview of how the project is laid out. The main bits are the `node`,
 the `relays` which are used to pass messages between chains.
 
 ```
-├── bin             // Node and Runtime for the various Axlib chains
+├── bin             // Node and Runtime for the various Substrate chains
 │  └── ...
 ├── deployments     // Useful tools for deploying test networks
 │  └──  ...
 ├── diagrams        // Pretty pictures of the project architecture
 │  └──  ...
-├── modules         // Axlib Runtime Modules (a.k.a Pallets)
+├── modules         // Substrate Runtime Modules (a.k.a Pallets)
 │  ├── grandpa      // On-Chain GRANDPA Light Client
 │  ├── messages     // Cross Chain Message Passing
 │  ├── dispatch     // Target Chain Message Execution
@@ -130,15 +130,15 @@ There are 2 ways to run the bridge, described below:
 First you'll need to build the bridge nodes and relay. This can be done as follows:
 
 ```bash
-# In `parity-bridges-common` folder
+# In `axia-bridges-common` folder
 cargo build -p rialto-bridge-node
 cargo build -p millau-bridge-node
-cargo build -p axlib-relay
+cargo build -p substrate-relay
 ```
 
 ### Running a Dev network
 
-We will launch a dev network to demonstrate how to relay a message between two Axlib based
+We will launch a dev network to demonstrate how to relay a message between two Substrate based
 chains (named Rialto and Millau).
 
 To do this we will need two nodes, two relayers which will relay headers, and two relayers which
@@ -149,10 +149,10 @@ will relay messages.
 To run a simple dev network you can use the scripts located in the
 [`deployments/local-scripts` folder](./deployments/local-scripts).
 
-First, we must run the two Axlib nodes.
+First, we must run the two Substrate nodes.
 
 ```bash
-# In `parity-bridges-common` folder
+# In `axia-bridges-common` folder
 ./deployments/local-scripts/run-rialto-node.sh
 ./deployments/local-scripts/run-millau-node.sh
 ```
@@ -164,8 +164,8 @@ After the nodes are up we can run the header relayers.
 ./deployments/local-scripts/relay-rialto-to-millau.sh
 ```
 
-At this point you should see the relayer submitting headers from the Millau Axlib chain to the
-Rialto Axlib chain.
+At this point you should see the relayer submitting headers from the Millau Substrate chain to the
+Rialto Substrate chain.
 
 ```
 # Header Relayer Logs
@@ -205,13 +205,13 @@ For a more sophisticated deployment which includes bidirectional header sync, me
 monitoring dashboards, etc. see the [Deployments README](./deployments/README.md).
 
 You should note that you can find images for all the bridge components published on
-[Docker Hub](https://hub.docker.com/u/paritytech).
+[Docker Hub](https://hub.docker.com/u/axiatech).
 
 To run a Rialto node for example, you can use the following command:
 
 ```bash
 docker run -p 30333:30333 -p 9933:9933 -p 9944:9944 \
-  -it paritytech/rialto-bridge-node --dev --tmp \
+  -it axiatech/rialto-bridge-node --dev --tmp \
   --rpc-cors=all --unsafe-rpc-external --unsafe-ws-external
 ```
 
@@ -221,7 +221,7 @@ In this section we'll show you how to quickly send a bridge message, if you want
 interact with and test the bridge see more details in [send message](./docs/send-message.md)
 
 ```bash
-# In `parity-bridges-common` folder
+# In `axia-bridges-common` folder
 ./scripts/send-message-from-millau-rialto.sh remark
 ```
 
@@ -236,12 +236,12 @@ TRACE bridge Sent transaction to Millau node: 0x5e68...
 ## Community
 
 Main hangout for the community is [Element](https://element.io/) (formerly Riot). Element is a chat
-server like, for example, Discord. Most discussions around Axia and Axlib happen
+server like, for example, Discord. Most discussions around Axia and Substrate happen
 in various Element "rooms" (channels). So, joining Element might be a good idea, anyway.
 
 If you are interested in information exchange and development of Axia related bridges please
 feel free to join the [Axia Bridges](https://app.element.io/#/room/#bridges:web3.foundation)
 Element channel.
 
-The [Axlib Technical](https://app.element.io/#/room/#axlib-technical:matrix.org) Element
-channel is most suited for discussions regarding Axlib itself.
+The [Substrate Technical](https://app.element.io/#/room/#substrate-technical:matrix.org) Element
+channel is most suited for discussions regarding Substrate itself.

@@ -1,4 +1,4 @@
-// Copyright 2020 Parity Technologies (UK) Ltd.
+// Copyright 2020 Axia Technologies (UK) Ltd.
 // This file is part of Axia.
 
 // Axia is free software: you can redistribute it and/or modify
@@ -158,7 +158,7 @@ async fn imported_block_info(
 		// want to use the block hash itself, and here's why:
 		//
 		// First off, 'epoch' in BABE means 'session' in other places. 'epoch' is the terminology from
-		// the paper, which we fulfill using 'session's, which are a Axlib consensus concept.
+		// the paper, which we fulfill using 'session's, which are a Substrate consensus concept.
 		//
 		// In BABE, the on-chain and off-chain view of the current epoch can differ at epoch boundaries
 		// because epochs change precisely at a slot. When a block triggers a new epoch, the state of
@@ -454,7 +454,7 @@ pub(crate) async fn handle_new_head(
 		let validator_group_lens: Vec<usize> =
 			session_info.validator_groups.iter().map(|v| v.len()).collect();
 		// insta-approve candidates on low-node testnets:
-		// cf. https://github.com/paritytech/axia/issues/2411
+		// cf. https://github.com/axiatech/axia/issues/2411
 		let num_candidates = included_candidates.len();
 		let approved_bitfield = {
 			if needed_approvals == 0 {

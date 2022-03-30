@@ -1,18 +1,18 @@
-// Copyright 2019-2021 Parity Technologies (UK) Ltd.
-// This file is part of Parity Bridges Common.
+// Copyright 2019-2021 Axia Technologies (UK) Ltd.
+// This file is part of Axia Bridges Common.
 
-// Parity Bridges Common is free software: you can redistribute it and/or modify
+// Axia Bridges Common is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Parity Bridges Common is distributed in the hope that it will be useful,
+// Axia Bridges Common is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Parity Bridges Common.  If not, see <http://www.gnu.org/licenses/>.
+// along with Axia Bridges Common.  If not, see <http://www.gnu.org/licenses/>.
 
 //! The Rialto runtime. This can be compiled with `#[no_std]`, ready for Wasm.
 
@@ -195,7 +195,7 @@ impl frame_system::Config for Runtime {
 	type OnKilledAccount = ();
 	/// The data to be stored in an account.
 	type AccountData = pallet_balances::AccountData<Balance>;
-	// TODO: update me (https://github.com/paritytech/parity-bridges-common/issues/78)
+	// TODO: update me (https://github.com/axiatech/axia-bridges-common/issues/78)
 	/// Weight information for the extrinsics of this pallet.
 	type SystemWeightInfo = ();
 	/// Block and extrinsics weights: base values and limits.
@@ -276,7 +276,7 @@ impl pallet_grandpa::Config for Runtime {
 		GrandpaId,
 	)>>::IdentificationTuple;
 	type HandleEquivocation = ();
-	// TODO: update me (https://github.com/paritytech/parity-bridges-common/issues/78)
+	// TODO: update me (https://github.com/axiatech/axia-bridges-common/issues/78)
 	type WeightInfo = ();
 	type MaxAuthorities = MaxAuthorities;
 }
@@ -322,7 +322,7 @@ impl pallet_timestamp::Config for Runtime {
 	type Moment = bp_rialto::Moment;
 	type OnTimestampSet = Babe;
 	type MinimumPeriod = MinimumPeriod;
-	// TODO: update me (https://github.com/paritytech/parity-bridges-common/issues/78)
+	// TODO: update me (https://github.com/axiatech/axia-bridges-common/issues/78)
 	type WeightInfo = ();
 }
 
@@ -342,7 +342,7 @@ impl pallet_balances::Config for Runtime {
 	type DustRemoval = ();
 	type ExistentialDeposit = ExistentialDeposit;
 	type AccountStore = System;
-	// TODO: update me (https://github.com/paritytech/parity-bridges-common/issues/78)
+	// TODO: update me (https://github.com/axiatech/axia-bridges-common/issues/78)
 	type WeightInfo = ();
 	type MaxLocks = MaxLocks;
 	type MaxReserves = MaxReserves;
@@ -387,7 +387,7 @@ impl pallet_session::Config for Runtime {
 	type SessionManager = pallet_shift_session_manager::Pallet<Runtime>;
 	type SessionHandler = <SessionKeys as OpaqueKeys>::KeyTypeIdProviders;
 	type Keys = SessionKeys;
-	// TODO: update me (https://github.com/paritytech/parity-bridges-common/issues/78)
+	// TODO: update me (https://github.com/axiatech/axia-bridges-common/issues/78)
 	type WeightInfo = ();
 }
 
@@ -1244,7 +1244,7 @@ mod tests {
 	fn call_size() {
 		const AXC_MAX_CALL_SZ: usize = 230;
 		assert!(core::mem::size_of::<pallet_bridge_grandpa::Call<Runtime>>() <= AXC_MAX_CALL_SZ);
-		// FIXME: get this down to 230. https://github.com/paritytech/grandpa-bridge-gadget/issues/359
+		// FIXME: get this down to 230. https://github.com/axiatech/grandpa-bridge-gadget/issues/359
 		const BEEFY_MAX_CALL_SZ: usize = 232;
 		assert!(core::mem::size_of::<pallet_bridge_messages::Call<Runtime>>() <= BEEFY_MAX_CALL_SZ);
 	}
