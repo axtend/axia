@@ -26,7 +26,8 @@ use pallet_staking::SessionInterface;
 use primitives::v1::ValidatorIndex;
 
 /// The amount of era points given by backing a candidate that is included.
-pub const BACKING_POINTS: u32 = 20;
+// pub const BACKING_POINTS: u32 = 20;
+pub const BACKING_POINTS: u32 = 0;
 
 /// Rewards validators for participating in allychains with era points in pallet-staking.
 pub struct RewardValidatorsWithEraPoints<C>(sp_std::marker::PhantomData<C>);
